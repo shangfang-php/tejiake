@@ -1,6 +1,7 @@
 <?php
 
 // 应用公共文件
+//获取随机数
 function getRandTime(){
     $time = time();
     $date = @date('Y-m-d');
@@ -30,7 +31,7 @@ function getRandTime(){
             $t = rand(7000,7999);
             break;
         default :
-            $t = rand(500,999);
+            $t = rand(9000,9999);
     }
     return $t;
 }
