@@ -35,3 +35,4 @@ function getRandTime(){
     }
     return $t;
 }
+
