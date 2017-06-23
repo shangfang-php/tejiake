@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+        <meta name="author" content="Coderthemes">
+
+        <!-- App Favicon -->
+        <link rel="shortcut icon" href="__STATIC__/admin/images/favicon.ico">
+
+        <!-- App title -->
+        <title>登录</title>
+
+        <!-- App CSS -->
+        <link href="__STATIC__/admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="__STATIC__/admin/css/core.css" rel="stylesheet" type="text/css" />
+        <link href="__STATIC__/admin/css/components.css" rel="stylesheet" type="text/css" />
+        <link href="__STATIC__/admin/css/icons.css" rel="stylesheet" type="text/css" />
+        <link href="__STATIC__/admin/css/pages.css" rel="stylesheet" type="text/css" />
+        <link href="__STATIC__/admin/css/menu.css" rel="stylesheet" type="text/css" />
+        <link href="__STATIC__/admin/css/responsive.css" rel="stylesheet" type="text/css" />
+
+        <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="__STATIC__/admin/js/modernizr.min.js"></script>
+
+    </head>
+    <body>
+
+        <div class="account-pages"></div>
+        <div class="clearfix"></div>
+        <div class="wrapper-page">
+            <div class="text-center">
+                <a href="index.html" class="logo"><span>&nbsp;&nbsp;</span></a>
+               
+            </div>
+        	<div class="m-t-40 card-box">
+                 <div class="text-center">
+                <a href="index.html" class="logo"><span>登录</span></a>
+               
+            </div>
+                <div class="panel-body">
+                    <form class="form-horizontal m-t-20" action="" method="post">
+
+                        <div class="form-group ">
+                            <div class="col-xs-12">
+                                <input class="form-control" type="text" name='username' required="" placeholder="用户名">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input class="form-control" type="password" name="password" required="" placeholder="密码">
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <div class="col-xs-12">
+                                <div class="checkbox checkbox-custom">
+                                    <input id="checkbox-signup" name="rempsw" type="checkbox">
+                                    <label for="checkbox-signup">
+                                        记得密码
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center m-t-30">
+                            <div class="col-xs-12">
+                                <button class="btn btn-custom btn-bordred btn-block waves-effect waves-light" type="button" onclick="check();" >登录</button>
+                            </div>
+                        </div>
+
+                       <!-- <div class="form-group m-t-30 m-b-0">
+                            <div class="col-sm-12" style="text-align: center">
+                                <a href="page-recoverpw.html" class="text-muted">
+                                <i class="fa fa-lock m-r-5"></i>
+                                 忘记了你的密码?
+                                </a>
+                                &nbsp;
+                                 <a href="page-register.html" class="text-primary m-l-5"> <b>注册</b></a>
+                            </div>
+                        </div>-->
+                    </form>
+
+                </div>
+            </div>
+            <!-- end card-box-->
+
+          <!--   <div class="row">
+                <div class="col-sm-12 text-center">
+                    <p class="text-muted">没有一个帐户吗?<a href="page-register.html" class="text-primary m-l-5"><b>报名</b></a></p>
+                </div>
+            </div> -->
+            
+        </div>
+        <!-- end wrapper page -->
+        
+
+        
+    	<script>
+            var resizefunc = [];
+            function check(){
+                var rempsw = 0;
+                var username = $('input[name=username]').val();
+                var password = $('input[name=password]').val();
+                if(username != '' && password != ''){
+                    if($('#checkbox-signup').attr('checked')){
+                         rempsw = 1;
+                    }
+                    $.post("{url('Login/index')}",{username:username,password:password,rempsw:rempsw},function(data){
+                       //alert(typeof data);
+                        data = JSON.parse(data);
+                        if(data.status == 1){
+                            alert(data.msg);
+                            window.location.href = "{url('Index/index')}";
+
+                        }else{
+                            alert(data.msg);return false;
+                        }
+                    });
+                }else{
+                    alert('用户名或密码不可为空');return false;
+                }
+            }
+        </script>
+
+        <!-- jQuery  -->
+        <script src="__STATIC__/admin/js/jquery.min.js"></script>
+        <script src="__STATIC__/admin/js/bootstrap.min.js"></script>
+        <script src="__STATIC__/admin/js/detect.js"></script>
+        <script src="__STATIC__/admin/js/fastclick.js"></script>
+        <script src="__STATIC__/admin/js/jquery.slimscroll.js"></script>
+        <script src="__STATIC__/admin/js/jquery.blockUI.js"></script>
+        <script src="__STATIC__/admin/js/waves.js"></script>
+        <script src="__STATIC__/admin/js/wow.min.js"></script>
+        <script src="__STATIC__/admin/js/jquery.nicescroll.js"></script>
+        <script src="__STATIC__/admin/js/jquery.scrollTo.min.js"></script>
+
+        <!-- App js -->
+        <script src="__STATIC__/admin/js/jquery.core.js"></script>
+        <script src="__STATIC__/admin/js/jquery.app.js"></script>
+	
+	</body>
+</html>

@@ -36,3 +36,9 @@ function getRandTime(){
     return $t;
 }
 
+function pswCrypt($psw){
+    $psw = md5($psw);
+    $salt = substr($psw,-1,3);
+    $psw = crypt($psw,$salt);
+    return $psw;
+}
