@@ -63,7 +63,7 @@
                         <div class="form-group ">
                             <div class="col-xs-12">
                                 <div class="checkbox checkbox-custom">
-                                    <input id="checkbox-signup" name="rempsw" type="checkbox">
+                                    <input id="checkbox-signup" name="rempsw" type="checkbox" >
                                     <label for="checkbox-signup">
                                         记得密码
                                     </label>
@@ -112,7 +112,7 @@
                 var username = $('input[name=username]').val();
                 var password = $('input[name=password]').val();
                 if(username != '' && password != ''){
-                    if($('#checkbox-signup').attr('checked')){
+                    if($('#checkbox-signup').is(':checked')){
                          rempsw = 1;
                     }
                     $.post("{url('Login/index')}",{username:username,password:password,rempsw:rempsw},function(data){
