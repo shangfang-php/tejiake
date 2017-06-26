@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+    <meta name="author" content="Coderthemes">
+
+    <link rel="shortcut icon" href="__STATIC__/admin/images/favicon.ico">
+
+    <title>后台管理系统</title>
+
+    <!--Morris Chart CSS -->
+    <link rel="stylesheet" href="__STATIC__/admin/plugins/morris/morris.css">
+
+    <!-- App css -->
+    <link href="__STATIC__/admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/admin/css/core.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/admin/css/components.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/admin/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/admin/css/pages.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/admin/css/menu.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/admin/css/responsive.css" rel="stylesheet" type="text/css" />
+
+    <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="__STATIC__/admin/js/modernizr.min.js"></script>
+
+
+
+
+</head>
+
+
+<body class="fixed-left" >
+
+<!-- Begin page -->
+<div id="wrapper">
+
+    <!-- Top Bar Start -->
+    <div class="topbar">
+
+        <!-- LOGO -->
+        <div class="topbar-left">
+            <a href="index.html" class="logo"><span>后台管理</span><i class="zmdi zmdi-layers"></i></a>
+        </div>
+
+        <!-- Button mobile view to collapse sidebar menu -->
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container">
+
+                <!-- Page title -->
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="button-menu-mobile open-left">
+                            <i class="zmdi zmdi-menu"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <h4 class="page-title">指示板</h4>
+                    </li>
+                </ul>
+
+                <!-- Right(Notification and Searchbox -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <!-- Notification -->
+                        <div class="notification-box">
+                            <ul class="list-inline m-b-0">
+                                <li>
+                                    <a href="javascript:void(0);" class="right-bar-toggle">
+                                        <i class="zmdi zmdi-notifications-none"></i>
+                                    </a>
+                                    <div class="noti-dot">
+                                        <span class="dot"></span>
+                                        <span class="pulse"></span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- End Notification bar -->
+                    </li>
+                    <li class="hidden-xs">
+                        <form role="search" class="app-search">
+                            <input type="text" placeholder="搜索..."
+                                   class="form-control">
+                            <a href=""><i class="fa fa-search"></i></a>
+                        </form>
+                    </li>
+                </ul>
+
+            </div><!-- end container -->
+        </div><!-- end navbar -->
+    </div>
+    <!-- Top Bar End -->
+
+
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="left side-menu">
+        <div class="sidebar-inner slimscrollleft">
+
+            <!-- User -->
+            <div class="user-box">
+                <div class="user-img">
+                    <img src="__STATIC__/admin/images/users/avatar-1.jpg" alt="user-img" title="Mat Helme" class="img-circle img-thumbnail img-responsive">
+                    <div class="user-status offline"><i class="zmdi zmdi-dot-circle"></i></div>
+                </div>
+                <h5><a href="#">admin</a> </h5>
+                <ul class="list-inline">
+                    <li>
+                        <a href="#" >
+                            <i class="zmdi zmdi-settings"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="text-custom">
+                            <i class="zmdi zmdi-power"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- End User -->
+
+            <!--- Sidemenu -->
+            <div id="sidebar-menu">
+                <ul>
+                    <li class="text-muted menu-title">导航</li>
+
+                    <li>
+                        <a href="index1.html" id="a1" name="index1.html" target="i" class="waves-effect  " onclick="a();" ><i class="zmdi zmdi-view-dashboard"></i> <span> 首页 </span> </a>
+                    </li>
+
+                    <li>
+                        <a href="typography.html" id="a2" name="typography.html" target="i" class="waves-effect"><i class="zmdi zmdi-format-underlined"></i> <span> 排版 </span> </a>
+                    </li>
+
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-invert-colors"></i> <span> 用户界面 </span> <span class="menu-arrow"></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="ui-buttons.html" id="a3" name="ui-buttons.html" target="i">按钮</a></li>
+                            <li><a href="ui-cards.html" id="a4" name="ui-cards.html" target="i">卡片</a></li>
+                            <li><a href="ui-checkbox-radio.html" id="a5" name="ui-checkbox-radio.html" target="i" >Checkboxs-Radios</a></li>
+                            <li><a href="ui-material-icons.html" id="a6" name="ui-material-icons.html" target="i">材料设计图标</a></li>
+                            <li><a href="ui-font-awesome-icons.html" id="a7" name="ui-font-awesome-icons.html" target="i">字体太棒了</a></li>
+                            <li><a href="ui-themify-icons.html" id="a8" name="ui-themify-icons.html" target="i">Themify图标</a></li>
+                            <li><a href="ui-modals.html" id="a9" name="ui-modals.html" target="i">情态动词</a></li>
+                            <li><a href="ui-notification.html" id="a10" name="ui-notification.html" target="i">通知</a></li>
+                            <li><a href="ui-range-slider.html" id="a11" name="ui-range-slider.html" target="i">滑块范围</a></li>
+                            <li><a href="ui-components.html" id="a12" name="ui-components.html" target="i">组件</a>
+                            <li><a href="ui-sweetalert.html" id="a13" name="ui-sweetalert.html" target="i">温馨提醒</a>
+                            <li><a href="ui-treeview.html" id="a14" name="ui-treeview.html" target="i">树视图</a>
+                            <li><a href="ui-widgets.html" id="a15" name="ui-widgets.html" target="i">小部件</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-collection-text"></i><span class="label label-warning pull-right">7</span><span> 形式 </span> </a>
+                        <ul class="list-unstyled">
+                            <li><a href="form-elements.html" id="a16" name="form-elements.html" target="i">一般的元素</a></li>
+                            <li><a href="form-advanced.html" id="a17" name="form-advanced.html" target="i">先进的形式</a></li>
+                            <li><a href="form-validation.html" id="a18" name="form-validation.html" target="i">表单验证</a></li>
+                            <li><a href="form-wizard.html" id="a19" name="form-wizard.html" target="i">表单向导</a></li>
+                            <li><a href="form-fileupload.html" id="a20" name="form-fileupload.html" target="i">表单上传</a></li>
+                            <li><a href="form-wysiwig.html" id="a21" name="form-wysiwig.html" target="i">Wysiwig编辑</a></li>
+                            <li><a href="form-xeditable.html" id="a22" name="form-xeditable.html" target="i">X-editable</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-view-list"></i> <span> 表</span> <span class="menu-arrow"></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="tables-basic.html" id="a23" name="tables-basic.html" target="i">基本表</a></li>
+                            <li><a href="tables-datatable.html" id="a24" name="tables-datatable.html" target="i">数据表</a></li>
+                            <li><a href="tables-editable.html" id="a25" name="tables-editable.html" target="i">可编辑的表</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-chart"></i><span> 图表 </span> <span class="menu-arrow"></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="chart-flot.html" id="a26" name="chart-flot.html" target="i">Flot图表</a></li>
+                            <li><a href="chart-morris.html" id="a27" name="chart-morris.html" target="i">莫里斯图表</a></li>
+                            <li><a href="chart-chartist.html" id="a28" name="chart-chartist.html" target="i">宪章图表</a></li>
+                            <li><a href="chart-other.html" id="a29" name="chart-other.html" target="i">其他图</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="calendar.html" class="waves-effect"><i class="zmdi zmdi-calendar"></i><span class="label label-purple pull-right">New</span><span> 日历 </span></a>
+                    </li>
+
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-collection-item"></i><span> 页面 </span> <span class="menu-arrow"></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="page-starter.html" id="a30" name="page-starter.html" target="i">启动页面</a></li>
+                            <li><a href="page-login.html" id="a31" name="page-login.html" target="i">登录</a></li>
+                            <li><a href="page-register.html" id="a32" name="page-register.html" target="i">注册</a></li>
+                            <li><a href="page-recoverpw.html" id="a33" name="page-recoverpw.html" target="i">恢复密码</a></li>
+                            <li><a href="page-lock-screen.html" id="a34" name="page-lock-screen.html" target="i">锁定屏幕</a></li>
+                            <li><a href="page-confirm-mail.html" id="a35" name="page-confirm-mail.html" target="i">确认邮件</a></li>
+                            <li><a href="page-404.html" id="a36" name="page-404.html" target="i">错误404</a></li>
+                            <li><a href="page-500.html" id="a37" name="page-500.html" target="i">错误500</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-layers"></i><span>额外的页面 </span> <span class="menu-arrow"></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="extras-projects.html" id="a38" name="extras-projects.html" target="i">项目</a></li>
+                            <li><a href="extras-tour.html" id="a39" name="extras-tour.html" target="i">之旅</a></li>
+                            <li><a href="extras-taskboard.html" id="a40" name="extras-taskboard.html" target="i">的周期</a></li>
+                            <li><a href="extras-taskdetail.html" id="a41" name="extras-taskdetail.html" target="i">任务细节</a></li>
+                            <li><a href="extras-maps.html" id="a42" name="extras-maps.html" target="i">地图</a></li>
+                            <li><a href="extras-contact.html" id="a43" name="extras-contact.html" target="i">联系人列表</a></li>
+                            <li><a href="extras-pricing.html" id="a44" name="extras-pricing.html" target="i">定价</a></li>
+                            <li><a href="extras-timeline.html" id="a45" name="extras-timeline.html" target="i">时间轴</a></li>
+                            <li><a href="extras-invoice.html" id="a46" name="extras-invoice.html" target="i">发票</a></li>
+                            <li><a href="extras-faq.html" id="a47" name="extras-faq.html" target="i">常见问题解答</a></li>
+                            <li><a href="extras-gallery.html" id="a48" name="extras-gallery.html" target="i">画廊</a></li>
+                            <li><a href="extras-email-template.html" id="a49" name="extras-email-template.html" target="i">电子邮件模板</a></li>
+                            <li><a href="extras-maintenance.html" id="a50" name="extras-maintenance.html" target="i">维护</a></li>
+                            <li><a href="extras-comingsoon.html" id="a51" name="extras-comingsoon.html" target="i">即将到来的</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <!-- Sidebar -->
+            <div class="clearfix"></div>
+
+        </div>
+
+    </div>
+    <!-- Left Sidebar End -->
