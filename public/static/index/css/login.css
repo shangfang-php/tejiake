@@ -1,0 +1,394 @@
+.bg{
+    background: url('../images/log-bg.png') no-repeat center center;
+    min-height: 100%;
+    height: 100vh;
+   position: relative;
+   padding-bottom: 229px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+/*登录*/
+.login-box{
+    width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    top: 28%;
+  
+}
+.login-right{
+      width: 350px;
+      height: 465px;
+      background-color: rgba(255, 255, 255, 0.9);
+      text-align: center;
+      padding: 25px 25px 10px 25px;
+      box-shadow: 0px 5px 15px #88c3d8;
+   
+}
+.login-right h1{
+  
+  font-weight: normal;
+  padding-top: 30px;
+
+}
+.login-line{
+  border-top: 1px  solid #ccc;
+  margin-top: 35px;
+}
+.login-form{
+  margin-top: 40px;
+}
+.login-form input {
+  width: 297px;
+    height: 42px;
+   
+    display: inline-block;
+    margin-bottom: 20px;
+    padding-left: 35px;
+    font-size: 14px;
+}
+.login-form  .user{
+  position: relative;
+}
+.login-form  .user span{
+  position: absolute;
+    top: 13px;
+    left: 17px;
+}
+
+.login-form  .pwd{
+  position: relative;
+}
+.login-form  .pwd span{
+  position: absolute;
+    top: 10px;
+    left: 22px;
+}
+.login-form  .pwd i{
+  position: absolute;
+    top: 13px;
+    right: 17px;
+    cursor: pointer
+}
+.login-links a{
+  color: #333;
+
+}
+.login-btn {
+   width: 325px;
+    height: 42px;
+    background: #5db8ff;
+    border: none;
+    color: #fff;
+    line-height: 42px;
+    margin-top: 40px;
+    border-radius: 7px;
+}
+.login-member{
+  height: 60px;
+  line-height: 60px;
+      width: 325px;
+    margin: 0 auto;
+}
+.login-member a{
+  color: #e92561
+}
+.login-member input{
+      height: 16px;
+    line-height: 16px;
+    vertical-align: text-bottom;
+}
+
+
+/*注册*/
+.reg-box{
+    width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+  position: relative;
+    top: 29%;
+  
+}
+.reg-right{
+    width: 350px;
+    height: 470px;
+ 
+    background-color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+          padding: 20px 25px 10px 25px;
+      box-shadow: 0px 5px 15px #88c3d8;
+   
+}
+.reg-right h1{
+  
+  font-weight: normal;
+ 
+
+}
+.reg-line{
+  border-top: 1px  solid #ccc;
+  margin-top: 15px;
+}
+.reg-form{
+  margin-top: 30px;
+}
+.reg-form input {
+  width: 297px;
+    height: 42px;
+    line-height: 42px;
+   
+    display: inline-block;
+    margin-bottom: 20px;
+    padding-left: 35px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.reg-form  .mobeil{
+  position: relative;
+}
+.reg-form  .code{
+  position: relative;
+}
+.reg-form  .QQ{
+  position: relative;
+}
+.reg-form  .weixin{
+  position: relative;
+}
+
+.reg-form  .mobeil span{
+  position: absolute;
+    top: 9px;
+    left: 17px;
+}
+.reg-form  .QQ span{
+  position: absolute;
+    top: 10px;
+    left: 17px;
+}
+.reg-form  .weixin span{
+  position: absolute;
+    top: 13px;
+    left: 17px;
+}
+.reg-form  .pwd{
+  position: relative;
+}
+.reg-form  .pwd span{
+  position: absolute;
+    top: 7px;
+    left: 22px;
+}
+.reg-form  .pwd i{
+  position: absolute;
+    top: 13px;
+    right: 17px;
+    cursor: pointer
+}
+.reg-form  .code .reg-code{
+  width: 180px;
+  height: 42px;
+  float: left;
+  margin-left: 10px;
+  padding-left: 16px;
+}
+.reg-form  .code .reg-fcode{
+  width: 100px;
+  height: 42px;
+  float: right;
+  margin-right: 10px;
+  text-align: center;
+  color: #666;
+  padding-left: 0;
+}
+.reg-links a{
+  color: #333;
+
+}
+.reg-form .fuxuan{
+  height: 16px;
+      position: relative;
+    padding: 0 14px;
+    top: 0px;
+}
+.reg-form .fuxuan p{
+  line-height: 16px;
+
+  height: 16px;
+}
+.reg-form .fuxuan input{
+   height: 15px;
+    line-height: 15px;
+    width: 15px;
+     margin-bottom: 0px; 
+         vertical-align: text-bottom;
+         background: #fff;
+}
+.reg-btn {
+   width: 325px;
+    height: 42px;
+    background: #5db8ff;
+    border: none;
+    color: #fff;
+    line-height: 42px;
+    margin-top: 20px;
+    border-radius: 7px;
+}
+.reg-member{
+  height: 60px;
+  line-height: 60px;
+}
+.reg-member a{
+  color: #e92561
+}
+.reg-member input{
+      height: 16px;
+    line-height: 16px;
+    vertical-align: text-bottom;
+}
+
+/*找回密码*/
+.repwd-box{
+    width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+  position: relative;
+    top: 28%;
+  
+}
+.repwd-right{
+    width: 350px;
+    height: 470px;
+ 
+    background-color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+         padding: 20px 25px 10px 25px;
+      box-shadow: 0px 5px 15px #88c3d8;
+   
+}
+.repwd-right h1{
+  
+  font-weight: normal;margin-top: 28px;
+ 
+
+}
+.repwd-line{
+  border-top: 1px  solid #ccc;
+  margin-top: 28px;
+}
+.repwd-form{
+  margin-top: 30px;
+}
+.repwd-form input {
+  width: 297px;
+    height: 42px;
+   
+    display: inline-block;
+    margin-bottom: 20px;
+    padding-left: 35px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.repwd-form  .mobeil{
+  position: relative;
+}
+.repwd-form  .code{
+  position: relative;
+}
+
+.repwd-form  .mobeil span{
+  position: absolute;
+    top: 9px;
+    left: 17px;
+}
+
+.repwd-form  .pwd{
+  position: relative;
+}
+.repwd-form  .pwd span{
+  position: absolute;
+    top: 7px;
+    left: 22px;
+}
+.repwd-form  .pwd i{
+  position: absolute;
+    top: 13px;
+    right: 17px;
+    cursor: pointer
+}
+.repwd-form  .code .repwd-code{
+  width: 180px;
+  height: 42px;
+  float: left;
+  margin-left: 10px;
+  padding-left: 16px;
+}
+.repwd-form  .code .repwd-fcode{
+  width: 100px;
+  height: 42px;
+  float: right;
+  margin-right: 10px;
+  background: #3c9bed;
+  text-align: center;
+  color: #fff;
+  padding-left: 0;
+}
+.repwd-form  .pwd .repwd-pwd{
+  width: 315px;
+  height: 42px;
+  float: left;
+  margin-left: 10px;
+  padding-left: 16px;
+}
+.repwd-links a{
+  color: #333;
+
+}
+.repwd-form .fuxuan{
+  height: 16px;
+      position: relative;
+    padding: 0 14px;
+    top: -10px;
+}
+.repwd-form .fuxuan p{
+  line-height: 16px;
+
+  height: 16px;
+}
+.repwd-form .fuxuan input{
+   height: 15px;
+    line-height: 15px;
+    width: 15px;
+     margin-bottom: 0px; 
+         vertical-align: text-bottom;
+         background: #fff;
+}
+.repwd-btn {
+   width: 325px;
+    height: 42px;
+    background: #5db8ff;
+    border: none;
+    color: #fff;
+    line-height: 42px;
+    margin-top: 15px;
+    border-radius: 7px;
+}
+.repwd-member{
+  height: 60px;
+  line-height: 60px;
+}
+.repwd-member a{
+  color: #e92561
+}
+.repwd-member input{
+      height: 16px;
+    line-height: 16px;
+    vertical-align: text-bottom;
+}
+

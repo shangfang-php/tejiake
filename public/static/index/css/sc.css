@@ -1,0 +1,11 @@
+/* quick_links */
+.mui-mbar-tabs{width:65px; position:fixed;right:13%;bottom:58%; z-index:9;     height: 66px;-webkit-transition:width linear .4s; -moz-transition:width linear .4s;-ms-transition:width linear .4s; transition:width linear .4s;
+ _position:fixed; _bottom:auto; _top:expression(documentElement.scrollTop+documentElement.clientHeight-this.offsetHeight-10);}
+.quick_links_panel{ width:65px;height: 100%;position: absolute;z-index: 2;top: 0;right:0;font-family: 'microsoft yahei',arial;background: url('../images/sccc.png')no-repeat center center;height: 65px;}
+.quick_links_panel a{display: block;line-height: 200px; width:65px;height: 38px;text-decoration: none;color: #d8d8d8;font-size:12px;overflow: hidden;background-color: #444851;position:relative;overflow: hidden;top: 0;left: 0px;*left: -15px;z-index: 1;margin:0;padding:0;}
+.quick_links{z-index: 2; width:65px;    position: relative;
+    top: -72px;}
+.quick_links a.message_list{background: url(../images/ibar_sprites.png) no-repeat;line-height: 16px;height: 66px;background-position: -23px -225px;color: #fff;margin: 72px 0 10px;}
+.quick_links a.message_list .span{width: 16px;display: block;height: 48px;margin: 38px 0 0 14px;cursor: pointer;}
+.quick_links a.message_list .cart_num{width: 30px;height: 30px;display: block;text-align: center;line-height: 21px;margin: 9px 0 0 10px;cursor: pointer;color: #2ce26f;position: relative;top: 14px; right: -8px; font-size: 15px;}
+.fly_item{width:42px; height: 42px; overflow: hidden; position: absolute; visibility: hidden; opacity: .5; filter: alpha(opacity=50);}
