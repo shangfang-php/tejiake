@@ -38,7 +38,43 @@ function getRandTime(){
 
 function pswCrypt($psw){
     $psw = md5($psw);
-    $salt = substr($psw,-1,3);
+    $salt = substr($psw,0,4);
     $psw = crypt($psw,$salt);
     return $psw;
+}
+
+function request_post($url = '', $param = '') {
+    /* if (empty($url) || empty($param)) {
+         return false;
+     }*/
+    if (empty($url) ) {
+        return false;
+    }
+    $postUrl = $url;
+    $curlPost = $param;
+    $ch = curl_init();//初始化curl
+    curl_setopt($ch, CURLOPT_URL,$postUrl);//抓取指定网页
+    curl_setopt($ch, CURLOPT_HEADER, 0);//设置header
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
+    curl_setopt($ch, CURLOPT_POST, 1);//post提交方式
+    curl_setopt($ch, CURLOPT_TIMEOUT,30);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $curlPost);
+    $data = curl_exec($ch);//运行curl
+    curl_close($ch);
+    return $data;
+}
+function request_get($url) {
+    if (empty($url)) {
+        return false;
+    }
+    //初始化
+    $ch = curl_init();
+    //设置选项，包括URL
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    $output = curl_exec($ch);
+    //释放curl句柄
+    curl_close($ch);
+    return $output;
 }

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>
+            登录
+        </title>
+        <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+        <link rel="stylesheet" href="__STATIC__/index/css/login.css">
+    </head>
+    
+    <body>
+        <div class="bg">
+            <div class="login-box">
+                <div class="login-right fr">
+                    <h1 class="f20">
+                        会员登录
+                    </h1>
+                    <div class="login-line">
+                    </div>
+                    <form class="login-form" method="post" action="">
+                        <div class="user">
+                        <span><img src="__STATIC__/index/images/id.png" alt=""></span>
+                            <input type="text" name="username" class="login-name" id="login-name"
+                            placeholder="请输入注册账号">
+                        </div>
+                        <!--暗文密码输入框-->
+                        <div class="pwd" id="pwd1">
+                        <span><img src="__STATIC__/index/images/yaosi.png" alt="" ></span>
+                            <input type="password" name="password" class="login-pwd" id="login-pwd"
+                            placeholder="请输入账号密码">
+                        <i><img src="__STATIC__/index/images/jm.png" alt="" id="jm"></i>
+                        </div>
+                        <!--明文密码输入框-->
+                         <div class="pwd" style="display: none" id="pwd2">
+                        <span><img src="__STATIC__/index/images/yaosi.png" alt=""></span>
+                            <input type="text" name="password" class="login-pwd" id="login-pwd"
+                            placeholder="请输入账号密码">
+                             <i><img src="__STATIC__/index/images/zhenyan.png" alt="" id="zhenyan"></i>
+                        </div>
+                        <div class="login-links fr">
+                            <a href="" class="f12">
+                                忘记密码？
+                            </a>
+                        </div>
+                        <button class="login-btn f20" type="submit">
+                            登录
+                        </button>
+                    </form>
+
+                    <div class="login-member f12">
+                         <p class="fl">&nbsp;&nbsp;<input type="checkbox" name="category" value="下次自动登录" />&nbsp;&nbsp;下次自动登录 </p>   
+                         <p class="fr">还没有账户，<a href="{:url('Login/register')}">注册&nbsp;&nbsp;</a></p>
+
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="__STATIC__/index/js/jquery.1.7.2.min.js"></script>
+    <script type="text/javascript">
+    $("#jm").click(function(){
+  $("#pwd1").hide();
+  $("#pwd2").show();
+});
+
+$("#zhenyan").click(function(){
+  $("#pwd1").show();
+  $("#pwd2").hide();
+});
+
+
+
+
+    </script>
+
+</html>

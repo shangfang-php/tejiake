@@ -26,11 +26,11 @@ class Menu extends Common{
     public function addMenu(){
         if(request()->isPost()){
             $param = array(
-                'name'=>input('post.name'),
-                'parentId'=>input('post.pid'),
-                'url'=>input('post.url'),
-                'icon'=>input('post.icon'),
-                'is_close'=>input('post.is_close'),
+                'name'    => input('post.name'),
+                'parentId'=> input('post.pid'),
+                'url'     => input('post.url'),
+                'icon'    => input('post.icon'),
+                'is_close'=> input('post.is_close'),
             );
             $info1 = Db::name('menu')->where(array('name'=>input('post.name')))->find();
             if(!empty($info1)){
@@ -55,11 +55,11 @@ class Menu extends Common{
         if(request()->isPost()){
             $menuid = input('post.menuid');
             $param = array(
-                'name'=>input('post.name'),
-                'parentId'=>input('post.pid'),
-                'url'=>input('post.url'),
-                'icon'=>input('post.icon'),
-                'is_close'=>input('post.is_close'),
+                'name'    => input('post.name'),
+                'parentId'=> input('post.pid'),
+                'url'     => input('post.url'),
+                'icon'    => input('post.icon'),
+                'is_close'=> input('post.is_close'),
             );
             $info1 = Db::name('menu')->where(array('id'=>$menuid))->find();
             if(empty($info1)){
