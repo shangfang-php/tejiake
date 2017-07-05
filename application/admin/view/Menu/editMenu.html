@@ -1,0 +1,169 @@
+{include file='Public/header' /}
+
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-box">
+                            <div class="dropdown pull-right">
+                                <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="zmdi zmdi-more-vert"></i>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+
+                            <h4 class="header-title m-t-0 m-b-30">修改菜单</h4>
+
+                            <form action="#" data-parsley-validate novalidate>
+                                <div class="form-group">
+                                    <label for="name">菜单名称</label>
+                                    <input type="text" name="name"  required value="{$data.name}" class="form-control" id="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pid">上级菜单</label>
+                                    <div >
+                                        <select class="form-control" name="pid" id="pid">
+                                            {if condition="$data.parentId eq 0"}
+                                            <option value="0" selected>一级菜单</option>
+                                            {else/}
+                                            <option value="0">一级菜单</option>
+                                            {/if}
+                                            {volist name='menulist' id='vo'}
+                                            {if condition="$data.parentId eq $vo['id']"}
+                                            <option value="{$vo.id}" selected>{$vo.name}</option>
+                                            {/if}
+                                            <option value="{$vo.id}">{$vo.name}</option>
+                                            {/volist}
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="url">URL (例：admin/Index/index)</label>
+                                    <input id="url" name="url" type="text" placeholder="输入URL" required class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="icon">icon (例：zmdi-account-add</label>
+                                    <input data-parsley-equalto="#icon" type="text" required
+                                           placeholder="输入icon" class="form-control" id="icon">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">是否正常显示</label>
+                                    <div class="col-sm-12">
+                                        <div class="radio checkbox-pink" >
+                                            <input id="checkbox1" checked type="radio" data-parsley-multiple="groups" data-parsley-mincheck="2" value="0" name="is_close">
+                                            <label for="checkbox1"> 显示 </label>
+                                        </div>
+                                        <div class="radio checkbox-pink" >
+                                            <input id="checkbox2" type="radio" data-parsley-multiple="groups" data-parsley-mincheck="2" value="1" name="is_close">
+                                            <label for="checkbox2"> 隐藏 </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group text-right m-b-0">
+                                    <button class="btn btn-primary waves-effect waves-light" type="button" onclick="check();">
+                                        提交
+                                    </button>
+                                    <button type="reset" class="btn btn-default waves-effect waves-light m-l-5">
+                                        重置
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div><!-- end col -->
+
+                </div>
+                <!-- end row -->
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+        <footer class="footer">
+            2016 © Adminto.
+        </footer>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Right content here -->
+    <!-- ============================================================== -->
+
+
+    <!-- Right Sidebar -->
+
+    <!-- /Right-bar -->
+
+</div>
+<!-- END wrapper -->
+
+
+
+<script>
+    var resizefunc = [];
+</script>
+
+<!-- jQuery  -->
+<script src="__STATIC__/admin/js/jquery.min.js"></script>
+<script src="__STATIC__/admin/js/bootstrap.min.js"></script>
+<script src="__STATIC__/admin/js/detect.js"></script>
+<script src="__STATIC__/admin/js/fastclick.js"></script>
+<script src="__STATIC__/admin/js/jquery.slimscroll.js"></script>
+<script src="__STATIC__/admin/js/jquery.blockUI.js"></script>
+<script src="__STATIC__/admin/js/waves.js"></script>
+<script src="__STATIC__/admin/js/jquery.nicescroll.js"></script>
+<script src="__STATIC__/admin/js/jquery.scrollTo.min.js"></script>
+
+<!-- Validation js (Parsleyjs) -->
+<script type="text/javascript" src="__STATIC__/admin/plugins/parsleyjs/dist/parsley.min.js"></script>
+
+<!-- App js -->
+<script src="__STATIC__/admin/js/jquery.core.js"></script>
+<script src="__STATIC__/admin/js/jquery.app.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('form').parsley();
+    });
+    function check(){
+        var name = $('#name').val();
+        var pid = $('#pid option:selected').val();
+        var url = $('#url').val();
+        var icon = $('#icon').val();
+        var is_close = $('input:radio[name="is_close"]:checked').val();
+        if(name == ''|| icon == ''){
+            alert('数据不可为空');return false;
+        }
+        $.post("{:url('Menu/addMenu')}",{name:name,pid:pid,url:url,icon:icon,is_close:is_close}, function (dat) {
+            var data = JSON.parse(dat);
+            if(data.status == 1){
+                alert(data.msg);
+                window.location.href = data.url;
+            }else{
+                alert(data.msg);return false;
+            }
+        });
+    }
+
+</script>
+
+</body>
+</html>

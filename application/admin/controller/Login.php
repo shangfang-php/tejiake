@@ -20,6 +20,7 @@ class Login extends Controller
                     exit(json_encode(array('status'=>0,'msg'=>'用户名或密码不可为空')));
                 }
                 $password = pswCrypt($psw);
+                //exit(json_encode(array('status'=>0,'msg'=>$password)));
                 $rempsw = input('post.rempsw');
                 $info = Db::name('admin')->where(array('username'=>$username))->find();
                 if(empty($info)){
@@ -36,6 +37,7 @@ class Login extends Controller
                 }
                 exit(json_encode(array('status'=>1,'msg'=>'登录成功'))) ;
             }else{
+
                 return view('index');
             }
         }
@@ -91,5 +93,12 @@ class Login extends Controller
             //Cookie::clear();
         }
         $this->redirect('login/index');
+    }
+
+    public function test(){
+
+        $num = '123456';
+        $num = pswCrypt($num);
+            print_r($_COOKIE);
     }
 }

@@ -28,6 +28,8 @@ class Common extends Controller{
                 }
             }
         }
+        $time = getRandTime();
+        $this->assign('time',$time);
         $this->assign('menulist',$nmenu);
     }
 }
