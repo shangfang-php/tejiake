@@ -35,6 +35,7 @@
                         <!--滑块-->
                         <div class="mkeContentBox">
                           <!--效果html开始-->
+                              <input type='hidden' name='handler_drag' value='0'>
                               <div id="drag">  </div>
                              <script type="text/javascript">
                                  $('#drag').drag();
@@ -101,7 +102,7 @@
                             <p class="fr f12">已有账号 <a href="{:url('Login/index')}" style="color:#2ce26f ">登录</a></p>
                         </div>
 
-                        <button class="reg-btn f20" type="submit">
+                        <button class="reg-btn f20" type="button" id="onsubmit">
                             注册
                         </button>
                     </form>
@@ -175,6 +176,12 @@
                     $("#jm2").attr('src','__STATIC__/index/images/jm.png');
                 }
             });
+
+            $("#onsubmit").click(function(){
+                var handler_drag = $("input[name=handler_drag]").val();//1则为通过
+                alert(handler_drag);
+            });
+
         });
     </script>
    
