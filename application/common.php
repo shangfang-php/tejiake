@@ -90,3 +90,12 @@ function returnAjaxMsg( $code = 200, $msg = '', $arr = array() ){
     }
     return json($data);
 }
+
+/**
+ * 检测手机号格式
+ * @param  [type] $phone [手机号]
+ * @return [type] bool
+ */
+function checkPhone($phone){
+    return preg_match("/^1[3587]\d{9}$/", $phone);
+}

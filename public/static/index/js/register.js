@@ -23,7 +23,9 @@ $(function(){
     	}
 
     	$('#sendCode').removeClass('fasong');
-        $.post("/index/login/send_code",{phone:phone});
+        $.post("/index/login/send_code",{phone:phone},function(msg){
+            alert(msg.msg);
+        },"json");
         var num = 61;
         var timer = setInterval(function(){
             if(num == 1 ||num <1){

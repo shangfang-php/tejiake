@@ -17,6 +17,7 @@ class Login extends Controller{
        return $this->fetch();
     }
 
+    //注册
     public function register(){
         Session::set('isRegister', 1); ##防止脚本提交验证
         return $this->fetch();
@@ -28,22 +29,31 @@ class Login extends Controller{
      */
     public function send_code(){
         $phone      =   trim(input('post.phone'));
-        if(!$phone || !preg_match("/^1[3587]\d{9}$/", $phone)){
-            return false;
+        if(!checkPhone($phone)){
+            return returnAjaxMsg(403, '手机号格式不正确!');
         }
 
+        /** 检测发送时间间隔 */
         $send_time  =   session('send_time');
         $now_time   =   time();
         if($now_time - $send_time < 60){
-            return false;
+            return returnAjaxMsg(402, '请不要频繁点击发送!');
+        }
+
+        $phoneInfo  =   Db::table('user')->field('id')->where(['phone'=>$phone])->find();
+        if($phoneInfo){
+            return returnAjaxMsg(403, '该手机号已注册!');
         }
 
         $rand = rand(100000,999999);
         Session::set('send_time', $now_time); ##保存发送时间
         Session::set('send_code', $rand); ##保存发送内容
-        echo $rand;exit;
-        /*$url = 'http://api.sms.cn/sms/?ac=send&uid=yuyuane2142&pwd=aee44f843c2590e977d717f642571ee5&mobile='.$phone.'&content=手机注册验证码为'.$rand.'，请尽快填写以完成会员注册【特价客】';
-        request_get($url);*/
+
+        include_once("SendTemplateSMS.php");
+        $datas = array($rand,'10分钟');
+        $tempId ="76747";
+        sendTemplateSMS($phone,$datas,$tempId);
+        return returnAjaxMsg(200, '发送成功!');
     }
 
     /**保存滑动验证通过信息
@@ -107,6 +117,53 @@ class Login extends Controller{
             Session::set('taoke_user', data); ##保存登陆session
         }
 
+        return returnAjaxMsg($code, $msg);
+    }
+
+    /**
+     * 登录提交信息
+     * @return [type] [description]
+     */
+    function login_info(){
+        $phone  =   trim(input('post.phone'));
+        $password=  trim(input('post.password'));
+        $isSaveUser=trim(input('post.isSaveUser'));
+
+        if(!$phone){
+            return returnAjaxMsg(501, '请输入手机号');
+        }
+
+        if(!checkPhone($phone)){
+            return returnAjaxMsg(502, '手机号格式不正确');   
+        }
+
+        if(!$password){
+            return returnAjaxMsg(503, '请输入密码');
+        }
+
+        $phoneInfo  =   Db::table('user')->where(array('phone'=>$phone))->find();
+        if(!$phoneInfo){
+            return returnAjaxMsg(504,'用户不存在！');
+        }
+
+        if($phoneInfo['password'] != md5($password)){
+            return returnAjaxMsg(505,'密码错误');
+        }
+
+        $data   =   array(
+                        'login_time'    =>  time(),
+                        'login_ip'      =>  $_SERVER['REMOTE_ADDR'],
+                    );
+        
+        $info   =   Db::table('user')->where(array('id'=>$phoneInfo['id']))->update($data);
+        if($info !== FALSE){
+            Session::set('taoke_user', $phoneInfo);
+            $code = 200;
+            $msg  = '登录成功!';
+        }else{
+            $code = 506;
+            $msg  = '登录失败!';
+        }
         return returnAjaxMsg($code, $msg);
     }
 }
