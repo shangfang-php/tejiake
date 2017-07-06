@@ -252,6 +252,11 @@
     vertical-align: text-bottom;
 }
 
+.fasong{
+  background: #1a99fb;
+  color: #fff!important;
+}
+
 /*找回密码*/
 .repwd-box{
     width: 1200px;

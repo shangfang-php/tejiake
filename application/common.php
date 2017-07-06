@@ -78,3 +78,15 @@ function request_get($url) {
     curl_close($ch);
     return $output;
 }
+
+/**
+ * 返回ajax信息（json格式）
+ * @return [type] [description]
+ */
+function returnAjaxMsg( $code = 200, $msg = '', $arr = array() ){
+    $data   =   array('code'=>$code, 'msg'=>$msg);
+    if(!empty($arr)){
+        $data   =   array_merge($data, $arr);
+    }
+    return json($data);
+}

@@ -10,9 +10,7 @@
         <link rel="stylesheet" href="__STATIC__/index/css/common.css">
         <link rel="stylesheet" href="__STATIC__/index/css/login.css">
         <link rel="stylesheet" href="__STATIC__/index/css/drag.css">
-       <!-- <script type="text/javascript" src="__STATIC__/index/js/jquery.1.7.2.min.js"></script>-->
-        <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-        <script type="text/javascript" src="__STATIC__/index/js/drag.js"></script>
+       
     </head>
     <body>
         <div class="bg">
@@ -35,16 +33,13 @@
                         <!--滑块-->
                         <div class="mkeContentBox">
                           <!--效果html开始-->
-                              <input type='hidden' name='handler_drag' value='0'>
-                              <div id="drag">  </div>
-                             <script type="text/javascript">
-                                 $('#drag').drag();
-                                 </script>
+                              <input type='hidden' id='handler_drag' value='0'>
+                              <div id="drag"></div>
                              <!--效果html结束-->
                        </div>
                          <!--验证码-->
                        <div class="code">
-                          <input type="text" name="username" class="reg-code"  placeholder="输入验证码">
+                          <input type="text" name="username" class="reg-code" id='code'  placeholder="输入验证码">
                            <input type="button"  class="reg-fcode" id="sendCode"  value="发送验证码">
                           <!-- <button><a href="{:url('Login/sendVerify')}">发送验证码bak</a></button>-->
                            <div class="clear">
@@ -64,17 +59,6 @@
                                 <img src="__STATIC__/index/images/jm.png" alt="" id="jm">
                             </i>
                         </div>
-                        <!--明文密码输入框-->
-                      <!--  <div class="pwd" style="display: none" id="pwd2">
-                            <span>
-                                <img src="__STATIC__/index/images/yaosi.png" alt="">
-                            </span>
-                            <input type="text" name="password" class="reg-pwd"  placeholder="密码长度6~20位">
-                            <i>
-                                <img src="__STATIC__/index/images/zhenyan.png" alt="" id="zhenyan">
-                            </i>
-                        </div>-->
-                         <!--第二次输入密码-->
                           <!--暗文密码输入框-->
                         <div class="pwd" id="pwd3">
                             <span>
@@ -85,21 +69,11 @@
                                 <img src="__STATIC__/index/images/jm.png" alt="" id="jm2">
                             </i>
                         </div>
-                        <!--明文密码输入框-->
-                      <!--  <div class="pwd" style="display: none" id="pwd4">
-                            <span>
-                                <img src="__STATIC__/index/images/yaosi.png" alt="">
-                            </span>
-                            <input type="text" name="password" class="reg-pwd"  placeholder="再次输入密码">
-                            <i>
-                                <img src="__STATIC__/index/images/zhenyan.png" alt="" id="zhenyan4">
-                            </i>
-                        </div>-->
 
                          <div class="fuxuan">
                            
-                            <p class="fl f12"><input type="checkbox"   checked="checked">&nbsp;&nbsp;我已阅读并接受<a href="/" style="color: #3c9bed">用户协议</a></p>
-                            <p class="fr f12">已有账号 <a href="{:url('Login/index')}" style="color:#2ce26f ">登录</a></p>
+                            <p class="fl f12"><input type="checkbox" id='isReceive' checked="checked">&nbsp;&nbsp;我已阅读并接受<a href="/" style="color: #3c9bed">用户协议</a></p>
+                            <p class="fr f12">已有账号 <a href="/index/login" style="color:#2ce26f ">登录</a></p>
                         </div>
 
                         <button class="reg-btn f20" type="button" id="onsubmit">
@@ -111,79 +85,9 @@
             </div>
         </div>
     </body>
-        <!--<script type="text/javascript" src="__STATIC__/index/js/jquery.1.7.2.min.js"></script>-->
-    <script type="text/javascript">
-       /* $("#jm").click(function(){
-          $("#pwd1").hide();
-          $("#pwd2").show();
-        });
-        $("#zhenyan").click(function(){
-          $("#pwd1").show();
-          $("#pwd2").hide();
-        });*/
-       /* $("#jm3").click(function(){
-          $("#pwd3").hide();
-          $("#pwd4").show();
-        });
-        $("#zhenyan4").click(function(){
-          $("#pwd3").show();
-          $("#pwd4").hide();
-        });*/
-        
-        //发送验证码
-        $(function () {
-            $("#sendCode").click(function () {
-                var tim =  $("#sendCode").val();
-                if(tim >1){
-                    alert('请稍后再重新发送');return false;
-                }//else{
-                    $.get("{:url('Login/sendVerify')}",function(){return true;});
-                    var num = 61;
-                    var timer = setInterval(function(){
-                        if(num == 1 ||num <1){
-                            $("#sendCode").val('重新发送');
-                            clearInterval(timer);
-                        }else{
-                            num--;
-                            $("#sendCode").val(num);
-                            //alert(typeof tim);
-                        }
-                    },1000);
-               // }
-                //发送验证码
-
-            });
-
-            $("#jm").click(function () {
-                //toggle();
-                var inputtype = $("#reg-pwd").attr('type');
-                if(inputtype == "password"){
-                    $("#reg-pwd").attr('type','text');
-                    $("#jm").attr('src','__STATIC__/index/images/zhenyan.png');
-                }else{
-                    $("#reg-pwd").attr('type','password');
-                    $("#jm").attr('src','__STATIC__/index/images/jm.png');
-                }
-            });
-            $("#jm2").click(function () {
-                //toggle();
-                var inputtype = $("#reg-pwd2").attr('type');
-                if(inputtype == "password"){
-                    $("#reg-pwd2").attr('type','text');
-                    $("#jm2").attr('src','__STATIC__/index/images/zhenyan.png');
-                }else{
-                    $("#reg-pwd2").attr('type','password');
-                    $("#jm2").attr('src','__STATIC__/index/images/jm.png');
-                }
-            });
-
-            $("#onsubmit").click(function(){
-                var handler_drag = $("input[name=handler_drag]").val();//1则为通过
-                alert(handler_drag);
-            });
-
-        });
-    </script>
-   
-
+    
+    <!--<script src="__STATIC__/index/js/jquery.1.7.2.min.js"></script>-->
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/index/js/drag.js?v=1.01"></script>
+    <script type="text/javascript" src="__STATIC__/index/js/register.js?v=1.0"></script>
 </html>
