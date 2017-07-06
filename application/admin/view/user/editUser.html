@@ -1,0 +1,225 @@
+{include file='Public/header' /}
+
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-box">
+                            <div class="dropdown pull-right">
+                                <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="zmdi zmdi-more-vert"></i>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+
+                            <h4 class="header-title m-t-0 m-b-30">修改用户</h4>
+
+                            <form action="{:url('User/addUser')}" data-parsley-validate  method="post">
+                                <div class="form-group">
+                                    <label for="name">用户名</label>
+                                    <input type="text" name="username" parsley-trigger="change" required placeholder="输入用户名"  class="form-control" id="name" value="{$data.username}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">登录密码</label>
+                                    <input type="password" name="password" parsley-trigger="change" required placeholder="******"  class="form-control" id="name">
+                                </div>
+                                <div class="form-group ">
+                                    <label >权限菜单</label>
+                                    {volist name="menulist" id="vo"}
+                                    {if condition="!empty($vo['cmenu']) eq true"}
+                                    <div class="col-sm-12" style="margin: 5px 0 0 0;">
+                                        <div style="background: #eeeeee;border: 1px solid #eeeee;" >
+                                           <input name="menu[]" class="a{$vo.id}" value="{$vo.id}"  type="checkbox" data-parsley-multiple="group1" onclick="getAll(this);" {if condition="in_array($vo['id'],$menu)"}checked{/if} > <label  >{$vo.name}</label>
+                                        </div>
+                                        <ul class="a{$vo.id}" style="padding-left: 20px ; list-style: none;">
+                                            {volist name="vo.cmenu" id="vv"}
+                                            <li style="float: left;margin-right: 20px;">
+                                                <input  type="checkbox" onclick="getParent(this);"  name="menu[]"  data-parsley-multiple="group1" value="{$vv.id}" {if condition="in_array($vv['id'],$menu)"}checked{/if}>
+                                                <label > {$vv.name} </label>
+                                            </li>
+                                            {/volist}
+                                        </ul>
+                                    </div>
+                                    {else/}
+                                    <div class="col-sm-12 " style="margin: 5px 0 0 0;">
+                                        <div style="background: #eeeeee;" >
+                                            <input name="menu[]" class="a{$vo.id}" value="{$vo.id}"  type="checkbox" data-parsley-multiple="group1" onclick="getAll(this);" {if condition="in_array($vo['id'],$menu)"}checked{/if}> <label  >{$vo.name}</label>
+                                        </div>
+                                    </div>
+                                    {/if}
+                                    {/volist}
+
+                                    <script>
+                                        //一级获取二级所有元素
+                                        function getAll(obj){
+                                            var classval = $(obj).attr('class');
+                                            var liobj = $('.'+classval).children('li');
+                                            for (var i = 0; i < liobj.length; i++) {
+                                                if ($(obj).is(':checked')) {
+                                                    $(liobj[i]).children('input').prop("checked", 'true');
+                                                    //$(liobj[i]).children('input').attr("checked", 'true');
+                                                } else {
+                                                    $(liobj[i]).children('input').removeAttr("checked");
+                                                }
+                                            }
+                                            //obj.is(:checked) = true;
+                                        }
+                                        //二级获取一级元素
+                                        function getParent(obj){
+                                            var ulobj = $(obj).parent().parent();
+                                            var classval = ulobj.attr('class');
+                                            if($(obj).is(':checked')){
+                                                //alert($('.'+classval).val());
+                                                $('.'+classval).prop("checked",'true');
+                                            }else{
+                                                //判断当前ul下的input是否全部未选中，是则将一级的CheckBox设为FALSE
+                                                var liobj = ulobj.children('li');
+                                                var num = 0;
+                                                for (var i = 0; i < liobj.length; i++) {
+                                                    if ($(liobj[i]).children('input').is(':checked')) {
+                                                        //$(liobj[i]).children('input').prop("checked", 'true');
+                                                        num++;
+                                                    }
+                                                }
+                                                if(num==0){
+                                                    $('.'+classval).removeAttr("checked");
+                                                }
+                                            }
+                                            // var parentobj = $('.'+classval).prop("checked", 'true');
+                                            //alert(classval.attr('class'));
+                                        }
+                                    </script>
+                                </div>
+                                <div class="form-group">
+                                    <label >是否正常显示</label>
+                                    <div class="col-sm-12">
+                                        <div class=" checkbox-pink" >
+                                            <input id="radio1" {if condition="$data.status eq 1"}checked{/if} type="radio" data-parsley-multiple="groups" data-parsley-mincheck="1" value="1" name="status">
+                                            <label for="radio1"> 正常 </label>
+                                        </div>
+                                        <div class=" checkbox-pink" >
+                                            <input id="radio2" type="radio" data-parsley-multiple="groups" data-parsley-mincheck="1" value="0" {if condition="$data.status eq 0"}checked{/if} name="status">
+                                            <label for="radio2"> 禁用 </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group text-right m-b-0">
+                                    <button class="btn btn-primary waves-effect waves-light" type="button" onclick="check();">
+                                        <input type="hidden" name="id" value="{$data.id}">
+                                        提交
+                                    </button>
+                                    <button type="reset" class="btn btn-default waves-effect waves-light m-l-5">
+                                        重置
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div><!-- end col -->
+
+                </div>
+                <!-- end row -->
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+        <footer class="footer">
+            2016 © Adminto.
+        </footer>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Right content here -->
+    <!-- ============================================================== -->
+
+
+    <!-- Right Sidebar -->
+
+    <!-- /Right-bar -->
+
+</div>
+<!-- END wrapper -->
+
+
+
+<script>
+    var resizefunc = [];
+</script>
+
+<!-- jQuery  -->
+<script src="__STATIC__/admin/js/jquery.min.js"></script>
+<script src="__STATIC__/admin/js/bootstrap.min.js"></script>
+<script src="__STATIC__/admin/js/detect.js"></script>
+<script src="__STATIC__/admin/js/fastclick.js"></script>
+<script src="__STATIC__/admin/js/jquery.slimscroll.js"></script>
+<script src="__STATIC__/admin/js/jquery.blockUI.js"></script>
+<script src="__STATIC__/admin/js/waves.js"></script>
+<script src="__STATIC__/admin/js/jquery.nicescroll.js"></script>
+<script src="__STATIC__/admin/js/jquery.scrollTo.min.js"></script>
+
+<!-- Validation js (Parsleyjs) -->
+<script type="text/javascript" src="__STATIC__/admin/plugins/parsleyjs/dist/parsley.min.js"></script>
+
+<!-- App js -->
+<script src="__STATIC__/admin/js/jquery.core.js"></script>
+<script src="__STATIC__/admin/js/jquery.app.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('form').parsley();
+    });
+
+    function check(){
+       // alert(22);
+        //获取数组
+        var menus = $('input[type=checkbox]:checked');
+        if(menus.length == 0){
+            alert('请为当前用户添加菜单');return false;
+        }
+        var myarrs = new Array();
+        //alert(menus.length);
+        for (var i = 0; i < menus.length; i++) {
+            //alert(menus[i].value);
+           // alert(menus[i]);
+            myarrs[i] = menus[i].value;
+        }
+        //alert(typeof myarrs);
+        var username = $('input[name=username]').val();
+        var password = $('input[name=password]').val();
+        var id = $('input[name=id]').val();
+        var status = $('input[name=status]:checked').val();
+        //alert(status);
+        $.post("{:url('User/editUser')}",{id:id,username:username,password:password,status:status,menu:myarrs}, function (dat) {
+            var data = JSON.parse(dat);
+            alert(data.msg);
+            if(data.status == 1) {
+                //成功 跳转到用户列表
+                window.location.href = "{:url('User/index')}";
+            }
+            return false;
+        });
+
+    }
+
+
+</script>
+
+</body>
+</html>

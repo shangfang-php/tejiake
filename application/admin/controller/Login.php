@@ -11,7 +11,7 @@ class Login extends Controller
     public function index()
     {
         if(Session::get('admin_user')){
-            $this->redirect('index/index');
+            $this->redirect('Index/index');
         }else{
             if(request()->isPost()){
                 $username = input('post.username');
@@ -37,7 +37,6 @@ class Login extends Controller
                 }
                 exit(json_encode(array('status'=>1,'msg'=>'登录成功'))) ;
             }else{
-
                 return view('index');
             }
         }
@@ -99,6 +98,10 @@ class Login extends Controller
 
         $num = '123456';
         $num = pswCrypt($num);
-            print_r($_COOKIE);
+            //print_r($_COOKIE);
+
+        $user_IP = ($_SERVER["HTTP_VIA"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : $_SERVER["REMOTE_ADDR"];
+        $user_IP = ($user_IP) ? $user_IP : $_SERVER["REMOTE_ADDR"];
+        echo $user_IP;
     }
 }
