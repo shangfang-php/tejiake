@@ -78,3 +78,24 @@ function request_get($url) {
     curl_close($ch);
     return $output;
 }
+
+/**
+ * 返回ajax信息（json格式）
+ * @return [type] [description]
+ */
+function returnAjaxMsg( $code = 200, $msg = '', $arr = array() ){
+    $data   =   array('code'=>$code, 'msg'=>$msg);
+    if(!empty($arr)){
+        $data   =   array_merge($data, $arr);
+    }
+    return json($data);
+}
+
+/**
+ * 检测手机号格式
+ * @param  [type] $phone [手机号]
+ * @return [type] bool
+ */
+function checkPhone($phone){
+    return preg_match("/^1[3587]\d{9}$/", $phone);
+}

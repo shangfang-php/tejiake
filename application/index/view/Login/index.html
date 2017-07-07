@@ -33,48 +33,25 @@
                             placeholder="请输入账号密码">
                         <i><img src="__STATIC__/index/images/jm.png" alt="" id="jm"></i>
                         </div>
-                        <!--明文密码输入框-->
-                         <div class="pwd" style="display: none" id="pwd2">
-                        <span><img src="__STATIC__/index/images/yaosi.png" alt=""></span>
-                            <input type="text" name="password" class="login-pwd" id="login-pwd"
-                            placeholder="请输入账号密码">
-                             <i><img src="__STATIC__/index/images/zhenyan.png" alt="" id="zhenyan"></i>
-                        </div>
-                        <div class="login-links fr">
+                        
+                        <!--<div class="login-links fr">
                             <a href="" class="f12">
                                 忘记密码？
                             </a>
-                        </div>
-                        <button class="login-btn f20" type="submit">
+                        </div>-->
+                        <button class="login-btn f20" type="button" onclick="submitInfo()">
                             登录
                         </button>
                     </form>
 
                     <div class="login-member f12">
-                         <p class="fl">&nbsp;&nbsp;<input type="checkbox" name="category" value="下次自动登录" />&nbsp;&nbsp;下次自动登录 </p>   
-                         <p class="fr">还没有账户，<a href="{:url('Login/register')}">注册&nbsp;&nbsp;</a></p>
-
-                      
+                         <p class="fl">&nbsp;&nbsp;<input type="checkbox" checked="true" id="saveUser" value="下次自动登录" />&nbsp;&nbsp;下次自动登录 </p>
+                         <p class="fr">还没有账户，<a href="/register">注册&nbsp;&nbsp;</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </body>
-    <script type="text/javascript" src="__STATIC__/index/js/jquery.1.7.2.min.js"></script>
-    <script type="text/javascript">
-    $("#jm").click(function(){
-  $("#pwd1").hide();
-  $("#pwd2").show();
-});
-
-$("#zhenyan").click(function(){
-  $("#pwd1").show();
-  $("#pwd2").hide();
-});
-
-
-
-
-    </script>
-
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/index/js/login.js?v=1.0.1"></script>
 </html>

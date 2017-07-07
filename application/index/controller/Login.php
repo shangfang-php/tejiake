@@ -1,60 +1,169 @@
 <?php
 namespace app\index\controller;
 use think\Controller;
-use think\Db;
 use think\Session;
+use think\Db;
+/**
+ * 登录类
+ */
 class Login extends Controller{
-    //登录
-    public function index(){
-        if(request()->post()){
+    public $validate = '';
 
-        }else{
-            return $this->fetch();
-        }
+    public function _initialize(){
+        $this->validate = \think\Loader::validate('User');
+    }
+
+    public function index(){
+       return $this->fetch();
     }
 
     //注册
     public function register(){
-        if(request()->post()){
-            $phone = input('post.phone');
-            $code = input('post.code');
-            $sess_code = Session::get('phone_code');
-            if($code != $sess_code){
-                exit(json_encode(array('status'=>0,'msg'=>'验证码不正确')));
-            }
-            $psw = input('post.psw');
-            $confirmpsw = input('post.confirmpsw');
-            if($confirmpsw != $psw){
-                exit(json_encode(array('status'=>0,'msg'=>'2次密码填写不一致')));
-            }
-            $param = array(
-                'phone'=>$phone,
-                'password'=>$psw,
-                'create_time'=>time()
-            );
-            $res = Db::name('user')->insert($param);
-            if($res){
-                exit(json_encode(array('status'=>1,'msg'=>'注册成功')));
-            }else{
-                exit(json_encode(array('status'=>0,'msg'=>'注册失败')));
-            }
-        }else{
-            return $this->fetch();
+        Session::set('isRegister', 1); ##防止脚本提交验证
+        return $this->fetch();
+    }
+
+    /**
+     * 发送手机验证码
+     * @return [type] [description]
+     */
+    public function send_code(){
+        $phone      =   trim(input('post.phone'));
+        if(!checkPhone($phone)){
+            return returnAjaxMsg(403, '手机号格式不正确!');
+        }
+
+        /** 检测发送时间间隔 */
+        $send_time  =   session('send_time');
+        $now_time   =   time();
+        if($now_time - $send_time < 60){
+            return returnAjaxMsg(402, '请不要频繁点击发送!');
+        }
+
+        $phoneInfo  =   Db::table('user')->field('id')->where(['phone'=>$phone])->find();
+        if($phoneInfo){
+            return returnAjaxMsg(403, '该手机号已注册!');
+        }
+
+        $rand = rand(100000,999999);
+        Session::set('send_time', $now_time); ##保存发送时间
+        Session::set('send_code', $rand); ##保存发送内容
+
+        include_once("SendTemplateSMS.php");
+        $datas = array($rand,'10分钟');
+        $tempId ="76747";
+        sendTemplateSMS($phone,$datas,$tempId);
+        return returnAjaxMsg(200, '发送成功!');
+    }
+
+    /**保存滑动验证通过信息
+     * @author Gary
+     * @return [type] [description]
+     */
+    function check_drag(){
+        if(session('isRegister')){
+            Session::set('check_drag', 1); ##滑动验证码通过
         }
     }
 
-    //发送手机验证码
-    public function sendVerify(){
-        $rand = rand(1000,9999);
-        $phone = input('get.phone');
-        $info = Db::name('user')->where(array('phone'=>$phone))->find();
-        if(!empty($info)){
-            exit(json_encode(array('status'=>0,'msg'=>'当前手机已注册，请更换手机号码')));
+    /**
+     * 注册提交验证
+     * @return [type] [description]
+     */
+    function register_info(){
+        $isRegister =   session('isRegister');
+        $check_drag =   session('check_drag');
+        if(!$isRegister || !$check_drag){
+            return returnAjaxMsg(300,'非法操作');
         }
-        Session::set('phone_code',$rand);
-        $url = 'http://api.sms.cn/sms/?ac=send&uid=yuyuane2142&pwd=aee44f843c2590e977d717f642571ee5&mobile='.$phone
-.'&content=手机注册验证码为'.$rand.'，请尽快填写以完成会员注册【Jane小憩Place】';
-        request_get($url);
 
+        $session_code   =   session('send_code');
+        $code           =   trim(input('post.code'));
+        if(!$code || $code != $session_code){
+            return returnAjaxMsg(301, '手机验证码不正确');
+        }
+
+        $data   =   array(
+                        'phone'     =>  trim(input('post.phone')),
+                        'password'  =>  trim(input('post.password')),
+                        'password1' =>  trim(input('post.password1')),
+                    );
+
+        $checkValidata  =   $this->validate->check($data); ##通过验证器验证信息
+        if(!$checkValidata){
+            return returnAjaxMsg(302, $this->validate->getError() );
+        }
+
+        unset($data['password1']);
+        $data['password']   =   md5($data['password']);
+        $data['login_time'] =   time();
+        $data['create_time']=   time();
+        $data['login_ip']   =   $_SERVER['REMOTE_ADDR'];
+
+        $insert_id  =   Db::table('user')->insertGetId($data);
+        if($info === FALSE){
+            $code = 303;
+            $msg  = '注册失败!';
+        }else{
+            $code = '200';
+            $msg  = '注册成功!';
+            $data['id'] =   $insert_id;
+
+            /** 清除session */
+            Session::delete('send_code');
+            Session::delete('isRegister');
+            Session::delete('check_drag');
+
+            Session::set('taoke_user', data); ##保存登陆session
+        }
+
+        return returnAjaxMsg($code, $msg);
+    }
+
+    /**
+     * 登录提交信息
+     * @return [type] [description]
+     */
+    function login_info(){
+        $phone  =   trim(input('post.phone'));
+        $password=  trim(input('post.password'));
+        $isSaveUser=trim(input('post.isSaveUser'));
+
+        if(!$phone){
+            return returnAjaxMsg(501, '请输入手机号');
+        }
+
+        if(!checkPhone($phone)){
+            return returnAjaxMsg(502, '手机号格式不正确');   
+        }
+
+        if(!$password){
+            return returnAjaxMsg(503, '请输入密码');
+        }
+
+        $phoneInfo  =   Db::table('user')->where(array('phone'=>$phone))->find();
+        if(!$phoneInfo){
+            return returnAjaxMsg(504,'用户不存在！');
+        }
+
+        if($phoneInfo['password'] != md5($password)){
+            return returnAjaxMsg(505,'密码错误');
+        }
+
+        $data   =   array(
+                        'login_time'    =>  time(),
+                        'login_ip'      =>  $_SERVER['REMOTE_ADDR'],
+                    );
+        
+        $info   =   Db::table('user')->where(array('id'=>$phoneInfo['id']))->update($data);
+        if($info !== FALSE){
+            Session::set('taoke_user', $phoneInfo);
+            $code = 200;
+            $msg  = '登录成功!';
+        }else{
+            $code = 506;
+            $msg  = '登录失败!';
+        }
+        return returnAjaxMsg($code, $msg);
     }
 }

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>
+            首页
+        </title>
+        <link rel="stylesheet" href="/static/index/css/common.css">
+        <link rel="stylesheet" type="text/css" href="/static/index/css/index.css">
+        <link rel="stylesheet" href="/static/index/css/sc.css">
+    </head>
+    
+    <body style="background: #f6f6f6;min-width: 1400px;width: 100%;">
+        <header id="header" class="">
+            <div class="head-mid">
+                <div class="content white">
+                    <div class="logo">
+                        <a href="/">
+                            <img src="/static/index/images/logo.png" alt="特价客">
+                        </a>
+                    </div>
+                    <div class="search">
+                        <div class="search-input">
+                            <input type="text" value="请输入商品关键字或者商品ID" onblur="if(value=='') {value='请输入商品关键字或者商品ID'}" onFocus="if(value=='请输入商品关键字或者商品ID'){value=''}"#ED1C24">
+                            <span>
+                                <img src="/static/index/images/shousuo.png" alt="">
+                            </sp an>
+                        </div>
+                    </div>
+                    <div class="admin">
+                        {if $login_user}
+                            <!--登录成功之后-->
+                            <div class="admin-ming">
+                                  <span class="fr baiid" ><img src="/static/index/images/baiid.png" alt="" ></span>
+                                  <span class="fl f12 ming" ><a href="" >{$login_user.phone}</a></span>
+                            </div>
+                        {else}
+                            <div class="admin-me" >
+                                <a href="/register"><div class="reg">注册</div></a>
+                                <a href="/index/login"> <div class="log">登录</div></a>
+                            </div>
+                        {/if}
+                        
+                        
+                    </div>
+                    <div style="clear: both">
+                    </div>
+                </div>
+            </div>
+            <div class="head-nav">
+                <nav>
+                    <ul>
+                        <li class="bkd yuan" >
+                            <a href="index.html">
+                                <img src="/static/index/images/baok.png" alt="">
+                                <div class="nav-dec">
+                                    <strong>
+                                        爆款单
+                                    </strong>
+                                    <p>
+                                        单日已领3000券
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="xsqg">
+                            <a  title="" href="flashSale.html">
+                                <img src="/static/index/images/xs.png" alt="">
+                                <div class="nav-dec">
+                                    <strong>
+                                        限时抢购
+                                    </strong>
+                                    <p>
+                                        聚划算、淘抢购
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="zbd">
+                            <a title="" href="live.html">
+                                <img src="/static/index/images/zb.png" alt="">
+                                <div class="nav-dec">
+                                    <strong>
+                                        直播单
+                                    </strong>
+                                    <p>
+                                        直播预告产品
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="spd">
+                            <a  title=""  href="video.html">
+                                <img src="/static/index/images/sp.png" alt="">
+                                <div class="nav-dec">
+                                    <strong>
+                                        视频单
+                                    </strong>
+                                    <p>
+                                        产品里面有视频
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="gyd">
+                            <a  title="" href="night.html">
+                                <img src="/static/index/images/yuel.png" alt="">
+                                <div class="nav-dec">
+                                    <strong>
+                                        过夜单
+                                    </strong>
+                                    <p>
+                                        每天0点抢购
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
+                        <div style="clear: both">
+                        </div>
+                    </ul>
+                </nav>
+            </div>
+        </header>
