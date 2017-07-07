@@ -1,0 +1,204 @@
+{include file='Public/header' /}
+
+
+<!-- ============================================================== -->
+<!-- Start right Content here -->
+<!-- ============================================================== -->
+<div class="content-page">
+    <!-- Start content -->
+    <div class="content">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-box">
+                        <div class="dropdown pull-right">
+                            <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                                <i class="zmdi zmdi-more-vert"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </div>
+
+                        <h4 class="header-title m-t-0 m-b-30">修改用户积分</h4>
+
+                        <form action="{:url('User/addUser')}" data-parsley-validate  method="post">
+                            <div class="form-group">
+                                <label for="phone">用户手机</label>
+                                <input type="text" name="phone" parsley-trigger="change" required placeholder="输入用户名"  class="form-control" id="phone" value="{$data.phone}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="oldscore">总积分</label>
+                                <input type="text" parsley-trigger="change" required placeholder="输入用户名"  class="form-control" id="oldscore"  value="{$data.score}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label >积分操作类型</label>
+                                <div class="col-sm-12">
+                                    <ul style=" list-style: none;">
+                                        {volist name='type' id='v'}
+                                        {if condition="$key gt 2"}
+                                        <li class="checkbox-pink" style="float: left;padding-right: 20px ;">
+                                            <input checked type="radio" data-parsley-multiple="groups" data-parsley-mincheck="1" value="{$key}" name="type">
+                                            <label > {$v} </label>
+                                        </li>
+                                        {/if}
+                                        {/volist}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="score">积分</label>
+                                <input type="text" name="score" parsley-trigger="change" required placeholder="输入积分"  class="form-control" id="score">
+                            </div>
+                            <div class="form-group">
+                                <label for="remark">备注</label>
+                                <input type="text" name="remark" parsley-trigger="change"  placeholder="输入备注"  class="form-control" id="remark">
+                            </div>
+                            <div class="form-group text-right m-b-0">
+                                <button class="btn btn-primary waves-effect waves-light" type="button" onclick="check();">
+                                    <input type="hidden" name="uid" value="{$data.id}" id="uid">
+                                    提交
+                                </button>
+                                <button type="reset" class="btn btn-default waves-effect waves-light m-l-5">
+                                    重置
+                                </button>
+                            </div>
+
+                        </form>
+
+                        <!--当前用户的积分修改记录-->
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <!--<th>昵称</th>-->
+                                    <th>手机号</th>
+                                    <th>变更积分</th>
+                                    <th>操作类型</th>
+                                    <th>变更时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name='list' id='vo' key="key"}
+                                <tr>
+                                    <th scope="row">{$key}</th>
+                                    <!--<td>{$data.nick_name}</td>-->
+                                    <td>{$data.phone}</td>
+                                    <td>{$vo.score}分</td>
+                                    <td>{$type[$vo.type]}</td>
+                                    <td>{$vo.time|date='Y-m-d H:i:s',###}</td>
+                                    <td>
+                                        {if condition="$vo['is_delete'] eq 1"}
+                                        <a href="javascript:;" class="btn btn-warning">已删除</a>
+                                        {else/}
+                                            <a href="javascript:void();" onclick="delScore({$vo.id})"  class="btn btn-primary">删除</a>
+                                        {/if}
+
+                                    </td>
+                                </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div><!-- end col -->
+
+            </div>
+            <!-- end row -->
+
+        </div> <!-- container -->
+
+    </div> <!-- content -->
+
+    <footer class="footer">
+        2016 © Adminto.
+    </footer>
+
+</div>
+
+
+<!-- ============================================================== -->
+<!-- End Right content here -->
+<!-- ============================================================== -->
+
+
+<!-- Right Sidebar -->
+
+<!-- /Right-bar -->
+
+</div>
+<!-- END wrapper -->
+
+
+
+<script>
+    var resizefunc = [];
+</script>
+
+<!-- jQuery  -->
+<script src="__STATIC__/admin/js/jquery.min.js"></script>
+<script src="__STATIC__/admin/js/bootstrap.min.js"></script>
+<script src="__STATIC__/admin/js/detect.js"></script>
+<script src="__STATIC__/admin/js/fastclick.js"></script>
+<script src="__STATIC__/admin/js/jquery.slimscroll.js"></script>
+<script src="__STATIC__/admin/js/jquery.blockUI.js"></script>
+<script src="__STATIC__/admin/js/waves.js"></script>
+<script src="__STATIC__/admin/js/jquery.nicescroll.js"></script>
+<script src="__STATIC__/admin/js/jquery.scrollTo.min.js"></script>
+
+<!-- Validation js (Parsleyjs) -->
+<script type="text/javascript" src="__STATIC__/admin/plugins/parsleyjs/dist/parsley.min.js"></script>
+
+<!-- App js -->
+<script src="__STATIC__/admin/js/jquery.core.js"></script>
+<script src="__STATIC__/admin/js/jquery.app.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('form').parsley();
+    });
+
+    function delScore(param){
+        $.get("{:url('User/delScore')}",{rid:param}, function (dat) {
+            var data = JSON.parse(dat);
+            alert(data.msg);
+            if(data.status == 1){
+                window.location.href = window.location.href;
+            }
+            return false;
+        });
+    }
+
+    function check(){
+        // alert(22);
+        //获取数组
+        var type = $('input[type=radio]:checked').val();
+        //alert(type);
+        var score = $('input[name=score]').val();
+        var remark = $('input[name=remark]').val();
+        var uid = $('input[name=uid]').val();
+        //alert(uid);return false;
+        $.post("{:url('User/editScore')}",{uid:uid,remark:remark,score:score,type:type}, function (dat) {
+            var data = JSON.parse(dat);
+            alert(data.msg);
+            if(data.status == 1) {
+                //成功 跳转到用户列表
+                window.location.href = window.location.href;
+            }
+            return false;
+        });
+
+    }
+
+
+</script>
+
+</body>
+</html>

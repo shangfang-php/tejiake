@@ -13,7 +13,7 @@
                                     <a href="{:url('Menu/addMenu')}" class="card-drop">添加用户</a>
                             </div>-->
 
-                            <h4 class="header-title m-t-0 m-b-30">用户列表</h4>
+                            <h4 class="header-title m-t-0 m-b-30">管理员列表</h4>
 
                             <p class="text-muted font-13 m-b-25">
 
@@ -24,16 +24,8 @@
                                     <thead>
                                     <tr>
                                         <th>序号</th>
-                                        <th>昵称</th>
-                                        <th>手机号</th>
-                                        <th>QQ</th>
-                                        <th>微信</th>
-                                        <th>淘宝类型</th>
-                                        <th>余额</th>
-                                        <th>积分</th>
-                                        <th>创建时间</th>
-                                        <th>最后登录时间</th>
-                                        <th>最后登录IP</th>
+                                        <th>名称</th>
+                                        <th>权限</th>
                                         <th>状态</th>
                                         <th>操作</th>
                                     </tr>
@@ -42,21 +34,11 @@
                                     {volist name='data' id='vo' key="key"}
                                     <tr>
                                         <th scope="row">{$key}</th>
-                                        <td>{$vo.nick_name}</td>
-                                        <td>{$vo.phone}</td>
-                                        <td>{$vo.qq}</td>
-                                        <td>{$vo.wechat}</td>
-                                        <td>{if condition="$vo['type'] eq 1"}普通淘客{else/}招商淘客{/if}</td>
-                                        <td>{$vo.balance}</td>
-                                        <td>{$vo.score}</td>
-                                        <td>{$vo.create_time|date='Y-m-d H:i:s',###}</td>
-                                        <td>{$vo.login_time|date='Y-m-d H:i:s',###}</td>
-                                        <td>{$vo.login_ip}</td>
+                                        <td>{$vo.username}</td>
+                                        <td>{$vo.menu}</td>
+                                        <td>{if condition="$vo['status'] eq 1"}正常{else/}禁用{/if}</td>
                                         <td>
-                                            <a href="javascript:void();" onclick="editStatus({$vo['id']});" class="btn btn-inverse">{if condition="$vo['status'] eq 1"} 正常  {else/} 封禁{/if} </a>
-
-                                        <td>
-                                            <a href="{:url('User/editScore',array('uid'=>$vo['id']))}"  class="btn btn-primary">积分操作</a>
+                                            <a href="{:url('Admin/editAdmin',array('adminid'=>$vo['id']))}"  class="btn btn-primary">编辑</a>
                                         </td>
                                     </tr>
                                     {/volist}
@@ -108,11 +90,9 @@
 <script src="__STATIC__/admin/js/jquery.core.js"></script>
 <script src="__STATIC__/admin/js/jquery.app.js"></script>
 <script type="text/javascript">
-    function editStatus(param){
-        //alert(param);
-        $.get("{:url('User/editStatus')}",{uid:param}, function (dat) {
+    function hideMenu(param){
+        $.get("{:url('Menu/hideMenu')}",{menuid:param}, function (dat) {
             var data = JSON.parse(dat);
-            //alert(dat);
             if(data.status == 1){
                 alert(data.msg);
                 window.location.href = window.location.href;
@@ -122,7 +102,17 @@
         });
     }
 
-
+    function delMenu(param){
+        $.get("{:url('Menu/delMenu')}",{menuid:param}, function (dat) {
+            var data = JSON.parse(dat);
+            if(data.status == 1){
+                alert(data.msg);
+                window.location.href = window.location.href;
+            }else{
+                alert(data.msg);return false;
+            }
+        });
+    }
 
 </script>
 </body>

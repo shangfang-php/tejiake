@@ -25,11 +25,11 @@
                                 </ul>
                             </div>
 
-                            <h4 class="header-title m-t-0 m-b-30">添加用户</h4>
+                            <h4 class="header-title m-t-0 m-b-30">添加管理员</h4>
 
                             <form action="{:url('User/addUser')}" data-parsley-validate  method="post">
                                 <div class="form-group">
-                                    <label for="name">用户名</label>
+                                    <label for="name">管理员名称</label>
                                     <input type="text" name="username" parsley-trigger="change" required
                                            placeholder="输入用户名"  class="form-control" id="name">
                                 </div>
@@ -234,12 +234,12 @@
         var password = $('input[name=password]').val();
         var status = $('input[name=status]:checked').val();
         //alert(status);
-        $.post("{:url('User/addUser')}",{username:username,password:password,status:status,menu:myarrs}, function (dat) {
+        $.post("{:url('Admin/addAdmin')}",{username:username,password:password,status:status,menu:myarrs}, function (dat) {
             var data = JSON.parse(dat);
             alert(data.msg);
             if(data.status == 1) {
                 //成功 跳转到用户列表
-                window.location.href = "{:url('User/index')}";
+                window.location.href = "{:url('Admin/index')}";
             }
             return false;
         });
