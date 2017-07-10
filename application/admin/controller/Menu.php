@@ -32,7 +32,11 @@ class Menu extends Common{
                 'url'     => input('post.url'),
                 'icon'    => input('post.icon'),
                 'is_close'=> input('post.is_close'),
+                'is_show' => input('post.is_show'),
             );
+
+           // echo '<pre>';
+           // print_r($param);exit;
             $info1 = Db::name('menu')->where(array('name'=>input('post.name')))->find();
             if(!empty($info1)){
                 exit(json_encode(array('status'=>0,'msg'=>'菜单名称已存在')));
@@ -61,6 +65,7 @@ class Menu extends Common{
                 'url'     => input('post.url'),
                 'icon'    => input('post.icon'),
                 'is_close'=> input('post.is_close'),
+                'is_show'=> input('post.is_show'),
             );
             $info1 = Db::name('menu')->where(array('id'=>$menuid))->find();
             if(empty($info1)){
@@ -73,8 +78,9 @@ class Menu extends Common{
                 exit(json_encode(array('status'=>0,'msg'=>'修改失败')));
             }
         }else{
-            $menuid = input('get.menuid');
+            $menuid = input('menuid');
             $info = Db::name('menu')->where(array('id'=>$menuid))->find();
+            //print_r($info);exit;
             $this->assign('data',$info);
             return $this->fetch();
         }

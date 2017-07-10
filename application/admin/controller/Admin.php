@@ -150,6 +150,15 @@ class Admin extends Common{
             $this->assign('data',$info);
             return $this->fetch();
         }
+    }
 
+    public function delAdmin(){
+        $aid = input('adminid');
+        $res = Db::name('admin')->delete($aid);
+        if($res){
+            return json_encode(array('status'=>1,'msg'=>'成功'));
+        }else{
+            return json_encode(array('status'=>0,'msg'=>'失败'));
+        }
     }
 }

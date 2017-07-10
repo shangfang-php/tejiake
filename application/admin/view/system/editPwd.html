@@ -1,0 +1,139 @@
+{include file='Public/header' /}
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-box">
+                            <div class="dropdown pull-right">
+                                <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="zmdi zmdi-more-vert"></i>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+
+                            <h4 class="header-title m-t-0 m-b-30">修改密码</h4>
+
+                            <form action="#" data-parsley-validate novalidate>
+                                <div class="form-group">
+                                    <label for="username">账号</label>
+                                    <input id="username" name="username" disabled type="text" value="{$data.username}" required class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="oldpwd">旧密码</label>
+                                    <input data-parsley-equalto="#oldpwd" type="password" required placeholder="输入旧密码" class="form-control" id="oldpwd">
+                                </div>
+                                <div class="form-group">
+                                    <label for="newpwd">新密码</label>
+                                    <input data-parsley-equalto="#newpwd" type="password" required placeholder="输入新密码" class="form-control" id="newpwd">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmnewpwd">确认新密码</label>
+                                    <input data-parsley-equalto="#confirmnewpwd" type="password" required placeholder="确认新密码" class="form-control" id="confirmnewpwd">
+                                </div>
+                                <input type="hidden" name="aid" value="{$data.id}">
+                                <div class="form-group  m-b-0">
+                                    <button class="btn btn-primary waves-effect waves-light" type="button" onclick="check();">
+                                        提交
+                                    </button>
+                                    <button type="reset" class="btn btn-default waves-effect waves-light m-l-5">
+                                        重置
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div><!-- end col -->
+
+                </div>
+                <!-- end row -->
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+        <footer class="footer">
+            2016 © Adminto.
+        </footer>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Right content here -->
+    <!-- ============================================================== -->
+
+
+    <!-- Right Sidebar -->
+
+    <!-- /Right-bar -->
+
+</div>
+<!-- END wrapper -->
+
+
+
+<script>
+    var resizefunc = [];
+</script>
+
+<!-- jQuery  -->
+<script src="__STATIC__/admin/js/jquery.min.js"></script>
+<script src="__STATIC__/admin/js/bootstrap.min.js"></script>
+<script src="__STATIC__/admin/js/detect.js"></script>
+<script src="__STATIC__/admin/js/fastclick.js"></script>
+<script src="__STATIC__/admin/js/jquery.slimscroll.js"></script>
+<script src="__STATIC__/admin/js/jquery.blockUI.js"></script>
+<script src="__STATIC__/admin/js/waves.js"></script>
+<script src="__STATIC__/admin/js/jquery.nicescroll.js"></script>
+<script src="__STATIC__/admin/js/jquery.scrollTo.min.js"></script>
+
+<!-- Validation js (Parsleyjs) -->
+<script type="text/javascript" src="__STATIC__/admin/plugins/parsleyjs/dist/parsley.min.js"></script>
+
+<!-- App js -->
+<script src="__STATIC__/admin/js/jquery.core.js"></script>
+<script src="__STATIC__/admin/js/jquery.app.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('form').parsley();
+    });
+    function check(){
+        if(confirm('确定熟记新密码?')){
+            var oldpwd = $('#oldpwd').val();
+            var newpwd = $('#newpwd').val();
+            if(oldpwd == newpwd){
+                alert('新旧密码不可一致');return false;
+            }
+            var confirmnewpwd = $('#confirmnewpwd').val();
+            if(oldpwd == ''|| newpwd == '' || confirmnewpwd == ''){
+                alert('数据不可为空');return false;
+            }
+            $.post("{:url('System/editPwd')}",{oldpwd:oldpwd,newpwd:newpwd,confirmnewpwd:confirmnewpwd}, function (dat) {
+                var data = JSON.parse(dat);
+                if(data.status == 1){
+                    alert(data.msg);
+                    window.location.href =  "{:url('Login/loginout')}";
+                }else{
+                    alert(data.msg);return false;
+                }
+            });
+        }
+    }
+
+</script>
+
+</body>
+</html>

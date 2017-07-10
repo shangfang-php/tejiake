@@ -19,6 +19,7 @@
 
                             </p>
 
+
                             <div class="table-responsive">
                                 <table class="table m-0">
                                     <thead>
@@ -38,7 +39,7 @@
                                         <td>{$vo.menu}</td>
                                         <td>{if condition="$vo['status'] eq 1"}正常{else/}禁用{/if}</td>
                                         <td>
-                                            <a href="{:url('Admin/editAdmin',array('adminid'=>$vo['id']))}"  class="btn btn-primary">编辑</a>
+                                            <a href="{:url('Admin/editAdmin',array('adminid'=>$vo['id']))}"  class="btn btn-primary">编辑</a>          <a onclick="delAdmin({$vo['id']});" class="btn btn-primary">删除</a>
                                         </td>
                                     </tr>
                                     {/volist}
@@ -102,16 +103,18 @@
         });
     }
 
-    function delMenu(param){
-        $.get("{:url('Menu/delMenu')}",{menuid:param}, function (dat) {
-            var data = JSON.parse(dat);
-            if(data.status == 1){
+    function delAdmin(param){
+        if(confirm('此操作不可恢复,确定删除当前管理员?')){
+            $.get("{:url('Admin/delAdmin')}",{adminid:param}, function (dat) {
+                var data = JSON.parse(dat);
                 alert(data.msg);
-                window.location.href = window.location.href;
-            }else{
-                alert(data.msg);return false;
-            }
-        });
+                if(data.status == 1){
+                    window.location.href = window.location.href;
+                }
+                return false;
+            });
+        }
+
     }
 
 </script>

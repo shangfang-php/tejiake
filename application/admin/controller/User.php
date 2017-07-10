@@ -1,13 +1,35 @@
 <?php
 namespace app\admin\Controller;
-use app\admin\Controller\Common;
+use app\admin\controller\Common;
 use think\Controller;
+use think\Paginator;
 use think\Db;
 class User extends Common{
     //用户列表
     public function index(){
-        $list = Db::name('user')/*->where()*/->select();
+        $where = array();
+        //获取用户类型
+        $type = input('type');
+        if(!empty($type)){
+            $where['type'] = $type;
+        }
+        //获取封禁用户列表
+        $status = input('status');
+        if(!empty($status)){
+            $where['status'] = $status;
+        }
+        //关键词
+        $pagesize = 1;
+        $keyword = input('keyword');
+
+        if(!empty($keyword)){
+            $where['qq|wechat|phone'] = array('like',"%$keyword%");
+        }
+        //print_r($where);exit;
+        $list = Db::name('user')->where($where)->paginate($pagesize,false,['query'=>request()->param()]);
+        $show = $list->render();
         $this->assign('data',$list);
+        $this->assign('show',$show);
         return $this->fetch();
     }
     //修改用户分数

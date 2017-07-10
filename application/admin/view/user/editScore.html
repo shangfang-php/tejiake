@@ -49,6 +49,14 @@
                                         {/if}
                                         {/volist}
                                     </ul>
+                                   <!-- {volist name='type' id='v'}
+                                    {if condition="$key gt 2"}
+                                    <div class="radio checkbox-pink" style="float: left;padding-right: 20px ;">
+                                        <input id="checkbox1" checked type="radio" data-parsley-multiple="groups" data-parsley-mincheck="2" value="{$key}" name="is_close">
+                                        <label for="checkbox1"> {$v} </label>
+                                    </div>
+                                    {/if}
+                                    {/volist}-->
                                 </div>
                             </div>
                             <div class="form-group">
