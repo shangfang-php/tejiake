@@ -29,6 +29,9 @@ class Login extends Controller
                 if($password != $info['password']){
                     exit(json_encode(array('status'=>0,'msg'=>'密码有误')));
                 }
+                if($info['status'] == 0){
+                    exit(json_encode(array('status'=>0,'msg'=>'当前用户禁止登录')));
+                }
                 Session::set('admin_user',$username);
                 if($rempsw == 1){
                     //记住密码 存储于cookie

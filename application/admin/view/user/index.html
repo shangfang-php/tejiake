@@ -9,23 +9,50 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card-box">
-                            <div class="dropdown pull-right">
+                            <!--<div class="dropdown pull-right">
                                     <a href="{:url('Menu/addMenu')}" class="card-drop">添加用户</a>
-                            </div>
+                            </div>-->
 
                             <h4 class="header-title m-t-0 m-b-30">用户列表</h4>
+                            <a href="{:url('User/index',array('status'=>2))}">封禁用户列表</a>
 
                             <p class="text-muted font-13 m-b-25">
 
                             </p>
+                            <div class=" btn-group" >
+                                <a href="{:url('User/index')}"  class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                    <span>全部</span>
+                                </a>
+                                <a href="{:url('User/index',array('type'=>1))}" class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                    <span>普通淘客</span>
+                                </a>
+                                <a href="{:url('User/index',array('type'=>2))}" class="btn btn-default buttons-csv buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                    <span>招商淘客</span>
+                                </a>
+                            </div>
+                            <div class="hidden-xs" style="width:215px;right: 20px;position: absolute;top: 42px;" >
+                                <form role="search" class="app-search" action="#" method="get">
+                                    <input type="text" placeholder="输入账号/QQ/微信" name="keyword" class="form-control">
+                                    <a><i class="fa fa-search"></i></a>
+                                </form>
 
+                            </div>
                             <div class="table-responsive">
                                 <table class="table m-0">
                                     <thead>
                                     <tr>
                                         <th>序号</th>
-                                        <th>名称</th>
-                                        <th>权限</th>
+                                        <th>昵称</th>
+                                        <th>账号</th>
+                                        <th>QQ</th>
+                                        <th>微信</th>
+                                        <th>淘宝类型</th>
+                                        <th>余额</th>
+                                        <th>积分</th>
+                                        <th>创建时间</th>
+                                        <th>最后登录时间</th>
+                                        <th>最后登录IP</th>
+                                        <th>状态</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
@@ -33,15 +60,27 @@
                                     {volist name='data' id='vo' key="key"}
                                     <tr>
                                         <th scope="row">{$key}</th>
-                                        <td>{$vo.username}</td>
-                                        <td>{$vo.menu}</td>
+                                        <td>{$vo.nick_name}</td>
+                                        <td>{$vo.phone}</td>
+                                        <td>{$vo.qq}</td>
+                                        <td>{$vo.wechat}</td>
+                                        <td>{if condition="$vo['type'] eq 1"}普通淘客{else/}招商淘客{/if}</td>
+                                        <td>{$vo.balance}</td>
+                                        <td>{$vo.score}</td>
+                                        <td>{$vo.create_time|date='Y-m-d H:i:s',###}</td>
+                                        <td>{$vo.login_time|date='Y-m-d H:i:s',###}</td>
+                                        <td>{$vo.login_ip}</td>
                                         <td>
-                                            <a href="{:url('User/editUser',array('adminid'=>$vo['id']))}"  class="btn btn-primary">编辑</a>
+                                            <a href="javascript:void();" onclick="editStatus({$vo['id']});" class="btn btn-inverse">{if condition="$vo['status'] eq 1"} 正常  {else/} 封禁{/if} </a>
+
+                                        <td>
+                                            <a href="{:url('User/editScore',array('uid'=>$vo['id']))}"  class="btn btn-primary">积分操作</a>
                                         </td>
                                     </tr>
                                     {/volist}
                                     </tbody>
                                 </table>
+                                {$show}
                             </div>
                         </div>
                     </div><!-- end col -->
@@ -88,29 +127,20 @@
 <script src="__STATIC__/admin/js/jquery.core.js"></script>
 <script src="__STATIC__/admin/js/jquery.app.js"></script>
 <script type="text/javascript">
-    function hideMenu(param){
-        $.get("{:url('Menu/hideMenu')}",{menuid:param}, function (dat) {
-            var data = JSON.parse(dat);
-            if(data.status == 1){
+    function editStatus(param){
+        //alert(param);
+        if(confirm('确定要对此用户进行当前操作吗?')){
+            $.get("{:url('User/editStatus')}",{uid:param}, function (dat) {
+                var data = JSON.parse(dat);
                 alert(data.msg);
-                window.location.href = window.location.href;
-            }else{
-                alert(data.msg);return false;
-            }
-        });
+                if(data.status == 1){
+                    window.location.href = window.location.href;
+                }
+                return false;
+            });
+        }
     }
 
-    function delMenu(param){
-        $.get("{:url('Menu/delMenu')}",{menuid:param}, function (dat) {
-            var data = JSON.parse(dat);
-            if(data.status == 1){
-                alert(data.msg);
-                window.location.href = window.location.href;
-            }else{
-                alert(data.msg);return false;
-            }
-        });
-    }
 
 </script>
 </body>

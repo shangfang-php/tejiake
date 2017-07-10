@@ -32,15 +32,19 @@ class Menu extends Common{
                 'url'     => input('post.url'),
                 'icon'    => input('post.icon'),
                 'is_close'=> input('post.is_close'),
+                'is_show' => input('post.is_show'),
             );
+
+           // echo '<pre>';
+           // print_r($param);exit;
             $info1 = Db::name('menu')->where(array('name'=>input('post.name')))->find();
             if(!empty($info1)){
                 exit(json_encode(array('status'=>0,'msg'=>'菜单名称已存在')));
             }
-            $info2 = Db::name('menu')->where(array('url'=>input('post.url')))->find();
+            /*$info2 = Db::name('menu')->where(array('url'=>input('post.url')))->find();
             if(!empty($info2)){
                 exit(json_encode(array('status'=>0,'msg'=>'URL已存在')));
-            }
+            }*/
             $res = Db::name('menu')->insert($param);
             if($res){
                 exit(json_encode(array('status'=>1,'msg'=>'添加成功','url'=>url('index'))));
@@ -61,6 +65,7 @@ class Menu extends Common{
                 'url'     => input('post.url'),
                 'icon'    => input('post.icon'),
                 'is_close'=> input('post.is_close'),
+                'is_show'=> input('post.is_show'),
             );
             $info1 = Db::name('menu')->where(array('id'=>$menuid))->find();
             if(empty($info1)){
@@ -73,8 +78,9 @@ class Menu extends Common{
                 exit(json_encode(array('status'=>0,'msg'=>'修改失败')));
             }
         }else{
-            $menuid = input('get.menuid');
+            $menuid = input('menuid');
             $info = Db::name('menu')->where(array('id'=>$menuid))->find();
+            //print_r($info);exit;
             $this->assign('data',$info);
             return $this->fetch();
         }
@@ -101,7 +107,7 @@ class Menu extends Common{
     public function delMenu(){
         $menuid = input('get.menuid');
         $info1 = Db::name('menu')->where(array('id'=>$menuid))->find();
-        if(empty($info1)){
+        if(empty($info1)||$info1['is_delete'] == 1){
             exit(json_encode(array('status'=>0,'msg'=>'参数有误')));
         }
         $res = Db::name('menu')->where(array('id'=>$menuid))->update(array('is_delete'=>1));

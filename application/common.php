@@ -88,3 +88,12 @@ function returnAjaxMsg( $code = 200, $msg = '', $arr = array() ){
 function checkPhone($phone){
     return preg_match("/^1[3587]\d{9}$/", $phone);
 }
+
+//获取当前URL
+function getActionUrl(){
+    $module = request()->module();
+    $controller = request()->controller();
+    $action = request()->action();
+    return $module.'/'.$controller.'/'.$action;
+
+}
