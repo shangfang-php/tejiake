@@ -59,7 +59,7 @@ del, ins, u, s, a, a:hover {
     text-decoration: none;
 }
 a {
-    color: #fff;
+    color: #333;
     display: inline-block;
 }
 a, i {
@@ -94,6 +94,9 @@ a, i {
 .fl {
     float: left;
 }
+.f18{
+    font-size: 18px;
+}
 .f20{
     font-size: 20px;
 }
@@ -102,6 +105,9 @@ a, i {
 }
 .a3 {
     color: #333;
+}
+.ac{
+    color:#a7a7a7;
 }
 p, div {
     word-wrap: break-word;

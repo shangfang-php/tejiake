@@ -13,17 +13,13 @@ return [
     '__pattern__' => [
         'name' => '\w+',
     ],
-    '[hello]'     => [
-        ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
-        ':name' => ['index/hello', ['method' => 'post']],
-    ],
 
-    '[register]'     => [
-        ''   => ['index/login/register']
-    ],
+    'register'  =>  'index/login/register', ##用户注册
+    'user_login'=>  'index/login/index', ##用户登录
+    'flashSale' =>  'index/index/flashSale', ##显示抢购
 
-    '[/index/login]'     => [
-        ''   => ['index/index/login']
+    /*'[user]'     => [
+        ':'   => ['index/index/detail',['method' => 'get']]
     ],
-
+*/
 ];

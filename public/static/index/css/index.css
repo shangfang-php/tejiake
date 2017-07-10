@@ -187,6 +187,7 @@ nav ul li a .nav-dec p {
     background-color: #f6f6f6;
     width: 1200px;
     margin: 0 auto;
+    min-height: 700px
 }
 .con .content .hot {
     width: 1200px;
@@ -321,7 +322,7 @@ nav ul li a .nav-dec p {
 /*产品列表*/
 .con .good {
     margin-top: 64px;
-    width: 1300px;
+    width: 1208px;
 }
 .con .good .good-list {
     margin-top: 20px;
