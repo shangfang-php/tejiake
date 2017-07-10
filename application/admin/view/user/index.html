@@ -12,10 +12,10 @@
                             <!--<div class="dropdown pull-right">
                                     <a href="{:url('Menu/addMenu')}" class="card-drop">添加用户</a>
                             </div>-->
-
+                            <a data-toggle="modal" href="{:url('User/info')}" data-target="#modal-info">Click me</a>
                             <h4 class="header-title m-t-0 m-b-30">用户列表</h4>
-                            <a href="{:url('User/index',array('status'=>2))}">封禁用户列表</a>
-
+                            <a class="btn btn-primary" href="{:url('User/index',array('status'=>2))}">封禁列表</a>
+                            <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal"><font><font>添加用户</font></font></button>
                             <p class="text-muted font-13 m-b-25">
 
                             </p>
@@ -52,7 +52,6 @@
                                         <th>创建时间</th>
                                         <th>最后登录时间</th>
                                         <th>最后登录IP</th>
-                                        <th>状态</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
@@ -71,10 +70,15 @@
                                         <td>{$vo.login_time|date='Y-m-d H:i:s',###}</td>
                                         <td>{$vo.login_ip}</td>
                                         <td>
-                                            <a href="javascript:void();" onclick="editStatus({$vo['id']});" class="btn btn-inverse">{if condition="$vo['status'] eq 1"} 正常  {else/} 封禁{/if} </a>
-
-                                        <td>
+                                            {if condition="$vo['status'] eq 1"}
+                                            <a href="javascript:void();" onclick="editStatus({$vo['id']});" class="btn btn-inverse"> 封禁 </a>
                                             <a href="{:url('User/editScore',array('uid'=>$vo['id']))}"  class="btn btn-primary">积分操作</a>
+                                            <button onclick="getId({$vo['id']},{$vo['phone']});" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-sm"><font><font>修改密码</font></font></button>
+                                            <a onclick="delUser({$vo['id']});"  class="btn btn-primary">删除用户</a>
+                                            {else/}
+                                            <a href="javascript:void();" onclick="editStatus({$vo['id']});" class="btn btn-inverse"> 解除封禁 </a>
+                                            {/if}
+
                                         </td>
                                     </tr>
                                     {/volist}
@@ -105,6 +109,91 @@
 
 </div>
 <!-- END wrapper -->
+
+<!-- /.modal begin-->
+<!--添加用户modal-->
+<div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">添加用户</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">账号</label>
+                                <input type="text" required  name="phone" class="form-control" id="field-1" placeholder="手机号">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="field-2" class="control-label">密码</label>
+                                <input type="password" required name="password" class="form-control" id="field-2" placeholder="密码">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="field-3" class="control-label">再次输入密码</label>
+                                <input type="password" required name="confirmpwd" class="form-control" id="field-3" placeholder="确认密码">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
+                    <button type="button" onclick="addUser();" class="btn btn-info waves-effect waves-light">确认提交</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!--修改密码modal-->
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="mySmallModalLabel">修改【<span id="editphone"></span>】的密码</h4>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <div class="row">
+                        <div class="col-md-12">
+                           <label for="field-4" class="control-label">新密码</label>
+                           <input type="password" required  name="editPwd" class="form-control" id="field-4" placeholder="确认密码">
+                            <input type="hidden" name="editid" value="">
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="border-top: 0">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
+                        <button type="button" onclick="editUserPwd();" class="btn btn-info waves-effect waves-light">提交</button>
+                    </div>
+                </form>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!--获取用户详情-->
+<div id="modal-info" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+                <div class="modal-body">
+                </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal end-->
 
 
 
@@ -140,6 +229,65 @@
             });
         }
     }
+    function delUser(param){
+        //alert(param);
+        if(confirm('确定删除当前用户?')){
+            $.get("{:url('User/delUser')}",{uid:param}, function (dat) {
+                var data = JSON.parse(dat);
+                alert(data.msg);
+                if(data.status == 1){
+                    window.location.href = window.location.href;
+                }
+                return false;
+            });
+        }
+    }
+
+    function addUser(){
+        var phone = $('input[name=phone]').val();
+        var password = $('input[name=password]').val();
+        var confirmpwd = $('input[name=confirmpwd]').val();
+        if(phone == '' || password == '' || confirmpwd == ''){
+            alert('数据不可为空');return false;
+        }
+        if(password.length <6){
+            alert('密码长度大于6');return false;
+        }
+        if(password != confirmpwd){
+            alert('2次输入的密码不一致');return false;
+        }
+
+        $.post("{:url('User/addUser')}",{phone:phone,password:password,confirmpwd:confirmpwd}, function (dat) {
+            var data = JSON.parse(dat);
+            alert(data.msg);
+            if(data.status == 1){
+                window.location.href = "{:url('User/index')}";
+            }
+            return false;
+        });
+    }
+
+    function getId(param,phone){
+        $('input[name=editid]').val(param);
+        $('#editphone').html(phone);
+    }
+    function editUserPwd(){
+        var editid =  $('input[name=editid]').val();
+        var editpwd = $('input[name=editPwd]').val();
+        //alert(editpwd.length);
+        if(editpwd == ''||editpwd.length <6){
+            alert('密码不可为空且须长度大于6');return false;
+        }
+        $.post("{:url('User/editUserPwd')}",{editid:editid,editpwd:editpwd}, function (dat) {
+            var data = JSON.parse(dat);
+            alert(data.msg);
+            if(data.status == 1){
+                window.location.href = "{:url('User/index')}";
+            }
+            return false;
+        });
+    }
+
 
 
 </script>

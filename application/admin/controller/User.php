@@ -7,7 +7,7 @@ use think\Db;
 class User extends Common{
     //用户列表
     public function index(){
-        $where = array();
+        $where['is_delete'] = 0;
         //获取用户类型
         $type = input('type');
         if(!empty($type)){
@@ -17,16 +17,18 @@ class User extends Common{
         $status = input('status');
         if(!empty($status)){
             $where['status'] = $status;
+        }else{
+            $where['status'] = 1;
         }
         //关键词
-        $pagesize = 1;
+        $pagesize = 10;
         $keyword = input('keyword');
 
         if(!empty($keyword)){
             $where['qq|wechat|phone'] = array('like',"%$keyword%");
         }
         //print_r($where);exit;
-        $list = Db::name('user')->where($where)->paginate($pagesize,false,['query'=>request()->param()]);
+        $list = Db::name('user')->where($where)->order('id desc')->paginate($pagesize,false,['query'=>request()->param()]);
         $show = $list->render();
         $this->assign('data',$list);
         $this->assign('show',$show);
@@ -106,6 +108,7 @@ class User extends Common{
         }
     }
 
+    //删除用户的积分记录
     public function delScore(){
         $rid = input('get.rid');
         $info = Db::name('user_score_record')->where(array('id'=>$rid))->find();
@@ -118,5 +121,66 @@ class User extends Common{
         }else{
             exit(json_encode(array('status'=>0,'msg'=>'删除失败')));
         }
+    }
+
+    //删除用户
+    public function delUser(){
+        $uid = input('get.uid');
+        $info = Db::name('user')->where(array('id'=>$uid))->find();
+        if(empty($info)||$info['is_delete'] == 1){
+            exit(json_encode(array('status'=>0,'msg'=>'参数有误')));
+        }
+        $res = Db::name('user')->where(array('id'=>$uid))->update(array('is_delete'=>1));
+        if($res){
+            exit(json_encode(array('status'=>1,'msg'=>'删除成功')));
+        }else{
+            exit(json_encode(array('status'=>0,'msg'=>'删除失败')));
+        }
+    }
+
+    //添加用户
+    public function addUser(){
+        $param = request()->post();
+        if(!checkPhone($param['phone'])){
+           exit(json_encode(array('status'=>0,'msg'=>'输入正确手机号')));
+        }
+        if(empty($param['password']) || $param['password'] != $param['confirmpwd']){
+            exit(json_encode(array('status'=>0,'msg'=>'数据有误')));
+        }
+        $info = Db::name('user')->where(['phone'=>$param['phone']])->find();
+        if(!empty($info)){
+            exit(json_encode(array('status'=>0,'msg'=>'当前手机号已使用')));
+        }
+        $data = array(
+            'phone'   =>$param['phone'],
+            'password'=>$param['password'],
+            'login_ip'=>request()->ip(),
+            'login_time'=>time(),
+            'create_time'=>time(),
+            'month_income'=>0
+        );
+        $res = Db::name('user')->insert($data);
+        if($res){
+            exit(json_encode(array('status'=>1,'msg'=>'成功')));
+        }else{
+            exit(json_encode(array('status'=>0,'msg'=>'失败')));
+        }
+    }
+
+    //修改用户密码
+    public function editUserPwd(){
+        $editid = input('post.editid');
+        $editpwd = pswCrypt(input('post.editpwd'));
+        $res = Db::name('user')->where(['id'=>$editid])->update(['password'=>$editpwd]);
+        if($res){
+            return json_encode(array('status'=>1,'msg'=>'成功'));
+        }else{
+            return json_encode(array('status'=>0,'msg'=>'失败'));
+        }
+    }
+
+    //获取用户详情
+    public function info(){
+        return view();
     }
 }
