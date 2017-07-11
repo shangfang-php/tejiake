@@ -1,0 +1,82 @@
+<style type="text/css">
+li a{
+    width:100%;
+}
+</style>
+<div class="fl user-sideBar">
+    <ul id="accordion" class="accordion">
+        <li>
+            <div class="link" style="    color: #1a99fb;">
+              <a href="{:url('user/index')}">
+                <i class="fa fa-paint-brush"><img src="__STATIC__/index/images/user-icon.png" alt=""></i>
+                个人中心
+                <i class="fa down"><img src="__STATIC__/index/images/more.png" alt=""></i>
+              </a>
+            </div>
+        </li>
+        <li onclick="showMenu(this)">
+            <div class="link">
+                <i class="fa fa-code"><img src="__STATIC__/index/images/deposit-icon.png" alt=""></i>
+                招商放单
+                <i class="fa fa-chevron-down"><img src="__STATIC__/index/images/down.png" alt=""></i>
+            </div>
+            <ul class="submenu" style="display: block;" >
+                <li>
+                    <a href="/user/fbtg.html">发布推广</a>
+                </li>
+                <li>
+                    <a href="">推广管理 </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="link">
+                <a href="/user/collect.html">
+                <i class="fa fa-mobile"><img src="__STATIC__/index/images/collect-icon.png" alt=""></i>
+                我的收藏
+                <i class="fa down"><img src="__STATIC__/index/images/more.png" alt=""></a></i>
+            </div>
+        </li>
+        <li onclick="showMenu(this)">
+            <div class="link">
+                <i class="fa fa-globe"><img src="__STATIC__/index/images/setting-icon.png" alt=""></i>
+                账户设置
+                <i class="fa fa-chevron-down"><img src="__STATIC__/index/images/down.png" alt=""></i>
+            </div>
+            <ul class="submenu" style="display: block;">
+                <li>
+                    <a href="{:url('user/basic')}">
+                       基本资料
+                    </a>
+                </li>
+                <li>
+                    <a href="/user/template.html">
+                        自定义模板设置
+                    </a>
+                </li>
+                <li>
+                    <a href="/user/setting.html">
+                        阿里妈妈设置
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+    function showMenu(obj){
+        var className = $(obj).prop('class');
+        className   =   className ? className : 'close';
+        if(className == 'close'){
+            var changeClass = 'open';
+            var display = 'none';
+            //$(obj).contents().find('.submenu').hide();
+        }else{
+            var changeClass = 'close';
+            var display = 'block';
+            //$(obj).contents().find('.submenu').show();
+        }
+        $(obj).prop('class', changeClass);
+        $(obj).children('ul').css('display', display)
+    }
+</script>

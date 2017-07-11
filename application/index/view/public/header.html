@@ -7,9 +7,11 @@
         <title>
             首页
         </title>
-        <link rel="stylesheet" href="/static/index/css/common.css">
+        <link rel="stylesheet" href="/static/index/css/common.css?v=1.0">
         <link rel="stylesheet" type="text/css" href="/static/index/css/index.css">
         <link rel="stylesheet" href="/static/index/css/sc.css">
+        <link rel="stylesheet" href="/static/index/css/style.css">
+        <link rel="stylesheet" href="/static/index/css/video-js.css">
     </head>
     
     <body style="background: #f6f6f6;min-width: 1400px;width: 100%;">
@@ -26,7 +28,7 @@
                             <input type="text" value="请输入商品关键字或者商品ID" onblur="if(value=='') {value='请输入商品关键字或者商品ID'}" onFocus="if(value=='请输入商品关键字或者商品ID'){value=''}"#ED1C24">
                             <span>
                                 <img src="/static/index/images/shousuo.png" alt="">
-                            </sp an>
+                            </span>
                         </div>
                     </div>
                     <div class="admin">
@@ -34,12 +36,12 @@
                             <!--登录成功之后-->
                             <div class="admin-ming">
                                   <span class="fr baiid" ><img src="/static/index/images/baiid.png" alt="" ></span>
-                                  <span class="fl f12 ming" ><a href="" >{$login_user.phone}</a></span>
+                                  <span class="fl f12 ming" ><a href="{:url('user/index')}" >{$login_user.phone}</a></span>
                             </div>
                         {else}
                             <div class="admin-me" >
                                 <a href="/register"><div class="reg">注册</div></a>
-                                <a href="/index/login"> <div class="log">登录</div></a>
+                                <a href="/user_login"> <div class="log">登录</div></a>
                             </div>
                         {/if}
                         
@@ -66,7 +68,7 @@
                             </a>
                         </li>
                         <li class="xsqg">
-                            <a  title="" href="flashSale.html">
+                            <a  title="" href="/flash_sale">
                                 <img src="/static/index/images/xs.png" alt="">
                                 <div class="nav-dec">
                                     <strong>

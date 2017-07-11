@@ -150,11 +150,15 @@ class Login extends Controller{
             return returnAjaxMsg(505,'密码错误');
         }
 
+        if($phoneInfo['status'] == 2){
+            return returnAjaxMsg(507,'该帐号已封禁');   
+        }
+
         $data   =   array(
                         'login_time'    =>  time(),
                         'login_ip'      =>  $_SERVER['REMOTE_ADDR'],
                     );
-        
+
         $info   =   Db::table('user')->where(array('id'=>$phoneInfo['id']))->update($data);
         if($info !== FALSE){
             Session::set('taoke_user', $phoneInfo);

@@ -1,0 +1,43 @@
+{include file="public/header" /}
+
+<!-- 加载每个页面内容-->
+<div class="con">
+    <div class="content" style="padding-top: 80px;">
+        {include file="public/user_menu"}
+
+        <div class="fr user-main">
+
+            <div class="tab-pane">
+                 <div class="tab-pane-tou">
+                     <div class="tou"><img src="__STATIC__/index/images/tou.png" alt=""></div>
+                     <div class="xiu">
+                         <a href="#"><img src="__STATIC__/index/images/xiu.png" alt=""></a>
+                     </div>
+                     <p class="hao f20">{$login_user.phone}</p>
+                     <p class="day f20">已入驻{$days}天</p>
+                    <div class="jifen">
+                        <p >{$login_user.score} <span>积分</span><a href="/user/pay.html"> <input type="button" name="" value="充值"></a></p>  
+                    </div>
+                 </div>
+            </div>
+            <div class="tab-link">
+                <div class="fl link-box" style="border-left:none;border-right:none;">
+                    <a href="#"><p><img src="__STATIC__/index/images/shouc.png" alt="">&nbsp;&nbsp;我的收藏</p></a>
+                </div>
+                <div class=" fl link-box" style="border-right:none;">
+                    <a href="#"><p><img src="__STATIC__/index/images/fabu.png" alt="">&nbsp;&nbsp;发布推广</p></a>
+                </div>
+                <div class=" fl link-box" style="border-left:none;border-top:none;border-right:none;">
+                    <a href="{:url('charge/index')}"><p><img src="__STATIC__/index/images/congz.png" alt="">&nbsp;&nbsp;充值中心</p></a>
+                </div>
+                <div class=" fl link-box" style="border-right:none;border-top:none;">
+                    <a href="#"><p><img src="__STATIC__/index/images/zhaungh.png" alt="">&nbsp;&nbsp;账户设置</p></a>
+                </div>
+            </div>
+        </div>
+                  
+    </div>
+    <div class="clear"></div>     
+</div>
+
+{include file="public/footer" /}
