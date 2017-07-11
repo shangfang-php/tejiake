@@ -5,7 +5,12 @@ use think\Controller;
 use think\Paginator;
 use think\Db;
 class User extends Common{
-    //用户列表
+    /*
+     * 用户列表 get传递
+     * @param type 淘客类型 1普通淘客 2招商淘客 可选 默认为全部淘客
+     * @param status 用户状态 1正常 2封禁 可选 默认正常
+     * @param keyword 搜索关键词 可选
+     * */
     public function index(){
         $where['is_delete'] = 0;
         //获取用户类型
@@ -34,7 +39,12 @@ class User extends Common{
         $this->assign('show',$show);
         return $this->fetch();
     }
-    //修改用户分数
+    /*
+     * 修改用户分数 post传递
+     * @param uid 用户ID
+     * @param type 积分操作类型 3为添加积分，4为删减积分
+     * @param score 分数
+     * */
     public function editScore(){
         if(request()->post()){
             $uid = input('post.uid');
@@ -88,7 +98,11 @@ class User extends Common{
         //echo '<pre>';
        // print_r($score_type);
     }
-    //修改用户状态
+
+    /*
+     * 修改用户状态 get传递
+     * @param uid 要修改的用户ID
+     * */
     public  function editStatus(){
         $uid = input('get.uid');
         $info = Db::name('user')->where(array('id'=>$uid))->find();
@@ -108,7 +122,10 @@ class User extends Common{
         }
     }
 
-    //删除用户的积分记录
+    /*
+     * 删除用户的积分记录
+     * @param rid 要删除的积分记录ID
+     * */
     public function delScore(){
         $rid = input('get.rid');
         $info = Db::name('user_score_record')->where(array('id'=>$rid))->find();
@@ -123,7 +140,10 @@ class User extends Common{
         }
     }
 
-    //删除用户
+    /*
+     * 删除用户 get传递
+     * @param uid 用户ID
+     * */
     public function delUser(){
         $uid = input('get.uid');
         $info = Db::name('user')->where(array('id'=>$uid))->find();
@@ -138,7 +158,12 @@ class User extends Common{
         }
     }
 
-    //添加用户
+    /*
+     * 添加用户 post传递
+     * @param phone 手机号
+     * @param password 密码
+     * @param confirmpwd 确认密码
+     * */
     public function addUser(){
         $param = request()->post();
         if(!checkPhone($param['phone'])){
@@ -167,7 +192,11 @@ class User extends Common{
         }
     }
 
-    //修改用户密码
+    /*
+     * 修改用户密码
+     * @param editid post传递 要修改的用户ID
+     * @param editpwd post传递 要修改的用户新密码
+     * */
     public function editUserPwd(){
         $editid = input('post.editid');
         $editpwd = pswCrypt(input('post.editpwd'));
@@ -179,12 +208,70 @@ class User extends Common{
         }
     }
 
-    //获取用户详情
+    /*
+     * 获取用户详情
+     * @param uid get传递 必选
+     * */
     public function info(){
         //获取用户信息
         $uid = input('uid');
         $info = Db::name('user')->where(['id'=>$uid])->find();
         $this->assign('data',$info);
         return view();
+    }
+
+    /*
+     * 申请招商淘客列表
+     * @param keyword 可选
+     * */
+    public function applyMerchant(){
+        $keyword = input('keyword');
+        $where['m.status'] = 1;
+        if(!empty($keyword)){
+            $where['u.phone'] = $keyword;
+        }
+        $list = Db::name('merchant_apply_record')->alias('m')->field('m.*,u.phone')->where($where)->join('user u','u.id=m.uid','left')->paginate(10,false,['query'=>request()->param()]);
+        $show = $list->render();
+        $this->assign('show',$show);
+        $this->assign('data',$list);
+        return $this->fetch();
+    }
+
+    /*
+     * 获取当前申请招商淘客的数据详情 get传递
+     * @param aid 申请招商淘客ID 必选
+     * */
+    public function applyInfo(){
+        $aid = input('aid');
+        $info = Db::name('merchant_apply_record')->alias('m')->field('m.*,u.phone')->where(['m.id'=>$aid])->join('user u','u.id=m.uid','left')->find();
+       // print_r($info);exit;
+        $this->assign('data',$info);
+        return view();
+    }
+
+    /*
+     * 申请招商淘客的用户通过审核 get传递
+     * @param aid 申请ID
+     * */
+    public function passApply(){
+        $aid = input('aid');
+        $info = Db::name('merchant_apply_record')->where(['id'=>$aid,'status'=>1])->find();
+        if(empty($info)){
+            return json_encode(array('status'=>0,'msg'=>'数据有误'));
+        }
+        //通过申请的话，一并修改user表中的淘客类型type=2
+        $data = [
+            'check_time'=>time(),
+            'status'=>2
+        ];
+        $res = Db::name('merchant_apply_record')->where(['id'=>$aid])->update($data);
+        if($res){
+            Db::name('user')->where(['id'=>$info['uid']])->update(['type'=>2]);
+            return json_encode(array('status'=>1,'msg'=>'成功'));
+        }else{
+            return json_encode(array('status'=>0,'msg'=>'失败'));
+        }
+
+
     }
 }

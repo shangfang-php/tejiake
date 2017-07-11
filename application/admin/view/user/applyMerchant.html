@@ -1,0 +1,189 @@
+{include file='Public/header' /}
+<!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-box">
+                            <!--<div class="dropdown pull-right">
+                                    <a href="{:url('Menu/addMenu')}" class="card-drop">添加用户</a>
+                            </div>-->
+
+                            <h4 class="header-title m-t-0 m-b-30">申请招商淘客</h4>
+
+                            <p class="text-muted font-13 m-b-25">
+
+                            </p>
+
+                            <div class="hidden-xs" style="width:215px;right: 20px;position: absolute;top: 10px;" >
+                                <form role="search" class="app-search" action="#" method="get">
+                                    <input type="text" placeholder="输入账号" name="keyword" class="form-control">
+                                    <a><i class="fa fa-search"></i></a>
+                                </form>
+
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table m-0">
+                                    <thead>
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>账号</th>
+                                        <th>QQ</th>
+                                        <th>微信</th>
+                                        <th>类型</th>
+                                        <th>月收入</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {volist name='data' id='vo' key="key"}
+                                    <tr>
+                                        <th scope="row">{$key}</th>
+                                        <td>{$vo.phone}</td>
+                                        <td>{$vo.qq}</td>
+                                        <td>{$vo.wechat}</td>
+                                        <td>{if condition="$vo['type'] eq 1"}个人{else/}团队{/if}</td>
+                                        <td>{$vo.month_income}</td>
+                                        <td>
+                                            <a data-toggle="modal" href="{:url('User/applyInfo',array('aid'=>$vo['id']))}" data-target="#modal-info" class="btn btn-primary">查看</a>
+                                            <a href="javascript:void();" onclick="passApply({$vo['id']});" class="btn btn-inverse"> 通过 </a>
+                                            <button onclick="rejectApply({$vo['id']},{$vo['phone']});" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-sm"><font><font>拒绝</font></font></button>
+
+                                        </td>
+                                    </tr>
+                                    {/volist}
+                                    </tbody>
+                                </table>
+                                {$show}
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                </div>
+                <!-- end row -->
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+        <footer class="footer">
+            2016 © Adminto.
+        </footer>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Right content here -->
+    <!-- ============================================================== -->
+
+</div>
+<!-- END wrapper -->
+
+<!-- /.modal begin-->
+<!--修改密码modal-->
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="mySmallModalLabel">修改【<span id="phone"></span>】的密码</h4>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <div class="row">
+                        <div class="col-md-12">
+                           <label for="remark" class="control-label">备注</label>
+                           <input type="password" required  name="remark" class="form-control" id="remark" placeholder="请输入原因">
+                            <input type="hidden" name="rejectid" value="">
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="border-top: 0">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
+                        <button type="button" onclick="rejectUserApply();" class="btn btn-info waves-effect waves-light">提交</button>
+                    </div>
+                </form>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!--获取申请招商淘客详情-->
+<div id="modal-info" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+                <div class="modal-body">
+                </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal end-->
+
+
+
+<script>
+    var resizefunc = [];
+</script>
+
+<!-- jQuery  -->
+<script src="__STATIC__/admin/js/jquery.min.js"></script>
+<script src="__STATIC__/admin/js/bootstrap.min.js"></script>
+<script src="__STATIC__/admin/js/detect.js"></script>
+<script src="__STATIC__/admin/js/fastclick.js"></script>
+<script src="__STATIC__/admin/js/jquery.slimscroll.js"></script>
+<script src="__STATIC__/admin/js/jquery.blockUI.js"></script>
+<script src="__STATIC__/admin/js/waves.js"></script>
+<script src="__STATIC__/admin/js/jquery.nicescroll.js"></script>
+<script src="__STATIC__/admin/js/jquery.scrollTo.min.js"></script>
+
+<!-- App js -->
+<script src="__STATIC__/admin/js/jquery.core.js"></script>
+<script src="__STATIC__/admin/js/jquery.app.js"></script>
+
+<script type="text/javascript">
+    function passApply(param){
+        //alert(param);
+        if(confirm('确定要对此用户进行当前操作吗?')){
+            $.get("{:url('User/passApply')}",{aid:param}, function (dat) {
+                var data = JSON.parse(dat);
+                alert(data.msg);
+                if(data.status == 1){
+                    window.location.href = window.location.href;
+                }
+                return false;
+            });
+        }
+    }
+
+    function rejectApply(param,phone){
+        $('input[name=rejectid]').val(param);
+        $('#phone').html(phone);
+    }
+    function rejectUserApply(){
+        var editid =  $('input[name=editid]').val();
+        var editpwd = $('input[name=editPwd]').val();
+        //alert(editpwd.length);
+        if(editpwd == ''||editpwd.length <6){
+            alert('密码不可为空且须长度大于6');return false;
+        }
+        $.post("{:url('User/editUserPwd')}",{editid:editid,editpwd:editpwd}, function (dat) {
+            var data = JSON.parse(dat);
+            alert(data.msg);
+            if(data.status == 1){
+                window.location.href = "{:url('User/index')}";
+            }
+            return false;
+        });
+    }
+
+
+
+</script>
+</body>
+</html>

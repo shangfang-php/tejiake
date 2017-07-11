@@ -1,0 +1,63 @@
+<style>
+    .form-group .radio-primary{
+        float: left;margin-right: 22px;
+    }
+</style>
+<div class="modal-header" style="margin-bottom: 17px;">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">招商淘客申请详情</h4>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="col-md-2 control-label">类型：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" disabled {if condition="$data.type eq 1"}value="个人"{else/}value="团队"{/if}>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">账号：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" disabled  value="{$data.phone}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">昵称：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" disabled  value="{$data.nickname}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">QQ：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" disabled value="{$data.qq}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">微信：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" disabled value="{$data.wechat}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">月收入：</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" disabled value="{$data.month_income}" style="float: left;width: 200px;"><span style="float: left;line-height: 38px;margin-left: 7px;">万</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">团队/个人介绍：</label>
+                <div class="col-md-10">
+                    <textarea class="form-control" rows="5" name="introduce">{$data.introduce}</textarea>
+                </div>
+            </div>
+        </form>
+    </div><!-- end col -->
+</div>
+<div class="modal-footer">
+    <input type="hidden" name="aid" value="{$data.id}">
+    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
+    <button type="button" class="btn btn-info waves-effect waves-light">提交</button>
+</div>
+
