@@ -1,62 +1,156 @@
+<style>
+    .form-group .radio-primary{
+        float: left;margin-right: 22px;
+    }
+</style>
 <div class="modal-header" style="margin-bottom: 17px;">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h4 class="modal-title">用户信息修改</h4>
+    <h4 class="modal-title">【某某】用户信息修改</h4>
 </div>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-lg-12">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="col-md-2 control-label">淘客类型：</label>
+                <div class="radio radio-primary" style="padding-left: 30px; margin-right: 80px;">
+                    <input id="radio1"  type="radio" value="1" name="type" {if condition="$data.type eq 1"}checked{/if}>
+                    <label for="radio1">
+                        普通淘客
+                    </label>
+                </div>
+                <div class="radio radio-primary" >
+                    <input id="radio2" type="radio" value="2" name="type"  {if condition="$data.type eq 2"}checked{/if}>
+                    <label for="radio2">
+                        招商淘客 &nbsp;&nbsp; <span style="font-size: 10px;">已发布宝贝 <font style="color: #188ae2;">123</font>  </span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" >免审权限：</label>
+                <div class="radio radio-primary"  style="padding-left: 30px;">
+                    <input id="goods_type1"  type="radio" value="1" name="free_trial"  {if condition="$data.type eq 1"}checked{/if}>
+                    <label for="goods_type1">
+                        爆款单
+                    </label>
+                </div>
+                <div class="radio radio-primary" >
+                    <input id="goods_type2" type="radio" value="2" name="free_trial" {if condition="$data.type eq 2"}checked{/if}>
+                    <label for="goods_type2">
+                       限时抢购
+                    </label>
+                </div>
+                <div class="radio radio-primary" >
+                    <input id="goods_type3" type="radio" value="3" name="free_trial" {if condition="$data.type eq 3"}checked{/if}>
+                    <label for="goods_type3">
+                        直播单
+                    </label>
+                </div>
+                <div class="radio radio-primary">
+                    <input id="goods_type4" type="radio" value="4" name="free_trial" {if condition="$data.type eq 4"}checked{/if}>
+                    <label for="goods_type4">
+                        视频单
+                    </label>
+                </div>
+                <div class="radio radio-primary" >
+                    <input id="goods_type5" type="radio" value="5" name="free_trial" {if condition="$data.type eq 5"}checked{/if}>
+                    <label for="goods_type5">
+                        过夜单
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">类型：</label>
+                <div class="radio radio-primary" style="padding-left: 30px; margin-right: 106px;">
+                    <input id="radio-type1" type="radio" name="is_team">
+                    <label for="radio-type1">
+                        团队
+                    </label>
+                </div>
+                <div class="radio radio-primary" >
+                    <input id="radio-type2" checked type="radio" name="is_team">
+                    <label for="radio-type2">
+                        个人
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">账号：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">昵称：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">QQ：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">微信：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">月收入：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">积分：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">注册时间：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">最后登录时间：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" disabled>
+                </div>
+            </div>
+           <!-- <div class="form-group">
+                <label class="control-label col-sm-4">Default Functionality</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input type="text" class="form-control"  id="datepicker">
+                        <span class="input-group-addon bg-primary b-0 text-white"><i class="ti-calendar"></i></span>
+                    </div>&lt;!&ndash; input-group &ndash;&gt;
+                </div>
+            </div>-->
+            <div class="form-group">
+                <label class="col-md-2 control-label">最后登入IP地址：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">团队/个人介绍：</label>
+                <div class="col-md-10">
+                    <textarea class="form-control" rows="5" readonly></textarea>
+                </div>
+            </div>
+        </form>
+    </div><!-- end col -->
 
-            <label >淘客类型</label>
-
-                <input type="radio" ><label>普通淘客</label>
-                <input type="radio" ><label>招商淘客</label>
-
-
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="field-2" class="control-label">Surname</label>
-            <input type="text" class="form-control" id="field-2" placeholder="Doe">
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="form-group">
-            <label for="field-3" class="control-label">Address</label>
-            <input type="text" class="form-control" id="field-3" placeholder="Address">
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="field-4" class="control-label">City</label>
-            <input type="text" class="form-control" id="field-4" placeholder="Boston">
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="field-5" class="control-label">Country</label>
-            <input type="text" class="form-control" id="field-5" placeholder="United States">
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="field-6" class="control-label">Zip</label>
-            <input type="text" class="form-control" id="field-6" placeholder="123456">
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="form-group no-margin">
-            <label for="field-7" class="control-label">Personal Info</label>
-            <textarea class="form-control autogrow" id="field-7" placeholder="Write something about yourself" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
-        </div>
-    </div>
-</div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-    <button type="button" class="btn btn-info waves-effect waves-light">Save changes</button>
+    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
+    <button type="button" class="btn btn-info waves-effect waves-light">提交</button>
 </div>
+<script src="__STATIC__/admin/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script>
+    jQuery('#datepicker').datepicker();
+</script>

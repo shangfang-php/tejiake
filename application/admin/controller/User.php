@@ -181,6 +181,10 @@ class User extends Common{
 
     //获取用户详情
     public function info(){
+        //获取用户信息
+        $uid = input('uid');
+        $info = Db::name('user')->where(['id'=>$uid])->find();
+        $this->assign('data',$info);
         return view();
     }
 }

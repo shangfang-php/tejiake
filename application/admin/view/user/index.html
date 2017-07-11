@@ -12,7 +12,7 @@
                             <!--<div class="dropdown pull-right">
                                     <a href="{:url('Menu/addMenu')}" class="card-drop">添加用户</a>
                             </div>-->
-                            <a data-toggle="modal" href="{:url('User/info')}" data-target="#modal-info">Click me</a>
+
                             <h4 class="header-title m-t-0 m-b-30">用户列表</h4>
                             <a class="btn btn-primary" href="{:url('User/index',array('status'=>2))}">封禁列表</a>
                             <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal"><font><font>添加用户</font></font></button>
@@ -71,6 +71,7 @@
                                         <td>{$vo.login_ip}</td>
                                         <td>
                                             {if condition="$vo['status'] eq 1"}
+                                            <a data-toggle="modal" href="{:url('User/info',array('uid'=>$vo['id']))}" data-target="#modal-info" class="btn btn-primary">修改</a>
                                             <a href="javascript:void();" onclick="editStatus({$vo['id']});" class="btn btn-inverse"> 封禁 </a>
                                             <a href="{:url('User/editScore',array('uid'=>$vo['id']))}"  class="btn btn-primary">积分操作</a>
                                             <button onclick="getId({$vo['id']},{$vo['phone']});" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-sm"><font><font>修改密码</font></font></button>
@@ -185,9 +186,8 @@
 
 <!--获取用户详情-->
 <div id="modal-info" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-
                 <div class="modal-body">
                 </div>
         </div>
@@ -215,6 +215,7 @@
 <!-- App js -->
 <script src="__STATIC__/admin/js/jquery.core.js"></script>
 <script src="__STATIC__/admin/js/jquery.app.js"></script>
+
 <script type="text/javascript">
     function editStatus(param){
         //alert(param);

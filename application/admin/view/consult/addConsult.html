@@ -1,0 +1,131 @@
+{include file='Public/header' /}
+
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box">
+                            <form method="post" action="#">
+                                <div class="form-group">
+                                    <label for="title">标题</label>
+                                    <input type="text" name="title" parsley-trigger="change" required placeholder="输入标题"  class="form-control" id="title">
+                                </div>
+                                <textarea id="elm1" name="area"></textarea>
+                                <div class="form-group  m-b-0">
+                                    <button class="btn btn-primary waves-effect waves-light" type="button" onclick="check();">
+                                        提交
+                                    </button>
+                                    <button type="reset" class="btn btn-default waves-effect waves-light m-l-5">
+                                        重置
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div><!-- end col -->
+                </div>
+
+            </div> <!-- container -->
+
+
+        </div> <!-- content -->
+
+        <footer class="footer">
+            2016 © Adminto.
+        </footer>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Right content here -->
+    <!-- ============================================================== -->
+
+
+    <!-- Right Sidebar -->
+
+    <!-- /Right-bar -->
+
+</div>
+<!-- END wrapper -->
+
+
+
+<script>
+    var resizefunc = [];
+</script>
+
+<!-- jQuery  -->
+<script src="__STATIC__/admin/js/jquery.min.js"></script>
+<script src="__STATIC__/admin/js/bootstrap.min.js"></script>
+<script src="__STATIC__/admin/js/detect.js"></script>
+<script src="__STATIC__/admin/js/fastclick.js"></script>
+<script src="__STATIC__/admin/js/jquery.slimscroll.js"></script>
+<script src="__STATIC__/admin/js/jquery.blockUI.js"></script>
+<script src="__STATIC__/admin/js/waves.js"></script>
+<script src="__STATIC__/admin/js/jquery.nicescroll.js"></script>
+<script src="__STATIC__/admin/js/jquery.scrollTo.min.js"></script>
+
+<!-- Validation js (Parsleyjs) -->
+<script type="text/javascript" src="__STATIC__/admin/plugins/parsleyjs/dist/parsley.min.js"></script>
+
+<!-- App js -->
+<script src="__STATIC__/admin/js/jquery.core.js"></script>
+<script src="__STATIC__/admin/js/jquery.app.js"></script>
+<!--form wysiwig js-->
+<script src="__STATIC__/admin/plugins/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('form').parsley();
+    });
+
+    function check(){
+        var title = $('input[name=title]').val();
+        //var content = $('#tinymce').html();
+        //var content =  tinyMCE.activeEditor.getContent();
+        var content = tinymce.get('elm1').getContent();
+        alert( content);
+        $.post("{:url('Consult/addConsult')}",{title:title,content:content}, function (dat) {
+            var data = JSON.parse(dat);
+            alert(data.msg);
+            if(data.status == 1) {
+                //成功 跳转到用户列表
+                window.location.href = "{:url('Consult/index')}";
+            }
+            return false;
+        });
+    }
+
+    $(document).ready(function () {
+        if($("#elm1").length > 0){
+            tinymce.init({
+                selector: "textarea#elm1",
+                theme: "modern",
+                height:300,
+                plugins: [
+                    "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+                    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                    "save table contextmenu directionality emoticons template paste textcolor"
+                ],
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons",
+                style_formats: [
+                    {title: 'Bold text', inline: 'b'},
+                    {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
+                    {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
+                    {title: 'Example 1', inline: 'span', classes: 'example1'},
+                    {title: 'Example 2', inline: 'span', classes: 'example2'},
+                    {title: 'Table styles'},
+                    {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
+                ]
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

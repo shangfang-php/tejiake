@@ -4,6 +4,11 @@ use app\admin\controller\Common;
 use think\Controller;
 class Consult extends Common{
     public function index(){
-        return 12;
+        $this->assign('data',array());
+       return $this->fetch();
+    }
+
+    public function addConsult(){
+       return $this->fetch();
     }
 }
