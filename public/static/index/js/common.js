@@ -1,3 +1,4 @@
+var isSync = false; //是否在进行异步操作
 //ds.base
 ;(function(global, document, undefined){
 	var 

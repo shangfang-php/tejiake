@@ -1,4 +1,5 @@
 <?php
+use think\Db;
 // 应用公共文件
 //获取随机数
 function getRandTime(){
@@ -96,4 +97,50 @@ function getActionUrl(){
     $action = request()->action();
     return $module.'/'.$controller.'/'.$action;
 
+}
+
+/**
+ * 获取通用配置
+ * @return [type] [description]
+ */
+function getCommonConfig($name){
+    $content    =   Db::table('common_config')->field('content')->where(array('name'=>$name))->find();
+    $return     =   $content ? json_decode($content['content'], TRUE) : '';
+    return $return;
+}
+
+/**
+ * 更新用户积分
+ * @param  [type] $uid       [用户UID]
+ * @param  [type] $score     [更新积分数 带符号 增加无需带+ 扣除需带-]
+ * @param  [type] $scoreType [积分变更类型]
+ * @return [type]            [description]
+ */
+function updateUserScore($uid, $score, $scoreType, $remark='', $operateUid = 0){
+    $score      =   $score > 0 ? '+'.$score : $score;
+    $update     =   array('score', ['exp', 'score '.$score]);
+    $info       =   Db::('user')->where(array('id'=>$uid))->update($update);
+    if($info === FALSE){
+        return FALSE;
+    }
+
+    $info   =   saveScoreChangeRecords($uid, $score, $scoreType, $remark, $operateUid); ##记录积分变更日志
+}
+
+/**
+ * 记录积分变更日志
+ * @param  [type] $uid       [用户ID]
+ * @param  [type] $score     [变化积分]
+ * @param  [type] $scoreType [变更类型]
+ * @return [type]            [description]
+ */
+function saveScoreChangeRecords($uid, $score, $scoreType, $remark = '', $operateUid = 0){
+    $score  =   str_replace('+', '', $score);
+    $data   =   array('uid'=>$uid, 'score'=>$score, 'type'=>$scoreType, 'operator'=>$operateUid, 'time'=>time());
+    if($remark){
+        $data['remark'] =   $remark;
+    }
+
+    $info   =   Db::table('user_score_record')->insert($data);
+    return $info === FALSE ? FALSE : TRUE;
 }
