@@ -1,0 +1,104 @@
+{include file='Public/header' /}
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box">
+                            <h4 class="header-title m-t-0 m-b-30">网站设置</h4>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">网站标题</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" value="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">关键词</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">网站描述</label>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control" rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">统计代码</label>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control" rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group text-right  m-b-0">
+                                            <button class="btn btn-primary waves-effect waves-light" type="button" onclick="check();">
+                                                提交
+                                            </button>
+                                            <button type="reset" class="btn btn-default waves-effect waves-light m-l-5">
+                                                重置
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div><!-- end col -->
+                        </div> <!-- container -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- content -->
+
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Right content here -->
+    <!-- ============================================================== -->
+
+
+    <!-- Right Sidebar -->
+
+    <!-- /Right-bar -->
+
+</div>
+<!-- END wrapper -->
+{include file='Public/footer' /}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('form').parsley();
+    });
+    function check(){
+        if(confirm('确定熟记新密码?')){
+            var oldpwd = $('#oldpwd').val();
+            var newpwd = $('#newpwd').val();
+            if(oldpwd == newpwd){
+                alert('新旧密码不可一致');return false;
+            }
+            var confirmnewpwd = $('#confirmnewpwd').val();
+            if(oldpwd == ''|| newpwd == '' || confirmnewpwd == ''){
+                alert('数据不可为空');return false;
+            }
+            $.post("{:url('System/editPwd')}",{oldpwd:oldpwd,newpwd:newpwd,confirmnewpwd:confirmnewpwd}, function (dat) {
+                var data = JSON.parse(dat);
+                if(data.status == 1){
+                    alert(data.msg);
+                    window.location.href =  "{:url('Login/loginout')}";
+                }else{
+                    alert(data.msg);return false;
+                }
+            });
+        }
+    }
+
+</script>

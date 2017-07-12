@@ -12,14 +12,10 @@
                             <!--<div class="dropdown pull-right">
                                     <a href="{:url('Menu/addMenu')}" class="card-drop">添加用户</a>
                             </div>-->
-
                             <h4 class="header-title m-t-0 m-b-30">资讯列表</h4>
-
                             <p class="text-muted font-13 m-b-25">
-
                             </p>
                             <a href="{:url('Consult/addConsult')}" class="btn btn-primary waves-effect waves-light" ><font><font>添加资讯</font></font></a>
-
                             <div class="table-responsive">
                                 <table class="table m-0">
                                     <thead>
@@ -31,7 +27,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
+                                    <!--<tr>
                                         <th scope="row">1</th>
                                         <td>dfd</td>
                                         <td>34fd</td>
@@ -40,15 +36,15 @@
                                             <a href="{:url('Consult/editConsult',array('adminid'=>1))}"  class="btn btn-primary">修改</a>
                                             <a onclick="delConsult(1);" class="btn btn-primary">删除</a>
                                         </td>
-                                    </tr>
+                                    </tr>-->
                                     {volist name='data' id='vo' key="key"}
                                     <tr>
                                         <th scope="row">{$key}</th>
                                         <td>{$vo.title}</td>
-                                        <td>{$vo.time|date='Y-m-d H:i:s'}</td>
+                                        <td>{$vo.time|date='Y-m-d H:i:s',###}</td>
                                         <td>
-                                            <a href="{:url('Consult/info',array('adminid'=>$vo['id']))}"  class="btn btn-primary">查看</a>
-                                            <a href="{:url('Consult/editConsult',array('adminid'=>$vo['id']))}"  class="btn btn-primary">修改</a>
+                                            <a href="{:url('Consult/info',array('cid'=>$vo['id']))}"  class="btn btn-primary">查看</a>
+                                            <a href="{:url('Consult/editConsult',array('cid'=>$vo['id']))}"  class="btn btn-primary">修改</a>
                                             <a onclick="delConsult({$vo['id']});" class="btn btn-primary">删除</a>
                                         </td>
                                     </tr>
@@ -66,9 +62,6 @@
 
         </div> <!-- content -->
 
-        <footer class="footer">
-            2016 © Adminto.
-        </footer>
 
     </div>
 
@@ -79,43 +72,12 @@
 
 </div>
 <!-- END wrapper -->
-
-
-
-<script>
-    var resizefunc = [];
-</script>
-
-<!-- jQuery  -->
-<script src="__STATIC__/admin/js/jquery.min.js"></script>
-<script src="__STATIC__/admin/js/bootstrap.min.js"></script>
-<script src="__STATIC__/admin/js/detect.js"></script>
-<script src="__STATIC__/admin/js/fastclick.js"></script>
-<script src="__STATIC__/admin/js/jquery.slimscroll.js"></script>
-<script src="__STATIC__/admin/js/jquery.blockUI.js"></script>
-<script src="__STATIC__/admin/js/waves.js"></script>
-<script src="__STATIC__/admin/js/jquery.nicescroll.js"></script>
-<script src="__STATIC__/admin/js/jquery.scrollTo.min.js"></script>
-
-<!-- App js -->
-<script src="__STATIC__/admin/js/jquery.core.js"></script>
-<script src="__STATIC__/admin/js/jquery.app.js"></script>
+{include file='Public/footer' /}
 <script type="text/javascript">
-    function hideMenu(param){
-        $.get("{:url('Menu/hideMenu')}",{menuid:param}, function (dat) {
-            var data = JSON.parse(dat);
-            if(data.status == 1){
-                alert(data.msg);
-                window.location.href = window.location.href;
-            }else{
-                alert(data.msg);return false;
-            }
-        });
-    }
 
-    function delAdmin(param){
+    function delConsult(param){
         if(confirm('此操作不可恢复,确定删除当前管理员?')){
-            $.get("{:url('Admin/delAdmin')}",{adminid:param}, function (dat) {
+            $.get("{:url('Consult/delConsult')}",{cid:param}, function (dat) {
                 var data = JSON.parse(dat);
                 alert(data.msg);
                 if(data.status == 1){
@@ -128,5 +90,3 @@
     }
 
 </script>
-</body>
-</html>

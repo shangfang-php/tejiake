@@ -5,7 +5,7 @@
 </style>
 <div class="modal-header" style="margin-bottom: 17px;">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h4 class="modal-title">【某某】用户信息修改</h4>
+    <h4 class="modal-title">【{$data.phone}】用户信息修改</h4>
 </div>
 <div class="row">
     <div class="col-lg-12">
@@ -21,12 +21,12 @@
                 <div class="radio radio-primary" >
                     <input id="radio2" type="radio" value="2" name="type"  {if condition="$data.type eq 2"}checked{/if}>
                     <label for="radio2">
-                        招商淘客 &nbsp;&nbsp; <span style="font-size: 10px;">已发布宝贝 <font style="color: #188ae2;">123</font>  </span>
+                        招商淘客 &nbsp;&nbsp; <span style="font-size: 10px;">已发布宝贝 <font style="color: #188ae2;">假的 123</font>  </span>
                     </label>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label" >免审权限：</label>
+                <label class="col-md-2 control-label" >免审权限：(未操作)</label>
                 <div class="radio radio-primary"  style="padding-left: 30px;">
                     <input id="goods_type1"  type="radio" value="1" name="free_trial"  {if condition="$data.type eq 1"}checked{/if}>
                     <label for="goods_type1">
@@ -61,13 +61,13 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">类型：</label>
                 <div class="radio radio-primary" style="padding-left: 30px; margin-right: 106px;">
-                    <input id="radio-type1" type="radio" name="is_team">
+                    <input id="radio-type1" value="2" {if condition="$data.mtype eq 2"}checked{/if} type="radio" name="mtype">
                     <label for="radio-type1">
                         团队
                     </label>
                 </div>
                 <div class="radio radio-primary" >
-                    <input id="radio-type2" checked type="radio" name="is_team">
+                    <input id="radio-type2" value="1" {if condition="$data.mtype eq 1"}checked{/if} type="radio" name="mtype">
                     <label for="radio-type2">
                         个人
                     </label>
@@ -76,49 +76,49 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">账号：</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled>
+                    <input type="text" class="form-control" disabled value="{$data.phone}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">昵称：</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled>
+                    <input type="text" class="form-control" disabled value="{$data.nickname}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">QQ：</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled>
+                    <input type="text" class="form-control" disabled value="{$data.qq}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">微信：</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled>
+                    <input type="text" class="form-control" disabled value="{$data.wechat}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">月收入：</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled>
+                    <input type="text" class="form-control" disabled value="{$data.month_income}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">积分：</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled>
+                    <input type="text" class="form-control" disabled value="{$data.score}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">注册时间：</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled>
+                    <input type="text" class="form-control" disabled value="{$data.create_time|date='Y-m-d H:i:s',###}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">最后登录时间：</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled>
+                    <input type="text" class="form-control" disabled value="{$data.login_time|date='Y-m-d H:i:s',###}">
                 </div>
             </div>
            <!-- <div class="form-group">
@@ -133,13 +133,13 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">最后登入IP地址：</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled>
+                    <input type="text" class="form-control" disabled value="{$data.login_ip}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">团队/个人介绍：</label>
                 <div class="col-md-10">
-                    <textarea class="form-control" rows="5" readonly></textarea>
+                    <textarea class="form-control" rows="5" readonly>{$data.introduce}</textarea>
                 </div>
             </div>
         </form>
