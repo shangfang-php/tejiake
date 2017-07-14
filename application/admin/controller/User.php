@@ -12,28 +12,34 @@ class User extends Common{
      * @param keyword 搜索关键词 可选
      * */
     public function index(){
-        $where['is_delete'] = 0;
+        $where['u.is_delete'] = 0;
         //获取用户类型
         $type = input('type');
         if(!empty($type)){
-            $where['type'] = $type;
+            $where['u.type'] = $type;
         }
         //获取封禁用户列表
         $status = input('status');
         if(!empty($status)){
-            $where['status'] = $status;
+            $where['u.status'] = $status;
         }else{
-            $where['status'] = 1;
+            $where['u.status'] = 1;
         }
         //关键词
         $pagesize = 10;
         $keyword = input('keyword');
 
         if(!empty($keyword)){
-            $where['qq|wechat|phone'] = array('like',"%$keyword%");
+            $where['m.qq|u.phone'] = array('like',"%$keyword%");
         }
         //print_r($where);exit;
-        $list = Db::name('user')->where($where)->order('id desc')->paginate($pagesize,false,['query'=>request()->param()]);
+        $list = Db::name('user')
+            ->alias('u')
+            ->field('u.*,m.nickname,m.qq')
+            ->where($where)
+            ->join('merchant_apply_record m','u.id=m.uid','left')
+            ->order('u.id desc')
+            ->paginate($pagesize,false,['query'=>request()->param()]);
         $show = $list->render();
         $this->assign('data',$list);
         $this->assign('show',$show);
@@ -215,7 +221,15 @@ class User extends Common{
     public function info(){
         //获取用户信息
         $uid = input('uid');
-        $info = Db::name('user')->where(['id'=>$uid])->find();
+        $info = Db::name('user')
+            ->alias('u')
+            ->field('u.*,m.type as mtype,m.nickname,m.qq,m.wechat,m.month_income,m.introduce')
+            ->where(['u.id'=>$uid])
+            ->join('merchant_apply_record m','u.id=m.uid','left')
+            ->find();
+        //$info = Db::name('merchant_apply_record')->alias('m')->field('m.*,u.phone')->where(['m.id'=>$aid])->join('user u','u.id=m.uid','left')->find();
+        //echo '<pre>';
+        //print_r($info);exit;
         $this->assign('data',$info);
         return view();
     }
@@ -271,7 +285,36 @@ class User extends Common{
         }else{
             return json_encode(array('status'=>0,'msg'=>'失败'));
         }
+    }
 
+    /*
+     * 拒绝招商申请 get 传递
+     * @param aid 申请ID
+     * @param remark 拒绝原因OR其他失败备注
+     * */
+    public function rejectMerchantApply(){
+        $aid = input('post.aid');
+        $remark = input('post.remark');
+        $info = Db::name('merchant_apply_record')->where(['id'=>$aid,'status'=>1])->find();
+        if(empty($info)||empty($remark)){
+            return json_encode(array('status'=>0,'msg'=>'数据有误'));
+        }
+        $data = [
+            'status'=>3,
+            'check_time'=>time(),
+            'remark'=>$remark
+        ];
+        $res = Db::name('merchant_apply_record')->where(['id'=>$aid])->update($data);
+        if($res){
+            return json_encode(array('status'=>1,'msg'=>'成功'));
+        }else{
+            return json_encode(array('status'=>0,'msg'=>'失败'));
+        }
 
     }
+
+    /*
+     * 拒绝招商申请列表
+     * @param
+     * */
 }

@@ -10,30 +10,33 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="card-box">
-                            <form method="post" action="#">
-                                <div class="form-group">
-                                    <label for="title">标题</label>
-                                    <input type="text" name="title" parsley-trigger="change" required placeholder="输入标题"  class="form-control" id="title">
+                        <div class="card-box task-detail">
+
+                            <h4 class="header-title m-t-0 m-b-30"><a href="{:url('Consult/index')}" style="font-size: 18px;">Back</a></h4>
+                            <p class="text-muted font-13 m-b-25">
+                            </p>
+                           <!-- <div class="media m-b-20">
+                                <div class="media-body">
+                                    <h4 class="media-heading m-b-0">Michael Zenaty</h4>
+                                    <span class="label label-danger">Urgent</span>
                                 </div>
-                                <textarea id="elm1" name="area"></textarea>
-                                <div class="form-group  m-b-0">
-                                    <button class="btn btn-primary waves-effect waves-light" type="button" onclick="check();">
-                                        提交
-                                    </button>
-                                    <button type="reset" class="btn btn-default waves-effect waves-light m-l-5">
-                                        重置
-                                    </button>
-                                </div>
-                            </form>
+                            </div>-->
+
+                            <h4 class="font-600 m-b-20">标题：{$data.title}</h4>
+
+                            <p class="text-muted">
+                                {$data.content}
+                            </p>
                         </div>
+
                     </div><!-- end col -->
                 </div>
-
             </div> <!-- container -->
-
-
         </div> <!-- content -->
+
+        <footer class="footer">
+            2016 © Jane小憩Place to.
+        </footer>
 
     </div>
 
@@ -50,6 +53,7 @@
 </div>
 <!-- END wrapper -->
 {include file='Public/footer' /}
+
 <!--form wysiwig js-->
 <script src="__STATIC__/admin/plugins/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
@@ -68,14 +72,14 @@
 
         $('form').submit();
         /*$.post("{:url('Consult/addConsult')}",{title:title,content:content}, function (dat) {
-            var data = JSON.parse(dat);
-            alert(data.msg);
-            if(data.status == 1) {
-                //成功 跳转到用户列表
-                window.location.href = "{:url('Consult/index')}";
-            }
-            return false;
-        });*/
+         var data = JSON.parse(dat);
+         alert(data.msg);
+         if(data.status == 1) {
+         //成功 跳转到用户列表
+         window.location.href = "{:url('Consult/index')}";
+         }
+         return false;
+         });*/
     }
 
     $(document).ready(function () {

@@ -14,10 +14,11 @@
                             <form method="post" action="#">
                                 <div class="form-group">
                                     <label for="title">标题</label>
-                                    <input type="text" name="title" parsley-trigger="change" required placeholder="输入标题"  class="form-control" id="title">
+                                    <input type="text" name="title" parsley-trigger="change" required placeholder="输入标题"  class="form-control" id="title" value="{$data.title}">
                                 </div>
-                                <textarea id="elm1" name="area"></textarea>
+                                <textarea id="elm1" name="area">{$data.content}</textarea>
                                 <div class="form-group  m-b-0">
+                                    <input type="hidden" name="cid" value="{$data.id}">
                                     <button class="btn btn-primary waves-effect waves-light" type="button" onclick="check();">
                                         提交
                                     </button>
@@ -49,8 +50,9 @@
 
 </div>
 <!-- END wrapper -->
+
 {include file='Public/footer' /}
-<!--form wysiwig js-->
+
 <script src="__STATIC__/admin/plugins/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -59,29 +61,19 @@
 
     function check(){
         var title = $('input[name=title]').val();
-        //var content = $('#tinymce').html();
         //var content =  tinyMCE.activeEditor.getContent();
         var content = tinymce.get('elm1').getContent();
         if(title == '' ||content == ''){
             alert('数据不可为空');return false;
         }
-
         $('form').submit();
-        /*$.post("{:url('Consult/addConsult')}",{title:title,content:content}, function (dat) {
-            var data = JSON.parse(dat);
-            alert(data.msg);
-            if(data.status == 1) {
-                //成功 跳转到用户列表
-                window.location.href = "{:url('Consult/index')}";
-            }
-            return false;
-        });*/
     }
 
     $(document).ready(function () {
         if($("#elm1").length > 0){
             tinymce.init({
                 selector: "textarea#elm1",
+                content:'rwefwef',
                 theme: "modern",
                 height:300,
                 plugins: [

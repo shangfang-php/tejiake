@@ -70,9 +70,6 @@
 
         </div> <!-- content -->
 
-        <footer class="footer">
-            2016 © Adminto.
-        </footer>
 
     </div>
 
@@ -87,24 +84,24 @@
 <!-- /.modal begin-->
 <!--修改密码modal-->
 <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="mySmallModalLabel">修改【<span id="phone"></span>】的密码</h4>
+                <h4 class="modal-title" id="mySmallModalLabel">拒绝【<span id="phone"></span>】的申请</h4>
             </div>
             <div class="modal-body">
                 <form action="">
                     <div class="row">
                         <div class="col-md-12">
                            <label for="remark" class="control-label">备注</label>
-                           <input type="password" required  name="remark" class="form-control" id="remark" placeholder="请输入原因">
-                            <input type="hidden" name="rejectid" value="">
+                           <input type="text" required  name="remark" class="form-control" id="remark" placeholder="请输入原因">
+                            <input type="hidden" name="rejectaid" value="">
                         </div>
                     </div>
                     <div class="modal-footer" style="border-top: 0">
                         <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
-                        <button type="button" onclick="rejectUserApply();" class="btn btn-info waves-effect waves-light">提交</button>
+                        <button type="button" onclick="rejectMerchantApply();" class="btn btn-info waves-effect waves-light">提交</button>
                     </div>
                 </form>
 
@@ -124,29 +121,14 @@
     </div>
 </div>
 <!-- /.modal end-->
-
-
-
-<script>
-    var resizefunc = [];
-</script>
-
-<!-- jQuery  -->
-<script src="__STATIC__/admin/js/jquery.min.js"></script>
-<script src="__STATIC__/admin/js/bootstrap.min.js"></script>
-<script src="__STATIC__/admin/js/detect.js"></script>
-<script src="__STATIC__/admin/js/fastclick.js"></script>
-<script src="__STATIC__/admin/js/jquery.slimscroll.js"></script>
-<script src="__STATIC__/admin/js/jquery.blockUI.js"></script>
-<script src="__STATIC__/admin/js/waves.js"></script>
-<script src="__STATIC__/admin/js/jquery.nicescroll.js"></script>
-<script src="__STATIC__/admin/js/jquery.scrollTo.min.js"></script>
-
-<!-- App js -->
-<script src="__STATIC__/admin/js/jquery.core.js"></script>
-<script src="__STATIC__/admin/js/jquery.app.js"></script>
-
+{include file='Public/footer' /}
 <script type="text/javascript">
+    $("#modal-info").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
+    $(".bs-example-modal-sm").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
     function passApply(param){
         //alert(param);
         if(confirm('确定要对此用户进行当前操作吗?')){
@@ -162,21 +144,22 @@
     }
 
     function rejectApply(param,phone){
-        $('input[name=rejectid]').val(param);
+        $('input[name=rejectaid]').val(param);
         $('#phone').html(phone);
     }
-    function rejectUserApply(){
-        var editid =  $('input[name=editid]').val();
-        var editpwd = $('input[name=editPwd]').val();
+    function rejectMerchantApply(){
+        var rejectaid =  $('input[name=rejectaid]').val();
+        var remark = $('input[name=remark]').val();
         //alert(editpwd.length);
-        if(editpwd == ''||editpwd.length <6){
-            alert('密码不可为空且须长度大于6');return false;
+        if(remark == ''){
+            alert('拒绝原因不可为空');return false;
         }
-        $.post("{:url('User/editUserPwd')}",{editid:editid,editpwd:editpwd}, function (dat) {
+        $.post("{:url('User/rejectMerchantApply')}",{aid:rejectaid,remark:remark}, function (dat) {
             var data = JSON.parse(dat);
             alert(data.msg);
             if(data.status == 1){
-                window.location.href = "{:url('User/index')}";
+                //window.location.href = "{:url('User/rejectList')}";
+                window.location.href = window.location.href;
             }
             return false;
         });
@@ -185,5 +168,3 @@
 
 
 </script>
-</body>
-</html>

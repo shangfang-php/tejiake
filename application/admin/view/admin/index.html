@@ -56,10 +56,6 @@
 
         </div> <!-- content -->
 
-        <footer class="footer">
-            2016 © Adminto.
-        </footer>
-
     </div>
 
 
@@ -69,27 +65,7 @@
 
 </div>
 <!-- END wrapper -->
-
-
-
-<script>
-    var resizefunc = [];
-</script>
-
-<!-- jQuery  -->
-<script src="__STATIC__/admin/js/jquery.min.js"></script>
-<script src="__STATIC__/admin/js/bootstrap.min.js"></script>
-<script src="__STATIC__/admin/js/detect.js"></script>
-<script src="__STATIC__/admin/js/fastclick.js"></script>
-<script src="__STATIC__/admin/js/jquery.slimscroll.js"></script>
-<script src="__STATIC__/admin/js/jquery.blockUI.js"></script>
-<script src="__STATIC__/admin/js/waves.js"></script>
-<script src="__STATIC__/admin/js/jquery.nicescroll.js"></script>
-<script src="__STATIC__/admin/js/jquery.scrollTo.min.js"></script>
-
-<!-- App js -->
-<script src="__STATIC__/admin/js/jquery.core.js"></script>
-<script src="__STATIC__/admin/js/jquery.app.js"></script>
+{include file='Public/footer' /}
 <script type="text/javascript">
     function hideMenu(param){
         $.get("{:url('Menu/hideMenu')}",{menuid:param}, function (dat) {
@@ -118,5 +94,3 @@
     }
 
 </script>
-</body>
-</html>

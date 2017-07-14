@@ -29,4 +29,16 @@ class System extends Common{
             return $this->fetch();
         }
     }
+
+    public function webset(){
+        $info = Db::name('setting')->select();
+        if(!empty($info)){
+            if(request()->post()){
+
+            }
+            $info = Db::name('setting')->where(['id'=>1])->find();
+            $this->assign('data',$info);
+        }
+        return $this->fetch();
+    }
 }
