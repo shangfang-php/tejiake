@@ -32,9 +32,32 @@
     <div class="clear"></div>        
 </div>
 <div id="flyItem" class="fly_item"><img src="__STATIC__/index/images/sc.png" width="40" height="40"></div>
+
+<!--弹出框-->
+<div class="lbOverlay"  onclick="closeDiv()"></div>
+
+<div class="hidden_pro_au tanchu" style="width: 760px;height: 550px;">
+    <img src="__STATIC__/index/images/close.png" alt=""  class="close" onclick="closeDiv()">
+    <h1>更新授权</h1>
+    <div style="width:100%;">
+        <iframe scrolling="no" allowtransparency="true" id="auth_frame" frameborder="0" src="" style="height: 450px;width:100%;">
+        </iframe>
+    </div>
+</div>
+
 {include file="public/footer" /}
 
 <script type="text/javascript">
+    $(function(){
+        $(window).scroll(function(){
+            var top = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+            $(".hidden_pro_au").css({
+                    "top": (document.documentElement.clientHeight/2 + top - $(".hidden_pro_au").css("height").replace("px","")/2 )+"px",
+                    "left":($(window).width() - $(".hidden_pro_au").css("width").replace("px",""))/2 +"px"
+                });
+        })
+    })
+
     function check_auth(){
         var taobao_account = $('#taobao_account').val();
         if(!taobao_account){
@@ -44,7 +67,9 @@
 
         $.post('/index/user/check_auth',{taobao_account:taobao_account},function(msg){
             if(msg.code == 200){
-                window.location.href = msg.msg;
+                $('#auth_frame').attr('src', msg.msg);
+                //window.location.href = msg.msg;
+                show();
             }else{
                 alert(msg.msg);
             }
@@ -62,5 +87,28 @@
         $.post('/index/user/save_pid', {pid:pid}, function(msg){
             alert(msg.msg);
         },"json");
+    }
+
+    function show(){
+        $(".lbOverlay").css({"height":window.screen.availHeight});
+        $(".lbOverlay").show();
+     
+        var st=$(document).scrollTop(); //页面滑动高度
+        var objH=$(".hidden_pro_au").height();//浮动对象的高度
+        var ch=$(window).height();//屏幕的高度  
+        var objT=Number(st)+(Number(ch)-Number(objH))/2;   //思路  浮动高度+（（屏幕高度-对象高度））/2
+        $(".hidden_pro_au").css("top",objT);
+         
+        var sl=$(document).scrollLeft(); //页面滑动左移宽度
+        var objW=$(".hidden_pro_au").width();//浮动对象的宽度
+        var cw=$(window).width();//屏幕的宽度  
+        var objL=Number(sl)+(Number(cw)-Number(objW))/2; //思路  左移浮动宽度+（（屏幕宽度-对象宽度））/2
+        $(".hidden_pro_au").css("left",objL);
+        $(".hidden_pro_au").slideDown("20000");//这里显示方式多种效果
+    }
+
+    function closeDiv(){
+        $(".lbOverlay").hide();
+        $(".hidden_pro_au").hide();
     }
 </script>

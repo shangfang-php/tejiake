@@ -193,7 +193,9 @@ class User extends UserCommon{
 	 */
 	function return_auth(){
 		$json	=	$_GET['json'];
-		var_dump($json);exit;
+		if($json){
+			echo '<script type="text/javascript">window.parent.location.reload();</script>'
+		}
 	}
 
 	/**
