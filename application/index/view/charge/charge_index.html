@@ -24,236 +24,68 @@
             </div>
 
             <div class="basic">
-               <a href='javascript:' class="thisclass fl a1"><img src="__STATIC__/index/images/mingxi.png" alt="">&nbsp;付款明细</a>
-                <a href='javascript:' class="fl a2"><img src="__STATIC__/index/images/jifen-icon.png" alt="">&nbsp;积分明细</a>
+               <a href='/index/charge/index?type=charge' class="{if $type=='charge'}thisclass{/if} fl a1"><img src="__STATIC__/index/images/mingxi.png" alt="">&nbsp;付款明细</a>
+                <a href='/index/charge/index?type=score' class="{if $type=='score'}thisclass{/if} fl a2"><img src="__STATIC__/index/images/jifen-icon.png" alt="">&nbsp;积分明细</a>
             </div>
-            
          
             <div  class="basic-form" >
-        <table class="fkmx" border="1" bordercolor="#e8e8e8">
-            <thead>
-                <tr>
-                    <td>账户</td>
-                    <td>支付金额</td>
-                    <td>积分</td>
-                    <td>时间</td>
-                     <td>状态</td>
-                  </tr>
-                </thead>
-              <tbody>
-                  <tr>
-                    <td>18671640021</td>
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td>已完成</td>
-                  </tr>
-                   <tr>
-                    <td>18671640021</td>
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td>未付款</td>
-                  </tr>
-                    <tr>
-                    <td>18671640021</td>
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td class="red">未充值成功</td>
-                  </tr>
-                    <tr>
-                    <td>18671640021</td>
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td>已完成</td>
-                  </tr>
-                   <tr>
-                    <td>18671640021</td>
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td>未付款</td>
-                  </tr>
-                    <tr>
-                    <td>18671640021</td>
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td class="red">未充值成功</td>
-                  </tr>
-                    <tr>
-                    <td>18671640021</td>
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td>已完成</td>
-                  </tr>
-                   <tr>
-                    <td>18671640021</td>
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td>未付款</td>
-                  </tr>
-                    <tr>
-                    <td>18671640021</td>
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td class="red">未充值成功</td>
-                  </tr>
-                      <tr>
-                    <td>18671640021</td>
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td>未付款</td>
-                  </tr>
-
-              </tbody>
-          </table>
-           <div class="page">
-                                <ul>
-                                    <li style="background: #c0c0c0"><a href="#"><img src="__STATIC__/index/images/zuobian.png" alt=""></a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#"><img src="__STATIC__/index/images/youbian.png" alt=""></a></li>
-                                </ul>
-                            </div>
-            </div>
-
-
-
-            <div  class="xiu-form" style="display: none">
-            <table class="fkmx" border="1" bordercolor="#e8e8e8">
-            <thead>
-                <tr>
-                    <td>账号</td>
-                    <td>积分</td>
-                    <td>时间</td>
-                    <td>说明</td>
-                   
-                  </tr>
-                </thead>
-              <tbody>
-                  <tr>
-                    
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td>跑单剩余退还</td>
-                  </tr>
-                   <tr>
-                  
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td>跑单剩余退还</td>
-                  </tr>
-                    <tr>
-                  
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td class="red">跑单扣除</td>
-                  </tr>
-                    <tr>
-                   
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td>充值</td>
-                  </tr>
-                   <tr>
-                    
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td>充值</td>
-                  </tr>
-                    <tr>
-                  
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td class="red">跑单扣除</td>
-                  </tr>
-                    <tr>
-                  
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td>充值</td>
-                  </tr>
-                   <tr>
-                   
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td>充值</td>
-                  </tr>
-                    <tr>
-                   
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td class="red">跑单扣除</td>
-                  </tr>
-                      <tr>
-                    
-                    <td>1000</td>
-                    <td>112000</td>
-                    <td>2016-12-15</td>
-                     <td>跑单剩余退还</td>
-                  </tr>
-
-              </tbody>
-          </table>
-           <div class="page">
-                                <ul>
-                                    <li style="background: #c0c0c0"><a href="#"><img src="__STATIC__/index/images/zuobian.png" alt=""></a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#"><img src="__STATIC__/index/images/youbian.png" alt=""></a></li>
-                                </ul>
-                            </div>
-            </div>
-
-
-
-            <div  class="xiu-form" style="display: none">
-               
-            </div>
             
-             
-
-            </div>
-               
-            </div>
-            
-             
-
-            </div>
-
-
-
-                      
+            {if $type == 'charge'}
+              <table class="fkmx" border="1" bordercolor="#e8e8e8">
+                <thead>
+                    <tr>
+                        <td>账户</td>
+                        <td>支付金额</td>
+                        <td>积分</td>
+                        <td>充值时间</td>
+                         <td>状态</td>
+                      </tr>
+                </thead>
+                <tbody>
+                  {foreach $res as $val}
+                    <tr>
+                      <td>{$login_user.phone}</td>
+                      <td>{$val.money}</td>
+                      <td>{$val.score + $val.give_score}</td>
+                      <td>{$val.create_time|date="Y-m-d H:i:s",###}</td>
+                       <td {if $val.status == 3}style="color:red;"{/if}>{$charge_status[$val.status]}</td>
+                    </tr>
+                  {/foreach}
+                </tbody>
+              </table>
+            {else}
+                <table class="fkmx" border="1" bordercolor="#e8e8e8">
+                  <thead>
+                      <tr>
+                          <td>账号</td>
+                          <td>积分</td>
+                          <td>时间</td>
+                          <td>说明</td>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {foreach $res as $val}
+                      <tr>
+                        <td>{$login_user.phone}</td>
+                        <td>{$val.score}</td>
+                        <td>{$val.time|date="Y-m-d H:i:s",###}</td>
+                         <td>{$score_type[$val.type]}</td>
+                      </tr>
+                    {/foreach}
+                  </tbody>
+                </table>
+            {/if}
+                <div class="page">
+                      {$res->render()}
+                </div>
+            </div>          
                   
         </div>
             <div class="clear"> </div>
            
 </div>
-<form style="display: none;" id="submit_order" action="#" method="post">
-    
-</form>
+
+<form style="display: none;" id="submit_order" action="#" method="post"></form>
 {include file="public/footer" /}
 
 <script type="text/javascript">
@@ -270,7 +102,7 @@
   });
 
 
-  $(".basic .a1").click(function(){
+  /*$(".basic .a1").click(function(){
     $(".xiu-form").hide();
     $(".basic-form").show();
   });
@@ -278,7 +110,7 @@
   $(".basic .a2").click(function(){
     $(".xiu-form").show();
     $(".basic-form").hide();
-  });
+  });*/
 
   $('.zfb').click(function(){
     if(isSync){

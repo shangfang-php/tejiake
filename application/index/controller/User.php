@@ -27,9 +27,14 @@ class User extends UserCommon{
 	 */
 	public function basic(){
 		$uid 	=	self::$login_user['id'];
-		$userInfo=	Db::table('user')->where(array('id'=>$uid))->find();
-		$this->assign('login_user', $userInfo);
-		return $this->fetch('user_basic');
+		$teamInfo 	=	Db::table('merchant_apply_record')->where(array('id'=>$uid,'status'=>2))->find();
+		$userInfo	=	Db::table('user')->where(array('id'=>$uid))->find();
+		
+		$data 	=	array(
+						'login_user' 	=>	$userInfo,
+						'teamInfo'		=>	$teamInfo,
+					);
+		return $this->fetch('user_basic', $data);
 	}
 
 	/**
@@ -79,14 +84,15 @@ class User extends UserCommon{
 			if(!$info){
 				return returnAjaxMsg(302,'保存头像失败!');
 			}
-			$update['head_img']	=	$save_img;
+			//$update['head_img']	=	$save_img;
+			Db::table('user')->where(array('id'=>$uid))->update(array('head_img'=>$save_img));
 		}
 		/**
 		 * end
 		 */
 
-		$update['team_info']	=	nl2br($team_info);
-		$info 	=	Db::table('user')->where(array('id'=>$uid))->update($update);
+		$update['introduce']	=	nl2br($team_info);
+		$info 	=	Db::table('merchant_apply_record')->where(array('uid'=>$uid,'status'=>2))->update($update);
 		if($info === FALSE){
 			$code 	=	303;
 			$msg 	=	'保存用户信息失败';
@@ -101,7 +107,7 @@ class User extends UserCommon{
 	 * 修改用户密码
 	 * @return [type] [description]
 	 */
-	function edit_password(){
+	function edit_password(){ 
 		$oldPassword	=	trim(input('post.oldPassword'));
 		$newPassword	=	trim(input('post.newPassword'));
 		$newPassword1	=	trim(input('post.newPassword1'));
@@ -129,6 +135,97 @@ class User extends UserCommon{
 		}else{
 			$code 	=	200;
 			$msg 	=	'修改密码成功';
+		}
+		return returnAjaxMsg($code, $msg);
+	}
+
+	/**
+	 * 用户淘宝帐号授权设置界面
+	 */
+	function set(){
+		$uid 	=	self::$login_user['id'];
+		$userInfo=	Db::table('user')->where(array('id'=>$uid))->find();
+		self::$login_user	=	$userInfo;
+
+		$where	=	array('uid'=>$uid, 'is_delete'=>0);
+		$pids	=	Db::table('user_pid_records')->field('pid')->where($where)->find();
+
+		$taobao_account	=	$userInfo['taobao_account'];
+
+		$data	=	array('pids'=>$pids, 'taobao_account'=>$taobao_account);
+		return $this->fetch('user_set', $data);
+	}
+
+	/**
+	 * 保存帐号信息并授权淘宝登录
+	 * @return [type] [description]
+	 */
+	function check_auth(){
+		$taobao_account 	=	trim(input('post.taobao_account'));
+		if(!$taobao_account){
+			return returnAjaxMsg(501, '请输入淘宝帐号!');
+		}
+
+		$uid 				=	self::$login_user['id'];
+		$info 	=	Db::table('user')->where(array('id'=>$uid))->update(array('taobao_account'=>$taobao_account)); ##保存淘宝帐号信息
+		if($info === FALSE){
+			return returnAjaxMsg(502, '保存淘宝帐号失败!');
+		}
+
+		$auth_url	=	$this->get_taobao_auth_url($taobao_account);
+		return returnAjaxMsg(200, $auth_url);
+	}
+
+	/**
+	 * 生成淘宝授权登录URL
+	 * @param  [type] $taobao_account [description]
+	 * @return [type]                 [description]
+	 */
+	function get_taobao_auth_url($taobao_account){
+		$state	=	base64_encode( $taobao_account.'|'.md5( $taobao_account.'eeetui' ) );
+		$url 	=	'https://oauth.taobao.com/authorize?response_type=code&client_id=23565277&redirect_uri=http://api.00o.cn/oauth.php?return=1&state='.$state.'&view=web';
+		return $url;
+	}
+
+	/**
+	 * 接收授权返回信息
+	 * @return [type] [description]
+	 */
+	function return_auth(){
+		$json	=	$_GET['json'];
+		var_dump($json);exit;
+	}
+
+	/**
+	 * 保存用户PID
+	 * @return [type] [description]
+	 */
+	function save_pid(){
+		$pid 	=	trim(input('post.pid'));
+		if(!$pid){
+			return returnAjaxMsg(601, '请输入PID');
+		}
+
+		if(!preg_match('/^mm_\d+_\d+_\d+$/', $pid)){
+			return returnAjaxMsg(602, 'PID格式不正确!');
+		}
+
+		$uid 	=	self::$login_user['id'];
+		$where 	=	array('uid'=>$uid);
+		$res 	=	Db::table('user_pid_records')->field('id')->where($where)->find();
+		if(!$res){
+			$data 	=	array('uid'=>$uid, 'pid'=>$pid);
+			$info 	=	Db::table('user_pid_records')->insert($data);
+		}else{
+			$info 	=	Db::table('user_pid_records')->where(array('id'=>$res['id']))->update(array('pid'=>$pid));
+		}
+
+		if($info === FALSE){
+			$code = 603;
+			$msg  = '保存PID失败!';
+		}else{
+			$code = 200;
+			$msg  = '保存成功!';
 		}
 		return returnAjaxMsg($code, $msg);
 	}

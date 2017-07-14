@@ -8,19 +8,34 @@ use think\Db;
  */
 class Charge extends UserCommon{
 	protected $charge_price;
+	protected $scoreType;
 
 	public function _initialize(){
 		parent::_initialize();
 		$this->charge_price = getCommonConfig('charge_price');
-		$this->assign('charge_price', $this->charge_price);
+		$this->score_type	= getCommonConfig('score_type');
+		$charge_status		= array(1=>'等待付款', 2=>'充值成功', 3=>'充值失败', 4=>'充值异常');
+
+		$assign	=	array('score_type'=>$this->score_type, 'charge_price'=>$this->charge_price, 'charge_status'=>$charge_status);
+		$this->assign($assign);
 	}
 	/**
 	 * 充值中心首页
 	 * @return [type] [description]
 	 */
 	public function index(){
+		$type	=	trim(input('get.type')) ? trim(input('get.type')) : 'charge';
+		$where	=	array('uid'=>self::$login_user['id']);
 
-		return $this->fetch('charge_index');
+		$query	=	['query' => array('type'=>$type)];
+		if($type == 'charge'){
+			$res 	=	Db::table('user_charge_records')->where($where)->order('id', 'desc')->paginate(5,false,$query);
+		}else{
+			$res 	=	Db::table('user_score_record')->where($where)->order('id', 'desc')->paginate(5,false,$query);
+		}
+
+		$data	=	array('type'=>$type, 'res'=>$res);
+		return $this->fetch('charge_index', $data);
 	}
 
 	/**

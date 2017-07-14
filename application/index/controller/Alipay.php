@@ -21,8 +21,9 @@ class Alipay extends Controller{
 						            'notify_url'=>	'http://ceshi.tejiake.com/index/alipay/receive_alipay_result',
 						            'return_url'=>	'http://ceshi.tejiake.com/index/charge/index',
 						            'payment_type'=> 1,
+						            'transport'	=>	'http',
+						            'cacert'	=>	getcwd().'/cacert.pem',
 						        );
-
 	}
 
 	/**
@@ -53,6 +54,7 @@ class Alipay extends Controller{
 			'input_charset'	=> $this->alipay_config['input_charset'],
 			'payment_type'	=> $this->alipay_config['payment_type'],
 			'notify_url'	=> $this->alipay_config['notify_url'],
+			'return_url'	=> $this->alipay_config['return_url'],
 			'sign_type'		=> $this->alipay_config['sign_type'],
 			'out_trade_no'	=> $orderInfo['id'],
 			'subject'		=> $orderInfo['description'],
@@ -99,17 +101,17 @@ class Alipay extends Controller{
 									'pay_money'		=>	$pay_money,
 									'end_time'		=>	time(),
 								);
-					Db::start_trans();
+					Db::startTrans();
 					if($pay_money == $orderInfo['money']){ ##付款金额一致
 						$update['status']	=	2;
 						$info 	=	Db::table('user_charge_records')->where($where)->update($update);
-						if(!$info){
+						if($info === FALSE){
 							Db::rollback();
 							echo 'fail';exit;
 						}
 
 						$score	=	$orderInfo['score'] + $orderInfo['give_score'];
-						$info 	=	updateUserScore($orderInfo['uid'], $score, 1, $orderInfo['description']);
+						$info 	=	updateUserScore($orderInfo['uid'], $score, 1, $orderInfo['description'], $orderInfo['uid']);
 						if(!$info){
 							Db::rollback();
 							echo 'fail';

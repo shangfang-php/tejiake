@@ -118,13 +118,14 @@ function getCommonConfig($name){
  */
 function updateUserScore($uid, $score, $scoreType, $remark='', $operateUid = 0){
     $score      =   $score > 0 ? '+'.$score : $score;
-    $update     =   array('score', ['exp', 'score '.$score]);
+    $update     =   array('score'=>['exp', 'score '.$score]);
     $info       =   Db::table('user')->where(array('id'=>$uid))->update($update);
     if($info === FALSE){
         return FALSE;
     }
 
     $info   =   saveScoreChangeRecords($uid, $score, $scoreType, $remark, $operateUid); ##记录积分变更日志
+    return $info;
 }
 
 /**

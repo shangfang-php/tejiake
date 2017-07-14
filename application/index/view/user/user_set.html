@@ -1,0 +1,66 @@
+{include file="public/header" /}
+<!-- 加载每个页面内容-->
+<div class="con">
+    <div class="content" style="padding-top: 80px;">
+        {include file="public/user_menu" /}
+        <div class="fr user-main">
+            <div class="connnn">
+                <h1><img src="__STATIC__/index/images/sqgl.png" alt="">&nbsp;授权管理</h1>
+                <p>
+                    {if $taobao_account}
+                        您已授权登录淘宝账号:
+                    {else}
+                        您先输入要授权登录淘宝账号:
+                    {/if}
+                    <input type="text" id='taobao_account' value="{$taobao_account}" placeholder="淘宝帐号,请不要输入淘宝昵称" class="geshi" style="width: 180px;">
+                    <input type="button" name="" value="{if $taobao_account}更新{/if}授权" class="gengxin" onclick="check_auth()">
+                </p>
+            </div>
+            
+            <div class="line"></div>
+            
+            <div class="connnn">
+                <h1><img src="__STATIC__/index/images/pid.png" alt="">&nbsp;PID管理</h1>
+                <p>
+                    PID <input type="text" placeholder="格式：mm_16356866_15776385_60028576" class="geshi" id="pid" value="{if $pids}{$pids.pid}{/if}">
+                    <input type="button" name="" value="确定" class="gengxin" onclick="save_pid()">
+                </p>
+                <p class="shuoming">说明：以上授权登录的淘宝账号和下面PID一定要是同一账户，这样才会是高佣</p>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>        
+</div>
+<div id="flyItem" class="fly_item"><img src="__STATIC__/index/images/sc.png" width="40" height="40"></div>
+{include file="public/footer" /}
+
+<script type="text/javascript">
+    function check_auth(){
+        var taobao_account = $('#taobao_account').val();
+        if(!taobao_account){
+            alert('请先输入淘宝帐号，再点击授权!');
+            return false;
+        }
+
+        $.post('/index/user/check_auth',{taobao_account:taobao_account},function(msg){
+            if(msg.code == 200){
+                window.location.href = msg.msg;
+            }else{
+                alert(msg.msg);
+            }
+        },"json")
+    }
+
+    function save_pid(){
+        var pid     =   $('#pid').val();
+        if(!pid){
+            alert('请输入PID！');
+            $('#pid').select();
+            return false;
+        }
+
+        $.post('/index/user/save_pid', {pid:pid}, function(msg){
+            alert(msg.msg);
+        },"json");
+    }
+</script>
