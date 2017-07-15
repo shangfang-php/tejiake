@@ -8,83 +8,76 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="card-box">
-                            <!--<div class="dropdown pull-right">
-                                    <a href="{:url('Menu/addMenu')}" class="card-drop">添加用户</a>
-                            </div>-->
-
-                            <h4 class="header-title m-t-0 m-b-30">用户列表</h4>
-                            <a class="btn btn-primary" href="{:url('User/index',array('status'=>2))}">封禁列表</a>
-                            <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal"><font><font>添加用户</font></font></button>
-                            <p class="text-muted font-13 m-b-25">
-
-                            </p>
-                            <div class=" btn-group" >
-                                <a href="{:url('User/index')}"  class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
-                                    <span>全部</span>
-                                </a>
-                                <a href="{:url('User/index',array('type'=>1))}" class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
-                                    <span>普通淘客</span>
-                                </a>
-                                <a href="{:url('User/index',array('type'=>2))}" class="btn btn-default buttons-csv buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
-                                    <span>招商淘客</span>
-                                </a>
+                        <div class="panel panel-color panel-tabs panel-success">
+                            <div class="panel-heading">
+                                <ul class="nav nav-pills pull-right">
+                                    <li >
+                                        <!--<a href="#navpills-1" ><font><font>标签一</font></font></a>-->
+                                        <a href="{:url('Finance/index')}" class="card-drop"><font><font>财务明细</font></font></a>
+                                    </li>
+                                    <li class="active">
+                                        <!--<a href="#navpills-2" data-toggle="tab" aria-expanded="false"><font><font>标签二</font></font></a>-->
+                                        <a href="{:url('Finance/scoreDetail')}" class="card-drop"><font><font>积分详情</font></font></a>
+                                    </li>
+                                </ul>
+                                <h3 class="panel-title"><font><font>财务信息</font></font></h3>
                             </div>
-                            <div class="hidden-xs" style="width:215px;right: 20px;position: absolute;top: 42px;" >
-                                <form role="search" class="app-search" action="#" method="get">
-                                    <input type="text" placeholder="输入账号/QQ/微信" name="keyword" class="form-control">
-                                    <a><i class="fa fa-search"></i></a>
-                                </form>
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <div id="navpills-1" class="tab-pane fade active in">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <h4 class="header-title m-t-0 m-b-30">积分明细</h4>
+                                                <p class="text-muted font-13 m-b-25">
 
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table m-0">
-                                    <thead>
-                                    <tr>
-                                        <th>编号</th>
-                                        <th>账号</th>
-                                        <th>昵称</th>
-                                        <th>QQ</th>
-                                        <th>积分</th>
-                                        <th>最近登录时间</th>
-                                        <th>淘宝类型</th>
-                                        <!--<th>创建时间</th>
-                                        <th>最后登录IP</th>-->
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {volist name='data' id='vo' key="key"}
-                                    <tr>
-                                        <th scope="row">{$key}</th>
-                                        <td>{$vo.phone}</td>
-                                        <td>{$vo.nickname}</td>
-                                        <td>{$vo.qq}</td>
-                                        <td>{$vo.score}</td>
-                                        <td>{$vo.login_time|date='Y-m-d H:i:s',###}</td>
-                                        <td>{if condition="$vo['type'] eq 1"}普通淘客{else/}招商淘客{/if}</td>
-                                        <td>
-                                            {if condition="$vo['status'] eq 1"}
-                                            <a data-toggle="modal" href="{:url('User/info',array('uid'=>$vo['id']))}" data-target="#modal-info" class="btn btn-primary">修改</a>
+                                                </p>
+                                                <div class="hidden-xs" style="width:215px;right: 20px;position: absolute;top: -19px;" >
+                                                    <form role="search" class="app-search" action="#" method="get">
+                                                        <input type="text" placeholder="输入账号" name="keyword" class="form-control">
+                                                        <a><i class="fa fa-search"></i></a>
+                                                    </form>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table class="table m-0">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>编号</th>
+                                                            <th>账号</th>
+                                                            <th>积分</th>
+                                                            <th>时间</th>
+                                                            <th>说明</th>
+                                                            <th>积分执行类型</th>
+                                                            <th>操作</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {volist name='data' id='vo' key="key"}
+                                                        <tr>
+                                                            <th scope="row">{$key}</th>
+                                                            <td>{$vo.phone}</td>
+                                                            <td>{$vo.score}</td>
+                                                            <td>{$vo.time|date='Y-m-d H:i:s',###}</td>
+                                                            <td>{$vo.remark}</td>
+                                                            <td>{$scoretype[$vo.type]}</td>
+                                                            <td>
+                                                                <!-- <a  href="{:url('Finance/editScore',array('uid'=>$vo['uid']))}"  class="btn btn-primary">修改??</a>-->
+                                                                暂无
+                                                            </td>
+                                                        </tr>
+                                                        {/volist}
+                                                        </tbody>
+                                                    </table>
+                                                    {$show}
+                                                </div>
 
-                                            <a href="{:url('User/editScore',array('uid'=>$vo['id']))}"  class="btn btn-primary">积分操作</a>
-                                            <button onclick="getId({$vo['id']},{$vo['phone']});" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-sm"><font><font>修改密码</font></font></button>
-                                            <a href="javascript:void();" onclick="editStatus({$vo['id']});" class="btn btn-inverse"> 封禁 </a>
-                                            <a onclick="delUser({$vo['id']});"  class="btn btn-primary">删除用户</a>
-                                            {else/}
-                                            <a href="javascript:void();" onclick="editStatus({$vo['id']});" class="btn btn-inverse"> 解除封禁 </a>
-                                            {/if}
+                                            </div><!-- end col -->
 
-                                        </td>
-                                    </tr>
-                                    {/volist}
-                                    </tbody>
-                                </table>
-                                {$show}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div><!-- end col -->
-
+                    </div>
                 </div>
                 <!-- end row -->
 

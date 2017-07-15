@@ -18,7 +18,7 @@ class Common extends Controller{
         //获取当前用户的Menu权限
         if($this->admininfo['id'] == 1){
             //admin 有全部权限
-            $menu = Db::name('menu')->where(array('parentId'=>0,'is_delete'=>0,'is_show'=>0))->order('id asc')->select();
+            $menu = Db::name('menu')->where(array('parentId'=>0,'is_delete'=>0,'is_show'=>0))->order('sort asc')->select();
             $nmenu = array();
             if(!empty($menu)){
                 foreach ($menu as $k=>$v) {

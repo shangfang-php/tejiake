@@ -1,4 +1,4 @@
-{include file='Public/header' /}
+{include file='public/header' /}
     <!-- ============================================================== -->
     <!-- Start right Content here -->
     <!-- ============================================================== -->
@@ -10,33 +10,32 @@
                     <div class="col-sm-12">
                         <div class="card-box">
                             <h4 class="header-title m-t-0 m-b-30">网站设置</h4>
-
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <form class="form-horizontal" role="form">
+                                    <form class="form-horizontal" role="form" action="#" method="post">
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">网站标题</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" value="">
+                                                <input type="text" class="form-control" name="title" value="{$data.title}">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">关键词</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" value="">
+                                                <input type="text" class="form-control" name="keyword" value="{$data.keyword}">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">网站描述</label>
                                             <div class="col-md-10">
-                                                <textarea class="form-control" rows="5"></textarea>
+                                                <textarea class="form-control" rows="5" name="describe">{$data.describe}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">统计代码</label>
                                             <div class="col-md-10">
-                                                <textarea class="form-control" rows="5"></textarea>
+                                                <textarea class="form-control" rows="5" name="code">{$data.code}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group text-right  m-b-0">
@@ -49,56 +48,35 @@
                                         </div>
                                     </form>
                                 </div><!-- end col -->
-                        </div> <!-- container -->
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
+            </div> <!-- container -->
         </div> <!-- content -->
-
-
     </div>
-
-
     <!-- ============================================================== -->
     <!-- End Right content here -->
     <!-- ============================================================== -->
-
-
     <!-- Right Sidebar -->
-
     <!-- /Right-bar -->
-
 </div>
 <!-- END wrapper -->
-{include file='Public/footer' /}
+{include file='public/footer' /}
 
 <script type="text/javascript">
     $(document).ready(function() {
         $('form').parsley();
     });
     function check(){
-        if(confirm('确定熟记新密码?')){
-            var oldpwd = $('#oldpwd').val();
-            var newpwd = $('#newpwd').val();
-            if(oldpwd == newpwd){
-                alert('新旧密码不可一致');return false;
-            }
-            var confirmnewpwd = $('#confirmnewpwd').val();
-            if(oldpwd == ''|| newpwd == '' || confirmnewpwd == ''){
-                alert('数据不可为空');return false;
-            }
-            $.post("{:url('System/editPwd')}",{oldpwd:oldpwd,newpwd:newpwd,confirmnewpwd:confirmnewpwd}, function (dat) {
-                var data = JSON.parse(dat);
-                if(data.status == 1){
-                    alert(data.msg);
-                    window.location.href =  "{:url('Login/loginout')}";
-                }else{
-                    alert(data.msg);return false;
-                }
-            });
+        var title = $('input[name=title]').val();
+        var keyword = $('input[name=keyword]').val();
+        var describe = $('textarea[name=describe]').val();
+        var code = $('textarea[name=code]').val();
+        if(describe == ''|| code == '' || title == ''|| keyword == ''){
+            alert('数据不可为空');return false;
         }
+       $('form').submit();
     }
 
 </script>

@@ -33,6 +33,7 @@ class Menu extends Common{
                 'icon'    => input('post.icon'),
                 'is_close'=> input('post.is_close'),
                 'is_show' => input('post.is_show'),
+                'sort'    => input('post.sort')
             );
 
            // echo '<pre>';
@@ -66,6 +67,7 @@ class Menu extends Common{
                 'icon'    => input('post.icon'),
                 'is_close'=> input('post.is_close'),
                 'is_show'=> input('post.is_show'),
+                'sort'    => input('post.sort')
             );
             $info1 = Db::name('menu')->where(array('id'=>$menuid))->find();
             if(empty($info1)){

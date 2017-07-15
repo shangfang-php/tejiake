@@ -1,0 +1,151 @@
+<div class="modal-header" style="margin-bottom: 17px;">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">修改商品</h4>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <form class="form-horizontal" role="form" action="{:url('Goods/edit')}">
+            <div class="form-group">
+                <label class="col-md-2 control-label">发布账号：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" readonly="" value="{$data.phone}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">分类：</label>
+                <div class="col-md-10"><!--1爆款单2限时抢购3过夜单4直播单5视频单-->
+                    <input type="text" class="form-control" disabled=""
+                           {if condition="$data['type'] eq 1"}value="爆款单"
+                           {elseif condition="$data['type'] eq 2"}value="限时抢购"
+                           {elseif condition="$data['type'] eq 3"}value="过夜单"
+                           {elseif condition="$data['type'] eq 4"}value="直播单"
+                           {elseif condition="$data['type'] eq 5"}value="视频单"
+                           {/if}>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">宝贝链接：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name="link" value="{$data.link}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" >优惠券链接：</label>
+                <div class="col-md-10">
+                    <input type="text" name="coupon_link" value="{$data.coupon_link}" class="form-control" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">推广长图：</label>
+                <div class="col-md-10">
+                    <img src="{$data.long_img}" alt="" class="img-circle thumb-xl img-thumbnail m-b-10">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">主图：</label>
+                <div class="col-md-10">
+                    <img src="{$data.main_img}" alt="" class="img-circle thumb-xl img-thumbnail m-b-10">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">宝贝标题：</label>
+                <div class="col-md-10">
+                    <input type="text"  name="title" value="{$data.title}" class="form-control" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">宝贝短标题：</label>
+                <div class="col-md-10">
+                    <input type="text" name="short_title" value="{$data.short_title}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group form-inline">
+                <label style="margin-left: 78px;">券后价：</label> <input type="text" style="margin-left: 17px;" name="real_money" class="form-control" value="{$data.real_money}">
+                <label style="margin-left: 27px;">原价：</label> <input  type="text"  name="price" class="form-control" value="{$data.price}">
+                <label style="margin-left: 27px;">销量：</label><input type="text"  name="sell_num" class="form-control"  value="{$data.sell_num}">
+            </div>
+            <div class="form-group form-inline">
+                <label style="margin-left: 94px;" >优惠：</label><input style="margin-left: 17px;" type="text" class="form-control"  value="{$data.coupon_money}" name="coupon_money">
+                <label style="margin-left: 10px;">总券数：</label><input type="text" class="form-control" value="{$data.coupon_total_num}" name="coupon_total_num">
+                <label style="margin-left: 10px;">已领券数：</label><input type="text" class="form-control" value="{$data.coupon_apply_num}" name="coupon_apply_num">
+            </div>
+            <div class="form-group form-inline">
+                <label style="margin-left: 22px;">优惠券开始时间：</label>
+                <input style="margin-left: 17px;" type="text"  name="example-email" class="form-control" >
+                <label style="margin-left: 23px;">优惠券结束时间：</label>
+                <input type="text"  name="example-email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">计划类型：</label>
+                <input type="hidden" name="plan_type" value="{$data.plan_type}">
+                <div class="col-md-10 plantype"><!--1定向计划2通用计划3鹊桥4营销计划-->
+                    <button onclick="changeType(this,1)" type="button" style="border-radius: 6px;"
+                            {if condition="$data.plan_type eq 1"}class="btn btn-primary"
+                            {else/}class="btn btn-default"
+                            {/if}
+                            ><font><font>定向计划</font></font></button>
+                    <button onclick="changeType(this,2)" type="button" style="margin: 0 10px 0 10px;border-radius: 6px;"
+                            {if condition="$data.plan_type eq 2"}class="btn btn-primary"
+                            {else/}class="btn btn-default"
+                            {/if}
+                            ><font><font>通用计划</font></font></button>
+                    <button onclick="changeType(this,3)" type="button" style="margin: 0 10px 0 10px;border-radius: 6px;"
+                            {if condition="$data.plan_type eq 3"}class="btn btn-primary"
+                            {else/}class="btn btn-default"
+                            {/if}
+                            ><font><font>高佣鹊桥</font></font></button>
+                    <button onclick="changeType(this,4)" type="button" style="margin: 0 10px 0 10px;border-radius: 6px;"
+                            {if condition="$data.plan_type eq 4"}class="btn btn-primary"
+                            {else/}class="btn btn-default"
+                            {/if}
+                            ><font><font>营销计划</font></font></button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">计划链接：</label>
+                <div class="col-md-10">
+                    <input type="text"  name="plan_link" class="form-control" value="{$data.plan_link}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">佣金比例：</label>
+                <div class="col-md-10">
+                    <input type="text"  name="taoke_money_percent" class="form-control" value="{$data.taoke_money_percent}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">推广文案：</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" rows="5">{$data.guide_info}</textarea>
+                </div>
+            </div>
+            <div class="form-group form-inline" >
+                <label style="margin-left: 63px;">开始时间：</label>
+                <input style="margin-left: 17px;" type="text" class="form-control" placeholder="Helping text">
+                <label style="margin-left: 23px;">结束时间：</label>
+                <input type="text" class="form-control" placeholder="Helping text">
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">审核语：</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" rows="5">{$data.submit_message}</textarea>
+                </div>
+            </div>
+        </form>
+    </div><!-- end col -->
+
+</div><!-- end row -->
+<div  style="margin-left: 142px;">
+    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
+    <button type="button" class="btn btn-info waves-effect waves-light">提交</button>
+</div>
+<script>
+    function changeType(obj,param){
+        $('input[name=plan_type]').val(param);
+        $('.plantype button').siblings().attr('class','btn btn-default');
+        $(obj).attr('class','btn btn-primary');
+    }
+</script>
+

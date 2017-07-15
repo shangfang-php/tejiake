@@ -31,14 +31,26 @@ class System extends Common{
     }
 
     public function webset(){
-        $info = Db::name('setting')->select();
-        if(!empty($info)){
-            if(request()->post()){
-
+        $info = Db::name('setting')->where(['id'=>1])->find();//print_r($info);exit;
+        if(request()->post()){
+            $data = [
+                'title'=>input('post.title'),
+                'keyword'=>input('post.keyword'),
+                'describe'=>input('post.describe'),
+                'code'=>htmlspecialchars(input('post.code')),
+            ];
+            if(!empty($info)){
+                //print_r($data);exit;
+                $data['updatetime'] = time();
+                Db::name('setting')->where(['id'=>1])->update($data);
+            }else{
+                $data['createtime'] = time();
+                Db::name('setting')->insert($data);
             }
             $info = Db::name('setting')->where(['id'=>1])->find();
-            $this->assign('data',$info);
+            //$this->assign('data',$info);
         }
+        $this->assign('data',$info);
         return $this->fetch();
     }
 }

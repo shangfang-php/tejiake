@@ -1,4 +1,4 @@
-{include file='Public/header' /}
+{include file='public/header' /}
 
 
     <!-- ============================================================== -->
@@ -12,21 +12,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card-box">
-                            <div class="dropdown pull-right">
-                                <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="zmdi zmdi-more-vert"></i>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
-                            </div>
-
                             <h4 class="header-title m-t-0 m-b-30">修改菜单</h4>
-
                             <form action="#" data-parsley-validate novalidate >
                                 <div class="form-group">
                                     <label for="name">菜单名称</label>
@@ -58,6 +44,10 @@
                                 <div class="form-group">
                                     <label for="icon">icon (例：zmdi-account-add</label>
                                     <input data-parsley-equalto="#icon" type="text" required placeholder="输入icon" class="form-control" id="icon" value="{$data.icon}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">菜单栏排序</label>
+                                    <input type="text" name="sort"  required value="{$data.sort}" class="form-control" id="sort" placeholder="非一级菜单不需填">
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">是否正常使用</label>
@@ -128,12 +118,7 @@
 <!-- END wrapper -->
 
 
-
-<script>
-    var resizefunc = [];
-</script>
-
-{include file='Public/footer' /}
+{include file='public/footer' /}
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -144,12 +129,14 @@
         var pid = $('#pid option:selected').val();
         var url = $('#url').val();
         var icon = $('#icon').val();
+        var sort = $('#sort').val();
         var menuid = $('#menuid').val();
         var is_close = $('input:radio[name="is_close"]:checked').val();
-        if(name == ''|| icon == ''){
+        var is_show = $('input:radio[name="is_show"]:checked').val();
+        if(name == ''){
             alert('数据不可为空');return false;
         }
-        $.post("{:url('Menu/editMenu')}",{name:name,pid:pid,menuid:menuid,url:url,icon:icon,is_close:is_close}, function (dat) {
+        $.post("{:url('Menu/editMenu')}",{name:name,pid:pid,menuid:menuid,url:url,sort:sort,icon:icon,is_close:is_close,is_show:is_show}, function (dat) {
             var data = JSON.parse(dat);
             if(data.status == 1){
                 alert(data.msg);

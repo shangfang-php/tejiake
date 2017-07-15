@@ -1,4 +1,4 @@
-{include file='Public/header' /}
+{include file='public/header' /}
 <!-- ============================================================== -->
     <!-- Start right Content here -->
     <!-- ============================================================== -->
@@ -14,7 +14,7 @@
                             </div>-->
 
                             <h4 class="header-title m-t-0 m-b-30">管理员列表</h4>
-
+                            <a class="btn btn-primary" href="{:url('Admin/addAdmin',array('status'=>2))}">添加管理员</a>
                             <p class="text-muted font-13 m-b-25">
 
                             </p>
@@ -65,7 +65,7 @@
 
 </div>
 <!-- END wrapper -->
-{include file='Public/footer' /}
+{include file='public/footer' /}
 <script type="text/javascript">
     function hideMenu(param){
         $.get("{:url('Menu/hideMenu')}",{menuid:param}, function (dat) {

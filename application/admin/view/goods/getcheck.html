@@ -12,53 +12,22 @@
                             <!--<div class="dropdown pull-right">
                                     <a href="{:url('Menu/addMenu')}" class="card-drop">添加用户</a>
                             </div>-->
-                            <h4 class="header-title m-t-0 m-b-30">商品管理</h4>
+                            <h4 class="header-title m-t-0 m-b-30">
+                                {if condition="$type eq 1"}爆款单
+                                {elseif condition="$type eq 2"}限时抢购
+                                {elseif condition="$type eq 3"}过夜单
+                                {elseif condition="$type eq 4"}直播单
+                                {elseif condition="$type eq 5"}视频单
+                                {/if}
+                            </h4>
                             <p class="text-muted font-13 m-b-25">
                             </p>
-                            <div class="" style="display: inline-block">
-                                <a onclick="getType(0);" class="btn btn-primary waves-effect waves-light">全部</a>
-                            </div>
-                            <div class="" style="display: inline-block">
-                                <a onclick="getType(1);" class="btn btn-primary waves-effect waves-light">爆款单</a>
-                            </div>
-                            <div class="" style="display: inline-block">
-                                <a onclick="getType(2);"  class="btn btn-primary waves-effect waves-light">限时抢购</a>
-                            </div>
-                            <div class="" style="display: inline-block">
-                                <a onclick="getType(3);"  class="btn btn-primary waves-effect waves-light">过夜单</a>
-                            </div>
-                            <div class="" style="display: inline-block">
-                                <a onclick="getType(4);"  class="btn btn-primary waves-effect waves-light">直播单</a>
-                            </div>
-                            <div class="" style="display: inline-block">
-                                <a onclick="getType(5);" class="btn btn-primary waves-effect waves-light">视频单</a>
-                            </div>
-                            <div class=" btn-group" >
-                                <button onclick="getStatus(0);"  class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
-                                    <span>全部</span>
-                                </button>
-                                <!--<button onclick="getStatus(1);"  class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
-                                    <span>待审核</span>
-                                </button>-->
-                                <button onclick="getStatus(2);" class="btn btn-default buttons-csv buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
-                                    <span>展示</span>
-                                </button>
-                                <button onclick="getStatus(3);" class="btn btn-default buttons-excel buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
-                                    <span>过期</span>
-                                </button>
-                                <button onclick="getStatus(5);" class="btn btn-default buttons-excel buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
-                                    <span>下架</span>
-                                </button>
-                            </div>
-                            <!-- Right(Notification and Searchbox -->
-
-                                <div class="hidden-xs" style="width:215px;right: 20px;position: absolute;top: 48px;" >
+                                <div class="hidden-xs" style="width:215px;right: 20px;position: absolute;top: 0;" >
                                     <form role="search" class="app-search" action="#" method="get">
-                                        <input  type="text" placeholder="输入商品名或用户手机" name="keyword" class="form-control">
+                                        <input  type="text" placeholder="输入商品标题" name="keyword" class="form-control">
                                         <a ><i class="fa fa-search"></i></a>
                                     </form>
-                                    <input type="hidden" name="status" value="{$param.status}">
-                                    <input type="hidden" name="type" value="{$param.type}">
+
                                 </div>
                             <div class="table-responsive">
                                 <table class="table m-0" >
@@ -73,7 +42,6 @@
                                         <th>编号</th>
                                         <th>图片</th>
                                         <th>短标题</th>
-                                        <th>分类</th>
                                         <th>价格</th>
                                         <th>优惠券</th>
                                         <th>佣金</th>
@@ -92,16 +60,8 @@
                                             </div>
                                         </th>
                                         <th scope="row">{$key}</th>
-                                        <td><img src="{$vo.main_img}" alt="" class="img-circle thumb-xl img-thumbnail m-b-10"></td>
+                                        <td><img src="{$vo.main_img}" alt=""></td>
                                         <td>{$vo.short_title}</td>
-                                        <td>
-                                            {if condition="$vo['type'] eq 1"}爆款单
-                                                {elseif condition="$vo['type'] eq 2"}限时抢购
-                                                {elseif condition="$vo['type'] eq 3"}过夜单
-                                                {elseif condition="$vo['type'] eq 4"}直播单
-                                                {elseif condition="$vo['type'] eq 5"}视频单
-                                            {/if}
-                                        </td>
                                         <td>
                                             <label>¥{$vo.real_money}</label>
                                             <label>¥{$vo.price}</label>
@@ -123,21 +83,18 @@
                                             {/if}
                                         </td>
                                         <td>
-
-                                            {if condition="$vo['is_delete'] eq 1"}
-                                            <a class="label label-warning">已删除</a>
-                                            {else/}
-                                           <!-- <a href="{:url('Goods/edit',array('gid'=>$vo['id']))}"  class="label label-purple">修改</a>-->
-                                            <a data-toggle="modal" href="{:url('Goods/edit',array('gid'=>$vo['id']))}" data-target="#custom-width-modal" class="label label-primary">修改</a>
-                                            <a onclick="delGood({$vo['id']});"  class="label label-danger">删除</a>
-                                            {/if}
-
+                                            <a data-toggle="modal" href="{:url('Goods/edit',array('gid'=>$vo['id']))}" data-target="#custom-width-modal" class="label label-primary">查看</a>
+                                            <a onclick="passGood({$vo['id']});"  class="label label-purple">通过</a>
+                                       <!--     <a onclick="rejectGood({$vo['id']});"  class="label label-danger">拒绝</a>-->
+                                            <button onclick="rejectGoodmodal({$vo['id']});" class="label label-danger waves-effect waves-light" data-toggle="modal" data-target=".reject-modal" ><font><font>拒绝</font></font></button>
+                                           <!-- <button onclick="getId({$vo['id']},{$vo['phone']});" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-sm"><font><font>修改密码</font></font></button>-->
                                         </td>
                                     </tr>
                                     {/volist}
                                     </tbody>
                                 </table>
-                                <a onclick="delMuchGood();"  class="label label-primary">删除</a>
+                                <a onclick="passMuchGood();"  class="label label-primary">通过</a>
+                               <!-- <a onclick="rejectMuchGood();"  class="label label-danger">拒绝</a>-->
                                 {$show}
                             </div>
                         </div>
@@ -160,6 +117,42 @@
         </div>
     </div>
 </div>
+<!--填写拒绝原因-->
+<div class="modal fade reject-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="mySmallModalLabel">拒绝商品申请</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">拒绝理由：</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" rows="5" name="remark"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">扣除积分：</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" value="" name="score" style="width: 300px;float: left;"><span style="line-height: 38px;margin-left: 9px;">分</span>
+                                </div>
+                            </div>
+                            <input type="hidden" name="rejectid" value="">
+                        </form>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
+                    <button type="button" onclick="rejectGood()" class="btn btn-info waves-effect waves-light">提交</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <!-- /.modal end-->
 
     <!-- ============================================================== -->
@@ -171,6 +164,9 @@
 {include file='public/footer' /}
 <script type="text/javascript">
     $("#custom-width-modal").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
+    $(".reject-modal").on("hidden.bs.modal", function() {
         $(this).removeData("bs.modal");
     });
     //获取全部CheckBox
@@ -187,23 +183,19 @@
         //obj.is(:checked) = true;
     }
 
-
-    function getStatus(param){
-        var type = $('input[name=type]').val();
-       // alert(type);
-        window.location.href = "{:url('Goods/index')}?status="+param+"&type="+type;
-        //alert("{:url('Goods/index')}?status="+param+"&type="+type);
+    //显示modal id OR ids
+    function rejectGoodmodal(param){
+        $('input[name=rejectid]').val(param);
     }
-    function getType(param){
-        var status = $('input[name=status]').val();
-        window.location.href = "{:url('Goods/index')}?status="+status+"&type="+param;
-    }
-
-    //删除一个商品
-    function delGood(param){
+    //拒绝一个商品的审核
+    function rejectGood(){
+        var param = $('input[name=rejectid]').val();
+        var remark = $('textarea[name=remark]').val();
+        var score = $('input[name=score]').val();
+        //alert(remark);return false;
         if(confirm('当前操作不可恢复,确定要删除?')){
-            //$.post("{:url('Goods/delGood')}",{gid:param}, function (dat) {
-            $.post("{:url('Goods/changeStatus')}",{gid:param,type:1}, function (dat) {
+            //$.post("{:url('Goods/rejectGood')}",{gid:param}, function (dat) {
+            $.post("{:url('Goods/changeStatus')}",{gid:param,type:3,remark:remark,score:score}, function (dat) {
                 var data = JSON.parse(dat);
                 alert(data.msg);
                 if(data.status == 1){
@@ -214,10 +206,13 @@
         }
     }
 
-    //删除多个商品
-    function delMuchGood(){
-        if(confirm('此操作不可恢复,求慎重')){
-            var gids = $('input[type=checkbox]:checked');
+    //拒绝多个商品的审核
+    function rejectMuchGood(){
+        var gids = $('input[type=checkbox]:checked');
+        if(gids.length < 2 ){
+            alert('请选择拒绝的商品审核');return false;
+        }
+        if(confirm('此操作不可恢复,请慎重')){
             var gidsarr = new Array();
             var k=0;
             for (var i = 0; i < gids.length; i++) {
@@ -226,8 +221,8 @@
                     k++;
                 }
             }
-            //$.post("{:url('Goods/delGood')}",{gids:gidsarr}, function (dat) {
-            $.post("{:url('Goods/changeStatus')}",{gids:gidsarr,type:1}, function (dat) {
+            //$.post("{:url('Goods/rejectGood')}",{gids:gidsarr}, function (dat) {
+            $.post("{:url('Goods/changeStatus')}",{gids:gidsarr,type:3}, function (dat) {
                 var data = JSON.parse(dat);
                 alert(data.msg);
                 if(data.status == 1){
@@ -235,6 +230,51 @@
                 }
                 return false;
             });
+        }
+
+    }
+
+    //通过一个商品的审核
+    function passGood(param){
+        if(confirm('当前操作不可恢复,确定要执行?')){
+            //$.post("{:url('Goods/passGood')}",{gid:param}, function (dat) {
+            $.post("{:url('Goods/changeStatus')}",{gid:param,type:2}, function (dat) {
+                var data = JSON.parse(dat);
+                alert(data.msg);
+                if(data.status == 1){
+                    window.location.href = "{:url('Goods/index')}";
+                }
+                return false;
+            });
+        }
+    }
+
+    //通过多个商品的审核
+    function passMuchGood(){
+        var gids = $('input[type=checkbox]:checked');
+        if(gids.length < 2 ){
+            alert('请选择拒绝的商品审核');return false;
+        }
+        if(confirm('此操作不可恢复,请慎重')){
+            //var gids = $('input[type=checkbox]:checked');
+            var gidsarr = new Array();
+            var k=0;
+            for (var i = 0; i < gids.length; i++) {
+                if (!isNaN(gids[i].value)) {
+                    gidsarr[k] = gids[i].value;
+                    k++;
+                }
+            }
+            //$.post("{:url('Goods/passGood')}",{gids:gidsarr}, function (dat) {
+            $.post("{:url('Goods/changeStatus')}",{gids:gidsarr,type:2}, function (dat) {
+                    var data = JSON.parse(dat);
+                    alert(data.msg);
+                    if(data.status == 1){
+                        window.location.href = "{:url('Goods/index')}";
+                    }
+                    return false;
+                });
+           // }
         }
 
     }

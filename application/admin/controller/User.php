@@ -55,18 +55,23 @@ class User extends Common{
         if(request()->post()){
             $uid = input('post.uid');
             $info = Db::name('user')->find($uid);
-            if(empty($info)||$info['status'] == 1){
-                exit(json_encode(['status'=>0,'msg'=>'用户数据有误']));
+            if(empty($info)||$info['status'] == 2){
+                $this->error('用户数据有误');
             }
+
             $score = intval(input('post.score'));
             $type = input('post.type');
             $remark = input('post.remark');
+            $diff = $info['score'];
             if($type == 3){
                 //添加
-                $diff = $info['score']+$score;
+                $diff += $score;
             }elseif($type == 4){
                 //删减
-                $diff = $info['score']-$score;
+                if($info['score'] == 0){
+                    $this->error('用户积分不够执行此操作');
+                }
+                $diff -= $score;
                 if($diff<0)$diff =0;
             }
             $data = [
@@ -80,29 +85,20 @@ class User extends Common{
             $res = Db::name('user_score_record')->insert($data);
             if($res){
                 Db::name('user')->where(['id'=>$uid])->update(['score'=>$diff]);
-                exit(json_encode(['status'=>1,'msg'=>'成功']));
+                $this->redirect(url('Finance/scoreDetail'));
             }else{
-                exit(json_encode(['status'=>0,'msg'=>'失败']));
+                $this->error('失败');
             }
         }else{
             $uid = input('uid');
             //用户详情
             $info = Db::name('user')->find($uid);
             //获取当前用户的积分变更记录
-            $list = Db::name('user_score_record')->where(array('uid'=>$uid,'is_delete'=>0))->select();
-            $scoreinfo = Db::name('common_config')->where(['name'=>'score_type'])->find();
-            $score_type = json_decode($scoreinfo['content'],true);
-            $this->assign('type',$score_type);
             $this->assign('data',$info);
-            $this->assign('list',$list);
            // echo '<pre>';
             // print_r($list);exit;
             return $this->fetch();
         }
-        //$scoreinfo = Db::name('common_config')->where(['name'=>'score_type'])->find();
-        //$score_type = json_decode($scoreinfo['content'],true);
-        //echo '<pre>';
-       // print_r($score_type);
     }
 
     /*

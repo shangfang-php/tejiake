@@ -121,8 +121,15 @@
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="zmdi {$vo.icon}"></i> <span> {$vo.name} </span> <span class="menu-arrow"></span></a>
                         <ul class="list-unstyled">
-                            {volist name="vo.cmenu" id="vv"}
+                            {volist name="vo.cmenu" id="vv"}<!--1爆款单2限时抢购3过夜单4直播单5视频单-->
+                            {if condition="$vv.id eq 18"}<li><a href="{:url('Goods/getCheck',array('type'=>1))}" id="a{$vv.id}" name="{:url($vv.url)}" target="i"><i class="zmdi {$vv.icon}"></i>{$vv.name}</a></li>
+                            {elseif condition="$vv.id eq 19"}<li><a href="{:url('Goods/getCheck',array('type'=>2))}" id="a{$vv.id}" name="{:url($vv.url)}" target="i"><i class="zmdi {$vv.icon}"></i>{$vv.name}</a></li>
+                            {elseif condition="$vv.id eq 20"}<li><a href="{:url('Goods/getCheck',array('type'=>4))}" id="a{$vv.id}" name="{:url($vv.url)}" target="i"><i class="zmdi {$vv.icon}"></i>{$vv.name}</a></li>
+                            {elseif condition="$vv.id eq 21"}<li><a href="{:url('Goods/getCheck',array('type'=>5))}" id="a{$vv.id}" name="{:url($vv.url)}" target="i"><i class="zmdi {$vv.icon}"></i>{$vv.name}</a></li>
+                            {elseif condition="$vv.id eq 22"}<li><a href="{:url('Goods/getCheck',array('type'=>3))}" id="a{$vv.id}" name="{:url($vv.url)}" target="i"><i class="zmdi {$vv.icon}"></i>{$vv.name}</a></li>
+                            {else/}
                             <li><a href="{:url($vv.url)}" id="a{$vv.id}" name="{:url($vv.url)}" target="i"><i class="zmdi {$vv.icon}"></i>{$vv.name}</a></li>
+                            {/if}
                             {/volist}
                         </ul>
                     </li>
