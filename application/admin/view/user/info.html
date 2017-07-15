@@ -21,7 +21,8 @@
                 <div class="radio radio-primary" >
                     <input id="radio2" type="radio" value="2" name="type"  {if condition="$data.type eq 2"}checked{/if}>
                     <label for="radio2">
-                        招商淘客 &nbsp;&nbsp; <span style="font-size: 10px;">已发布宝贝 <font style="color: #188ae2;">假的 123</font>  </span>
+                        招商淘客 &nbsp;&nbsp;
+                        {if condition="$data.type eq 2"}<span style="font-size: 10px;">已发布宝贝 <font style="color: #188ae2;">{$data.goodsnum}</font>  </span>{/if}
                     </label>
                 </div>
             </div>
@@ -142,14 +143,15 @@
                     <textarea class="form-control" rows="5" readonly>{$data.introduce}</textarea>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
+                <button type="submit" class="btn btn-info waves-effect waves-light">提交</button>
+            </div>
         </form>
     </div><!-- end col -->
 
 </div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
-    <button type="button" class="btn btn-info waves-effect waves-light">提交</button>
-</div>
+
 <script src="__STATIC__/admin/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <script>
     jQuery('#datepicker').datepicker();

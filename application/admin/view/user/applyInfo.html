@@ -52,12 +52,13 @@
                     <textarea class="form-control" rows="5" name="introduce">{$data.introduce}</textarea>
                 </div>
             </div>
+            <input type="hidden" name="aid" value="{$data.id}">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
+                <button type="submit" class="btn btn-info waves-effect waves-light">提交</button>
+            </div>
         </form>
     </div><!-- end col -->
 </div>
-<div class="modal-footer">
-    <input type="hidden" name="aid" value="{$data.id}">
-    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
-    <button type="button" class="btn btn-info waves-effect waves-light">提交</button>
-</div>
+
 

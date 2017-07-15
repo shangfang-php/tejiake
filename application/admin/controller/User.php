@@ -215,19 +215,37 @@ class User extends Common{
      * @param uid get传递 必选
      * */
     public function info(){
-        //获取用户信息
-        $uid = input('uid');
-        $info = Db::name('user')
-            ->alias('u')
-            ->field('u.*,m.type as mtype,m.nickname,m.qq,m.wechat,m.month_income,m.introduce')
-            ->where(['u.id'=>$uid])
-            ->join('merchant_apply_record m','u.id=m.uid','left')
-            ->find();
-        //$info = Db::name('merchant_apply_record')->alias('m')->field('m.*,u.phone')->where(['m.id'=>$aid])->join('user u','u.id=m.uid','left')->find();
-        //echo '<pre>';
-        //print_r($info);exit;
-        $this->assign('data',$info);
-        return view();
+        if(request()->post()){
+            $uid = input('post.uid');
+            $data = [
+                //'free_trial'=>input('post.free_trial'),
+                'type'=>input('post.type'),
+            ];
+            $res = Db::name('user')->where(['id'=>$uid])->update($data);
+            if($res){
+                echo '<script> window.location.href = history.go(-1);</script>';exit;
+            }else{
+                $this->error('修改失败');
+            }
+        }else{
+            //获取用户信息
+            $uid = input('uid');
+            $info = Db::name('user')
+                ->alias('u')
+                ->field('u.*,m.type as mtype,m.nickname,m.qq,m.wechat,m.month_income,m.introduce')
+                ->where(['u.id'=>$uid])
+                ->join('merchant_apply_record m','u.id=m.uid','left')
+                ->find();
+            //获取当前用户发布的商品(已审核通过)
+            $goodsnum = db('goods')->where(['uid'=>$uid,'status'=>2,'is_delete'=>0])->count();
+            $info['goodsnum'] = $goodsnum;
+            //$info = Db::name('merchant_apply_record')->alias('m')->field('m.*,u.phone')->where(['m.id'=>$aid])->join('user u','u.id=m.uid','left')->find();
+            //echo '<pre>';
+            //print_r($info);exit;
+            $this->assign('data',$info);
+            return view();
+        }
+
     }
 
     /*
@@ -252,11 +270,25 @@ class User extends Common{
      * @param aid 申请招商淘客ID 必选
      * */
     public function applyInfo(){
-        $aid = input('aid');
-        $info = Db::name('merchant_apply_record')->alias('m')->field('m.*,u.phone')->where(['m.id'=>$aid])->join('user u','u.id=m.uid','left')->find();
-       // print_r($info);exit;
-        $this->assign('data',$info);
-        return view();
+        if(request()->post()){
+            $aid = input('post.aid');
+            $data = [
+                'introduce'=>input('post.introduce'),
+            ];
+            $res = Db::name('merchant_apply_record')->where(['id'=>$aid])->update($data);
+            if($res){
+                echo '<script> window.location.href = history.go(-1);</script>';exit;
+            }else{
+                $this->error('修改失败');
+            }
+        }else{
+            $aid = input('aid');
+            $info = Db::name('merchant_apply_record')->alias('m')->field('m.*,u.phone')->where(['m.id'=>$aid])->join('user u','u.id=m.uid','left')->find();
+            // print_r($info);exit;
+            $this->assign('data',$info);
+            return view();
+        }
+
     }
 
     /*

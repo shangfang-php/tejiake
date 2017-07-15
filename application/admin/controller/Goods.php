@@ -129,14 +129,43 @@ class Goods extends Common{
      * */
     public function edit(){
         if(request()->post()){
-            print_r(23);
+            //echo '<pre>';
+            //print_r(request()->post());exit;
+            $gid = input('post.gid');
+            $data = [
+                'link'               =>input('post.link'),
+                'coupon_link'        =>input('post.coupon_link'),
+                'title'              =>input('post.title'),
+                'short_title'        =>input('post.short_title'),
+                'real_money'         =>input('post.real_money'),
+                'price'              =>input('post.price'),
+                'sell_num'           =>input('post.sell_num'),
+                'coupon_money'       =>input('post.coupon_money'),
+                'coupon_total_num'   =>input('post.coupon_total_num'),
+                'coupon_apply_num'   =>input('post.coupon_apply_num'),
+                'plan_type'          =>input('post.plan_type'),
+                'plan_link'          =>input('post.plan_link'),
+                'taoke_money_percent'=>input('post.taoke_money_percent'),
+                'guide_info'         =>input('post.guide_info'),
+                'submit_message'     =>input('post.submit_message')
+            ];
+            $res = Db::name('goods')->where(['id'=>$gid])->update($data);
+              if($res){
+                  //exit(json_encode(array('status'=>1,'msg'=>'成功')));
+                  //$this->redirect(url('Goods'));
+                  echo '<script> window.location.href = history.go(-1);</script>';exit;
+              }else{
+                  $this->error('修改失败');
+                  //exit(json_encode(array('status'=>0,'msg'=>'失败')));
+              }
+
         }else{
             $gid = input('gid');
             $info = Db::name('goods')
-                ->alias('g')
-                ->field('g.*,u.phone')
-                ->join('user u','g.uid=u.id','left')
-                ->find($gid);
+                  ->alias('g')
+                  ->field('g.*,u.phone')
+                  ->join('user u','g.uid=u.id','left')
+                  ->find($gid);
             //echo '<pre>';
             //print_r($info);exit;
             $this->assign('data',$info);
