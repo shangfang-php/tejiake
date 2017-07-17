@@ -217,9 +217,10 @@ class User extends Common{
     public function info(){
         if(request()->post()){
             $uid = input('post.uid');
+            //$type = input('post.type');
             $data = [
-                //'free_trial'=>input('post.free_trial'),
-                'type'=>input('post.type'),
+                'free_trial'=>input('post.free_trial'),
+                //'type'=>input('post.type'),
             ];
             $res = Db::name('user')->where(['id'=>$uid])->update($data);
             if($res){
@@ -275,6 +276,7 @@ class User extends Common{
             $data = [
                 'introduce'=>input('post.introduce'),
             ];
+            //print_r($data);exit;
             $res = Db::name('merchant_apply_record')->where(['id'=>$aid])->update($data);
             if($res){
                 echo '<script> window.location.href = history.go(-1);</script>';exit;
