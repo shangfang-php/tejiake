@@ -35,11 +35,18 @@ class Login extends Controller
                 Session::set('admin_user',$username);
                 if($rempsw == 1){
                     //记住密码 存储于cookie
-                    Cookie::set('admin_user',$username);
-                    Cookie::set('admin_pass',$psw);
+                    cookie('admin_user',trim($username),3600*24*30);
+                    cookie('admin_pass',trim($psw),3600*24*30);
+                    //exit(json_encode(array('status'=>1,'msg'=>'登录成功'))) ;
                 }
                 exit(json_encode(array('status'=>1,'msg'=>'登录成功'))) ;
             }else{
+                $username = Cookie::get('admin_user');
+                $password = Cookie::get('admin_pass');
+                if($username && $password) {
+                    $this->assign('username',$username);
+                    $this->assign('password',$password);
+                }
                 return view('index');
             }
         }
