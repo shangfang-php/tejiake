@@ -73,13 +73,15 @@
     height: 36px;
 }
 .head-mid .content .admin-ming {
-    width: 145px;
-    height: 34px;
-    line-height: 34px;
+    width: 120px;
+    height: 33px;
+    line-height: 33px;
     background: #f2f2f2;
-    border-radius: 10px;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
     overflow: hidden;
     margin-left: 12px;
+       
 }
 .head-mid .content .admin-ming .baiid{
     background: #1a99fb;
@@ -87,20 +89,69 @@
     height: 33px; 
      text-align: center; 
       border-top-right-radius: 10px; 
-         border-bottom-right-radius: 10px;
+       
+}
+.head-mid .content .admin-ming .baiid img{
+    vertical-align: top;
+       
 }
 .head-mid .content .admin-ming .ming{
-   width: 95px;   text-indent: 4px; overflow: hidden; height: 34px;
+   width: 70px;   text-indent: 4px; overflow: hidden; height: 34px;
 }
 .head-mid .content .admin-ming .ming a{
     color: #333;
-     width: 95px; 
+     width: 70px; 
     
 }
 .head-mid .content .admin-ming .baiid img{
     position: relative;
     top: 3px;
 }
+.head-mid .content .admin-ming:hover .admin-an{
+   display: block;
+}
+.head-mid .content .admin-an {
+    width: 120px;
+    height: 34px;
+    line-height: 34px;
+    background: #f2f2f2;
+     border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+    overflow: hidden;
+    margin-left: 12px;
+    display: none;
+     border-top: 1px solid #ccc;
+}
+.head-mid .content .admin-an .baiid{
+    background: #1a99fb;
+    width: 50px;
+    height: 33px; 
+     text-align: center; 
+      border-bottom-right-radius: 10px; 
+       
+}
+.head-mid .content .admin-an .baiid img{
+    vertical-align: top;
+       
+}
+.head-mid .content .admin-an .ming{
+   width: 70px;   text-indent: 4px; overflow: hidden; height: 34px;
+}
+.head-mid .content .admin-an .ming a{
+    color: #333;
+     width: 70px; 
+    
+}
+.head-mid .content .admin-an .baiid img{
+    position: relative;
+    top: 8px;
+}
+
+
+
+
+
+
 .head-mid .content .admin-me .reg {
     float: left;
     width: 60px;
@@ -333,13 +384,13 @@ nav ul li a .nav-dec p {
 }
 .con .good .good-list ul li {
     width: 290px;
-    border: 1px solid #e2e2e9;
+  
     margin-right: 10px;
     float: left;
     border-radius: 10px;
     margin-bottom: 20px;
     background: #fff;
-    height: 477px;
+    height: 493px;
     position: relative;
     -webkit-box-shadow: 0 1px 3px 0 rgba(32,32,64,0.04);
     -moz-box-shadow: 0 1px 3px 0 rgba(32,32,64,0.04);
@@ -347,6 +398,7 @@ nav ul li a .nav-dec p {
     -o-box-shadow: 0 1px 3px 0 rgba(32,32,64,0.04);
     box-shadow: 0 1px 3px 0 rgba(32,32,64,0.04);
 }
+
 .con .good .good-list ul li .good-img {
     width: 290px;
     height: 258px;
@@ -406,6 +458,15 @@ nav ul li a .nav-dec p {
 .con .good .good-list ul li .good-title {
     margin: 38px 10px 0;
 }
+.con .good .good-list ul li .good-bei {
+      margin: 2px 10px -6px 10px;
+}
+.con .good .good-list ul li .good-bei .p1{
+       overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 90%;
+}
 .con .good .good-list ul li .good-title a i {
     vertical-align: sub;
 }
@@ -418,12 +479,19 @@ nav ul li a .nav-dec p {
         overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 100%;
+    width: 87%;
 }
 .con .good .good-list ul li .good-fit {
     margin: 8px 10px;
     height: 23px;
     font-size: 13px;
+}
+.con .good .good-list ul li .good-lu {
+   background: #eafcf1;
+   height: 40px;
+   line-height: 40px;
+   text-align: center;
+   font-size: 12px;
 }
 .con .good .good-list ul li .good-fit .quan {
     width: 80px;
@@ -530,7 +598,7 @@ nav ul li a .nav-dec p {
     color: #fff;
     padding: 0 3px;
     text-align: center;
-        letter-spacing: -2px;
+        letter-spacing: -1px;
 }
 .con .good .good-list ul li .good-sales .xiao {
     color: #a1a1a1
@@ -601,11 +669,11 @@ nav ul li a .nav-dec p {
     border-radius: 7px;
     background: #fff;
     cursor: pointer }
-    .con .good .good-list ul li .good-price .copy:hover{
+.con .good .good-list ul li .good-price .copy:hover{
         background: #029bfe;
         color: #fff;
     }
-   
+
   
 .con .good .good-list ul li:hover .yin {
     display: block 
@@ -688,16 +756,19 @@ footer .footer-content {
 }
 .waper ul {
     width:340px;
+    
 }
 .waper ul li {
     float: left;
     height: 25px;
+    width: 106px;
     line-height: 25px;
     font-size: 12px;
+     text-align: center;
 }
 .waper ul li a {
     color:#333;
-    padding: 10px;
+   
 }
 footer .footer-content .shu {
     border-left: 1px solid #ccc;
@@ -750,12 +821,30 @@ footer .footer-content .follow h1 {
     display:none;
     text-align: left;
     width: 562px;
-    height: 408px;
+    height: 395px;
     overflow: auto;
     position: absolute;
+    background: #fff;
     top: 0;
     left: 0;
-    z-index: 9999999
+    z-index: 9999999;
+    border-radius: 7px;
+}
+.hidden_pro_au p {
+    text-align: right;
+}
+.hidden_pro_au p input{
+    border: 1px solid #1a99fb;
+   
+    background: #fff;
+    width: 90px;
+    height: 30px;
+    color: #1a99fb;
+    line-height: 30px;
+        margin-right: 25px;
+    margin-top: 5px;
+    border-radius: 7px;
+
 }
 .hidden_pro_au .close{
     position: absolute;

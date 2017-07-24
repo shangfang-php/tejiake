@@ -1,0 +1,187 @@
+{include file='public/header' /}
+<!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-box">
+                            <!--<div class="dropdown pull-right">
+                                    <a href="{:url('Menu/addMenu')}" class="card-drop">添加用户</a>
+                            </div>-->
+                            <h4 class="header-title m-t-0 m-b-30">商品纠错</h4>
+                            <p class="text-muted font-13 m-b-25">
+                            </p>
+
+                            <!--<div class=" btn-group" >
+                                <button onclick="getStatus(0);"  class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                    <span>全部</span>
+                                </button>
+                                <button onclick="getStatus(2);" class="btn btn-default buttons-csv buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                    <span>已处理</span>
+                                </button>
+                                <button onclick="getStatus(3);" class="btn btn-default buttons-excel buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                    <span>未处理</span>
+                                </button>
+                            </div>-->
+                            <!-- Right(Notification and Searchbox -->
+
+                                <div class="hidden-xs" style="width:215px;right: 20px;position: absolute;top: 48px;" >
+                                    <form role="search" class="app-search" action="#" method="get">
+                                        <input  type="text" placeholder="输入商品名或用户手机" name="keyword" class="form-control">
+                                        <a ><i class="fa fa-search"></i></a>
+                                    </form>
+                                </div>
+                            <div class="table-responsive">
+                                <table class="table m-0" >
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="checkbox checkbox-primary" >
+                                                <input id="checkbox3" type="checkbox" onclick="getAll(this);">
+                                                <label for="checkbox3">选择</label>
+                                            </div>
+                                        </th>
+                                        <th>编号</th>
+                                        <th>图片</th>
+                                        <th>宝贝标题</th>
+                                        <th>备注</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {volist name='data' id='vo' key="key"}
+                                    <tr>
+                                        <th>
+                                            <div class="checkbox checkbox-primary">
+                                                <input type="checkbox" name="gid[]" value="{$vo.id}">
+                                                <label ></label>
+                                            </div>
+                                        </th>
+                                        <th scope="row">{$key}</th>
+                                        <td><img src="{$vo.main_img}" alt="" class="img-circle thumb-xl img-thumbnail m-b-10"></td>
+                                        <td>{$vo.short_title}</td>
+                                        <td>
+                                            <label>{$vo.remark}</label>
+                                        </td>
+                                        <td>
+                                            {if condition="$vo['status'] eq 1"}待审核
+                                                {elseif condition="$vo['status'] eq 2"}展示
+                                                {elseif condition="$vo['status'] eq 3"}过期
+                                            {/if}
+                                        </td>
+                                        <td>
+                                            <a  href="{:url('Goods/edit',array('gid'=>$vo['id']))}"  class="label label-primary" target="_blank">查找</a>
+                                        </td>
+                                    </tr>
+                                    {/volist}
+                                    </tbody>
+                                </table>
+                               <!-- <a onclick="delMuchGood();"  class="label label-primary">删除</a>-->
+                                {$show}
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+                </div>
+                <!-- end row -->
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+    </div>
+<!--获取用户详情-->
+<div id="custom-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal end-->
+
+    <!-- ============================================================== -->
+    <!-- End Right content here -->
+    <!-- ============================================================== -->
+
+</div>
+<!-- END wrapper -->
+{include file='public/footer' /}
+<script type="text/javascript">
+    $("#custom-width-modal").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
+    //获取全部CheckBox
+    function getAll(obj){
+        var liobj = $('input[type=checkbox]');
+        //alert(liobj.length);
+        for (var i = 0; i < liobj.length; i++) {
+            if ($(obj).is(':checked')) {
+                $(liobj[i]).prop("checked", 'true');
+            } else {
+                $(liobj[i]).removeAttr("checked");
+            }
+        }
+        //obj.is(:checked) = true;
+    }
+
+
+    function getStatus(param){
+        var type = $('input[name=type]').val();
+       // alert(type);
+        window.location.href = "{:url('Goods/index')}?status="+param+"&type="+type;
+        //alert("{:url('Goods/index')}?status="+param+"&type="+type);
+    }
+    function getType(param){
+        var status = $('input[name=status]').val();
+        window.location.href = "{:url('Goods/index')}?status="+status+"&type="+param;
+    }
+
+    //删除一个商品
+    function delGood(param){
+        if(confirm('当前操作不可恢复,确定要删除?')){
+            //$.post("{:url('Goods/delGood')}",{gid:param}, function (dat) {
+            $.post("{:url('Goods/changeStatus')}",{gid:param,type:1}, function (dat) {
+                var data = JSON.parse(dat);
+                alert(data.msg);
+                if(data.status == 1){
+                    window.location.href = window.location.href;
+                }
+                return false;
+            });
+        }
+    }
+
+    //删除多个商品
+    function delMuchGood(){
+        if(confirm('此操作不可恢复,求慎重')){
+            var gids = $('input[type=checkbox]:checked');
+            var gidsarr = new Array();
+            var k=0;
+            for (var i = 0; i < gids.length; i++) {
+                if (!isNaN(gids[i].value)) {
+                    gidsarr[k] = gids[i].value;
+                    k++;
+                }
+            }
+            //$.post("{:url('Goods/delGood')}",{gids:gidsarr}, function (dat) {
+            $.post("{:url('Goods/changeStatus')}",{gids:gidsarr,type:1}, function (dat) {
+                var data = JSON.parse(dat);
+                alert(data.msg);
+                if(data.status == 1){
+                    window.location.href = window.location.href;
+                }
+                return false;
+            });
+        }
+
+    }
+
+
+</script>
