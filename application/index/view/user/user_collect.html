@@ -95,7 +95,7 @@
                     <p class="fr">
                         <input type="button" name="" value="清空" class="qingk" id="qingk">
                         {if condition='$action eq "collect"'}
-                        <input type="button" name="" value="加入推广" class="add" onclick="show()">
+                        <input type="button" name="" value="加入推广" class="add" onclick="show(0)">
                         {/if}
                     </p>
                 </div>
@@ -103,10 +103,10 @@
                     {volist name="list" id="vo"}
                     <div class="box-content">
                         <div class="hhhh">
-                            <div class="fl che getgid">
+                            <div class="fl che getgcid">
                                 <!--  <input type="checkbox" name = "nobby" checked="checked"> -->
 
-                                <input class="magic-checkbox che-checkbox" value="{$vo.id}" type="checkbox"  name="gid[]"   id="check{$vo.id}" >
+                                <input class="magic-checkbox che-checkbox" value="{$vo.id}" type="checkbox"  name="gcid[]"   id="check{$vo.id}" >
                                 <label for="check{$vo.id}"> </label>
 
 
@@ -138,11 +138,16 @@
                                 <p class="f12 yu">到期 <i>{$vo.end_time|date='Y-m-d',###}</i></p>
                             </div>
                             <div class="box-price fl">
-                                <p><span class="f14">佣金：</span>{$vo.taoke_money_percent}%<br/><i class="back f12">计划 30%</i></p>
+                                <p><span class="f14">佣金：</span>{$vo.taoke_money}元<br/>
+                                    <!--1定向计划2通用计划3鹊桥4营销计划-->
+                                    <i class="back f12">
+                                        计划
+                                        {$vo.taoke_money_percent}%</i>
+                                </p>
                             </div>
                             <div class=" box-btn fl">
                                 {if condition="$vo.is_spread eq 0"}
-                                <input type="button" name="" value="推广" class="more">
+                                <input type="button" name="" value="推广" class="more" onclick="show({$vo.id})">
                                 {/if}
                                 <input type="button" value="删除" class="delete" onclick="delgc({$vo.id})" >
 
@@ -154,12 +159,15 @@
                         <p class="fl time f12 " style="margin-left: 20px;color: #1a99fb">
                             {if condition="$vo.is_spread eq 1"}
                             <img src="__STATIC__/index/images/tuiguangcg.png" alt="">&nbsp;推广成功</p>
-                        {elseif condition="$vo.is_spread eq 2"}
-                        <img src="__STATIC__/index/images/tuiguang-shibai.png" alt="">&nbsp;推广失败  原因：{$vo.remark}
-                        {/if}
+                            {elseif condition="$vo.is_spread eq 2"}
+                            <img src="__STATIC__/index/images/tuiguang-shibai.png" alt="">&nbsp;推广失败  原因：{$vo.remark}
+                            {/if}
                         </p>
-
-                        <p class="fr time f12">发布时间：{$vo.start_time|date="Y-m-d H:i:s",###}</p>
+                        {if condition="$vo.is_spread eq 0"}
+                        <p class="fr time f12">发布时间：{$vo.time|date="Y-m-d H:i:s",###}</p>
+                        {else/}
+                        <p class="fr time f12">推广时间：{$vo.spread_time|date="Y-m-d H:i:s",###}</p>
+                        {/if}
                     </div>
                     {/volist}
                 </form>
@@ -238,33 +246,30 @@
 </div>
 <!--弹出框-->
 <div class="lbOverlay"  onclick="closeDiv()"></div>
-
-<div class="hidden_pro_au tanchu">
-    <img src="__STATIC__/index/images/close.png" alt=""  class="close" onclick="closeDiv()">
-    <h1>推广选择</h1>
-    <p class="er f12">开始推送时间：<input type="text"  value="2017-07-06 12:25" id="time"></p>
-    <p class="san"><input type="button" name="" value="确定" class="fr"></p>
-</div>
-
+<form action="" method="post">
+    <div class="hidden_pro_au tanchu">
+        <img src="__STATIC__/index/images/close.png" alt=""  class="close" onclick="closeDiv()">
+        <h1>推广选择</h1>
+        <p class="er f12">开始推送时间：<input type="text"  value="2017-07-06 12:25" id="time"></p>
+        <input type="hidden" name="spread_gcid" value="">
+        <p class="san"><input type="button" name="" value="确定" class="fr" id="gettime"></p>
+    </div>
+</form>
 <!--收藏 商品数量 quick_links.js控制-->
 <div class="mui-mbar-tabs" id="sc">
     <div class="quick_links_panel">
         <div id="quick_links" class="quick_links">
             <li id="shopCart">
                 <a href="#" class="message_list">
-                            <span class="cart_num">
-                                0
-                            </span>
+                    <span class="cart_num">
+                        0
+                    </span>
                 </a>
             </li>
         </div>
     </div>
 </div>
-
-
 </body>
-
-
 <script  language="javascript" type="text/javascript" src="__STATIC__/index/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="__STATIC__/index/js/common.js"></script>
 <script type="text/javascript" src="__STATIC__/index/js/quick_links.js"></script>
@@ -315,26 +320,44 @@
         });
 
         $('#qingk').click(function () {
-            var gids = $('.getgid input[type=checkbox]:checked');
-            var gids_val = new Array();
-            for(var i=0;i<gids.length;i++){
-                gids_val[i] = gids[i].value;
+            var gcids = $('.getgcid input[type=checkbox]:checked');
+            var gcids_val = new Array();
+            for(var i=0;i<gcids.length;i++){
+                gcids_val[i] = gcids[i].value;
             }
-            if(gids_val == null || gids_val == ''){
+            if(gcids_val == null || gcids_val == ''){
                 alert('选择要删除的收藏数据');return false;
                 //给爆款单添加checked
             }
             if(confirm('确定要删除当前当前数据？')){
-                $.post("{:url('Collect/clear')}",{gcids_arr:gids_val},function(dat){
+                $.post("{:url('Collect/clear')}",{gcids_arr:gcids_val},function(dat){
                     var data = JSON.parse(dat);
                     alert(data.msg);
                     if(data.code == 1){
                         window.location.href = window.location.href;
                     }
+                    return false;
                 });
             }
         });
+
+        $('#gettime').click(function () {
+            var time = $('#time').val();
+            var timestamp2 = Date.parse(new Date(time));
+            timestamp2 = timestamp2 / 1000;  //时间戳
+            //alert(timestamp2);
+            var spreaf_gcid = $('input[name=spread_gcid]').val();
+            $.post("{:url('Collect/addSpread')}",{spread_time:timestamp2,gcid:spreaf_gcid},function (data) {
+                alert(data.msg);
+                if(data.code == 1){
+                    window.location.href = "{:url('Collect/index')}?action=spread";
+                }
+                return false;
+            });
+        });
+
     });
+
     function delgc(param){
         if(confirm('确定要删除当前当前数据？')){
             $.get("{:url('Collect/clear')}",{gcid:param},function(dat){
@@ -343,9 +366,11 @@
                 if(data.code == 1){
                     window.location.href = window.location.href;
                 }
+                return false;
             });
         }
     }
+
 
     // 置顶对象点击事件
     obj.onclick = function() {
@@ -388,7 +413,7 @@
     //列表全选
     function choise2(value)
     {
-        var checkBoxs = document.getElementsByName("gid[]");
+        var checkBoxs = document.getElementsByName("gcid[]");
         for (var i = 0;i < checkBoxs.length ;i++ )
         {
             if(checkBoxs[i].type == "checkbox")
@@ -406,7 +431,22 @@
 
 <script>
 
-    function show(){
+    function show(param){
+        if(param == 0){
+            //多个选择 获取多个gcid的值
+            var gcids = $('.getgcid input[type=checkbox]:checked');
+            var gcids_val = new Array();
+            for(var i=0;i<gcids.length;i++){
+                gcids_val[i] = gcids[i].value;
+            }
+            if(gcids_val == null || gcids_val == ''){
+                alert('选择要推广的数据');return false;
+            }
+            $('input[name=spread_gcid]').val(gcids_val);
+        }else{
+            //单个选择
+            $('input[name=spread_gcid]').val(param);
+        }
         $(".lbOverlay").css({"height":window.screen.availHeight});
         $(".lbOverlay").show();
 
@@ -423,6 +463,7 @@
         $(".hidden_pro_au").css("left",objL);
         $(".hidden_pro_au").slideDown("20000");//这里显示方式多种效果
     }
+
     function closeDiv(){
         $(".lbOverlay").hide();
         $(".hidden_pro_au").hide();

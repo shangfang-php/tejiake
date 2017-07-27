@@ -1,0 +1,413 @@
+{include file='public/header'}
+        <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+        <!-- 加载每个页面内容-->
+        <div class="con">
+
+        <div class="content" style="padding-top: 80px;">
+             {include file='public/user_menu'}
+
+            <div class="fr user-main">
+
+         <div class="basic">
+               <a href='javascript:' class="thisclass fl a1" ><img src="__STATIC__/index/images/qbsc-icon.png" alt="">&nbsp;宝贝管理</a>
+               
+            </div>
+           <script type="text/javascript">
+
+$(function(){
+    /*var basic = $(".basic a");
+    basic.click(function(){
+        $(this).addClass("thisclass").siblings().removeClass("thisclass");
+    });
+*/
+     /*var qie = $(".qie-box li");
+    qie.click(function(){
+        $(this).addClass("qie").siblings().removeClass("qie");
+    });*/
+
+     /* var sai = $(".sai-box li");
+    sai.click(function(){
+        $(this).addClass("sai").siblings().removeClass("sai");
+    });*/
+});
+
+/*
+
+$(".basic .a1").click(function(){
+  $(".tui-list").hide();
+  $(".collect-box").show();
+});
+
+$(".basic .a2").click(function(){
+  $(".tui-list").show();
+  $(".collect-box").hide();
+});
+
+//tab切换
+
+   function tabNav(num) {
+                for (var i = 1; i < 6; i++) {
+                    document.getElementById('cnt_' + i).style.display = 'none';
+                }
+                document.getElementById('cnt_' + num).style.display = 'block';
+            }
+*/
+
+
+            </script>
+
+          
+         
+            <!--收藏列表-->
+         
+        <div  class="collect-box" >
+              <!--<ul class="qie-box">
+                <li class="qie" onclick="tabNav(1)">全部(1212)</li>
+                <li onclick="tabNav(2)">进行中(23)</li>
+                <li onclick="tabNav(3)">待审核(20)</li>
+                <li onclick="tabNav(4)">拒绝(1)</li>
+                <li onclick="tabNav(5)">已下架(18)</li>
+              </ul>-->
+              <ul class="qie-box"><!--1待审核2展示3过期4不通过审核 5下架-->
+                <li {if condition="$param['status'] eq 0"}class="qie"{/if} onclick="getStatus(0)"><a href="javascript:;" >全部({$total[0]})</a></li>
+                <li {if condition="$param['status'] eq 2"}class="qie"{/if} onclick="getStatus(2)"><a href="javascript:;">进行中({$total[2]})</a></li>
+                <li {if condition="$param['status'] eq 1"}class="qie"{/if} onclick="getStatus(1)"><a href="javascript:;" >待审核({$total[1]})</a></li>
+                <li {if condition="$param['status'] eq 4"}class="qie"{/if} onclick="getStatus(4)"><a href="javascript:;">拒绝({$total[4]})</a></li>
+                <li {if condition="$param['status'] eq 5"}class="qie"{/if} onclick="getStatus(5)"><a href="javascript:;">已下架({$total[5]})</a></li>
+                <li {if condition="$param['status'] eq 3"}class="qie"{/if} onclick="getStatus(3)"><a href="javascript:;">已过期({$total[3]})</a></li>
+              </ul>
+  <div class="cnt"  style="display: block;">
+       
+              <div class="sai-box">
+              <ul class="fl"><!--1爆款单2限时抢购3过夜单4直播单5视频单-->
+                <li {if condition="$param['type'] eq 0"}class="sai"{/if} onclick="getType(0)">所有</li>
+                <li {if condition="$param['type'] eq 1"}class="sai"{/if} onclick="getType(1)">爆款单</li>
+                <li {if condition="$param['type'] eq 2"}class="sai"{/if} onclick="getType(2)">限时抢购</li>
+                <li {if condition="$param['type'] eq 4"}class="sai"{/if} onclick="getType(4)">直播单</li>
+                <li {if condition="$param['type'] eq 5"}class="sai"{/if} onclick="getType(5)">视频单</li>
+                <li {if condition="$param['type'] eq 3"}class="sai"{/if} style="border: none" onclick="getType(3)">过夜单</li>
+              </ul>
+              <form action="#" method="get">
+                  <p class="fr sou-box">
+                      <input type="hidden" name="status" value="{$param.status}">
+                      <input type="hidden" name="type" value="{$param.type}">
+                      <input type="text" name="keyword" class="sousou-text" placeholder="搜商品标题" value="{if condition='!empty($param.keyword) eq true'}{$param.keyword}{/if}">
+                      <input type="submit"  value="搜索" class="sousou-btn">
+                  </p>
+              </form>
+              </div>
+              <table class="tui-table">
+                <thead>
+                  <tr>
+                    <th style="width: 180px;">商品</th>
+                    <th style="width: 90px;">券后价</th>
+                    <th style="width: 130px;">优惠券信息</th>
+                    <th style="width: 70px;">计划</th>
+                    <th style="width: 178px;">时间</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+              </table>
+                {volist name="goods" id="vo"}
+               <table class="tui-table1" border="1" bordercolor="#e8e8e8">
+                  <tr>
+
+
+                    <td style="width: 140px;  padding: 15px 20px;{if condition="$param['status'] eq 3"}position:relative;{/if}">
+
+                      {if condition="$param['status'] eq 3"}
+                      <img src="{$vo.main_img}" alt="" style="width: 77px;height: 77px;border-radius: 7px;opacity: 0.5;" >
+                      <!--过期商品添加了透明度，字体也添加了透明度-->
+                      <img src="__STATIC__/index/images/guoqi.png" alt="" class="guoqi" style="position:absolute;right:38px;top: 49px;">
+                      <!--过期商品添加了透明度，字体也添加了透明度-->
+                      {else/}
+                      <img src="{$vo.main_img}" alt="" style="width: 77px;height: 77px;border-radius: 7px;">
+                        {/if}
+
+
+
+
+                          <p style="height: 30px;line-height: 15px; font-size: 12px; margin-top: 6px;  overflow: hidden;">
+                        {if condition="$vo['type'] eq 1"}
+                        <img src="__STATIC__/index/images/BAO.png" alt="">
+                        {elseif condition="$vo['type'] eq 2"}
+                        <img src="__STATIC__/index/images/XIAN.png" alt="">
+                        {elseif condition="$vo['type'] eq 3"}
+                        <img src="__STATIC__/index/images/YE.png" alt="">
+                        {elseif condition="$vo['type'] eq 4"}
+                        <img src="__STATIC__/index/images/BO.png" alt="">
+                        {elseif condition="$vo['type'] eq 5"}
+                        <img src="__STATIC__/index/images/SHI.png" alt="">
+                        {/if}
+                        &nbsp;{$vo.short_title}</p></td>
+                    <td style="width: 90px;"><p style="color: #ff7758;">￥{$vo.real_money}<br><i class="back f12">￥{$vo.price}</i></p></td>
+                    <td style="width: 130px;">
+                    <p class="quan">￥{$vo.coupon_money}</p><p style="color: #ccc;" class="f12">已领：<i style="color: #333;">{$vo.coupon_apply_num}</i>/{$vo.coupon_total_num}</p>
+                    </td>
+                    <td style="width: 70px;">{$vo.taoke_money_percent}%</td>
+                    <td style="width: 178px; " class=" ac"> 
+                    <p class="f12">开始：{$vo.start_time|date="Y-m-d H:i:s",###}</p>
+                    <p class="f12">结束：{$vo.end_time|date="Y-m-d H:i:s",###}</p>
+                    <p class="f12">提交：{$vo.create_time|date="Y-m-d H:i:s",###}</p></td>
+                        <td style="    width: 80px;" >
+                            <span style="color: #ccc;">冻结</span><br/>
+                            <span>{$vo.scores}积分</span>
+                    </td>
+                    <td><!--1待审核2展示3过期4不通过审核 5下架-->
+                        {if condition="$vo.status eq 1"}
+                        审核中
+                        {elseif condition="$vo.status eq 2"}
+                        <p class="xiajia" onclick="makeGoodsShelves({$vo.id})">下架</p><br/>
+                        <p class="beizhu" onclick="show({$vo.id})">备注</p>
+                        {elseif condition="$vo.status eq 4"}
+                        <p class="shanchu" onclick="delGoods({$vo.id})">删除</p><br/>
+                        <p class="bianji"><a href=""></a>编辑</p>
+                        {elseif condition="$vo.status eq 5"}
+                        <p class="shanchu" onclick="delGoods({$vo.id})">删除</p><br/>
+                        <p class="beizhu" onclick="show({$vo.id})">备注</p>
+                        {elseif condition="$vo.status eq 3"}
+                        <p class="shanchu" onclick="delGoods({$vo.id})">删除</p>
+                        {/if}
+                    </td>
+                  </tr>
+                  <tr>
+                      <td colspan="7" headers="" rowspan="" style="text-align: left;text-indent: 22px;">
+                          <!--1待审核2展示3过期4不通过审核 5下架-->
+                          {if condition="$vo.status eq 4"}
+                          <p class="red">备注：{$vo.remark}</p>
+                          {else/}
+                          <p class="lan">备注：{$vo.user_remark}</p>
+                          {/if}
+                      </td>
+                  </tr>
+                
+              </table>
+      {/volist}
+
+              <div class="page" style="margin-bottom: 30px;">
+                  {$show}
+               </div>
+        </div>
+
+        </div>
+
+            </div>
+        </div>
+            <div class="clear">
+            </div>
+        </div>
+          <div id="flyItem" class="fly_item">
+            <img src="__STATIC__/index/images/sc.png" width="40" height="40">
+        </div>
+        <footer>
+            <div class="footer-content">
+                <div class="fl waper">
+                    <img src="__STATIC__/index/images/logo.png" alt="">
+                    <ul>
+                        <li>
+                            <a href="/user/user.html" target="_blank">
+                                个人中心
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/user/collect.html" target="_blank">
+                               我的收藏
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/user/fbtg.html" target="_blank">
+                                放单后台
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/user/api.html" target="_blank">
+                                开放API
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/user/setting.html" target="_blank">
+                                联盟设置
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/index/news.html" target="_blank">
+                                联系我们
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="fl shu">
+                </div>
+                <div class="fl follow">
+                    <h1>
+                        特价客的单子至少可以提升你3倍以上的收入
+                    </h1>
+                    <p class="f12">
+                        特价客CopyRight 2017粤ICP备15077059号-4
+                    </p>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </footer>
+           <!--置顶-->
+        <div id="scroll">
+        </div>
+        <div class="lbOverlay"  onclick="closeDiv()"></div>
+        <form action="{:url('Goods/addRemark')}" method="post" id="remark_form">
+            <div class="hidden_pro_au tanchu"  style="height: 210px;">
+                <img src="__STATIC__/index/images/close.png" alt=""  class="close" onclick="closeDiv()">
+                <h1  style="height:40px;line-height:40px;margin-bottom:12px;">备注信息</h1>
+                <p class="f12" style="text-align:center;"><span style="vertical-align: top;">备注: </span>
+                    <textarea name="user_remark" style="padding-left:10px;width: 300px; height: 100px; border-radius: 7px;"></textarea>
+                    <input type="hidden" name="gid" value="" id="addremarlgid">
+                </p>
+                <p class="san">
+                    <input type="button" class="add-remark fr" value="提交">
+                </p>
+            </div>
+        </form>
+         <!--收藏 商品数量 quick_links.js控制-->
+        <div class="mui-mbar-tabs" id="sc">
+            <div class="quick_links_panel">
+                <div id="quick_links" class="quick_links">
+                    <li id="shopCart">
+                        <a href="#" class="message_list">
+                            <span class="cart_num">
+                                0
+                            </span>
+                        </a>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="__STATIC__/index/js/common.js"></script>
+    <script type="text/javascript" src="__STATIC__/index/js/quick_links.js"></script>
+    <!--[if lte IE 8]><script src="__STATIC__/index/js/ieBetter.js"> </script><![endif]-->
+    <script type="text/javascript" src="__STATIC__/index/js/parabola.js"></script>
+    <script type="text/javascript">
+        //置顶
+        // 获取置顶对象
+        var obj = document.getElementById('scroll');
+        function getStatus(param){
+            var type = $('input[name=type]').val();
+            var keyword = $('input[name=keyword]').val();
+            window.location.href = "{:url('Goods/index')}?status="+param+"&type="+type+"&keyword="+keyword;
+            //alert("{:url('Goods/index')}?status="+param+"&type="+type);
+            //alert("{:url('Goods/index')}?status="+param+"&type="+type);
+        }
+        function getType(param){
+            var status = $('input[name=status]').val();
+            var keyword = $('input[name=keyword]').val();
+            window.location.href = "{:url('Goods/index')}?status="+status+"&type="+param+"&keyword="+keyword;
+        }
+        //商品下架
+        function makeGoodsShelves(param){
+            if(confirm('当前操作不可恢复,是否确定执行?')){
+                $.get("{:url('Goods/makeGoodsShelves')}",{gid:param}, function (data) {
+                    //var data = JOSN.parse(dat);
+                    alert(data.msg);
+                    if(data.code == 1){
+                        window.location.href =  window.location.href;
+                    }
+                    return false;
+                });
+            }
+        }
+        function delGoods(param){
+            if(confirm('当前操作不可恢复,是否确定执行?')){
+                $.get("{:url('Goods/delGoods')}",{gid:param}, function (data) {
+                    //var data = JOSN.parse(dat);
+                    alert(data.msg);
+                    if(data.code == 1){
+                        window.location.href =  window.location.href;
+                    }
+                    return false;
+                });
+            }
+        }
+        $('.add-remark').click(function () {
+            var user_reamrk = $('textarea[name=user_remark]').val();
+            var gid = $('#addremarlgid').val();
+            if(user_reamrk == ''){
+                alert('请填写备注');return false;
+            }
+            //$('#remark_form').submit();
+            $.post("{:url('Goods/addRemark')}",{user_remark:user_reamrk,gid:gid}, function (data) {
+                alert(data.msg);
+                if(data.code == 1){
+                    window.location.href =  window.location.href;
+                }
+                return false;
+            });
+        });
+
+        // 置顶对象点击事件
+        obj.onclick = function() {
+            var timer = setInterval(function() {
+                window.scrollBy(0, -50);
+                if (document.body.scrollTop == 0) {
+                    clearInterval(timer);
+                };
+            },
+            30);
+        }
+        // 窗口滚动检测
+        window.onscroll = function() {
+            obj.style.display = (document.body.scrollTop >= 300) ? "block": "none";
+        }
+        //图片懒加载
+        var imgLoad = lazyload.init({
+            anim: true,
+            selectorName: ".lazy"
+        });
+    </script>
+  <script>
+function show(param){
+    $(".lbOverlay").css({"height":window.screen.availHeight});
+    $(".lbOverlay").show();
+    var st   = $(document).scrollTop(); //页面滑动高度
+    var objH = $(".hidden_pro_au").height();//浮动对象的高度
+    var ch   = $(window).height();//屏幕的高度
+    var objT = Number(st)+(Number(ch)-Number(objH))/2;   //思路  浮动高度+（（屏幕高度-对象高度））/2
+    $(".hidden_pro_au").css("top",objT);
+     
+    var sl   = $(document).scrollLeft(); //页面滑动左移宽度
+    var objW = $(".hidden_pro_au").width();//浮动对象的宽度
+    var cw   = $(window).width();//屏幕的宽度
+    var objL = Number(sl)+(Number(cw)-Number(objW))/2; //思路  左移浮动宽度+（（屏幕宽度-对象宽度））/2
+    $(".hidden_pro_au").css("left",objL);
+    $(".hidden_pro_au").slideDown("20000");//这里显示方式多种效果
+    $('#addremarlgid').val(param);
+}
+function closeDiv(){
+    $(".lbOverlay").hide();
+    $(".hidden_pro_au").hide();
+}
+$(document).ready(function(){
+   
+    // $(".btn").bind("click",function(){
+    //     var top = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+    //     $(".hidden_pro_au").css({
+    //         "top": (document.documentElement.clientHeight/2 + top - $(".hidden_pro_au").css("height").replace("px","")/2 )+"px",
+    //         "left":($(window).width() - $(".hidden_pro_au").css("width").replace("px",""))/2 +"px"
+    //     });
+    //     $(".hidden_pro_au").show();
+    // })
+   
+    $(window).scroll(function(){
+        var top = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+        $(".hidden_pro_au").css({
+            "top": (document.documentElement.clientHeight/2 + top - $(".hidden_pro_au").css("height").replace("px","")/2 )+"px",
+            "left":($(window).width() - $(".hidden_pro_au").css("width").replace("px",""))/2 +"px"
+        });
+    })
+
+
+   
+})
+</script>
+</html>

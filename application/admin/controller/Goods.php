@@ -40,9 +40,10 @@ class Goods extends Common{
         }
        $pagesize = 10;
         $goods = Db::name('goods')
-            ->alias('g')->field('g.*,u.phone')
+            ->alias('g')
+            ->field('g.*,u.phone')
             ->where($condition)
-            ->order('id desc')
+            ->order('g.id desc')
             ->join('user u','g.uid=u.id','left')
             ->paginate($pagesize,false,['query'=>request()->param()]);
         //分配当前的type及status
