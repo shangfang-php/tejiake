@@ -40,8 +40,10 @@ class Goods extends Common{
         }
        $pagesize = 10;
         $goods = Db::name('goods')
-            ->alias('g')->field('g.*,u.phone')
+            ->alias('g')
+            ->field('g.*,u.phone')
             ->where($condition)
+            ->order('g.id desc')
             ->join('user u','g.uid=u.id','left')
             ->paginate($pagesize,false,['query'=>request()->param()]);
         //分配当前的type及status
@@ -317,6 +319,81 @@ class Goods extends Common{
         }
     }
 
+    /*
+     * 商品纠错列表
+     * */
+    public function wrong(){
+        $list = Db::name('goods')
+            ->alias('g')->field('g.*,u.phone')
+            //->where(['g.remark'=>array('neq','null')])
+            ->where(['g.status'=>4])
+            ->join('user u','g.uid=u.id','left')
+            ->order('id desc')
+            ->paginate(10,false,['query'=>request()->param()]);
+        $show = $list->render();
+        $this->assign('show',$show);
+        $this->assign('data',$list);
+        return $this->fetch();
+    }
 
+    /*
+     * 商品修改1 跳转页面 get 获取ID
+     * @param gid
+     * */
+    public function edit1(){
+        if(request()->post()){
+            //获取时间
+            $timet = input('post.timet');
+            $dated = input('post.dated');
+            $tt = strtotime($dated.$timet);
+            $dd = date('Y-m-d H:i:s',$tt);
+            //获取图片数据
+            $ff = input('file.images/a');
+
+            echo '<pre>';
+            print_r($ff);exit;
+            $gid = input('post.gid');
+            $data = [
+                'link'               =>input('post.link'),
+                'coupon_link'        =>input('post.coupon_link'),
+                'title'              =>input('post.title'),
+                'short_title'        =>input('post.short_title'),
+                'real_money'         =>input('post.real_money'),
+                'price'              =>input('post.price'),
+                'sell_num'           =>input('post.sell_num'),
+                'coupon_money'       =>input('post.coupon_money'),
+                'coupon_total_num'   =>input('post.coupon_total_num'),
+                'coupon_apply_num'   =>input('post.coupon_apply_num'),
+                'plan_type'          =>input('post.plan_type'),
+                'plan_link'          =>input('post.plan_link'),
+                'taoke_money_percent'=>input('post.taoke_money_percent'),
+                'guide_info'         =>input('post.guide_info'),
+                'submit_message'     =>input('post.submit_message')
+            ];
+            $res = Db::name('goods')->where(['id'=>$gid])->update($data);
+            if($res){
+                //exit(json_encode(array('status'=>1,'msg'=>'成功')));
+                //$this->redirect(url('Goods'));
+                echo '<script> window.location.href = history.go(-1);</script>';exit;
+            }else{
+                $this->error('修改失败');
+                //exit(json_encode(array('status'=>0,'msg'=>'失败')));
+            }
+
+        }else{
+            $gid = input('gid');
+            $info = Db::name('goods')
+                ->alias('g')
+                ->field('g.*,u.phone')
+                ->join('user u','g.uid=u.id','left')
+                ->join('goods_extend ge','ge.gid = g.id','left')
+                ->find($gid);
+           // echo '<pre>';
+            //print_r($info);exit;
+            $this->assign('data',$info);
+            return view();
+        }
+        return $this->fetch();
+    }
 
 }

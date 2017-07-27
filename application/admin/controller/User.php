@@ -75,11 +75,11 @@ class User extends Common{
                 if($diff<0)$diff =0;
             }
             $data = [
-                'uid'=>$uid,
-                'score'=>$score,
-                'type'=>$type,
-                'remark'=>$remark,
-                'time'=>time(),
+                'uid'     =>$uid,
+                'score'   =>$score,
+                'type'    =>$type,
+                'remark'  =>$remark,
+                'time'    =>time(),
                 'operator'=>$this->admininfo['id']
             ];
             $res = Db::name('user_score_record')->insert($data);
@@ -179,12 +179,11 @@ class User extends Common{
             exit(json_encode(array('status'=>0,'msg'=>'当前手机号已使用')));
         }
         $data = array(
-            'phone'   =>$param['phone'],
-            'password'=>$param['password'],
-            'login_ip'=>request()->ip(),
-            'login_time'=>time(),
+            'phone'      =>$param['phone'],
+            'password'   =>Md5($param['password']),
+            'login_ip'   =>request()->ip(),
+            'login_time' =>time(),
             'create_time'=>time(),
-            'month_income'=>0
         );
         $res = Db::name('user')->insert($data);
         if($res){
@@ -201,7 +200,7 @@ class User extends Common{
      * */
     public function editUserPwd(){
         $editid = input('post.editid');
-        $editpwd = pswCrypt(input('post.editpwd'));
+        $editpwd = Md5(input('post.editpwd'));
         $res = Db::name('user')->where(['id'=>$editid])->update(['password'=>$editpwd]);
         if($res){
             return json_encode(array('status'=>1,'msg'=>'成功'));
@@ -218,11 +217,21 @@ class User extends Common{
         if(request()->post()){
             $uid = input('post.uid');
             //$type = input('post.type');
-            $data = [
-                'free_trial'=>input('post.free_trial'),
-                //'type'=>input('post.type'),
+           /* $data_user = [
+                'type'=>input('post.type'),
+            ];*/
+            $data_merchant = [
+                'free_trial'  =>json_encode(input('post.free_trial/a')),
+                'type'        =>input('post.mtype'),
+                'nickname'    =>input('post.nickname'),
+                'qq'          =>input('post.qq'),
+                'wechat'      =>input('post.wechat'),
+                'month_income'=>input('post.month_income'),
+                'introduce'   =>input('post.introduce'),
             ];
-            $res = Db::name('user')->where(['id'=>$uid])->update($data);
+            //echo '<pre>';
+            //print_r(json_encode(input('post.free_trial/a')));exit;
+            $res = Db::name('merchant_apply_record')->where(['uid'=>$uid])->update($data_merchant);
             if($res){
                 echo '<script> window.location.href = history.go(-1);</script>';exit;
             }else{
@@ -233,13 +242,14 @@ class User extends Common{
             $uid = input('uid');
             $info = Db::name('user')
                 ->alias('u')
-                ->field('u.*,m.type as mtype,m.nickname,m.qq,m.wechat,m.month_income,m.introduce')
+                ->field('u.*,m.type as mtype,m.nickname,m.qq,m.wechat,m.month_income,m.introduce,m.free_trial')
                 ->where(['u.id'=>$uid])
                 ->join('merchant_apply_record m','u.id=m.uid','left')
                 ->find();
             //获取当前用户发布的商品(已审核通过)
             $goodsnum = db('goods')->where(['uid'=>$uid,'status'=>2,'is_delete'=>0])->count();
             $info['goodsnum'] = $goodsnum;
+            $info['free_trial'] = json_decode($info['free_trial'],true);
             //$info = Db::name('merchant_apply_record')->alias('m')->field('m.*,u.phone')->where(['m.id'=>$aid])->join('user u','u.id=m.uid','left')->find();
             //echo '<pre>';
             //print_r($info);exit;
@@ -274,7 +284,11 @@ class User extends Common{
         if(request()->post()){
             $aid = input('post.aid');
             $data = [
-                'introduce'=>input('post.introduce'),
+                'introduce'   =>input('post.introduce'),
+                'nickname'    =>input('post.nickname'),
+                'qq'          =>input('post.qq'),
+                'wechat'      =>input('post.wechat'),
+                'month_income'=>input('post.month_income'),
             ];
             //print_r($data);exit;
             $res = Db::name('merchant_apply_record')->where(['id'=>$aid])->update($data);
@@ -330,9 +344,9 @@ class User extends Common{
             return json_encode(array('status'=>0,'msg'=>'数据有误'));
         }
         $data = [
-            'status'=>3,
+            'status'    =>3,
             'check_time'=>time(),
-            'remark'=>$remark
+            'remark'    =>$remark
         ];
         $res = Db::name('merchant_apply_record')->where(['id'=>$aid])->update($data);
         if($res){

@@ -144,7 +144,7 @@
 }
 .head-mid .content .admin-an .baiid img{
     position: relative;
-    top: 3px;
+    top: 8px;
 }
 
 
@@ -384,7 +384,7 @@ nav ul li a .nav-dec p {
 }
 .con .good .good-list ul li {
     width: 290px;
-    border: 1px solid #e2e2e9;
+  
     margin-right: 10px;
     float: left;
     border-radius: 10px;
@@ -829,6 +829,22 @@ footer .footer-content .follow h1 {
     left: 0;
     z-index: 9999999;
     border-radius: 7px;
+}
+.hidden_pro_au p {
+    text-align: right;
+}
+.hidden_pro_au p input{
+    border: 1px solid #1a99fb;
+   
+    background: #fff;
+    width: 90px;
+    height: 30px;
+    color: #1a99fb;
+    line-height: 30px;
+        margin-right: 25px;
+    margin-top: 5px;
+    border-radius: 7px;
+
 }
 .hidden_pro_au p {
     text-align: right;

@@ -13,13 +13,13 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">淘客类型：</label>
                 <div class="radio radio-primary" style="padding-left: 30px; margin-right: 80px;">
-                    <input id="radio1"  type="radio" value="1" name="type" {if condition="$data.type eq 1"}checked{/if}>
+                    <input id="radio1"  type="radio" value="1" name="type" disabled {if condition="$data.type eq 1"}checked{/if}>
                     <label for="radio1">
                         普通淘客
                     </label>
                 </div>
                 <div class="radio radio-primary" >
-                    <input id="radio2" type="radio" value="2" name="type"  {if condition="$data.type eq 2"}checked{/if}>
+                    <input id="radio2" type="radio" value="2" name="type" disabled {if condition="$data.type eq 2"}checked{/if}>
                     <label for="radio2">
                         招商淘客 &nbsp;&nbsp;
                         {if condition="$data.type eq 2"}<span style="font-size: 10px;">已发布宝贝 <font style="color: #188ae2;">{$data.goodsnum}</font>  </span>{/if}
@@ -27,48 +27,38 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label" >免审权限：(未操作)</label>
-                <div class="radio radio-primary"  style="padding-left: 30px;">
-                    <input id="goods_type1"  type="radio" value="1" name="free_trial"  {if condition="$data.type eq 1"}checked{/if}>
-                    <label for="goods_type1">
-                        爆款单
-                    </label>
+                <label class="col-md-2 control-label" >免审权限：</label>
+                <div class="checkbox checkbox-inline checkbox-success" style="padding-left: 30px;">
+                    <input type="checkbox" id="inlineCheckbox1" value="1" {if condition="in_array(1,$data['free_trial'])"}checked{/if} name="free_trial[]">
+                    <label for="inlineCheckbox1"><font><font> 爆款单 </font></font></label>
                 </div>
-                <div class="radio radio-primary" >
-                    <input id="goods_type2" type="radio" value="2" name="free_trial" {if condition="$data.type eq 2"}checked{/if}>
-                    <label for="goods_type2">
-                       限时抢购
-                    </label>
+                <div class="checkbox checkbox-success checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox2" value="2" {if condition="in_array(2,$data['free_trial'])"}checked{/if}  name="free_trial[]">
+                    <label for="inlineCheckbox2"><font><font> 限时抢购 </font></font></label>
                 </div>
-                <div class="radio radio-primary" >
-                    <input id="goods_type3" type="radio" value="3" name="free_trial" {if condition="$data.type eq 3"}checked{/if}>
-                    <label for="goods_type3">
-                        直播单
-                    </label>
+                <div class="checkbox checkbox-success checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox3" value="3" {if condition="in_array(3,$data['free_trial'])"}checked{/if} name="free_trial[]">
+                    <label for="inlineCheckbox3"><font><font> 直播单 </font></font></label>
                 </div>
-                <div class="radio radio-primary">
-                    <input id="goods_type4" type="radio" value="4" name="free_trial" {if condition="$data.type eq 4"}checked{/if}>
-                    <label for="goods_type4">
-                        视频单
-                    </label>
+                <div class="checkbox checkbox-success checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox4" value="4" {if condition="in_array(4,$data['free_trial'])"}checked{/if} name="free_trial[]">
+                    <label for="inlineCheckbox4"><font><font> 视频单 </font></font></label>
                 </div>
-                <div class="radio radio-primary" >
-                    <input id="goods_type5" type="radio" value="5" name="free_trial" {if condition="$data.type eq 5"}checked{/if}>
-                    <label for="goods_type5">
-                        过夜单
-                    </label>
+                <div class="checkbox checkbox-success checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox5" value="5" {if condition="in_array(5,$data['free_trial'])"}checked{/if} name="free_trial[]">
+                    <label for="inlineCheckbox5"><font><font> 过夜单 </font></font></label>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">类型：</label>
                 <div class="radio radio-primary" style="padding-left: 30px; margin-right: 106px;">
-                    <input id="radio-type1" value="2" disabled {if condition="$data.mtype eq 2"}checked{/if} type="radio" name="mtype">
+                    <input id="radio-type1" value="2" {if condition="$data.mtype eq 2"}checked{/if} type="radio" name="mtype">
                     <label for="radio-type1">
                         团队
                     </label>
                 </div>
                 <div class="radio radio-primary" >
-                    <input id="radio-type2"  value="1" disabled {if condition="$data.mtype eq 1"}checked{/if} type="radio" name="mtype">
+                    <input id="radio-type2"  value="1" {if condition="$data.mtype eq 1"}checked{/if} type="radio" name="mtype">
                     <label for="radio-type2">
                         个人
                     </label>
@@ -83,31 +73,31 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">昵称：</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled value="{$data.nickname}">
+                    <input type="text" class="form-control" name="nickname"  value="{$data.nickname}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">QQ：</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled value="{$data.qq}">
+                    <input type="text" class="form-control" name="qq" value="{$data.qq}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">微信：</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled value="{$data.wechat}">
+                    <input type="text" class="form-control" name="wechat" value="{$data.wechat}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">月收入：</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled value="{$data.month_income}">
+                    <input type="text" class="form-control" name="month_income"  value="{$data.month_income}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">积分：</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled value="{$data.score}">
+                    <input type="text" class="form-control" disabled  value="{$data.score}">
                 </div>
             </div>
             <div class="form-group">
@@ -140,7 +130,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">团队/个人介绍：</label>
                 <div class="col-md-10">
-                    <textarea class="form-control" rows="5" readonly>{$data.introduce}</textarea>
+                    <textarea class="form-control" rows="5" name="introduce">{$data.introduce}</textarea>
                 </div>
             </div>
             <div class="modal-footer">
