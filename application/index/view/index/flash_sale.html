@@ -1,0 +1,164 @@
+{include file="public/header" /}
+<!-- 加载每个页面内容-->
+<div class="con">
+    <div class="content">
+        <div class="hot">
+            <img src="/static/index/images/fsale.png" alt="限时抢购" style="padding-top: 64px">
+            <span class="f12">
+                <img src="/static/index/images/tu.png" alt="">
+                &nbsp;在线淘客数：{$online_num}人
+            </span>
+        </div>
+        <div class="fsale-dec">
+            <div class="fsale-box">
+                <p>
+                    这里有聚划算、淘抢购每天限时秒杀的好单子，
+                    <br/>
+                    经过筛选，都是高佣计划，
+                    <br/>
+                    已优选优惠券给大家转化率最高的肉单！
+                </p>
+            </div>
+        </div>
+
+        <div class="purchase">
+            <div class="qiang fl yy">
+                <img src="__STATIC__/index/images/qiang.png" alt="">
+                &nbsp;正在抢购
+            </div>
+            <div class="yugao fl">
+                <img src="__STATIC__/index/images/yugao.png" alt="">
+                &nbsp;预告
+            </div>
+        </div>
+
+        <div class="good goodqiang">
+            <div class="good-list">
+                <ul>
+                    {foreach $goods_list as $val}
+                    <li>
+                        <div class="good-img">
+                            <a href="/goods?id={$val.id}" target="_blank"><img src="{$val.main_img}"></a>
+                        </div>
+                        <div class="good-collect">
+                            <a  href="javascript:;" class="add_cart_large btnCart"><img src="/static/index/images/sc.png" alt=""></a>
+                        </div>
+                        <div class="good-title">
+                            <a href="/goods?id={$val.id}" title="{$val.short_title}" target="_blank">
+                                <i class="tk-icon-14 icon-taobao">
+                                </i>
+                                {$val.title}
+                            </a>
+                        </div>
+                        <div class="good-fit">
+                            <div class="quan fl">
+                                ￥{$val.coupon_money}&nbsp;
+                            </div>
+                            <div class="charges f12 fl">
+                                <img src="/static/index/images/yj.png" alt="">
+                                佣金
+                                <span class="a3">
+                                    ￥{$val.taoke_money}
+                                </span>
+                            </div>
+                            <div class="plan f12 fl">
+                                <img src="/static/index/images/jih.png" alt="">
+                                计划
+                                <span class="a3">
+                                    20%
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="good-yu f12">
+                            <span class="fl">
+                                余券
+                            </span>
+                            <span class="fr">
+                                全部{$val.coupon_total_num}
+                            </span>
+                        </div>
+
+                        <div class="good-bar">
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 55%; background: #f66d25;height: 3px;">
+                                    <div class="progress-value">
+                                        {$val.coupon_apply_num}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="good-sales">
+                            <div class="skipper fl f12">
+                                近2个小时跑单
+                            </div>
+                            <div class="lia fl f12">
+                                <span>
+                                    2
+                                </span>
+                                <span>
+                                    2
+                                </span>
+                                <span>
+                                    2
+                                </span>
+                            </div>
+                            <div class="xiao fr f12">
+                                销量&nbsp;{$val.sell_num}
+                            </div>
+                        </div>
+                        <div class="good-line"></div>
+                        <div class="good-price">
+                            <div class="fl f14">
+                                券后
+                                <span class="f20 price">
+                                    ￥{$val.real_money}
+                                </span>
+                            </div>
+                            <input class="fz fr copy f12" type="button" id="fz" value=" 复制文案">
+                            </input>
+                        </div>
+
+                        <div class="yin">
+                            <div class="good-line">
+                            </div>
+                            <div class="good-jian">
+                                <p class="f12">
+                                    <span class="f12">
+                                        推荐：
+                                    </span>
+                                    {$val.guide_info}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="good-wenan fm" id="fm">
+                            <div class="media-text-area f12">
+                                <img class='' src='{$val.main_img}'
+                                style='width:66px;'>
+                                <br/>
+                                成人脊椎保健修复荞麦枕头
+                                <br>
+                                【在售价{$val.price}元，券后价{$val.real_money}元】
+                                <br/>
+                                领券：{$val.coupon_link}
+                                <br>
+                                下单：{$val.link}
+                                <br>
+                                {$val.guide_info}
+                            </div>
+                        </div>
+
+                    </li>
+                    {/foreach}
+                    <div id="flyItem" class="fly_item">
+                      <img src="/static/index/images/sc.png" width="40" height="40">
+                    </div>
+                    <div class="clear"></div>
+                </ul>
+            </div>
+        </div>
+    </div>        
+</div>        
+{include file="public/footer" /}

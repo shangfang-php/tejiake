@@ -1,217 +1,209 @@
-        <footer>
-            <div class="footer-content">
-                <div class="fl waper">
-                    <img src="/static/index/images/logo.png" alt="">
-                    <ul>
-                        <li>
-                            <a href="" target="_blank">
-                                爆款单
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" target="_blank">
-                                限时抢购
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" target="_blank">
-                                限时抢购
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" target="_blank">
-                                开放平台API接口
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" target="_blank">
-                                限时抢购
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" target="_blank">
-                                视频单
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" target="_blank">
-                                过夜单
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" target="_blank">
-                                员工版
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" target="_blank">
-                                放单后台
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="fl shu">
-                </div>
-                <div class="fl follow">
-                    <h1>
-                        特价客的单子至少可以提升你3倍以上的收入
-                    </h1>
-                    <p class="f12">
-                        特价客CopyRight 2017粤ICP备15077059号-4
-                    </p>
-                </div>
-                <div class="clear">
-                </div>
-            </div>
-        </footer>
-           <!--置顶-->
-        <div id="scroll">
-        </div>
-        <!--收藏 商品数量 quick_links.js控制-->
-        <div class="mui-mbar-tabs" id="sc">
-            <div class="quick_links_panel">
-                <div id="quick_links" class="quick_links">
-                    <li id="shopCart">
-                        <a href="#" class="message_list">
-                            <span class="cart_num">
-                                0
-                            </span>
+    <footer>
+        <div class="footer-content">
+            <div class="fl waper">
+                <img src="/static/index/images/logo.png" alt="">
+                <ul>
+                    <li>
+                        <a href="/user/user.html" target="_blank">
+                            个人中心
                         </a>
                     </li>
-                </div>
+                    <li>
+                        <a href="/user/collect.html" target="_blank">
+                           我的收藏
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/user/fbtg.html" target="_blank">
+                            放单后台
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/user/api.html" target="_blank">
+                            开放API
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/user/setting.html" target="_blank">
+                            联盟设置
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/index/news.html" target="_blank">
+                            联系我们
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="fl shu">
+            </div>
+            <div class="fl follow">
+                <h1>
+                    特价客的单子至少可以提升你3倍以上的收入
+                </h1>
+                <p class="f12">
+                    特价客CopyRight 2017粤ICP备15077059号-4
+                </p>
+            </div>
+            <div class="clear">
             </div>
         </div>
-    </body>
-    <script type="text/javascript" src="/static/index/js/jquery.1.7.2.min.js">
-    </script>
-    <script type="text/javascript" src="/static/index/js/layer.js">
-    </script>
-    <script type="text/javascript" src="/static/index/js/imgLarzy.js">
-    </script>
-    <script type="text/javascript" src="/static/index/js/clipboard.js">
-    </script>
-    <script type="text/javascript" src="/static/index/js/common.js?v=1.0.1"></script>
-    <script type="text/javascript" src="/static/index/js/quick_links.js"></script>
-    <!--[if lte IE 8]><script src="js/ieBetter.js"> </script><![endif]-->
-    <script type="text/javascript" src="/static/index/js/parabola.js"></script>
+    </footer>
+       <!--置顶-->
+    <div id="scroll">
+    </div>
+    <!--收藏 商品数量 quick_links.js控制-->
+    <div class="mui-mbar-tabs" id="sc">
+        <div class="quick_links_panel">
+            <div id="quick_links" class="quick_links">
+                <li id="shopCart">
+                    <a href="#" class="message_list">
+                        <span class="cart_num">
+                            0
+                        </span>
+                    </a>
+                </li>
+            </div>
+        </div>
+    </div>
+</body>
 
-  <script type="text/javascript">
-        $(function(){
-            var nav = $(".head-nav nav li");
-            nav.click(function(){
-                $(this).addClass("yuan").siblings().removeClass("yuan");
-            });
+<div class="msg_body" onclick="msg_close()" style="height: 824px; display: none;"></div>
+<div class="msg_div tanchu" style="height: 220px; top: 1650px; left: 559.5px; display: none;">
+    <img src="__STATIC__/index/images/close.png" alt="" class="close" onclick="msg_close()">
+    <h1 class='mmsg_title'>消息</h1>
+    <p class="er f16 msg_content" style="overflow:auto;text-align:center;padding-left:10px;line-height:25px;text-indent:0px;margin-top:10px;padding-top:20px;height:80px;">
+    </p>
+    <p class="san" style="margin-top: 10px;"><input type="button" onclick="msg_close()" value="确定" class="fr msg_button"></p>
+</div>
+
+<script type="text/javascript" src="/static/index/js/jquery.1.4.2.min.js"></script>
+<script type="text/javascript" src="/static/index/js/layer.js"></script>
+<script type="text/javascript" src="/static/index/js/imgLarzy.js"></script>
+<script type="text/javascript" src="/static/index/js/clipboard.js"></script>
+<script type="text/javascript" src="/static/index/js/common.js?v=1.0.1"></script>
+<script type="text/javascript" src="/static/index/js/quick_links.js"></script>
+<!--[if lte IE 8]><script src="js/ieBetter.js"> </script><![endif]-->
+<script type="text/javascript" src="/static/index/js/parabola.js"></script>
+<script type="text/javascript" src="/static/alert/alertify.custom.js"></script>
+
+<script type="text/javascript">
+    $(function(){
+        var nav = $(".head-nav nav li");
+        nav.click(function(){
+            $(this).addClass("yuan").siblings().removeClass("yuan");
         });
+    });
 
-        var clipboard = new Clipboard('.copy', {
-            target: function() {
-                return document.querySelector('.media-text-area');
-            }
-        });
-        clipboard.on('success',
-        function(e) {
-           
-            $('.copy').val('复制成功');
-           
-            console.info('Action:', e.action);
-            console.info('Text:', e.text);
-            console.info('Trigger:', e.trigger);
-            e.clearSelection();
-        });
+    var clipboard = new Clipboard('.copy', {
+        target: function() {
+            return document.querySelector('.media-text-area');
+        }
+    });
+    clipboard.on('success',
+    function(e) {
+       
+        $('.copy').val('复制成功');
+       
+        /*console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);*/
+        e.clearSelection();
+    });
 
 
-        //复制文案显示与隐藏
-        window.onload = function() {
-            var oBox = document.getElementById("fz");
-            var ooo = document.getElementById("fm");
-            oBox.onmouseover = function() {
-                ooo.style.display = "block";
+    //复制文案显示与隐藏
+    window.onload = function() {
+        var oBox = $("#fz");
+        var ooo = $("#fm");
+        oBox.onmouseover = function() {
+            ooo.style.display = "block";
+        };
+        oBox.onmouseout = function() {
+            ooo.style.display = "none";
+        }
+    }
+
+    //置顶
+    // 获取置顶对象
+    var obj = document.getElementById('scroll');
+    
+
+    // 置顶对象点击事件
+    obj.onclick = function() {
+        var timer = setInterval(function() {
+            window.scrollBy(0, -50);
+            if (document.body.scrollTop == 0) {
+                clearInterval(timer);
             };
-            oBox.onmouseout = function() {
-                ooo.style.display = "none";
-            }
+        },
+        30);
+    }
+
+    // 窗口滚动检测
+    window.onscroll = function() {
+        obj.style.display = (document.body.scrollTop >= 300) ? "block": "none";
+      
+    }
+    
+
+    //图片懒加载
+    var imgLoad = lazyload.init({
+        anim: true,
+        selectorName: ".lazy"
+    });
+
+    //添加收藏数量
+    // 元素以及其他一些变量
+    var eleFlyElement = document.querySelector("#flyItem"),
+    eleShopCart = document.querySelector("#shopCart");
+
+    var numberItem = 0;
+
+    // 抛物线运动
+    var myParabola = funParabola(eleFlyElement, eleShopCart, {
+
+        speed: 400,
+        //抛物线速度
+        curvature: 0.0008,
+        //控制抛物线弧度
+        complete: function() {
+
+            eleFlyElement.style.visibility = "hidden";
+
+            eleShopCart.querySelector("span").innerHTML = ++numberItem;
+
         }
 
-        //置顶
-        // 获取置顶对象
-        var obj = document.getElementById('scroll');
-        
+    });
 
-        // 置顶对象点击事件
-        obj.onclick = function() {
-            var timer = setInterval(function() {
-                window.scrollBy(0, -50);
-                if (document.body.scrollTop == 0) {
-                    clearInterval(timer);
-                };
-            },
-            30);
-        }
+    // 绑定点击事件
+    if (eleFlyElement && eleShopCart) {
 
-        // 窗口滚动检测
-        window.onscroll = function() {
-            obj.style.display = (document.body.scrollTop >= 300) ? "block": "none";
-          
-        }
-        
+        [].slice.call(document.getElementsByClassName("btnCart")).forEach(function(button) {
 
-        //图片懒加载
-        var imgLoad = lazyload.init({
-            anim: true,
-            selectorName: ".lazy"
-        });
+            button.addEventListener("click",
+            function(event) {
 
-        //添加收藏数量
-        // 元素以及其他一些变量
-        var eleFlyElement = document.querySelector("#flyItem"),
-        eleShopCart = document.querySelector("#shopCart");
+                // 滚动大小
+                var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
 
-        var numberItem = 0;
+                scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
 
-        // 抛物线运动
-        var myParabola = funParabola(eleFlyElement, eleShopCart, {
+                eleFlyElement.style.left = event.clientX + scrollLeft + "px";
 
-            speed: 400,
-            //抛物线速度
-            curvature: 0.0008,
-            //控制抛物线弧度
-            complete: function() {
+                eleFlyElement.style.top = event.clientY + scrollTop + "px";
 
-                eleFlyElement.style.visibility = "hidden";
+                eleFlyElement.style.visibility = "visible";
 
-                eleShopCart.querySelector("span").innerHTML = ++numberItem;
-
-            }
-
-        });
-
-        // 绑定点击事件
-        if (eleFlyElement && eleShopCart) {
-
-            [].slice.call(document.getElementsByClassName("btnCart")).forEach(function(button) {
-
-                button.addEventListener("click",
-                function(event) {
-
-                    // 滚动大小
-                    var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
-
-                    scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
-
-                    eleFlyElement.style.left = event.clientX + scrollLeft + "px";
-
-                    eleFlyElement.style.top = event.clientY + scrollTop + "px";
-
-                    eleFlyElement.style.visibility = "visible";
-
-                    // 需要重定位
-                    myParabola.position().move();
-
-                });
+                // 需要重定位
+                myParabola.position().move();
 
             });
 
-        }
-    </script>
+        });
 
+    }
+</script>
 </html>

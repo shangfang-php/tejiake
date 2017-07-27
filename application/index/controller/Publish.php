@@ -1,0 +1,289 @@
+<?php
+namespace app\index\controller;
+use think\Controller;
+use think\Db;
+
+/**
+ * 产品发布
+ */
+class Publish extends UserCommon{
+	private static $team_info = '';
+	public function _initialize(){
+		parent::_initialize();
+		
+		/** 获取招商信息 没有则跳到申请页面*/
+		self::$team_info	=	Db::table('merchant_apply_record')->where(array('uid'=>self::$login_user['id']))->order('id', 'desc')->find();
+		if(!self::$team_info){ ##未申请招商淘客
+			$this->redirect('user/apply');
+		}
+
+		if(self::$team_info['status'] == 1){ ##审核中
+			$this->redirect('user/show_checking');
+		}
+        
+        if(self::$team_info['status'] == 3){ ##审核中
+			$this->redirect('user/apply_fail');
+		}
+	}
+
+	
+	/**
+	 * 发布中心首页
+	 * @return [type] [description]
+	 */
+	public function index(){
+		$mianshen 	=	self::$team_info['free_trial'] ? json_decode(self::$team_info['free_trial']) : array(); ##免审项目
+		$data 		=	array(
+							'mianshen'	=>	$mianshen,
+						);
+		$this->assign($data);
+		return $this->fetch('publish_index');
+	}
+
+	/**
+	 * 发布产品页面
+	 * @return [type] [description]
+	 */
+	function publish(){
+		$common_type 	=	intval(trim(input('get.common_type')));
+		$goods_type		=	intval(trim(input('get.goods_type')));
+		if(!in_array($common_type, array(1,2))){
+			$this->error('请重新选择类型', '/index/publish/index');
+		}
+
+		if(!in_array($goods_type, array(1,2,3,4,5))){
+			$this->error('请重新选择类型', '/index/publish/index');
+		}
+
+		$data 	=	array(
+						'common_type' 	=>	$common_type,
+						'goods_type'	=>	$goods_type,
+					);
+		$this->assign($data);
+		return $this->fetch('publish_goods');
+	}
+
+	/**
+	 * 通过接口获取商品信息
+	 * @return [type] [description]
+	 */
+	function get_goods_info(){
+		$goods_id 	=	trim(input('post.id'));
+		if(!$goods_id){
+			return returnAjaxMsg(301, '请输入商品ID');
+		}
+
+		$goods_info 	=	getGoodsInfo($goods_id);
+		if(empty($goods_info)){
+			$code 	=	302;
+			$msg 	=	'未查到商品信息!';
+		}else{
+			$code 	=	200;
+			$msg 	=	$goods_info;
+		}
+		return returnAjaxMsg($code, $msg);
+	}
+
+	/**
+	 * 获取优惠券信息
+	 * @return [type] [description]
+	 */
+	function get_coupon_info(){
+		$activityId	=	trim(input('post.activityId'));
+		$goods_id 	=	trim(input('post.goods_id'));
+		if(!$activityId){
+			return returnAjaxMsg(401,'优惠券链接不正确!');
+		}
+
+		if(!$goods_id){
+			return returnAjaxMsg(402,'商品链接不正确!');
+		}
+
+		$coupon_info 	=	getCouponInfo($activityId,$goods_id);
+		if(!$coupon_info){
+			return returnAjaxMsg(403,'未获取到优惠券信息!');
+		}
+
+		if($coupon_info['result']['retStatus'] != '0'){
+			return returnAjaxMsg(404,'优惠券已失效!');
+		}
+		$coupon_info 	=	$coupon_info['result'];
+		if(time() >= strtotime($coupon_info['effectiveEndTime'])){
+			return returnAjaxMsg(405,'优惠券已过期!');
+		}
+		return returnAjaxMsg(200, $coupon_info);
+	}
+
+	/**
+	 * 计算发布商品消耗的积分
+	 * @return [type] [description]
+	 */
+	function count_score(){
+		$real_money		=	floatval(trim(input('post.real_money')));
+		$coupon_total_num=	intval(trim(input('post.coupon_total_num')));
+		$coupon_apply_num=	intval(trim(input('post.coupon_apply_num')));
+		if(!$real_money || !$coupon_total_num){
+			return returnAjaxMsg(501,'请求非法!');
+		}
+
+		$uid 	=	self::$login_user['id'];
+		$need_scores=	countGoodsScore($real_money, $coupon_total_num - $coupon_apply_num); ##计算需要的总积分
+		$user_info 	=	Db::table('user')->field('score')->where(array('id'=>$uid))->find();
+		$user_score =	$user_info['score'];
+		$data		=	compact('user_score');
+		$data		=	array_merge($data, $need_scores);
+		return returnAjaxMsg(200, $data);
+	}
+
+	/**
+	 * 提交产品信息
+	 * @return [type] [description]
+	 */
+	function submit_goods(){
+		$data 	=	$_POST;
+		$uid	=	self::$login_user['id'];
+		$data['uid']	=	$uid;
+		$goods_type		=	$data['goods_type'];
+		unset($data['goods_type']);
+
+		$data['common_type'] == 2 && $data['plan_type'] = 4; ##营销计划时计划类型为4
+		$data['type'] =	$goods_type;
+		
+		$data['show_time']		=	( isset($data['show_time']) && $data['show_time'] ) ? strtotime($data['show_time']) : 0;
+		$data['start_time']		=	$data['start_time'] ? strtotime($data['start_time']) : 0;
+		$data['end_time']		=	$data['end_time'] ? strtotime($data['end_time']) : 0;
+		$data['coupon_start_time']		=	$data['coupon_start_time'] ? strtotime($data['coupon_start_time']) : 0;
+		$data['coupon_end_time']		=	$data['coupon_end_time'] ? strtotime($data['coupon_end_time']) : 0;
+
+		if($goods_type == 3){
+			if(!isset($data['live_info']) || !$data['live_info']){
+				return returnAjaxMsg('620', '请输入直播信息!');
+			}
+			$live_info 	=	$data['live_info'];
+			unset($data['live_info']);
+		}
+
+		if($goods_type == 4){
+			$video_url 	=	$data['video_url'];
+			unset($data['video_url']);
+		}
+		
+		$data 			=	init_goods_data($data); ##初始化商品数据
+		if(!is_array($data)){
+			return returnAjaxMsg(601, $data);
+		}
+
+		$mianshen 	=	check_goods_mianshen($uid, $goods_type); ##检测是否免审
+		$data['data']['status']=	$mianshen ? 2 : 1; ##免审则直接发布 2发布1待审核
+		
+		$data['data']['create_time']	=	time();
+		$long_img	=	$data['data']['long_img'];
+		unset($data['data']['long_img']);
+
+		/** 检测用户积分 */
+		$userInfo 	=	Db::table('user')->field('score')->where(['id'=>$uid])->find();
+		$need_scores=	countGoodsScore($data['data']['real_money'], $data['data']['coupon_total_num'] - $data['data']['coupon_apply_num']);
+		$need_scores=	$need_scores['need_scores'];
+		if($need_scores > $userInfo['score']){
+			return returnAjaxMsg('666', '积分余额不足，请先充值！');
+		}
+		$data['score']	=	$need_scores;
+
+		Db::startTrans();
+		$insertId 	=	Db::table('goods')->insertGetId($data['data']);
+		if(!$insertId){
+			Db::rollback();
+			return returnAjaxMsg('602', '保存商品基本信息失败!');
+		}
+
+		/**扣除用户积分**/
+		$remark	=	'发布产品冻结'.$need_scores.'积分';
+		$info 	=	updateUserScore($uid, '-'.$need_scores, 2, $remark, $uid, $need_scores, $insertId);
+		if(!$info){
+			Db::rollback();
+			return returnAjaxMsg('665', '扣除用户积分失败!');
+		}
+
+		$info 	=	$this->save_goods_img($insertId, $data['images_arr']);
+		if(!$info){
+			Db::rollback();
+			return returnAjaxMsg('603', '保存商品图片失败!');
+		}
+
+		if($long_img){
+			if(preg_match('/^(data:\s*image\/(\w+);base64,)/', $long_img, $result)){
+				$img_data 	=	str_replace($result[1], '', $long_img);
+				$image_path	=	$this->save_goods_long_img($uid, $insertId, $img_data, $result[2]);
+				if(!$image_path){
+					Db::rollback();
+					return returnAjaxMsg(self::$code, self::$msg);
+				}
+	        }else{
+	        	$image_path =	$long_img;
+	        }
+	        $info 	= 	Db::table('goods')->where(['id'=>$insertId])->update(['long_img'=>$image_path]);
+	        if(!$info){
+	        	Db::rollback();
+	        	return returnAjaxMsg('604', '保存长图失败！');
+	        }
+		}
+
+		if($goods_type == 3 && $live_info){
+			$info 	=	saveGoodsLiveInfo($uid, $insertId, $live_info);
+			if(!$info){
+				Db::rollback();
+				return returnAjaxMsg('605', '保存直播信息失败！');
+			}
+		}
+
+		if($goods_type == 4){ ##保存视频单网址信息
+			$info 	=	saveGoodsVideInfo($uid, $insertId, $video_url);
+			if(!$info){
+				Db::rollback();
+				return returnAjaxMsg('606', '保存视频信息失败！');
+			}
+		}
+
+		Db::commit();
+		return returnAjaxMsg('200', '提交商品成功!');
+	}
+
+	/**
+	 * 保存商品图片信息
+	 * @param  [type] $goodsId    [description]
+	 * @param  [type] $images_arr [description]
+	 * @return [type]             [description]
+	 */
+	function save_goods_img($goodsId, $images_arr){
+		$insertData 	=	array();
+		foreach($images_arr as $url){
+			$insertData[]	=	array('gid'=>$goodsId, 'image_url'=>$url);
+		}
+		$nums 	=	Db::table('goods_image')->insertAll($insertData);
+		return $nums;
+	}
+
+	/**
+	 * 保存base64编码之后的图片
+	 * @param  [type] $uid        [description]
+	 * @param  [type] $goods_id   [description]
+	 * @param  [type] $image_data [description]
+	 * @param  [type] $type       [description]
+	 * @return [type]             [description]
+	 */
+	function save_goods_long_img($uid, $goods_id, $image_data, $type){
+		$file_path	=	ROOT_PATH.'public/static/goods/'.$uid.'/';
+		$file 		=	$goods_id.'.'.$type;
+
+		$save  		=	saveGoodsBase64Img($file_path, $file, $image_data);
+		if($save){
+			return '/static/goods/'.$uid.'/'.$goods_id.'.'.$type;
+		}else{
+			self::$code 	=	902;
+			self::$msg 		=	'保存商品长图失败!';
+			return false;
+		}
+		
+	}
+
+}

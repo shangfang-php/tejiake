@@ -1,0 +1,677 @@
+{include file="public/header" /}
+<!-- 加载每个页面内容-->
+<div class="con">
+    <div class="content" style="padding-top: 80px;">
+        {include file="public/user_menu" /}
+        <input type="hidden" id="common_type" value="{$common_type}">
+        <input type="hidden" id="goods_type" value="{$goods_type}">
+        <div class="fr user-main">
+            <div class="load-box f14">
+                <p>
+                    <span>宝贝链接：</span>
+                    <input id="goods_link" type="text" placeholder="请输入或粘贴宝贝链接">
+                    <input type="button" name="" value="获取商品信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;" onclick="check_goods()">
+                </p>
+                {if $common_type == 1}
+                <p> 
+
+                   <span>优惠券链接：</span>                   <input type="text" id="coupon_link" placeholder="如：https://shop.m.taobao.com/shop/coupon.htm?sellerId=12345…">
+                   <input type="button" name="" value="获取信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;" onclick="get_coupon_info()">
+                </p>
+                {/if}
+            
+                <!--隐藏部分-->
+                <div id='goods_detail' style="display:block;">
+                    <p>
+                        <span>推广长图：</span>
+                        <div class="chagntu">
+                            <!-- <img src="__STATIC__/index/images/shangc.png" alt="" >  -->
+                            <div id="addCommodityIndex">
+                                <div class=" big-photo">
+                                    <div id="preview">
+                                       <img id="imghead" border="0" src="__STATIC__/index/images/shangc.png" width="298" height="430" onclick="$('#previewImg').click();">
+                                    </div>
+                                   <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
+                                </div>               
+                            </div>
+                            <img src="__STATIC__/index/images/laji.png" alt="" class="laji">
+                        </div>
+                    </p>
+            
+                    <p>
+                        <span>主图选择：</span>
+                        <div class="zhutu">
+                            <ul class="sys_spec_img"></ul>
+                        </div>
+                        <div class="clear"></div>
+                    </p>
+            
+            
+                    <p>
+                        <span>宝贝标题：</span> <input type="text" id="goods_title" placeholder="宝贝标题" readonly="readonly" style="background: #f2f2f2;border:none;">
+                    </p>
+                    
+                    <p><span>短标题</span> <input id="short_title" type="text" placeholder="10~16个字，精简的标题更能让人记住哦~"></p>  
+                    <div class="duan-input">
+                        <p class="fl"><span>销量：</span> <input id="sale_num" type="text" value=""></p>
+                        <p class="fl" style="margin-left: 27px;">
+                            <span>原价:</span> <input id="goods_price" type="number" placeholder="请填入数字">
+                        </p>
+                        <p class="fl" style="margin-left: 27px;"><span>券后价：</span> <input id="real_money" type="text" value=""> </p> 
+                    </div>
+            
+                    <div class="duan-input">
+                        <p class="fl"><span>优惠券：</span> <input id="coupon_money" type="text" value="" ></p>
+                        <p class="fl" style="margin-left: 27px;">
+                            <span>优惠券总数：</span> <input id="coupon_total_num" type="number" placeholder="请填入数字">
+                        </p>
+                        <p class="fl" style="margin-left: 27px;">
+                            <span>优惠券已领数：</span> <input id="coupon_apply_num" type="number" value="0" placeholder="请填入数字">
+                        </p> 
+                    </div>
+            
+                    <div class="duan-input">
+                        <p class="fl"><span>优惠券开始时间：</span> <input class="datetime" id="coupon_start_time" type="text" ></p>
+                        <p class="fl" style="margin-left: 27px;"><span>优惠券结束时间：</span> <input class="datetime" id="coupon_end_time" type="text"> </p>
+                    </div>
+                    <div class="clear"></div>
+                    {if $goods_type == 2}
+                    <div class="jihua-box">
+                        <p class="fl"><span>活动类型：<span></p>
+                        <p class="fl activity_type">
+                            <i class="jihuaclass" data=1>聚划算</i>
+                            <i data=2>淘抢购</i>
+                        </p>
+                        <div class="clear"></div>
+                    </div>
+                    {/if}
+
+                    {if $common_type == 1}
+                    <div class="jihua-box">
+                        <p class="fl"><span>计划类型：<span></p>
+                        <p class="fl plan_type"> 
+                            <i class="jihuaclass i1" data=2>通用计划</i>
+                            <i class="i2" data=1>定向计划</i>
+                            <i class="i3" data=3>鹊桥</i>
+                        </p>
+                        <div class="clear"></div>
+                    </div>
+            
+                    <div class="clear"></div>
+                    <p class="jihualianjie" style="display: none">
+                        <span>计划链接</span> <input id="plan_link" type="text" placeholder="请输入定向计划链接">
+                    </p>
+                    {/if}
+
+                    <p>
+                        <span>佣金比例</span>
+                        <input id="taoke_money_percent" type="number" placeholder="1~100" style="width: 117px;">&nbsp;&nbsp;%
+                    </p>
+
+                    {if $goods_type == 3}
+                        {include file="publish/live" /}
+                    {else}
+                        {if $goods_type == 4}
+                            <p>
+                                <span>视频地址:</span>
+                                <input id='video_url' type="text" placeholder="如：http://tbm.alicdn.com/64LKfg7lcDXkcInqCcz/UPZMxV01EEqZkt6fDUM%40%40ud.mp4" style="width:600px;">
+                            </p>
+                        {/if}
+                        <p><span>导购文案</span><textarea id="guide_info" name="" placeholder="请输入文案，在100个字以内"></textarea></p>
+                    {/if}
+
+                    {if in_array($goods_type,[0])}
+                    <p>
+                        <span>链接开放时间：</span>
+                        <input id='show_time' class="datetime" type="text"  placeholder="如：2017-07-12 12:14" style="width: 140px;">
+                    </p>
+                    {/if}
+            
+                    <div class="duan-input">
+                       <p class="fl"><span>开始时间：</span> <input id="start_date" class="datetime" type="text" placeholder="如：2017-07-12" ></p>
+                       <p class="fl" style="margin-left: 27px;"><span>结束时间：</span> <input class="datetime" id="end_date" type="text" placeholder="如：2017-07-12"> </p>
+                       <div class="clear"></div>
+                    </div>
+                        
+                    <p>
+                        <span>留言审核</span>
+                        <textarea name="" id="submit_message" placeholder="留言仅审核员可看，前台不会显示，输入如：此单已检查，商品评价没有拉人信息之类"></textarea>
+                    </p>
+            
+                </div>
+            
+                <p class="" style="width: 520px;margin: 0 auto;">
+                   <input type="button" name="" value="上一步" class="last-btn">
+                   <input type="button" name="" value="下一步" class="next-btn" onclick="count_score()">
+                </p>
+            
+                <div class="clear"></div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    
+    <div class="clear"></div>
+</div>
+<div id="flyItem" class="fly_item"><img src="__STATIC__/index/images/sc.png" width="40" height="40"></div>
+
+<div class="lbOverlay" onclick="closeDiv()" style="height: 824px; display: none;"></div>
+<div class="hidden_pro_au tanchu" style="height: 220px; top: 1650px; left: 559.5px; display: none;">
+    <img src="__STATIC__/index/images/close.png" alt="" class="close" onclick="closeDiv()">
+    <h1>提示</h1>
+    <p class="er f16" style="overflow:auto;text-align:left;padding-left:36px;line-height:25px;text-indent:0px;margin-top:10px;">
+        券后价<i class="score_real_money"></i>元，剩余<i class="score_coupon_nums"></i>张券，每张券消耗<i class="lan single_score"></i>积分<br>
+        共需<i class="lan need_scores"></i>积分，现有<i class="lan user_score"></i>积分<br>
+        <span class="red f12 score_tip"></span>
+    </p>
+    <p class="san" style="margin-top: 10px;"><input type="button" click="" value="确认提交" class="fr score_button"></p>
+</div>
+
+
+{include file="public/footer" /}
+<link type="text/css" href="/static/index/css/jquery-ui-1.8.16.custom.css" rel="stylesheet">
+<script language="javascript" type="text/javascript" src="__STATIC__/index/js/jquery-ui-1.8.16.custom.min.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript" src="__STATIC__/index/js/jquery-ui-timepicker-addon.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript" src="__STATIC__/index/js/jquery.ui.datepicker-zh-CN.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+    jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
+    $(function(){
+        var jihua = $(".jihua-box i");
+        jihua.click(function(){
+            $(this).addClass("jihuaclass").siblings().removeClass("jihuaclass");
+        });
+        
+        $('.last-btn').click(function(){
+            window.history.back('-1');
+        });
+
+        $(".datetime").datetimepicker({
+            changeYear : true,
+            changeMonth : true,
+            showSecond : true,
+            timeFormat : 'hh:mm:ss',
+            dateFormat : 'yy-mm-dd',
+            stepHour : 1,
+            stepMinute : 1,
+            stepSecond : 1,
+        });
+
+        $(window).scroll(function(){
+            var top = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+            $(".hidden_pro_au").css({
+                "top": (document.documentElement.clientHeight/2 + top - $(".hidden_pro_au").css("height").replace("px","")/2 )+"px",
+                "left":($(window).width() - $(".hidden_pro_au").css("width").replace("px",""))/2 +"px"
+            });
+        })
+    });
+
+    $('.jihua-box .i1').click(function(){
+        $('.jihualianjie').css('display','none');
+       
+    });
+    $('.jihua-box .i2').click(function(){
+        $('.jihualianjie').css('display','block');
+       
+    });
+    $('.jihua-box .i3').click(function(){
+        $('.jihualianjie').css('display','none');
+    });
+
+    function select_img(obj){
+        $(obj).addClass('selected').siblings().removeClass('selected');
+    }
+
+    //图片上传预览    IE是用了滤镜。
+    function previewImage(file){
+      var MAXWIDTH  = 90; 
+      var MAXHEIGHT = 90;
+      var div = document.getElementById('preview');
+      if (file.files && file.files[0])
+      {
+          div.innerHTML ='<img id=imghead onclick=$("#previewImg").click()>';
+          var img = document.getElementById('imghead');
+          img.onload = function(){
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            img.width  =  rect.width;
+            img.height =  rect.height;
+            //img.style.marginLeft = rect.left+'px';
+            img.style.marginTop = rect.top+'px';
+          }
+          var reader = new FileReader();
+          reader.onload = function(evt){img.src = evt.target.result;}
+          reader.readAsDataURL(file.files[0]);
+      }
+      else //兼容IE
+      {
+        var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+        file.select();
+        var src = document.selection.createRange().text;
+        div.innerHTML = '<img id=imghead>';
+        var img = document.getElementById('imghead');
+        img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+        var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+        status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+        div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+      }
+    }
+
+    function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+        var param = {top:0, left:0, width:width, height:height};
+        if( width>maxWidth || height>maxHeight ){
+            rateWidth = width / maxWidth;
+            rateHeight = height / maxHeight;
+            
+            if( rateWidth > rateHeight ){
+                param.width =  maxWidth;
+                param.height = Math.round(height / rateWidth);
+            }else{
+                param.width = Math.round(width / rateHeight);
+                param.height = maxHeight;
+            }
+        }
+        param.left = Math.round((maxWidth - param.width) / 2);
+        param.top = Math.round((maxHeight - param.height) / 2);
+        return param;
+    }
+
+    /**
+     * 检测商品信息
+     * @return {[type]} [description]
+     */
+    function check_goods(){
+        if(isSync){
+            msg_show('正在获取商品信息,请稍候!');
+            return false;
+        }
+        var id      =   get_goods_id();
+        if(!id){
+            return false;
+        }
+
+        isSync      =   true;
+        var url     =   '/index/publish/get_goods_info';
+        var data    =   {id:id};
+        $.post(url, data, function(msg){
+            isSync  =   false;
+            if(msg.code == 200){
+                show_goods_info(msg.msg);
+            }else{
+                msg_show(msg.msg);
+                return false;
+            }
+        },"json");
+    }
+
+    function get_goods_id(){
+        var goods_link  =   $('#goods_link').val();
+        if(!goods_link){
+            msg_show('请输入商品链接');
+            $("#goods_link").select();
+            return false;
+        }
+
+        var preg        =   /([&amp;\?&]id=)(\d+)/;
+        var check       =   preg.test(goods_link);
+
+        if(!check){
+            msg_show('商品链接不合法');
+            $("#goods_link").select();
+            return false;
+        }
+        return RegExp.$2;
+    }
+
+    /**
+     * 展示商品信息
+     * @param  {[type]} goods_info [description]
+     * @return {[type]}            [description]
+     */
+    function show_goods_info(goods){
+        $('#goods_link').val(goods.item_url);
+        $('#goods_title').val(goods.title);
+        $('#sale_num').val(goods.volume);
+        $('#goods_price').val(goods.zk_final_price);
+        var img_string  =   '';
+        $.each(goods['small_images']['string'], function(i,img){
+            var className = i == 1 ? 'class="selected"' : '';
+            img_string += '<li '+className+' onclick="select_img(this)"> <a><img src="'+img+'" alt="" style="width: 100%;"></a><i></i></li>';
+        });
+        $('.zhutu ul').html(img_string);
+        $('#goods_detail').show();
+    }
+
+    /**
+     * 获取优惠券信息
+     * @return {[type]} [description]
+     */
+    function get_coupon_info(){
+        if(isSync){
+            msg_show('正在拉取信息,请稍候!');
+            return false;
+        }
+        
+        var activityId = get_activityId();
+        var goods_id   = get_goods_id();
+        if(!activityId){
+            return false;
+        }
+        if(!goods_id){
+            return false;
+        }
+        var url     =   '/index/publish/get_coupon_info';
+        var data    =   {activityId:activityId,goods_id:goods_id};
+        $.post(url, data, function(msg){
+            if(msg.code == 200){
+                show_coupon_info(msg.msg);
+            }else{
+                msg_show(msg.msg);
+                return false;
+            }
+        },"json");
+    }
+
+    /**
+     * 获取活动ID
+     * @return {[type]} [description]
+     */
+    function get_activityId(){
+        var coupon_link =   $('#coupon_link').val();
+        if(!coupon_link){
+            msg_show('请输入优惠券链接!');
+            return false;
+        }
+
+        var patten  =   /[?&]+activityId=(\w+)&?/;
+        var check   =   patten.exec(coupon_link);
+        if(!check){
+            msg_show('该优惠券链接不正确!');
+            $('#coupon_link').select();
+            return false;
+        }
+
+        return check[1];
+    }
+
+    /**
+     * 展示优惠券信息
+     * @param  {[type]} coupon [description]
+     * @return {[type]}        [description]
+     */
+    function show_coupon_info(coupon){
+        $('#coupon_money').val(coupon.amount);
+        var real_money     =   coupon['item']['discountPrice'] - coupon.amount;
+        $('#real_money').val(real_money.toFixed(2));
+        $('#coupon_start_time').val(coupon.effectiveStartTime);
+        $('#coupon_end_time').val(coupon.effectiveEndTime);
+    }
+
+    function count_score(){
+        data       =   get_goods_data();
+        if(!data){
+            return false;
+        }
+        var url     =   '/index/publish/count_score';
+        var data    =   {real_money:data.real_money,coupon_total_num:data.coupon_total_num,coupon_apply_num:data.coupon_apply_num};
+        $.post(url, data, function(msg){
+            $('.score_button').unbind();
+            if(msg.code != 200){
+                msg_show(msg.msg);
+                return false;
+            }else{
+                var single_score    =   msg.msg.single_score;
+                var need_scores     =   msg.msg.need_scores;
+                var user_score      =   msg.msg.user_score;
+                $('.score_real_money').html(data.real_money);
+                $('.score_coupon_nums').html(data.coupon_total_num - data.coupon_apply_num);
+                $('.single_score').html(single_score);
+                $('.need_scores').html(need_scores);
+                $('.user_score').html(user_score);
+
+                if(user_score >= need_scores){
+                    $('.score_tip').html('* 提交后,我们将冻结响应的积分,活动结束后会自动结算!');
+                    $('.score_button').val('确认提交');
+                    $('.score_button').bind('click', function(){
+                        submit_goods();
+                    });
+                }else{
+                    $('.score_tip').html('* 积分余额不足，请先充值！');
+                    $('.score_button').val('充值积分');
+                    $('.score_button').bind('click', function(){
+                        charge_score();
+                    });
+                }
+                show();
+            }
+        },"json");
+    }
+
+    function charge_score(){
+        window.open('/index/charge/index');
+    }
+
+    function submit_goods(){
+        data       =   get_goods_data();
+        if(!data){
+            return false;
+        }
+        var url     =   '/index/publish/submit_goods';
+        $.post(url, data, function(msg){
+            $('.msg_button').unbind();
+            msg_show(msg.msg);
+            if(msg.code == 200){
+                $('.msg_button').bind('click', function(){
+                    window.location.href = '/index/publish/index';
+                });
+            }
+        },"json");
+        
+    }
+
+    /**
+     * 生成并检测要提交的商品信息
+     * @return {[type]} [description]
+     */
+    function get_goods_data(){
+        var data            =   new Object();
+        data.common_type     =   $('#common_type').val();
+        data.goods_type      =   $('#goods_type').val();
+        data.link            =   $('#goods_link').val();
+        if(!data.link){
+            msg_show('请输入商品链接!');
+            return false;
+        }
+
+        if(data.common_type == 1){ //普通计划需要优惠券链接
+            data.coupon_link     =   $('#coupon_link').val();
+            if(!data.coupon_link){
+                msg_show('请输入优惠券链接!');
+                return false;
+            }
+
+            data.plan_type       =   $('.plan_type .jihuaclass').attr('data');
+        }
+        var long_img        =   $('#imghead').attr('src');
+        preg                =   /shangc\.png/;
+        data.long_img       =   preg.test(long_img) ? '' : long_img;
+        data.main_img        =   $('.selected a img').attr('src');
+        data.short_title     =   $('#short_title').val();
+        if(!data.short_title){
+            msg_show('请输入短标题!');
+            return false;
+        }
+        data.coupon_total_num=   $('#coupon_total_num').val();
+        if(!data.coupon_total_num){
+            msg_show('请输入优惠券总数!');
+            return false;
+        }
+        data.coupon_apply_num=   $('#coupon_apply_num').val();
+        if(!data.coupon_apply_num){
+            msg_show('请输入优惠券已领取数!');
+            return false;
+        }
+        data.coupon_start_time=  $('#coupon_start_time').val();
+        if(!data.coupon_start_time){
+            msg_show('请输入优惠券开始时间!');
+            return false;
+        }
+        data.coupon_end_time =   $('#coupon_end_time').val();
+        if(!data.coupon_end_time){
+            msg_show('请输入优惠券结束时间!');
+            return false;
+        }
+        data.real_money      =   $('#real_money').val();
+        if(!data.real_money){
+            msg_show('请输入券后价!');
+            return false;
+        }
+        
+        if(data.goods_type == 2){ //限时抢购
+            data.activity_type   =   $('.activity_type .jihuaclass').attr('data');
+        }
+
+        if(data.goods_type == 3){ //直播单
+            var live_info   =   get_live_info();
+            if(!live_info){
+                return false;
+            }
+            data.live_info  =   live_info;
+        }
+
+        if(data.goods_type == 4){ //视频单
+            data.video_url   =   $('#video_url').val();
+            if(!data.video_url){
+                msg_show('请输入视频地址!');
+                return false;
+            }
+        }
+        
+        data.taoke_money_percent    =   $('#taoke_money_percent').val();
+        if(!data.taoke_money_percent){
+            msg_show('请输入淘客佣金比例!');
+            return false;
+        }
+
+        if(data.taoke_money_percent <0 || data.taoke_money_percent > 100){
+            msg_show('淘客佣金比例只能在1-100之间!');
+            return false;
+        }
+
+        if(data.goods_type != 3){ //非直播单
+            data.guide_info     =   $('#guide_info').val();
+        }
+        data.show_time      =   $('#show_time').val();
+        data.start_time     =   $('#start_date').val();
+        if(!data.start_time){
+            msg_show('请输入开始时间!');
+            return false;
+        }
+        data.end_time       =   $('#end_date').val();
+        if(!data.end_time){
+            msg_show('请输入结束时间!');
+            return false;
+        }
+        data.submit_message =   $('#submit_message').val();
+        return data;
+    }
+
+    function show(){
+        $(".lbOverlay").css({"height":window.screen.availHeight});
+        $(".lbOverlay").show();
+     
+        var st=$(document).scrollTop(); //页面滑动高度
+        var objH=$(".hidden_pro_au").height();//浮动对象的高度
+        var ch=$(window).height();//屏幕的高度  
+        var objT=Number(st)+(Number(ch)-Number(objH))/2;   //思路  浮动高度+（（屏幕高度-对象高度））/2
+        $(".hidden_pro_au").css("top",objT);
+         
+        var sl=$(document).scrollLeft(); //页面滑动左移宽度
+        var objW=$(".hidden_pro_au").width();//浮动对象的宽度
+        var cw=$(window).width();//屏幕的宽度  
+        var objL=Number(sl)+(Number(cw)-Number(objW))/2; //思路  左移浮动宽度+（（屏幕宽度-对象宽度））/2
+        $(".hidden_pro_au").css("left",objL);
+        $(".hidden_pro_au").slideDown("20000");//这里显示方式多种效果
+    }
+    function closeDiv(){
+        $(".lbOverlay").hide();
+        $(".hidden_pro_au").hide();
+    }
+
+    function tabNav(obj,num) {
+        $(obj).addClass('ttt').siblings().removeClass('ttt');
+        $(obj).parents('ul').siblings('.cnt').css('display','none')
+        $(obj).parents('ul').siblings('.cnt_'+num).css('display','block')
+    }
+
+    function load_img(obj){
+        //var div = document.getElementById('preview')
+        var img     =   $(obj).siblings('.loading').children('img').eq(0);
+        if (obj.files && obj.files[0]){
+            
+            var reader = new FileReader();
+            reader.onload = function(evt){img.attr('src',evt.target.result);}
+            reader.readAsDataURL(obj.files[0]);
+        }
+        else //兼容IE
+        {
+            var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+            obj.select();
+            var src = document.selection.createRange().text;
+            img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+            //var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            //status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+            //div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+        }
+    }
+
+    /**
+     * 获取直播信息
+     * @return {[type]} [description]
+     */
+    function get_live_info(){
+        var live_info   =   new Object();
+        var isReturn    =   true;
+        $('.zhibo-sc').each(function(i,obj){
+            var info        =   new Object();
+            var contents     =   $(obj).contents()
+            var type    =   contents.find('.ttt').attr('data');
+            info.type   =   type;
+            if(type == 1){
+                var content =   contents.find('.zhibo-wenan').val();
+                var url     =   contents.find('.loading img').eq(0).attr('src');
+                url         =   url == '/static/index/images/success.png' ? '' : url;
+                
+                if(content || url){
+                    if(!content){
+                        msg_show('请输入文案内容!');
+                        isReturn    =   false;
+                        return false;
+                    }
+
+                    if(!url){
+                        msg_show('请上传直播图片!');
+                        isReturn    =   false;
+                        return false;   
+                    }
+                    info.content     =   content;
+                    info.url         =   url;
+                    live_info[i]     =   info;
+                }
+                
+            }else{
+                var url     =   contents.find('.zhibo-dizhi').val();
+                if(url){
+                    info.url         =   url;
+                    info.content     =   '';
+                    live_info[i]     =   info;
+                }
+            }
+            
+        });
+
+        return isReturn ? live_info : false;
+        
+    }
+    
+</script>

@@ -1,0 +1,70 @@
+{include file="public/header" /}
+<!-- 加载每个页面内容-->
+<div class="con">
+    <div class="content" style="padding-top: 80px;">
+        {include file="public/user_menu" /}
+        <div class="fr user-main">
+            <div class="connnn">
+                <h1><img src="__STATIC__/index/images/zssq.png" alt="">&nbsp;招商淘客申请</h1>
+            </div>
+            <p class="zsredio">
+                 <span><input type="radio" name="type" value="1" checked> 个人</span>
+                 <span style="margin-left: 200px;"> <input type="radio" name="type" value="2" > 团队</span>
+            </p>
+        
+            <form action="attract_submit" method="get" accept-charset="utf-8" class="zsform">
+                <p><span>个人／团队名称：</span><input type="text" id="nick_name" placeholder="填写2~6汉字或4~8个字符"></p>
+                 <p><span>QQ号：</span><input type="text" id="qq" placeholder="请填写常用号"></p>
+                  <p><span>微信号：</span><input type="text" id="wechat" placeholder="请填写常用号"></p>
+                   <p><span>月收入：</span><input type="number" id="income" class="wan">&nbsp;&nbsp;万</p>
+                   <p style="    margin-top: 18px;"><span>个人／团队介绍：</span> <textarea id="introduce" class="input_text" placeholder="填写个人/团队信息"></textarea>    </p>
+        
+                   <p><span>&nbsp;&nbsp;</span><input type="button" value="提交" class="tijiao"></p>
+            </form>
+        </div> 
+    </div>
+    
+    <div class="clear"></div>
+</div>
+
+<div id="flyItem" class="fly_item"><img src="__STATIC__/index/images/sc.png" width="40" height="40"></div>
+{include file="public/footer" /}
+<script type="text/javascript">
+$('.tijiao').click(function(){
+    if(isSync){
+        alert('请不要重复提交!');
+        return false;
+    }
+    var type    =   $('input[name=type]:checked').val();
+    var nick_name=  $('#nick_name').val();
+    var qq      =   $('#qq').val();
+    var wechat  =   $('#wechat').val();
+    var income  =   $('#income').val();
+    var introduce=  $('#introduce').val();
+    if(!nick_name){
+        alert('请输入个人/团队名称!');
+        $('#nick_name').select();
+        return false;
+    }
+
+    if(!income){
+        alert('请输入月收入!');
+        $('#income').select();
+        return false;
+    }
+
+    if(!introduce){
+        alert('请输入个人/团队介绍!');
+        $('#introduce').select();
+        return false;
+    }
+    //isSync = true;
+    var data = {type:type,nick_name:nick_name,qq:qq,wechat:wechat,income:income,introduce:introduce};
+    $.post('/index/user/submit_apply', data, function(msg){
+        alert(msg.msg);
+        if(msg.code == 200){
+            window.location.href = '/index/user/show_checking';
+        }
+    },"json");
+});
+</script>

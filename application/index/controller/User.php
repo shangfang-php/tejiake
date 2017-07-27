@@ -10,6 +10,8 @@ class User extends UserCommon{
 
 	public function _initialize(){
 		parent::_initialize();
+		
+		$this->assign('goods_type', self::$goods_type);
 	}
 	/**
 	 * 淘客个人中心首页
@@ -232,5 +234,73 @@ class User extends UserCommon{
 		}
 		return returnAjaxMsg($code, $msg);
 	}
+
+	/**
+	 * 招商淘客申请界面
+	 * @return [type] [description]
+	 */
+	public function apply(){
+		return $this->fetch();
+	}
+
+	/**
+	 * 提交申请信息
+	 * @return [type] [description]
+	 */
+	function submit_apply(){
+		$type 	=	intval(input('post.type'));
+		$nickname=	trim(input('post.nick_name'));
+		$qq		=	trim(input('post.qq'));
+		$wechat =	trim(input('post.wechat'));
+		$month_income =	trim(input('post.income'));
+		$introduce=	trim(input('post.introduce'));
+		if(!in_array($type, array(1, 2) ) ){
+			return returnAjaxMsg(701,'非法操作!');
+		}
+
+		if(!$nickname){
+			return returnAjaxMsg(702, '个人/团队名称不能为空!');
+		}
+
+		if(!$introduce){
+			return returnAjaxMsg(703, '介绍不能为空!');
+		}
+
+		if(!is_numeric($month_income)){
+			return returnAjaxMsg(704, '月收入必须为数字！');
+		}
+
+		$data	=	compact('type', 'nickname', 'qq', 'wechat', 'month_income', 'introduce');
+		$data['apply_time']	=	time();
+		$data['uid']		=	self::$login_user['id'];
+
+		$info 	=	Db::table('merchant_apply_record')->insert($data);
+		if(!$info){
+			$code 	=	705;
+			$msg 	=	'保存信息失败!';
+		}else{
+			$code 	=	200;
+			$msg 	=	'提交申请成功!';
+		}
+		return returnAjaxMsg($code, $msg);
+	}
+
+	/**
+	 * 展示招商淘客审核中页面
+	 * @return [type] [description]
+	 */
+	function show_checking(){
+		return $this->fetch();
+	}
+    
+    function apply_fail(){
+        $user_apply_info 	=	Db::table('merchant_apply_record')->where(array('uid'=>self::$login_user['id'],'status'=>3))->find();
+        $fail_info 			=	empty($user_apply_info) ? '' : $user_apply_info['remark'];
+        $data 				=	array(
+        							'fail_info'	=>	$fail_info,
+        						);
+        $this->assign($data);
+       	return $this->fetch('apply_fail');
+    }
 
 }

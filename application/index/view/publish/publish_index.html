@@ -1,0 +1,107 @@
+{include file="public/header" /}
+<!-- 加载每个页面内容-->
+<div class="con">
+    <div class="content" style="padding-top: 80px;">
+        {include file="public/user_menu" /}
+        <div class="fr user-main">
+            <div class="basic">
+               <a href='#' class="thisclass fl "><img src="__STATIC__/index/images/cz.png" alt="">&nbsp;发布宝贝</a>
+            </div>
+            
+            <div  class="basic-form" >
+                <div class="jihua">
+                    <p style="border: none">请选择推广计划：</p>
+                    <div class="yxjh jihua-box fl avrr" data='2'>营销计划</div>
+                    <div class="yxjh jihua-box fr" data='1'> 普通计划</div>
+                    <div class="clear"></div>
+                </div>
+                <div class="jihua" style="margin-top: 30px;">
+                    <div class="xuan">
+                        <p class="fl fen">请选择分类：</p>
+                        <p class="fl f20">
+                            <input class="checkbox" type="checkbox" name="" value="1" checked="checked">&nbsp;爆款单 
+                            <i class="f12 red">
+                                {if in_array(1, $mianshen)}
+                                <img src="__STATIC__/index/images/mianshen.png" alt="" style="vertical-align: text-bottom;">
+                                {/if}
+                                &nbsp;* 单日领券量在3000张以上或者隔天5000张的领券量才会审核通过。
+                            </i>
+                        </p>
+                        <p class="fl f20">
+                            <input class="checkbox" type="checkbox" name="" value="2">&nbsp;限时抢购 
+                            <i class="f12">
+                                {if in_array(2, $mianshen)}
+                                <img src="__STATIC__/index/images/mianshen.png" alt="" style="vertical-align: text-bottom;">
+                                {/if}
+                                *  只有正在参加聚划算和淘抢购活动的单子才会审核通过。
+                            </i>
+                        </p>
+                        <p class="fl f20">
+                            <input class="checkbox" type="checkbox" name="" value="3">&nbsp;直播单 
+                            <i class="f12">
+                                {if in_array(3, $mianshen)}
+                                <img src="__STATIC__/index/images/mianshen.png" alt="" style="vertical-align: text-bottom;">
+                                {/if}
+                                * 请在直播消息中填写商品多条介绍文案，容易转化才会审核通过。
+                            </i>
+                        </p>
+                        <p class="fl f20">
+                            <input class="checkbox" type="checkbox" name=""  value="4">&nbsp;视频单 
+                            <i class="f12">* 
+                                {if in_array(4, $mianshen)}
+                                <img src="__STATIC__/index/images/mianshen.png" alt="" style="vertical-align: text-bottom;">
+                                {/if}
+                                真人实拍、验货视频、容易转化的视频单子才会审核通过。
+                            </i>
+                        </p>
+                        <p class="fl f20">
+                            <input class="checkbox" type="checkbox" name="" value="5">&nbsp;过夜单 
+                            <i class="f12">*  
+                                {if in_array(5, $mianshen)}
+                                <img src="__STATIC__/index/images/mianshen.png" alt="" style="vertical-align: text-bottom;">
+                                {/if}
+                                过夜单必须是独家，不通过当天跑过的单子，0点券生效才会审核通过。
+                            </i>
+                        </p>
+                    </div>
+                    <div class="clear"></div>
+                 
+                </div>
+             </div>
+
+
+            <div class="next">
+                <input type="button" name="" value="上一步">
+                <input type="button" name="" value="下一步" class="next-btn">
+            </div>
+        </div>
+    </div>
+    
+    <div class="clear"></div>
+</div>
+
+<div id="flyItem" class="fly_item"><img src="__STATIC__/index/images/sc.png" width="40" height="40"></div>
+{include file="public/footer" /}
+<script type="text/javascript">
+    $(function(){
+        var jihua = $(".jihua .jihua-box");
+        jihua.click(function(){
+            $(this).addClass("avrr").siblings().removeClass("avrr");
+        });
+
+        $('.f20').bind('click', function(){
+            $('.f20 .checkbox').attr("checked", false);
+            $('i').removeClass('red');
+            $(this).children('i').addClass('red');
+            $(this).children('.checkbox').attr('checked', true);
+        });
+        
+        $('.next-btn').bind('click', function(){
+            var common_type     =   $('.avrr').attr('data');
+            var goods_type      =   $('.checkbox:checked').val();
+
+            var url     =   '/index/publish/publish?common_type='+common_type+'&goods_type='+goods_type;
+            window.location.href = url;
+        });
+    });
+</script>
