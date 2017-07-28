@@ -59,6 +59,9 @@ class Publish extends UserCommon{
 						'common_type' 	=>	$common_type,
 						'goods_type'	=>	$goods_type,
 					);
+		if($goods_type == 3){ ##直播单
+			$data['extends']	=	array(0=>[],1=>[],2=>[],3=>[],4=>[]);
+		}
 		$this->assign($data);
 		return $this->fetch('publish_goods');
 	}
@@ -145,6 +148,7 @@ class Publish extends UserCommon{
 		$data['uid']	=	$uid;
 		$goods_type		=	$data['goods_type'];
 		unset($data['goods_type']);
+		$goods_id  		=	isset($data['id']) ? $data['id'] : 0;
 
 		$data['common_type'] == 2 && $data['plan_type'] = 4; ##营销计划时计划类型为4
 		$data['type'] =	$goods_type;
@@ -187,27 +191,38 @@ class Publish extends UserCommon{
 		if($need_scores > $userInfo['score']){
 			return returnAjaxMsg('666', '积分余额不足，请先充值！');
 		}
-		$data['score']	=	$need_scores;
+		$data['data']['scores']	=	$need_scores;
 
 		Db::startTrans();
-		$insertId 	=	Db::table('goods')->insertGetId($data['data']);
-		if(!$insertId){
-			Db::rollback();
-			return returnAjaxMsg('602', '保存商品基本信息失败!');
+		if(!$goods_id){ ##发布产品
+			$insertId 	=	Db::table('goods')->insertGetId($data['data']);
+			if(!$insertId){
+				Db::rollback();
+				return returnAjaxMsg('602', '保存商品基本信息失败!');
+			}
+		}else{ ##修改产品
+			$info 		=	Db::table('goods')->update($data['data']);
+			if($info === FALSE){
+				Db::rollback();
+				return returnAjaxMsg('625', '修改商品基本信息失败!');
+			}
+			$insertId 	=	$goods_id;
 		}
 
 		/**扣除用户积分**/
-		$remark	=	'发布产品冻结'.$need_scores.'积分';
+		$remark	=	($goods_id ? '修改' : '发布') .'产品冻结'.$need_scores.'积分';
 		$info 	=	updateUserScore($uid, '-'.$need_scores, 2, $remark, $uid, $need_scores, $insertId);
 		if(!$info){
 			Db::rollback();
 			return returnAjaxMsg('665', '扣除用户积分失败!');
 		}
 
-		$info 	=	$this->save_goods_img($insertId, $data['images_arr']);
-		if(!$info){
-			Db::rollback();
-			return returnAjaxMsg('603', '保存商品图片失败!');
+		if(!$goods_id){ ##只有新发布产品才再次保存图片信息
+			$info 	=	$this->save_goods_img($insertId, $data['images_arr']);
+			if(!$info){
+				Db::rollback();
+				return returnAjaxMsg('603', '保存商品图片失败!');
+			}
 		}
 
 		if($long_img){
@@ -284,6 +299,43 @@ class Publish extends UserCommon{
 			return false;
 		}
 		
+	}
+
+	/**
+	 * 修改商品信息
+	 * @return [type] [description]
+	 */
+	public function edit(){
+		$goods_id 	=	intval(trim(input('get.id')));
+		if(!$goods_id){
+			$this->error('请选择要修改的产品信息!', '/index/goods');
+		}
+		$uid 	=	self::$login_user['id'];
+
+		$goods_info 	=	Db::table('goods')->where(['id'=>$goods_id])->find();
+		if(empty($goods_info)){
+			$this->error('找不到对应的产品!', '/index/goods');
+		}
+
+		if($goods_info['status'] != 4){
+			$this->error('该产品不允许修改!', '/index/goods');
+		}
+
+		if($goods_info['uid'] != $uid){
+			$this->error('该产品不属于你!', '/index/goods');
+		}
+
+		$images_arr 	=	Db::table('goods_image')->field('gid,image_url')->where('gid', $goods_id)->select();
+		$extends_info 	=	getGoodsExtendsInfo($goods_id, $goods_info['type']); ##获取产品扩展信息
+		$data 	=	array(
+						'common_type'	=>	$goods_info['common_type'],
+						'goods_type'	=>	$goods_info['type'],
+						'goods_info'	=>	$goods_info,
+						'images_arr'	=>	$images_arr,
+						'extends'		=>	$extends_info,
+					);
+		$this->assign($data);
+		return $this->fetch('publish_edit');
 	}
 
 }

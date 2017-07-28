@@ -134,11 +134,11 @@ $(".basic .a2").click(function(){
                         {elseif condition="$vo['type'] eq 2"}
                         <img src="__STATIC__/index/images/XIAN.png" alt="">
                         {elseif condition="$vo['type'] eq 3"}
-                        <img src="__STATIC__/index/images/YE.png" alt="">
-                        {elseif condition="$vo['type'] eq 4"}
                         <img src="__STATIC__/index/images/BO.png" alt="">
-                        {elseif condition="$vo['type'] eq 5"}
+                        {elseif condition="$vo['type'] eq 4"}
                         <img src="__STATIC__/index/images/SHI.png" alt="">
+                        {elseif condition="$vo['type'] eq 5"}
+                        <img src="__STATIC__/index/images/YE.png" alt="">
                         {/if}
                         &nbsp;{$vo.short_title}</p></td>
                     <td style="width: 90px;"><p style="color: #ff7758;">￥{$vo.real_money}<br><i class="back f12">￥{$vo.price}</i></p></td>
@@ -162,7 +162,7 @@ $(".basic .a2").click(function(){
                         <p class="beizhu" onclick="show({$vo.id})">备注</p>
                         {elseif condition="$vo.status eq 4"}
                         <p class="shanchu" onclick="delGoods({$vo.id})">删除</p><br/>
-                        <p class="bianji"><a href=""></a>编辑</p>
+                        <p class="bianji"><a style="color:white;" href="/index/publish/edit?id={$vo.id}" target="_blank">编辑</a></p>
                         {elseif condition="$vo.status eq 5"}
                         <p class="shanchu" onclick="delGoods({$vo.id})">删除</p><br/>
                         <p class="beizhu" onclick="show({$vo.id})">备注</p>

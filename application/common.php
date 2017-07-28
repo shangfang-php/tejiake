@@ -196,8 +196,8 @@ function getCouponInfo($activityId, $goods_id){
  * @return [type]      [description]
  */
 function getCouponActivityId($url){
-    preg_match('/[&\?]activityId=(\w+)&?/', $url, $matches);
-    return $matches ? $matches[1] : '';
+    preg_match('/[&\?](activityId|activity_id)=(\w+)&?/', $url, $matches);
+    return $matches ? $matches[2] : '';
 }
 
 /**
@@ -362,6 +362,11 @@ function saveGoodsBase64Img($file_path, $file,$image_data){
  * @return [type]            [description]
  */
 function saveGoodsLiveInfo($uid, $goods_id, $live_info){
+    $info       =   Db::table('goods_live_extends')->where(['gid'=>$goods_id])->delete();
+    if($info === false){
+        return false;
+    }
+
     $file_path  =   ROOT_PATH.'public/static/live/'.$uid.'/';
     $data       =   array();
     foreach($live_info as $key=>$val){
@@ -389,6 +394,10 @@ function saveGoodsLiveInfo($uid, $goods_id, $live_info){
  * @return [type]           [description]
  */
 function saveGoodsVideInfo($uid, $goods_id, $url){
+    $info       =   Db::table('goods_video_extends')->where(['gid'=>$goods_id])->delete();
+    if($info === false){
+        return false;
+    }
     $data   =   ['uid'=>$uid,'gid'=>$goods_id, 'video_url'=>$url];
     $info   =   Db::table('goods_video_extends')->insertGetId($data);
     return $info;
@@ -418,4 +427,29 @@ function reverse_array($array, $key_filter, $val_filter, $isMulti = FALSE){
         }
     }
     return array_filter($return);
+}
+
+/**
+ * 获取产品扩展信息
+ * @param  [type] $goods_id   [description]
+ * @param  [type] $goods_type [description]
+ * @return [type]             [description]
+ */
+function getGoodsExtendsInfo($goods_id, $goods_type){
+    $extends    =   array();
+    switch($goods_type){
+        case 1: ##爆款
+        case 2: ##限时抢购
+        case 5: ##过夜单
+            break;
+        case 3: ##直播单
+            $extends    =   Db::table('goods_live_extends')->where(['gid'=>$goods_id])->select();
+            $extends    =   array_pad($extends,5, array());
+            break;
+        case 4: ##视频单
+            $extends    =   Db::table('goods_video_extends')->where(['gid'=>$goods_id])->find();
+            break;
+        default:
+    }
+    return $extends;
 }

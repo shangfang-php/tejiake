@@ -5,23 +5,22 @@
         {include file="public/user_menu" /}
         <input type="hidden" id="common_type" value="{$common_type}">
         <input type="hidden" id="goods_type" value="{$goods_type}">
+        <input type="hidden" id="goods_id" value="{$goods_info.id}">
         <div class="fr user-main">
             <div class="load-box f14">
                 <p>
                     <span>宝贝链接：</span>
-                    <input id="goods_link" type="text" placeholder="请输入或粘贴宝贝链接">
-                    <input type="button" name="" value="获取商品信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;" onclick="check_goods()">
+                    <input id="goods_link" type="text" readonly="" value="{$goods_info.link}">
                 </p>
                 {if $common_type == 1}
                 <p> 
-
-                   <span>优惠券链接：</span>                   <input type="text" id="coupon_link" placeholder="如：https://shop.m.taobao.com/shop/coupon.htm?sellerId=12345…">
-                   <input type="button" name="" value="获取信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;" onclick="get_coupon_info()">
+                   <span>优惠券链接：</span>
+                   <input type="text" id="coupon_link" value="{$goods_info.coupon_link}">
                 </p>
                 {/if}
             
                 <!--隐藏部分-->
-                <div id='goods_detail' style="display:none;">
+                <div id='goods_detail' style="display:block;">
                     <p>
                         <span>推广长图：</span>
                         <div class="chagntu">
@@ -29,7 +28,7 @@
                             <div id="addCommodityIndex">
                                 <div class=" big-photo">
                                     <div id="preview">
-                                       <img id="imghead" border="0" src="__STATIC__/index/images/shangc.png" width="298" height="430" onclick="$('#previewImg').click();">
+                                       <img id="imghead" border="0" src="{if $goods_info.long_img}{$goods_info.long_img}{else}__STATIC__/index/images/shangc.png{/if}" width="298" height="430" onclick="$('#previewImg').click();">
                                     </div>
                                    <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
                                 </div>               
@@ -41,46 +40,59 @@
                     <p>
                         <span>主图选择：</span>
                         <div class="zhutu">
-                            <ul class="sys_spec_img"></ul>
+                            <ul class="sys_spec_img">
+                            {foreach $images_arr as $val}
+                                <li {if $val.image_url == $goods_info.main_img}class="selected"{/if} onclick="select_img(this)">
+                                    <a href="javascript:;">
+                                         <img src="{$val.image_url}" alt="" style="width: 100%;">
+                                    </a>
+                                    <i></i>
+                                </li>
+                            {/foreach}
+                            </ul>
                         </div>
                         <div class="clear"></div>
                     </p>
             
             
                     <p>
-                        <span>宝贝标题：</span> <input type="text" id="goods_title" placeholder="宝贝标题" readonly="readonly" style="background: #f2f2f2;border:none;">
+                        <span>宝贝标题：</span> <input type="text" id="goods_title" value="{$goods_info.title}" readonly="readonly" style="background: #f2f2f2;border:none;">
                     </p>
                     
-                    <p><span>短标题</span> <input id="short_title" type="text" placeholder="10~16个字，精简的标题更能让人记住哦~"></p>  
+                    <p><span>短标题</span> <input id="short_title" type="text" value="{$goods_info.short_title}" placeholder="10~16个字，精简的标题更能让人记住哦~"></p>  
                     <div class="duan-input">
-                        <p class="fl"><span>销量：</span> <input id="sale_num" type="text" value=""></p>
+                        <p class="fl"><span>销量：</span> <input id="sale_num" type="text" value="{$goods_info.sell_num}"></p>
                         <p class="fl" style="margin-left: 27px;">
-                            <span>原价:</span> <input id="goods_price" type="number" placeholder="请填入数字">
+                            <span>原价:</span> <input id="goods_price" readonly="" type="number" placeholder="请填入数字" value="{:round($goods_info.price,2)}">
                         </p>
-                        <p class="fl" style="margin-left: 27px;"><span>券后价：</span> <input id="real_money" type="text" value=""> </p> 
+                        <p class="fl" style="margin-left: 27px;"><span>券后价：</span> <input readonly="" id="real_money" type="text" value="{:round($goods_info.real_money, 2)}"> </p> 
                     </div>
             
                     <div class="duan-input">
-                        <p class="fl"><span>优惠券：</span> <input id="coupon_money" type="text" value="" ></p>
+                        <p class="fl"><span>优惠券：</span> <input id="coupon_money" type="text" value="{$goods_info.coupon_money}" ></p>
                         <p class="fl" style="margin-left: 27px;">
-                            <span>优惠券总数：</span> <input id="coupon_total_num" type="number" placeholder="请填入数字">
+                            <span>优惠券总数：</span> <input id="coupon_total_num" type="number" placeholder="请填入数字" value="{$goods_info.coupon_total_num}">
                         </p>
                         <p class="fl" style="margin-left: 27px;">
-                            <span>优惠券已领数：</span> <input id="coupon_apply_num" type="number" value="0" placeholder="请填入数字">
+                            <span>优惠券已领数：</span> <input id="coupon_apply_num" type="number" value="0" placeholder="请填入数字" value="{$goods_info.coupon_apply_num}">
                         </p> 
                     </div>
             
                     <div class="duan-input">
-                        <p class="fl"><span>优惠券开始时间：</span> <input class="datetime" id="coupon_start_time" type="text" ></p>
-                        <p class="fl" style="margin-left: 27px;"><span>优惠券结束时间：</span> <input class="datetime" id="coupon_end_time" type="text"> </p>
+                        <p class="fl"><span>优惠券开始时间：</span>
+                            <input class="datetime" id="coupon_start_time" type="text" value="{$goods_info.coupon_start_time|date="Y-m-d H:i:s", ###}">
+                        </p>
+                        <p class="fl" style="margin-left: 27px;"><span>优惠券结束时间：</span>
+                            <input class="datetime" id="coupon_end_time" type="text" value="{$goods_info.coupon_end_time|date="Y-m-d H:i:s", ###}">
+                        </p>
                     </div>
                     <div class="clear"></div>
                     {if $goods_type == 2}
                     <div class="jihua-box">
                         <p class="fl"><span>活动类型：<span></p>
                         <p class="fl activity_type">
-                            <i class="jihuaclass" data=1>聚划算</i>
-                            <i data=2>淘抢购</i>
+                            <i {if $goods_info.activity_type == 1}class="jihuaclass"{/if} data=1>聚划算</i>
+                            <i {if $goods_info.activity_type == 2}class="jihuaclass"{/if} data=2>淘抢购</i>
                         </p>
                         <div class="clear"></div>
                     </div>
@@ -90,22 +102,22 @@
                     <div class="jihua-box">
                         <p class="fl"><span>计划类型：<span></p>
                         <p class="fl plan_type"> 
-                            <i class="jihuaclass i1" data=2>通用计划</i>
-                            <i class="i2" data=1>定向计划</i>
-                            <i class="i3" data=3>鹊桥</i>
+                            <i class="{if $goods_info.plan_type == 2}jihuaclass{/if} i1" data=2>通用计划</i>
+                            <i class="i2 {if $goods_info.plan_type == 1}jihuaclass{/if}" data=1>定向计划</i>
+                            <i class="i3 {if $goods_info.plan_type == 3}jihuaclass{/if}" data=3>鹊桥</i>
                         </p>
                         <div class="clear"></div>
                     </div>
             
                     <div class="clear"></div>
                     <p class="jihualianjie" style="display: none">
-                        <span>计划链接</span> <input id="plan_link" type="text" placeholder="请输入定向计划链接">
+                        <span>计划链接</span> <input value="{$goods_info.plan_link}" id="plan_link" type="text" placeholder="请输入定向计划链接">
                     </p>
                     {/if}
 
                     <p>
                         <span>佣金比例</span>
-                        <input id="taoke_money_percent" type="number" placeholder="1~100" style="width: 117px;">&nbsp;&nbsp;%
+                        <input id="taoke_money_percent" type="number" value="{:round($goods_info.taoke_money_percent,1)}" placeholder="1~100" style="width: 117px;">&nbsp;&nbsp;%
                     </p>
 
                     {if $goods_type == 3}
@@ -114,34 +126,34 @@
                         {if $goods_type == 4}
                             <p>
                                 <span>视频地址:</span>
-                                <input id='video_url' type="text" placeholder="如：http://tbm.alicdn.com/64LKfg7lcDXkcInqCcz/UPZMxV01EEqZkt6fDUM%40%40ud.mp4" style="width:600px;">
+                                <input id='video_url' type="text" placeholder="如：http://tbm.alicdn.com/64LKfg7lcDXkcInqCcz/UPZMxV01EEqZkt6fDUM%40%40ud.mp4" style="width:600px;" value="{$extends.video_url}">
                             </p>
                         {/if}
-                        <p><span>导购文案</span><textarea id="guide_info" name="" placeholder="请输入文案，在100个字以内"></textarea></p>
+                        <p><span>导购文案</span><textarea id="guide_info" value="{$goods_info.guide_info}" name="" placeholder="请输入文案，在100个字以内"></textarea></p>
                     {/if}
 
                     {if in_array($goods_type,[2])}
                     <p>
                         <span>链接开放时间：</span>
-                        <input id='show_time' class="datetime" type="text"  placeholder="如：2017-07-12 12:14" style="width: 140px;">
+                        <input id='show_time' class="datetime" type="text" value="{$goods_info.show_time|date='Y-m-d H:i:s', ###}" placeholder="如：2017-07-12 12:14" style="width: 140px;">
                     </p>
                     {/if}
             
                     <div class="duan-input">
-                       <p class="fl"><span>开始时间：</span> <input id="start_date" class="datetime" type="text" placeholder="如：2017-07-12" ></p>
-                       <p class="fl" style="margin-left: 27px;"><span>结束时间：</span> <input class="datetime" id="end_date" type="text" placeholder="如：2017-07-12"> </p>
+                       <p class="fl"><span>开始时间：</span> <input id="start_date" class="datetime" type="text" placeholder="如：2017-07-12" value="{$goods_info.start_time|date='Y-m-d H:i:s',###}"></p>
+                       <p class="fl" style="margin-left: 27px;"><span>结束时间：</span> <input class="datetime" id="end_date" type="text" placeholder="如：2017-07-12" value="{$goods_info.end_time|date='Y-m-d H:i:s',###}"> </p>
                        <div class="clear"></div>
                     </div>
                         
                     <p>
                         <span>留言审核</span>
-                        <textarea name="" id="submit_message" placeholder="留言仅审核员可看，前台不会显示，输入如：此单已检查，商品评价没有拉人信息之类"></textarea>
+                        <textarea name="" id="submit_message" placeholder="留言仅审核员可看，前台不会显示，输入如：此单已检查，商品评价没有拉人信息之类">{$goods_info.submit_message}</textarea>
                     </p>
             
                 </div>
             
                 <p class="" style="width: 520px;margin: 0 auto;">
-                   <input type="button" name="" value="上一步" class="last-btn">
+                   <!--<input type="button" name="" value="上一步" class="last-btn">-->
                    <input type="button" name="" value="下一步" class="next-btn" onclick="count_score()">
                 </p>
             
@@ -160,7 +172,7 @@
 <div class="hidden_pro_au tanchu" style="height: 220px; top: 1650px; left: 559.5px; display: none;">
     <img src="__STATIC__/index/images/close.png" alt="" class="close" onclick="closeDiv()">
     <h1>提示</h1>
-    <p class="er f16" style="overflow:auto;text-align:left;padding-left:36px;line-height:25px;text-indent:0px;margin-top:10px;">
+    <p class="er f16" style="overflow:auto;text-align:left;padding-left:30px;line-height:25px;text-indent:0px;margin-top:10px;">
         券后价<i class="score_real_money"></i>元，剩余<i class="score_coupon_nums"></i>张券，每张券消耗<i class="lan single_score"></i>积分<br>
         共需<i class="lan need_scores"></i>积分，现有<i class="lan user_score"></i>积分<br>
         <span class="red f12 score_tip"></span>
@@ -452,17 +464,19 @@
     }
 
     function submit_goods(){
+        var  goods_id  =   $('#goods_id').val();
         data       =   get_goods_data();
         if(!data){
             return false;
         }
+        data.id     =   goods_id;
         var url     =   '/index/publish/submit_goods';
         $.post(url, data, function(msg){
             $('.msg_button').unbind();
             msg_show(msg.msg);
             if(msg.code == 200){
                 $('.msg_button').bind('click', function(){
-                    window.location.href = '/index/publish/index';
+                    window.location.href = '/index/goods/index';
                 });
             }
         },"json");
