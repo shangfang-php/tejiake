@@ -1,0 +1,187 @@
+{include file="public/header" /}
+<!-- 加载每个页面内容-->
+<div class="con">
+    <div class="content">
+        <div class="hot">
+            <img src="/static/index/images/video.png" alt="视频单" style="padding-top: 64px">
+            <span class="f12">
+                <img src="/static/index/images/tu.png" alt="">
+                &nbsp;在线淘客数：{$online_num}人
+            </span>
+        </div>
+        <div class="video-dec">
+            <div class="video-box">
+                <p>
+                    发视频单介绍让产品更直观，让人感觉更用心，更容易成交， <br/>
+                    推广产品的时候加上视频会能让转化提升一倍以上
+                </p>
+                 <p style="margin-top: 10px;">   温馨小提示：点击左上角的视频小图标可以直接播放视频！</p>
+            </div>
+        </div>
+
+        <div class="good goodqiang">
+            <div class="good-list">
+                <ul>
+                    {foreach $goods_list as $val}
+                    <li>
+                        <div class="good-img">
+                            <a href="/goods?id={$val.id}" target="_blank"><img src="{$val.main_img}"></a>
+                        </div>
+                        <div class="good-play">
+                              <img src="/static/index/images/smallplay.png" alt="" onclick="show('{$video_urls[$val.id]}')" class="btn">
+                        </div>
+                        <div class="good-collect">
+                            <a  href="javascript:;" class="add_cart_large btnCart"><img src="/static/index/images/sc.png" alt=""></a>
+                        </div>
+                        <div class="good-title">
+                            <a href="/goods?id={$val.id}" title="{$val.short_title}" target="_blank">
+                                <i class="tk-icon-14 icon-taobao">
+                                </i>
+                                {$val.title}
+                            </a>
+                        </div>
+                        <div class="good-fit">
+                            <div class="quan fl">
+                                ￥{$val.coupon_money}&nbsp;
+                            </div>
+                            <div class="charges f12 fl">
+                                <img src="/static/index/images/yj.png" alt="">
+                                佣金
+                                <span class="a3">
+                                    ￥{$val.taoke_money}
+                                </span>
+                            </div>
+                            <div class="plan f12 fl">
+                                <img src="/static/index/images/jih.png" alt="">
+                                计划
+                                <span class="a3">
+                                    20%
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="good-yu f12">
+                            <span class="fl">
+                                余券
+                            </span>
+                            <span class="fr">
+                                全部{$val.coupon_total_num}
+                            </span>
+                        </div>
+
+                        <div class="good-bar">
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {:round( ($val.coupon_total_num - $val.coupon_apply_num)/$val.coupon_total_num,2 ) * 100}%; background: #f66d25;height: 3px;">
+                                    <div class="progress-value">
+                                        {$val.coupon_total_num - $val.coupon_apply_num}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="good-sales">
+                            <div class="skipper fl f12">
+                                近2个小时跑单
+                            </div>
+                            <div class="lia fl f12">
+                                <span>
+                                    2
+                                </span>
+                                <span>
+                                    2
+                                </span>
+                                <span>
+                                    2
+                                </span>
+                            </div>
+                            <div class="xiao fr f12">
+                                销量&nbsp;{$val.sell_num}
+                            </div>
+                        </div>
+                        <div class="good-line"></div>
+                        <div class="good-price">
+                            <div class="fl f14">
+                                券后
+                                <span class="f20 price">
+                                    ￥{$val.real_money}
+                                </span>
+                            </div>
+                            <input class="fz fr copy f12" type="button" id="fz" value=" 复制文案">
+                            </input>
+                        </div>
+
+                        <div class="yin">
+                            <div class="good-line">
+                            </div>
+                            <div class="good-jian">
+                                <p class="f12">
+                                    <span class="f12">
+                                        推荐：
+                                    </span>
+                                    {$val.guide_info}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="good-wenan fm" id="fm">
+                            <div class="media-text-area f12">
+                                <img class='' src='{$val.main_img}'
+                                style='width:66px;'>
+                                <br/>
+                                成人脊椎保健修复荞麦枕头
+                                <br>
+                                【在售价{$val.price}元，券后价{$val.real_money}元】
+                                <br/>
+                                领券：{$val.coupon_link}
+                                <br>
+                                下单：{$val.link}
+                                <br>
+                                {$val.guide_info}
+                            </div>
+                        </div>
+
+                    </li>
+                    {/foreach}
+                    <div id="flyItem" class="fly_item">
+                      <img src="/static/index/images/sc.png" width="40" height="40">
+                    </div>
+                    <div class="clear"></div>
+                </ul>
+            </div>
+        </div>
+    </div>        
+</div>
+
+<div class="lbOverlay"  onclick="closeDiv()"></div>
+<div class="hidden_pro_au">
+<img src="__STATIC__/index/images/close.png" alt=""  class="close" onclick="closeDiv()">
+      <video width="562" height="408" src=""   controls="controls" class="video-js" autoplay="true"></video>
+      <p><input type="button" name="" value="下载视频"></p>
+</div>       
+{include file="public/footer" /}
+
+<script type="text/javascript">
+    function show(video_url){
+        $('.video-js').attr('src', video_url);
+        $(".lbOverlay").css({"height":window.screen.availHeight});
+        $(".lbOverlay").show();
+     
+        var st=$(document).scrollTop(); //页面滑动高度
+        var objH=$(".hidden_pro_au").height();//浮动对象的高度
+        var ch=$(window).height();//屏幕的高度  
+        var objT=Number(st)+(Number(ch)-Number(objH))/2;   //思路  浮动高度+（（屏幕高度-对象高度））/2
+        $(".hidden_pro_au").css("top",objT);
+         
+        var sl=$(document).scrollLeft(); //页面滑动左移宽度
+        var objW=$(".hidden_pro_au").width();//浮动对象的宽度
+        var cw=$(window).width();//屏幕的宽度  
+        var objL=Number(sl)+(Number(cw)-Number(objW))/2; //思路  左移浮动宽度+（（屏幕宽度-对象宽度））/2
+        $(".hidden_pro_au").css("left",objL);
+        $(".hidden_pro_au").slideDown("20000");//这里显示方式多种效果
+    }
+    function closeDiv(){
+        $('.video-js').attr('src', '');
+        $(".lbOverlay").hide();
+        $(".hidden_pro_au").hide();
+    }
+</script>

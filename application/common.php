@@ -394,3 +394,28 @@ function saveGoodsVideInfo($uid, $goods_id, $url){
     return $info;
 }
 
+/**
+ * reverse_array()
+ * 从一个数组中拿出指定的字段作为键名，另外一个字段作为值生成数组
+ * @param mixed $array
+ * @param mixed $val_filter  作为值的字段
+ * @param string $key_filter 作为键名的字段 为空则为key值
+ * @param bool $isMulti 是否生成多维数组
+ * @return void
+ */
+function reverse_array($array, $key_filter, $val_filter, $isMulti = FALSE){
+    $return     =   array();
+    if(empty($array)){
+        return $return; //增加拦截传递为空数组的情况
+    }
+    foreach($array as $key=>$val){
+        $k  =   $key_filter ? $val[$key_filter] : $key;
+        $v  =   $val_filter ? $val[$val_filter] : $val;
+        if($isMulti){
+            $return[$k][]   =   $v;
+        }else{
+            $return[$k]     =   $v;
+        }
+    }
+    return array_filter($return);
+}
