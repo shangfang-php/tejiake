@@ -20,6 +20,7 @@ return [
     'live' 		=>  'index/index/live', ##直播单
     'video' 	=>  'index/index/video', ##限时抢购
     'night'     =>  'index/index/night', ##过夜单
+    'goods'     =>  'index/index/goods', ##商品详情
     /*'[user]'     => [
         ':'   => ['index/index/detail',['method' => 'get']]
     ],
