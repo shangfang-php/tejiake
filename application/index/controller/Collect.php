@@ -46,7 +46,7 @@ class Collect extends UserCommon{
     }
 
     /*
-     * 清空
+     * 清空 / 删除
      * @param gcid OR gcids_arr 收藏ID OR 收藏ID数组群
      * */
     public function clear(){

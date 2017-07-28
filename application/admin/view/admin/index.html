@@ -2,6 +2,17 @@
 <!-- ============================================================== -->
     <!-- Start right Content here -->
     <!-- ============================================================== -->
+     <style type="text/css" media="screen">
+
+
+    table,thead,tbody,tr,td,th{
+        text-align: center;
+        height: 50px!important;
+        line-height: 50px!important;
+    }
+
+        
+    </style>
     <div class="content-page">
         <!-- Start content -->
         <div class="content">
@@ -20,8 +31,8 @@
                             </p>
 
 
-                            <div class="table-responsive">
-                                <table class="table m-0">
+                            <div class="table-responsive" >
+                                <table class="table m-0" border="1" style="border: 1px  solid #eee">
                                     <thead>
                                     <tr>
                                         <th>序号</th>
@@ -36,10 +47,10 @@
                                     <tr>
                                         <th scope="row">{$key}</th>
                                         <td>{$vo.username}</td>
-                                        <td>{$vo.menu}</td>
+                                        <td style="text-align: left">{$vo.menu}</td>
                                         <td>{if condition="$vo['status'] eq 1"}正常{else/}禁用{/if}</td>
                                         <td>
-                                            <a href="{:url('Admin/editAdmin',array('adminid'=>$vo['id']))}"  class="btn btn-primary">编辑</a>          <a onclick="delAdmin({$vo['id']});" class="btn btn-primary">删除</a>
+                                            <a href="{:url('Admin/editAdmin',array('adminid'=>$vo['id']))}"  class="btn btn-primary" style="background: #10c469!important;border: none!important">编辑</a>          <a onclick="delAdmin({$vo['id']});" class="btn btn-primary" style="background: #ff5b5b!important;border: none!important">删除</a>
                                         </td>
                                     </tr>
                                     {/volist}

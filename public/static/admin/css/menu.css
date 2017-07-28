@@ -203,7 +203,7 @@ File: Menu
   overflow: hidden;
 }
 .content-page .content {
-  padding: 0px 5px;
+  padding: 0px 40px;
   margin-top: 73px;
      -webkit-animation: .3s scaleUp ease-in;
     -o-animation: .3s scaleUp ease-in;
