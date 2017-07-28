@@ -94,6 +94,15 @@
         nav.click(function(){
             $(this).addClass("yuan").siblings().removeClass("yuan");
         });
+        
+        //复制文案显示
+        $('.fz').mouseover(function(){
+            $(this).parents('.good-price').siblings('.fm').css('display','block');
+        });
+        //复制文案隐藏
+        $('.fz').mouseout(function(){
+            $(this).parents('.good-price').siblings('.fm').css('display','none');
+        });
     });
 
     var clipboard = new Clipboard('.copy', {
@@ -111,19 +120,6 @@
         console.info('Trigger:', e.trigger);*/
         e.clearSelection();
     });
-
-
-    //复制文案显示与隐藏
-    window.onload = function() {
-        var oBox = $("#fz");
-        var ooo = $("#fm");
-        oBox.onmouseover = function() {
-            ooo.style.display = "block";
-        };
-        oBox.onmouseout = function() {
-            ooo.style.display = "none";
-        }
-    }
 
     //置顶
     // 获取置顶对象
