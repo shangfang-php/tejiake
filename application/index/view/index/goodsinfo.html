@@ -108,6 +108,16 @@
                             <div>结束</div>
                         </div>
                     </div>
+                <script>
+                    $('.countdown').downCount({
+                        /*date: '7/29/2017 00:00:00',*/
+                        date: "{$data.show_time|date='m-d-Y H:i:s',###}",
+                        offset: +8
+                    }, function () {
+                        //alert('倒计时结束!');
+                        $('.countdown').html('<p style="color: red;">活动已结束!</p>');
+                    });
+                </script>
                 {elseif condition="$data.type eq 3"}过夜单
                     {elseif condition="$data.type eq 4"}直播单
                     {elseif condition="$data.type eq 5"}视频单
@@ -131,7 +141,8 @@
                                 </div>
                             </li>
                             {volist name='goods_image' id='vo'}
-                            <li> <img src="{$vo.image_url}"  data-src="{$vo.image_url}"   data-500="{$vo.image_url}">
+                            <li>
+                                <img src="{$vo.image_url}"  data-src="{$vo.image_url}" data-500="{$vo.image_url}">
                                 <div class="cover">
                                         <span>
                                             &nbsp;
@@ -173,7 +184,7 @@
                     <p class="f14" style="line-height: 36px;margin-top: 10px;text-indent: 15px;">已领<i style="color: #fe5c30;">{$data.coupon_apply_num}</i>/{$data.coupon_total_num}&nbsp;张</p>
                     <p class="f14" style="line-height: 36px;text-indent: 15px;margin-bottom: 10px;">优惠券有效时间 {$data.coupon_start_time|date='Y-m-d',###}至{$data.coupon_end_time|date='Y-m-d',###}</p>
                     <p class="dashed"></p>
-                    <p class="f14 ac" style="line-height: 25px;padding: 10px 0 25px 0">?????????????????????</p>
+                    <p class="f14 ac" style="line-height: 25px;padding: 10px 0 25px 0">{$data.title}</p>
                     <p class="dashed"></p>
                     <p class="zhuan" onclick="show2()"><span>一键转链</span></p>
                 </div>
@@ -378,14 +389,8 @@
     }, function () {
         alert('倒计时结束!');
     });*/
-    $('.countdown').downCount({
-        /*date: '7/29/2017 00:00:00',*/
-        date: "{$data.show_time|date='m-d-Y H:i:s',###}",
-        offset: +8
-    }, function () {
-        //alert('倒计时结束!');
-        $('.countdown').html('<p style="color: red;">活动已结束!</p>');
-    });
+
+
     //浮动左边导航
     $(window).scroll(function(){
         if($(this).scrollTop() > 280){

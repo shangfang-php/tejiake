@@ -213,8 +213,7 @@ class Index extends Common{
             $goods_live_extends = getGoodsExtendsInfo($id,4);
             //$goods_live_extends = Db::name('goods_live_extends')->where(['gid'=>$id])->select();
             $this->assign('extends_data',$goods_live_extends);
-            echo '<pre>';
-            print_r($goods_live_extends);exit;
+
             return $this->fetch('liveinfo');
         }else{
             if($info['type'] == 5){

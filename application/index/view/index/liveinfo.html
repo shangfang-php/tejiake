@@ -79,25 +79,27 @@
                   </div>
                   <div class="you-content">
                   {volist name='extends_data' id='vo' key='key'}
-                  <!--奇数-->
-                  <div class="{if condition='$key % 2 eq 1'}con1 fl{else/}con2 fr{/if}">
-                      <span >{$key}</span>
-                      <div class="one one{$key}">
-                          {if condition='$vo.type eq 1'}<!--图片-->
-                              <div id="foo{$key}">
-                                  <img src="{$vo.url}" alt="">
-                                  <p>{$vo.content}</p>
+                      {if condition='!empty($vo.url) eq true'}
+                          <!--奇数-->
+                          <div class="{if condition='$key % 2 eq 1'}con1 fl{else/}con2 fr{/if}">
+                              <span >{$key}</span>
+                              <div class="one one{$key}">
+                                  {if condition='$vo.type eq 1'}<!--图片-->
+                                      <div id="foo{$key}">
+                                          <img src="{$vo.url}" alt="">
+                                          <p>{$vo.content}</p>
+                                      </div>
+                                   <input type="button" name="" value="+复制11" class="copy" data-clipboard-action="copy" data-clipboard-target="#foo{$key}">
+                                  {else/}
+                                      <div style="width: 294px;height: 295px;    margin-top: 20px;">
+                                          <img src="{$data.main_img}" alt="" style="width: 100%;">
+                                      </div><!--  <img src="__STATIC__/index/images/bigplay.png" alt="" class="bigplay" onclick="show()" class="btn">-->
+                                      <!-- <input type="button" name="" value="↓下载视频" class="down"> -->
+                                      <a href="{$vo.url}"><input type="button" name="" value="↓下载视频" class="down jp-play-down" ></a>
+                                  {/if}
                               </div>
-                           <input type="button" name="" value="+复制" class="copy" data-clipboard-action="copy" data-clipboard-target="#foo{$key}">
-                          {else/}
-                              <div style="width: 294px;height: 295px;    margin-top: 20px;">
-                                  <img src="{$data.main_img}" alt="" style="width: 100%;">
-                              </div><!--  <img src="__STATIC__/index/images/bigplay.png" alt="" class="bigplay" onclick="show()" class="btn">-->
-                              <!-- <input type="button" name="" value="↓下载视频" class="down"> -->
-                              <a href="{$vo.url}"><input type="button" name="" value="↓下载视频" class="down jp-play-down" ></a>
-                          {/if}
-                      </div>
-                  </div>
+                          </div>
+                      {/if}
                   {/volist}
 
                   <!-- <div class="con2 fr">
