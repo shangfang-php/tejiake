@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="widget-detail-1">
                                     <a href="">
-                                        <h2 class="p-t-10 m-b-0"> 4569 </h2>
+                                        <h2 class="p-t-10 m-b-0">{$goods_count}</h2>
                                         <p class="text-muted">今日上架</p>
                                     </a>
                                 </div>
@@ -59,7 +59,7 @@
                         <div class="card-box widget-user" style="    min-height: 50px; padding: 12px;">
                             <div>
                                 <div class="wid-u-info">
-                                    <a href="{:url('User/applyMerchant')}"><h4 class="m-t-0 m-b-5 font-600">2324</h4>
+                                    <a href="{:url('User/applyMerchant')}"><h4 class="m-t-0 m-b-5 font-600">{$merchant_count}</h4>
                                         <p class="text-muted m-b-5 font-13">招生淘客数</p>
                                         <!--<small class="text-warning"><b>管理</b></small>--></a>
                                 </div>
@@ -69,7 +69,7 @@
                             <div>
                                 <!--<img src="__STATIC__/admin/images/users/avatar-2.jpg" class="img-responsive img-circle" alt="user">-->
                                 <div class="wid-u-info">
-                                    <a href="{:url('Goods/index',array('status'=>1))}"><h4 class="m-t-0 m-b-5 font-600"> 353453</h4>
+                                    <a href="{:url('Goods/index',array('status'=>1))}"><h4 class="m-t-0 m-b-5 font-600"> {$apply_merchant_count}</h4>
                                         <p class="text-muted m-b-5 font-13">淘客申请审核</p></a>
                                     <!--<small class="text-custom"><b>支持引导</b></small>-->
                                 </div>
@@ -99,11 +99,12 @@
                             </div>
                         </div>
                     </div><!-- end col -->
+                   <!--1爆款单2限时抢购3过夜单4直播单5视频单-->
                      <div class="col-lg-2 col-md-6">
-                        <div class="card-box widget-user" style="    min-height: 50px; padding: 12px;">
+                        <div class="card-box widget-user" style=" min-height: 50px; padding: 12px;">
                             <div>
                                 <div class="wid-u-info">
-                                    <a href="{:url('User/applyMerchant')}"><h4 class="m-t-0 m-b-5 font-600">2324</h4>
+                                    <a href="{:url('User/applyMerchant')}"><h4 class="m-t-0 m-b-5 font-600">{$wait_for_check[1]}</h4>
                                         <p class="text-muted m-b-5 font-13">爆款单审核</p>
                                         <!--<small class="text-warning"><b>管理</b></small>--></a>
                                 </div>
@@ -113,7 +114,7 @@
                             <div>
                                 <!--<img src="__STATIC__/admin/images/users/avatar-2.jpg" class="img-responsive img-circle" alt="user">-->
                                 <div class="wid-u-info">
-                                    <a href="{:url('Goods/index',array('status'=>1))}"><h4 class="m-t-0 m-b-5 font-600"> 353453</h4>
+                                    <a href="{:url('Goods/index',array('status'=>1))}"><h4 class="m-t-0 m-b-5 font-600"> {$wait_for_check[3]}</h4>
                                         <p class="text-muted m-b-5 font-13">过夜单审核</p></a>
                                     <!--<small class="text-custom"><b>支持引导</b></small>-->
                                 </div>
@@ -124,7 +125,7 @@
                         <div class="card-box widget-user" style="    min-height: 50px; padding: 12px;">
                             <div>
                                 <div class="wid-u-info">
-                                    <a href="{:url('User/applyMerchant')}"><h4 class="m-t-0 m-b-5 font-600">2324</h4>
+                                    <a href="{:url('User/applyMerchant')}"><h4 class="m-t-0 m-b-5 font-600">{$wait_for_check[2]}</h4>
                                         <p class="text-muted m-b-5 font-13">限时抢购审核</p>
                                         <!--<small class="text-warning"><b>管理</b></small>--></a>
                                 </div>
@@ -134,7 +135,7 @@
                             <div>
                                 <!--<img src="__STATIC__/admin/images/users/avatar-2.jpg" class="img-responsive img-circle" alt="user">-->
                                 <div class="wid-u-info">
-                                    <a href="{:url('Goods/index',array('status'=>1))}"><h4 class="m-t-0 m-b-5 font-600"> 353453</h4>
+                                    <a href="{:url('Goods/index',array('status'=>1))}"><h4 class="m-t-0 m-b-5 font-600"> {$wait_for_check[5]}</h4>
                                         <p class="text-muted m-b-5 font-13">视频单审核</p></a>
                                     <!--<small class="text-custom"><b>支持引导</b></small>-->
                                 </div>
@@ -145,7 +146,7 @@
                         <div class="card-box widget-user" style="    min-height: 50px; padding: 12px;">
                             <div>
                                 <div class="wid-u-info">
-                                    <a href="{:url('User/applyMerchant')}"><h4 class="m-t-0 m-b-5 font-600">2324</h4>
+                                    <a href="{:url('User/applyMerchant')}"><h4 class="m-t-0 m-b-5 font-600">{$wait_for_check[4]}</h4>
                                         <p class="text-muted m-b-5 font-13">直播单审核</p>
                                         <!--<small class="text-warning"><b>管理</b></small>--></a>
                                 </div>

@@ -73,7 +73,6 @@
         }
         </style>
     </head>
-    
     <body style="background: #f6f6f6;min-width: 1400px;width: 100%;">
         <header id="header" class="">
             <div class="head-mid">
@@ -104,8 +103,6 @@
                                 <a href="/user_login"> <div class="log">登录</div></a>
                             </div>
                         {/if}
-                        
-                        
                     </div>
                     <div style="clear: both">
                     </div>
@@ -166,7 +163,7 @@
                                 </div>
                             </a>
                         </li>
-                        <li class="gyd">
+                        <li class="gyd {if $goods_type == 'night'}yuan{/if}">
                             <a  title="" href="night.html">
                                 <img src="/static/index/images/yuel.png" alt="">
                                 <div class="nav-dec">
