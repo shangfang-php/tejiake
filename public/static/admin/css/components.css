@@ -1263,6 +1263,7 @@ table.dataTable td.focus {
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #1a99fb;
 }
 /* Inbox-widget */
 .inbox-widget .inbox-item {

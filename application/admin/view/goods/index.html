@@ -2,17 +2,42 @@
 <!-- ============================================================== -->
     <!-- Start right Content here -->
     <!-- ============================================================== -->
+     <style type="text/css" media="screen">
+
+
+    table,thead,tbody,tr,td,th{
+        text-align: center;
+        height: 50px!important;
+        line-height: 50px!important;
+        vertical-align: middle!important;
+        line-height: 20px!important; height: 20px!important;
+    }
+  .checkbox .shiwu:before {
+   
+    top: 0px!important;
+}
+ .checkbox label:before {
+   
+    top: 5px;
+}
+.table-responsive {
+   
+    overflow-x: visible!important;
+}
+
+        
+    </style>
     <div class="content-page">
         <!-- Start content -->
         <div class="content">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="card-box">
+                        <div class="card-box" >
                             <!--<div class="dropdown pull-right">
                                     <a href="{:url('Menu/addMenu')}" class="card-drop">添加用户</a>
                             </div>-->
-                            <h4 class="header-title m-t-0 m-b-30">商品管理</h4>
+                            <h4 class="header-title m-t-0 m-b-30">商品管理(454)</h4>
                             <p class="text-muted font-13 m-b-25">
                             </p>
                             <div class="" style="display: inline-block">
@@ -60,14 +85,14 @@
                                     <input type="hidden" name="status" value="{$param.status}">
                                     <input type="hidden" name="type" value="{$param.type}">
                                 </div>
-                            <div class="table-responsive">
-                                <table class="table m-0" >
+                            <div class="table-responsive" style="margin-top: 20px;"  scroll='no'>
+                                <table class="table m-0" border="1" style="border: 1px  solid #eee" >
                                     <thead>
                                     <tr>
                                         <th>
                                             <div class="checkbox checkbox-primary" >
                                                 <input id="checkbox3" type="checkbox" onclick="getAll(this);">
-                                                <label for="checkbox3">选择</label>
+                                                <label for="checkbox3" class="shiwu">选择</label>
                                             </div>
                                         </th>
                                         <th>编号</th>
@@ -103,17 +128,17 @@
                                             {/if}
                                         </td>
                                         <td>
-                                            <label>¥{$vo.real_money}</label>
-                                            <label>¥{$vo.price}</label>
+                                            <label>¥{$vo.real_money}</label><br/>
+                                            <label class="deldel" style="color: #ccc;"><del>&nbsp;¥{$vo.price}</del></label>
                                         </td>
-                                        <td>
-                                            <label>¥{$vo.coupon_money}</label>
-                                            <label>剩余：{$vo.coupon_apply_num}/{$vo.coupon_total_num}</label>
+                                        <td style="color: #ccc;">
+                                            <label style="color: #333;">¥{$vo.coupon_money}</label><br/>
+                                            <label>剩余：<i style="color: #333;">{$vo.coupon_apply_num}</i>/{$vo.coupon_total_num}</label><br/>
                                             <label>到期：{$vo.coupon_end_time|date='Y-m-d H:i:s',###}</label>
                                         </td>
                                         <td>
-                                            <label>¥{$vo.taoke_money}</label>
-                                            <label>计划：{$vo.taoke_money_percent}%</label>
+                                            <label>¥{$vo.taoke_money}</label><br/>
+                                            <label style="color: #ccc;">计划：{$vo.taoke_money_percent}%</label>
                                         </td>
                                         <td>{$vo.phone}</td>
                                         <td>
@@ -128,8 +153,8 @@
                                             <a class="label label-warning">已删除</a>
                                             {else/}
                                            <!-- <a href="{:url('Goods/edit',array('gid'=>$vo['id']))}"  class="label label-purple">修改</a>-->
-                                            <a data-toggle="modal" href="{:url('Goods/edit',array('gid'=>$vo['id']))}" data-target="#custom-width-modal" class="label label-primary">修改</a>
-                                            <a onclick="delGood({$vo['id']});"  class="label label-danger">删除</a>
+                                            <a data-toggle="modal" href="{:url('Goods/edit',array('gid'=>$vo['id']))}" data-target="#custom-width-modal" class="label label-primary" style="background: #10c469!important;border: none!important;    padding: 5px 12px;">修改</a>
+                                            <a onclick="delGood({$vo['id']});"  class="label label-danger" style="background: #ff5b5b!important;border: none!important;    padding: 5px 12px;">删除</a>
                                             {/if}
 
                                         </td>
@@ -137,10 +162,8 @@
                                     {/volist}
                                     </tbody>
                                 </table>
-                                <div>
-                                    <a onclick="delMuchGood();"  class="label label-primary">删除</a>
-                                </div>
-
+                                <a onclick="delMuchGood();"  class="label label-primary" style="    position: relative;
+    top: 10px;    padding: 5px 20px;">删除</a>
                                 {$show}
                             </div>
                         </div>

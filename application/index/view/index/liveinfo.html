@@ -1,0 +1,459 @@
+{include file='public/header'}
+        <!-- 加载每个页面内容-->
+        <div class="con">
+
+        <div class="content" style="padding-top: 80px;">
+             <div class="fl zuo" id="zuo">
+            <div class="team">
+               <div class="team-head">
+                  <img src="__STATIC__/index/images/tou.png" alt="">
+                  <p class="f16">{$data.nickname}&nbsp;
+                      <span class="f12">
+                          {if condition="$data.mtype eq 1"}个人
+                            {else/}团队
+                            {/if}
+                      </span>
+                  </p>
+                     <div class="tubiao">
+                    <img src="__STATIC__/index/images/tubiao.png" alt="">
+               </div>
+                   
+               </div>
+            
+               <div class="team-dec">
+                  <div class="time fl">
+                   <p class="f12">入驻时间<br/><span class="f16">{$data.addday}天</span></p>
+                   
+                  </div>
+                  <div class="line fl">
+                    <p class="f12">在线商品<br/><span class="f16">{$data.line_goods_num}款</span></p>
+                      
+                  </div>
+                   
+               </div></div>
+            <div class="xiang">
+
+            <div class="xiang-price">
+                <div class="fl f12">券后
+                      <span class="f20 price">￥{$data.real_money} </span>
+                </div>
+                <div class="fr">
+                    <img src="__STATIC__/index/images/tao.png" alt="" >&nbsp;&nbsp;
+                </div>                 
+            </div>
+
+            <div class="xiang-fit">
+               <div class="quan fl">￥{$data.coupon_money}</div>
+               <div class="fr f12 ac">已领取:&nbsp;{$data.coupon_apply_num}/{$data.coupon_total_num}&nbsp;</div>
+            </div>
+
+            <div class="xiang-chan f12">
+            <div class="changes fl">
+             佣金：<span style="color: #333;">￥{$data.taoke_money}</span>
+                
+            </div>
+            <div class="fr plan">
+                计划：{$data.taoke_money_percent}%&nbsp;&nbsp;
+            </div>
+                
+            </div>
+
+            <div class="xiang-sc">
+                {if condition="$data.is_collect eq 1"}
+                <p>已收藏</p>
+                {else/}
+                <p><a href="javascript:;" class="add_cart_large btnCart">点击收藏</a></p>
+                {/if}
+            <!-- <a  href="javascript:;" class="add_cart_large btnCart" style="color: #333;">收藏</a>-->
+                
+            </div></div>
+            </div>
+
+
+            <div class="fr you">
+                  <div class="title">
+                  <h1>{$data.short_title}</h1>
+                  <p>—————详情介绍</p>
+                      
+                  </div>
+                  <div class="you-content">
+                  <div class="con1 fl">
+                      <span >1</span>
+
+
+                      <div class="one one1">
+
+                      <img src="__STATIC__/index/images/dec1.jpg" alt="">
+                       <p>【东菱】全自动智能面包蛋糕机  汇集于颜值跟多功能一身的面包机，早餐睡前智能预约时间，让厨房新手的你解放双手，活动马上开始~~</p>
+
+                       <input type="button" name="" value="+复制" class="copy1">
+
+                          
+                      </div>
+                  </div>
+                   <div class="con2 fr">
+                     <span >2</span>
+                        <div class="one one2">
+
+                      <img src="__STATIC__/index/images/dec2.jpg" alt="">
+                       <p>【东菱】全自动智能面包蛋糕机  汇集于颜值跟多功能一身的面包机，早餐睡前智能预约时间，让厨房新手的你解放双手，活动马上开始~~</p>
+
+                       <input type="button" name="" value="+复制" class="copy2">
+
+                          
+                      </div>
+                  </div>
+
+                    <div class="con1 fl">
+                      <span >3</span>
+
+
+                      <div class="one one3">
+
+                        <div style="width: 294px;height: 295px;    margin-top: 20px;"><img src="__STATIC__/index/images/decvideo.png" alt="" style="width: 100%;"></div>
+                        <img src="__STATIC__/index/images/bigplay.png" alt="" class="bigplay" onclick="show()" class="btn">
+                        
+                      
+
+                       <!-- <input type="button" name="" value="↓下载视频" class="down"> -->
+                          <a href="__STATIC__/index/images/controller.mp4.txt"><input type="button" name="" value="↓下载视频" class="down jp-play-down" ></a>
+
+                          
+                      </div>
+                  </div>
+
+                  <div class="clear">
+                      
+                  </div>
+
+
+                  <div class="link">
+                    <div class="one one4">
+
+                      <img src="__STATIC__/index/images/dec4.jpg" alt="">
+                       <p>东菱】全自动家用智能面包蛋糕机<br/>
+【淘抢购199元】券后【159元】包邮<br/>
+领券：<a href="http://shop.m.taobao.com/shop/coupon.htm?seller_id=2786465182&activity_id=1acb87f7c3fa47918605b0e37db246a3" target="_blank">http://shop.m.taobao.com/shop/coupon.htm?seller_id=2786465182&activity_id=1acb87f7c3fa47918605b0e37db246a3</a><br/>
+抢购：<br/>
+<a href="https://detail.tmall.com/item.htm?id=527839747670" target="_blank">https://detail.tmall.com/item.htm?id=527839747670</a><br/>
+拉丝不锈钢机身，仿古法手工揉面，新涡轮增压技术，还原古早味麦香面包，18项强大功能 只需两步</p>
+
+                       <input type="button" name="" value="一键转链"  class="yijian" onclick="show2()">
+                       <input type="button" name="" value="+复制" class="fuzhi copy3">
+                      </div>
+                  </div>
+                  </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+          <div id="flyItem" class="fly_item">
+            <img src="__STATIC__/index/images/sc.png" width="40" height="40">
+        </div>
+        <footer>
+            <div class="footer-content">
+                <div class="fl waper">
+                    <img src="__STATIC__/index/images/logo.png" alt="">
+                    <ul>
+                       <li>
+                            <a href="/user/user.html" target="_blank">
+                                个人中心
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/user/collect.html" target="_blank">
+                               我的收藏
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/user/fbtg.html" target="_blank">
+                                放单后台
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/user/api.html" target="_blank">
+                                开放API
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/user/setting.html" target="_blank">
+                                联盟设置
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/index/news.html" target="_blank">
+                                联系我们
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="fl shu">
+                </div>
+                <div class="fl follow">
+                    <h1>
+                        特价客的单子至少可以提升你3倍以上的收入
+                    </h1>
+                    <p class="f12">
+                        特价客CopyRight 2017粤ICP备15077059号-4
+                    </p>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </footer>
+           <!--置顶-->
+        <div id="scroll">
+        </div>
+        <!--视频播放-->
+<div class="lbOverlay"  onclick="closeDiv()"></div>
+<div class="hidden_pro_au">
+<img src="__STATIC__/index/images/close.png" alt=""  class="close" onclick="closeDiv()">
+      <video width="562" height="408" src="__STATIC__/index/images/controller.mp4.txt"   controls="controls" class="video-js"></video>
+        <p> <a href="__STATIC__/index/images/controller.mp4.txt"><input type="button" name="" value="↓下载视频" class="down jp-play-down" ></a></p>
+</div>
+
+<div class="lbOverlay"  onclick="closeDiv()"></div>
+<div class="zhuanlian tanchu " style="width: 240px;height: 220px;background: #fff;text-align: center;padding: 30px;">
+         <img src="__STATIC__/index/images/close.png" alt=""  class="close" onclick="closeDiv()" style="    position: absolute;right: 2px;top: 2px;z-index: 9;cursor: pointer;">
+   <div class="">
+     <img src="__STATIC__/index/images/dengl.png" alt="">
+   </div>
+   <!--前往登录-->
+   <p style="line-height: 44px;">你还没登录账号</p>
+   <a href="__STATIC__/index/index/login.html"><input type="button" name="" value="前往登录" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
+    line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a>
+  <!--前往更新-->
+  <!--    <p style="line-height: 44px;">您的PID已过期</p>
+   <a href="/index/user/set.html"><input type="button" name="" value="前往更新" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
+    line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a> -->
+
+    <!--前往设置-->
+    <!--  <p style="line-height: 44px;">请先设置淘宝账号并设置PID</p>
+   <a href="/index/user/set.html"><input type="button" name="" value="前往设置" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
+    line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a> -->
+</div>
+
+        <!--收藏 商品数量 quick_links.js控制-->
+        <div class="mui-mbar-tabs" id="sc">
+            <div class="quick_links_panel">
+                <div id="quick_links" class="quick_links">
+                    <li id="shopCart">
+                        <a href="#" class="message_list">
+                            <span class="cart_num">
+                                0
+                            </span>
+                        </a>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </body>
+   <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+ 
+    <script type="text/javascript" src="__STATIC__/index/js/clipboard.js">
+    </script>
+    <script type="text/javascript" src="__STATIC__/index/js/common.js"></script>
+    <script type="text/javascript" src="__STATIC__/index/js/quick_links.js"></script>
+    <!--[if lte IE 8]><script src="__STATIC__/index/js/ieBetter.js"> </script><![endif]-->
+    <script type="text/javascript" src="__STATIC__/index/js/parabola.js"></script>
+<script type="text/javascript" src="__STATIC__/index/js/videojs-ie8.min.js"></script>
+
+  <script type="text/javascript">
+        var clipboard = new Clipboard('.copy1', {
+            target: function() {
+                return document.querySelector('.one1');
+            }
+        });
+        clipboard.on('success',
+        function(e) {
+            $(e.trigger).val('复制成功');
+            e.clearSelection();
+        });
+        /* var clipboard = new Clipboard('.copy2', {
+            target: function() {
+                return document.querySelector('.one2');
+            }
+        });
+        clipboard.on('success',
+        function(e) {
+           
+            $('.copy2').val('复制成功');
+           
+            console.info('Action:', e.action);
+            console.info('Text:', e.text);
+            console.info('Trigger:', e.trigger);
+            e.clearSelection();
+        });
+         var clipboard = new Clipboard('.copy3', {
+            target: function() {
+                return document.querySelector('.one4');
+            }
+        });
+        clipboard.on('success',
+        function(e) {
+           
+            $('.copy3').val('复制成功');
+           
+            console.info('Action:', e.action);
+            console.info('Text:', e.text);
+            console.info('Trigger:', e.trigger);
+            e.clearSelection();
+        });
+*/
+    </script>
+     <script type="text/javascript">
+       //浮动左边导航
+$(window).scroll(function(){
+     if($(this).scrollTop() > 280){
+        $("#zuo").addClass('zuofu');
+     }
+     else{
+        $("#zuo").removeClass('zuofu');
+     }
+  })    
+        </script>
+<script>
+
+function show(){
+    $(".lbOverlay").css({"height":window.screen.availHeight});
+    $(".lbOverlay").show();
+ 
+    var st=$(document).scrollTop(); //页面滑动高度
+    var objH=$(".hidden_pro_au").height();//浮动对象的高度
+    var ch=$(window).height();//屏幕的高度  
+    var objT=Number(st)+(Number(ch)-Number(objH))/2;   //思路  浮动高度+（（屏幕高度-对象高度））/2
+    $(".hidden_pro_au").css("top",objT);
+     
+    var sl=$(document).scrollLeft(); //页面滑动左移宽度
+    var objW=$(".hidden_pro_au").width();//浮动对象的宽度
+    var cw=$(window).width();//屏幕的宽度  
+    var objL=Number(sl)+(Number(cw)-Number(objW))/2; //思路  左移浮动宽度+（（屏幕宽度-对象宽度））/2
+    $(".hidden_pro_au").css("left",objL);
+    $(".hidden_pro_au").slideDown("20000");//这里显示方式多种效果
+}
+function show2(){
+    $(".lbOverlay").css({"height":window.screen.availHeight});
+    $(".lbOverlay").show();
+ 
+    var st=$(document).scrollTop(); //页面滑动高度
+    var objH=$(".zhuanlian").height();//浮动对象的高度
+    var ch=$(window).height();//屏幕的高度  
+    var objT=Number(st)+(Number(ch)-Number(objH))/2;   //思路  浮动高度+（（屏幕高度-对象高度））/2
+    $(".zhuanlian").css("top",objT);
+     
+    var sl=$(document).scrollLeft(); //页面滑动左移宽度
+    var objW=$(".zhuanlian").width();//浮动对象的宽度
+    var cw=$(window).width();//屏幕的宽度  
+    var objL=Number(sl)+(Number(cw)-Number(objW))/2; //思路  左移浮动宽度+（（屏幕宽度-对象宽度））/2
+    $(".zhuanlian").css("left",objL);
+    $(".zhuanlian").slideDown("20000");//这里显示方式多种效果
+}
+function closeDiv(){
+    $(".lbOverlay").hide();
+    $(".hidden_pro_au").hide();
+    $(".zhuanlian").hide();
+}
+
+$(document).ready(function(){
+   
+  
+   
+    $(window).scroll(function(){
+        var top = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+        $(".hidden_pro_au").css({
+            "top": (document.documentElement.clientHeight/2 + top - $(".hidden_pro_au").css("height").replace("px","")/2 )+"px",
+            "left":($(window).width() - $(".hidden_pro_au").css("width").replace("px",""))/2 +"px"
+        });
+         $(".zhuanlian").css({
+            "top": (document.documentElement.clientHeight/2 + top - $(".zhuanlian").css("height").replace("px","")/2 )+"px",
+            "left":($(window).width() - $(".zhuanlian").css("width").replace("px",""))/2 +"px"
+        });
+    })
+   
+})
+</script>
+
+      
+    <script type="text/javascript">
+    //置顶
+        // 获取置顶对象
+        var obj = document.getElementById('scroll');
+        
+
+        // 置顶对象点击事件
+        obj.onclick = function() {
+            var timer = setInterval(function() {
+                window.scrollBy(0, -50);
+                if (document.body.scrollTop == 0) {
+                    clearInterval(timer);
+                };
+            },
+            30);
+        }
+
+        // 窗口滚动检测
+        window.onscroll = function() {
+            obj.style.display = (document.body.scrollTop >= 300) ? "block": "none";
+          
+        }
+        
+
+    </script>
+          <script type="text/javascript">
+      //添加收藏数量
+        // 元素以及其他一些变量
+        var eleFlyElement = document.querySelector("#flyItem"),
+        eleShopCart = document.querySelector("#shopCart");
+
+        var numberItem = 0;
+
+        // 抛物线运动
+        var myParabola = funParabola(eleFlyElement, eleShopCart, {
+
+            speed: 400,
+            //抛物线速度
+            curvature: 0.0008,
+            //控制抛物线弧度
+            complete: function() {
+
+                eleFlyElement.style.visibility = "hidden";
+
+                eleShopCart.querySelector("span").innerHTML = ++numberItem;
+
+            }
+
+        });
+
+        // 绑定点击事件
+        if (eleFlyElement && eleShopCart) {
+
+            [].slice.call(document.getElementsByClassName("btnCart")).forEach(function(button) {
+
+                button.addEventListener("click",
+                function(event) {
+
+                    // 滚动大小
+                    var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+
+                    scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+                    eleFlyElement.style.left = event.clientX + scrollLeft + "px";
+
+                    eleFlyElement.style.top = event.clientY + scrollTop + "px";
+
+                    eleFlyElement.style.visibility = "visible";
+
+                    // 需要重定位
+                    myParabola.position().move();
+
+                });
+
+            });
+
+        }
+    </script>
+
+     
+
+</html>

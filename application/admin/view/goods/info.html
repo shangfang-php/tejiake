@@ -1,0 +1,132 @@
+{include file='public/header' /}
+
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-box">
+                            <div class="dropdown pull-right">
+                                <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="zmdi zmdi-more-vert"></i>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+
+                            <h4 class="header-title m-t-0 m-b-30">商品详情</h4>
+
+                            <form action="#" data-parsley-validate novalidate>
+                                <div class="form-group">
+                                    <label for="title">商品名称</label>
+                                    <input type="text" name="title" parsley-trigger="change" required placeholder="输入菜单名称"  class="form-control" id="title" value="{$data.title}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="url">URL (例：admin/Index/index)</label>
+                                    <input id="url" name="url" type="text" placeholder="输入URL" required class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="remark">备注 </label>
+                                    <input data-parsley-equalto="#remark" type="text" required placeholder="输入备注" class="form-control" id="remark" name="remark">
+                                </div>
+                               <!-- <div class="form-group">
+                                    <label class="col-sm-3 control-label">审核</label>
+                                    <div class="col-sm-12">
+                                        <div class="radio checkbox-pink" style="float: left;padding-right: 20px ;">
+                                            <input id="checkbox1" checked type="radio" data-parsley-multiple="groups" data-parsley-mincheck="2" value="1" name="is_close">
+                                            <label for="checkbox1"> 通过 </label>
+                                        </div>
+                                        <div class="radio checkbox-pink" style="float: left;padding-right: 20px ;  margin-top: 10px; ">
+                                            <input id="checkbox2" type="radio" data-parsley-multiple="groups" data-parsley-mincheck="2" value="4" name="is_close">
+                                            <label for="checkbox2"> 不通过 </label>
+                                        </div>
+                                    </div>
+                                </div>-->
+                                <input type="hidden" name="gid" value="{$data.id}">
+                                <div class="form-group  m-b-0">
+                                    {if condition="$data['status'] eq 2"}
+                                        <button class="btn btn-primary"  type="button" >
+                                            已审核通过
+                                        </button>
+                                    {elseif condition="$data['status'] eq 4"}
+                                        <button class="btn btn-primary"  type="button" >
+                                            不通过审核
+                                        </button>
+                                    {else/}
+                                        {if condition="$data['is_delete'] eq 1"}
+                                            <button class="btn btn-primary"  type="button" >
+                                                已删除
+                                            </button>
+                                        {else/}
+                                            <button class="btn btn-primary" type="button" onclick="editStatus(2);">
+                                                通过
+                                            </button>
+                                            <button class="btn btn-danger" type="button" onclick="editStatus(4);">
+                                                不通过
+                                            </button>
+                                        {/if}
+                                    {/if}
+                                </div>
+
+                            </form>
+                        </div>
+                    </div><!-- end col -->
+
+                </div>
+                <!-- end row -->
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Right content here -->
+    <!-- ============================================================== -->
+
+
+    <!-- Right Sidebar -->
+
+    <!-- /Right-bar -->
+
+</div>
+<!-- END wrapper -->
+{include file='public/footer' /}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('form').parsley();
+    });
+    function editStatus(param){
+        if(confirm('确定修改当前商品的审核状态?')){
+            var gid = $('input[name=gid]').val();
+            var remark = $('input[name=remark]').val();
+            //alert(33);
+            $.post("{:url('Goods/info')}",{gid:gid,status:param,remark:remark}, function (dat) {
+                var data = JSON.parse(dat);
+                alert(data.msg);
+                if(data.status == 1){
+                    window.location.href = window.location.href
+                }
+                return false;
+            });
+        }
+
+    }
+
+</script>

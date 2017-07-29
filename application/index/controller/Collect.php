@@ -46,7 +46,7 @@ class Collect extends UserCommon{
     }
 
     /*
-     * 清空
+     * 清空 / 删除
      * @param gcid OR gcids_arr 收藏ID OR 收藏ID数组群
      * */
     public function clear(){
@@ -70,31 +70,6 @@ class Collect extends UserCommon{
             //return returnAjaxMsg(0,'失败');
         }
     }
-
-    /*
-     * 添加收藏
-     * @param gid商品ID
-     * */
-    public function addCollect(){
-        $gid = input('get.gid');
-        $uid = self::$login_user['id'];
-        $info = Db::name('goods')->where(['is_delete'=>0,'id'=>$gid])->find();
-        if(empty($info)){
-            return returnAjaxMsg(0,'数据有误');
-        }
-        $data = [
-            'gid'=>$gid,
-            'uid'=>$uid,
-            'time'=>time(),
-        ];
-        $res = Db::name('goods_collect')->insert($data);
-        if($res){
-            return returnAjaxMsg(1,'成功');
-        }else{
-            return returnAjaxMsg(0,'失败');
-        }
-    }
-
     /*
      * 加入推广
      * @param gcid收藏ID spread_time推广时间

@@ -156,4 +156,100 @@ class Index extends Common{
         $goods  =   Db::table('goods')->where($where)->order('id', 'desc')->limit($start, $nums)->select();
         return $goods;
     }
+
+    /*
+      * 商品详情 get传递数据
+      * @param id商品ID
+      * http://ceshi.tejiake.com/goods?id=5
+      * */
+    public function goods(){
+        $id = input('get.id');
+        $info = Db::name('goods')
+            ->alias('g')
+            ->field('g.*,u.head_img,u.create_time ucreate_time,m.nickname,m.type mtype')
+            ->join('user u','g.uid=u.id','left')
+            ->join('merchant_apply_record m','g.uid=m.uid','left')
+            ->where(['g.id'=>$id,'g.is_delete'=>0])
+            ->find();
+        if(empty($info)){
+            $this->error('数据有误');
+        }
+        //$info['head_img'] = '__STATIC__' . DS . 'user_temp'.DS.$info['head_img'];//头像
+        $info['head_img'] = '__STATIC__' . DS . 'user_temp'.DS.'avatar.png';//头像
+        $info['addday'] = ceil((time()-$info['ucreate_time'])/86400);//入驻天数
+        $goods_num = Db::name('goods')->where("uid=".$info['uid']." and is_delete=0 and status=2 and start_time<=".time()." and end_time>=".time()."")->count();
+        $info['line_goods_num'] = $goods_num;//线上商品 状态为展示中 当前时间在商品的活动期
+
+        if(self::$login_user){
+            $uid = self::$login_user['id'];
+            $collect_info = Db::name('goods_collect')->where(['is_spread'=>0,'gid'=>$id,'uid'=>$uid])->find();//当前商品是否被当前用户所收藏
+            if(!empty($collect_info)){
+                $info['is_collect'] = 1;
+            }else{
+                $info['is_collect'] = 0;
+            }
+        }else{
+            $info['is_collect'] = 0;
+        }
+        //1爆款单2限时抢购3过夜单4直播单5视频单
+        if($info['type'] == 1){
+            $goods_type = 'hot';
+        }elseif($info['type'] == 2){
+            $goods_type = 'flash_sale';
+        }elseif($info['type'] == 3){
+            $goods_type = 'night';
+        }elseif($info['type'] == 4){
+            $goods_type = 'live';
+        }else{
+            $goods_type = 'video';
+        }
+       // echo '<pre>';
+        //print_r($goods_type);exit;
+        $this->assign('goods_type', $goods_type);
+        $this->assign('data',$info);
+        
+        if($info['type'] == 4){
+            //直播单
+            $goods_live_extends = Db::name('goods_live_extends')->where(['gid'=>$id])->select();
+            $this->assign('extends_data',$goods_live_extends);
+            echo '<pre>';
+            print_r($goods_live_extends);exit;
+            return $this->fetch('liveinfo');
+        }else{
+            if($info['type'] == 5){
+                $goods_video_extends = Db::name('goods_video_extends')->where(['gid'=>$id])->select();
+                $this->assign('extends_data',$goods_video_extends);
+            }
+            return $this->fetch('goodsinfo');
+        }
+
+    }
+
+    /*
+     * 添加收藏
+     * @param gid商品ID
+     * */
+    public function addCollect(){
+        $gid = input('get.gid');
+        if(!self::$login_user){
+            return returnAjaxMsg(0,'失败',array('url'=>"/user_login"));
+        }
+        $uid = self::$login_user['id'];
+        $info = Db::name('goods')->where(['is_delete'=>0,'id'=>$gid])->find();
+        if(empty($info)){
+            return returnAjaxMsg(0,'数据有误');
+        }
+        $data = [
+            'gid'=>$gid,
+            'uid'=>$uid,
+            'time'=>time(),
+        ];
+        $res = Db::name('goods_collect')->insert($data);
+        if($res){
+            return returnAjaxMsg(1,'成功');
+        }else{
+            return returnAjaxMsg(0,'失败');
+        }
+    }
+
 }

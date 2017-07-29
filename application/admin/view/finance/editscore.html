@@ -1,0 +1,107 @@
+{include file='public/header' /}
+<!-- ============================================================== -->
+<!-- Start right Content here -->
+<!-- ============================================================== -->
+<div class="content-page">
+    <!-- Start content -->
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box">
+                        <h4 class="header-title m-t-0 m-b-30">积分修改</h4>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <form class="form-horizontal" role="form" action="#" method="post">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">用户账号：</label>
+                                        <div class="col-md-8" style="float: left;">
+                                            <input type="text" class="form-control" name="phone" value="{$data.phone}" placeholder="账号" onblur="getScore();">
+                                        </div >
+                                        <label class="col-md-2 control-label" id="aaa" style="text-align: left;">积分余额：<span id="showscore">{$data.score}</span></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">积分选择：</label>
+                                        <div class="input-group" style="padding-left: 10px;">
+                                            <div class="input-group-btn">
+                                                <button  type="button" class="btn waves-effect waves-light btn-primary dropdown-toggle" data-toggle="dropdown" style="overflow: hidden; position: relative;"><span id="showtype">选择</span> <span class="caret"></span></button>
+                                                <input type="hidden" name="type" value="">
+                                                <ul class="dropdown-menu" style="min-width:auto;">
+                                                    <li><a href="javascript:void(0)" onclick="getAction(3,'增加');">增加</a></li>
+                                                    <li><a href="javascript:void(0)" onclick="getAction(4,'减少');">减少</a></li>
+                                                </ul>
+
+                                            </div>
+                                            <input type="text" id="example-input1-group3" name="example-input1-group3" class="form-control" placeholder="积分" style="width: 78%;">
+                                            <label class="col-md-2 control-label" style="text-align: left;">积分</label>
+                                        </div>
+                                    </div> <!-- form-group -->
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">备注：</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="remark" value="" placeholder="说明">
+                                        </div >
+
+                                    </div>
+
+                                    <div class="form-group text-left  m-b-0" style="margin-left:130px;;">
+                                        <button class="btn btn-primary waves-effect waves-light" type="button" onclick="check();">
+                                            提交
+                                        </button>
+                                        <button type="reset" class="btn btn-default waves-effect waves-light m-l-5">
+                                            重置
+                                        </button>
+                                    </div>
+                                </form>
+                            </div><!-- end col -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- container -->
+    </div> <!-- content -->
+</div>
+<!-- ============================================================== -->
+<!-- End Right content here -->
+<!-- ============================================================== -->
+<!-- Right Sidebar -->
+<!-- /Right-bar -->
+</div>
+<!-- END wrapper -->
+{include file='public/footer' /}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('form').parsley();
+    });
+
+    function getScore(){
+        var phone = $('input[name=phone]').val();
+        alert(phone);
+        $.get("{:url('Finance/getScore')}",{phone:phone},function(dat){
+            var data = JSON.parse(dat);
+            if(data.status == 1){
+                $('#showscore').html(data.score);
+            }else{
+                $('#showscore').html(data.msg);
+            }
+        });
+    }
+
+    function getAction(param,action){
+        $('#showtype').html(action);
+        $('input[name=type]').val(param);
+
+    }
+
+    function check(){
+        var phone = $('input[name=phone]').val();
+        var remark = $('input[name=remark]').val();
+        var type = $('textarea[name=type]').val();
+        if(phone == ''|| remark == ''|| type == ''){
+            alert('数据不可为空');return false;
+        }
+        $('form').submit();
+    }
+
+</script>

@@ -1,4 +1,3 @@
-
 <div class="modal-header" style="margin-bottom: 17px;">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h4 class="modal-title">修改商品</h4>
@@ -40,22 +39,9 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">推广长图：</label>
                 <div class="col-md-10">
-                    <img src="{$data.long_img}" alt="" class="img-circle thumb-xl img-thumbnail m-b-10" id="long_img1">
-                    <input type="file" value="上传" id="long_img" name="long_img">
+                    <img src="{$data.long_img}" alt="" class="img-circle thumb-xl img-thumbnail m-b-10">
                 </div>
             </div>
-            <script>
-                $(function () {
-                    $('#long_img').change(function () {
-                        //alert(this.value);
-                        //$('#long_img1').attr('src',this.value);
-                        var fileval = this.value;
-                        $.post("{:url('Goods/filetest')}",{fileval:fileval}, function (dat) {
-                            alert(dat);
-                        });
-                    });
-                });
-            </script>
 
             <div class="form-group">
                 <label class="col-md-2 control-label">主图：</label>
@@ -110,11 +96,11 @@
                             {else/}class="btn btn-default"
                             {/if}
                             ><font><font>高佣鹊桥</font></font></button>
-                    <!--<button onclick="changeType(this,4)" type="button" style="margin: 0 10px 0 10px;border-radius: 6px;"
+                    <button onclick="changeType(this,4)" type="button" style="margin: 0 10px 0 10px;border-radius: 6px;"
                             {if condition="$data.plan_type eq 4"}class="btn btn-primary"
                             {else/}class="btn btn-default"
                             {/if}
-                            ><font><font>营销计划</font></font></button>-->
+                            ><font><font>营销计划</font></font></button>
                 </div>
             </div>
             <div class="form-group">
@@ -127,19 +113,6 @@
                 <label class="col-md-2 control-label">佣金比例：</label>
                 <div class="col-md-10">
                     <input type="text"  name="taoke_money_percent" class="form-control" value="{$data.taoke_money_percent}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">直播信息(图文)：</label>
-                <div class="col-sm-9" style="border:1px solid #E3E3E3;max-width: 100%;min-height: 90px;border-radius: 4px;padding: 7px 12px;font-size: 14px;margin-left: 10px;">
-                    <img src="__STATIC__/admin/images/users/avatar-1.jpg" alt="">
-                    <textarea  name="guide_info">{$data.guide_info}</textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">直播信息(视频)：</label>
-                <div class="col-md-10">
-                    <input type="text"  name="taoke_money_percent" class="form-control" value="{$data.taoke_money_percent}"><a href="" target="_blank">查看视频</a>
                 </div>
             </div>
             <div class="form-group">
@@ -171,10 +144,10 @@
 </div><!-- end row -->
 
 <script>
-    function changeType(obj,param) {
+    function changeType(obj,param){
         $('input[name=plan_type]').val(param);
-        $('.plantype button').siblings().attr('class', 'btn btn-default');
-        $(obj).attr('class', 'btn btn-primary');
+        $('.plantype button').siblings().attr('class','btn btn-default');
+        $(obj).attr('class','btn btn-primary');
     }
 </script>
 
