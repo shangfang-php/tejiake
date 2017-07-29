@@ -137,17 +137,15 @@
                   <div class="link">
                     <div class="one one4">
                         <div id="guide_info">
-                        <img src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
-                           <p>
-                            <!--东菱】全自动家用智能面包蛋糕机<br/>
-                        【淘抢购199元】券后【159元】包邮<br/>
-                        领券：<a href="http://shop.m.taobao.com/shop/coupon.htm?seller_id=2786465182&activity_id=1acb87f7c3fa47918605b0e37db246a3" target="_blank">http://shop.m.taobao.com/shop/coupon.htm?seller_id=2786465182&activity_id=1acb87f7c3fa47918605b0e37db246a3</a><br/>
-                        抢购：<br/>
-                        <a href="https://detail.tmall.com/item.htm?id=527839747670" target="_blank">https://detail.tmall.com/item.htm?id=527839747670</a><br/>
-                        拉丝不锈钢机身，仿古法手工揉面，新涡轮增压技术，还原古早味麦香面包，18项强大功能 只需两步
- -->
-                            {$data.guide_info}
-                        </p>
+                          <img style="width:130px;height:243px;" src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
+                          <p>
+                              {$data.short_title}<br>
+                              【淘抢购{$data.price}元】券后【{$data.real_money}元】<br>
+                              领券：<a href="{$data.coupon_link}" target="_blank" class="lan">{$data.coupon_link}</a><br>
+                              抢购：<br>
+                              <a href="{$data.link}" target="_blank" class="lan">{$data.link}</a><br>
+                              {$data.guide_info}
+                          </p>
                         </div>
 
                        <input type="button" name="" value="一键转链"  class="yijian" onclick="show2()">

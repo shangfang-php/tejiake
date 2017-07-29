@@ -170,4 +170,9 @@ class Login extends Controller{
         }
         return returnAjaxMsg($code, $msg);
     }
+
+    function logout(){
+        Session::set('taoke_user', NULL);
+        $this->redirect('/');
+    }
 }

@@ -1,4 +1,5 @@
 {include file='public/header'}
+<style type="text/css" src="/static/index/css/quan_detail.css"></style>
 <style type="text/css" media="screen">
     .countdown div i {
         background: none;
@@ -61,7 +62,7 @@
         <div class="fl zuo" id="zuo">
             <div class="team">
                 <div class="team-head">
-                    <img src="{$data.head_img}" alt="">
+                    <img style="width:100px;height:100px;" src="{if $data.head_img}/static/user/{$data.head_img}{else}/static/index/images/tou.png{/if}" alt="">
                     <p class="f16">{$data.nickname}&nbsp;
                         <span class="f12">
                             {if condition="$data.mtype eq 1"}个人
@@ -178,9 +179,9 @@
                     </div>
 
                     <div class="ji-ji-ji">
-                        <span class="un  quan">￥{$data.coupon_money}</span>
-                        <span class="un">佣金：<i class="lan">￥{$data.taoke_money}</i></span>
-                        <span class="un f12" style="border: none">计划 {$data.taoke_money_percent}%</span>
+                        <span class="un  quan">￥{:round($data.coupon_money)}</span>
+                        <span class="un">佣金：<i class="lan">￥{:round($data.taoke_money,2)}</i></span>
+                        <span class="un f12" style="border: none">计划 {:round($data.taoke_money_percent,2)}%</span>
 
                     </div>
                     <p class="f14" style="line-height: 36px;margin-top: 10px;text-indent: 15px;">已领<i style="color: #fe5c30;">{$data.coupon_apply_num}</i>/{$data.coupon_total_num}&nbsp;张</p>
@@ -196,16 +197,15 @@
                 <h1><img src="__STATIC__/index/images/tgwa.png" alt="">&nbsp;&nbsp;推广文案&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="__STATIC__/index/images/fzline.png" alt=""></h1>
                 <div class="tgwa-con media-text-area">
                     <div class="im-im fl">
-                        <img src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
+                        <img style="width:279px;height:504px;" src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
                     </div>
                     <div class="fl fm-fm" >
                         <p>
-                            <!--【东菱】111全自动家用智能面包蛋糕机<br>
-                            【淘抢购199元】券后【159元】包邮<br>
-                            领券：<a href="http://shop.m.taobao.com/shop/coupon.htm?seller_id=2786465182&amp;activity_id=1acb87f7c3fa47918605b0e37db246a3" target="_blank" class="lan">http://shop.m.taobao.com/shop/coupon.htm?seller_id=2786465182&amp;activity_id=1acb87f7c3fa47918605b0e37db246a3</a><br>
+                            {$data.short_title}<br>
+                            【淘抢购{$data.price}元】券后【{$data.real_money}元】<br>
+                            领券：<a href="{$data.coupon_link}" target="_blank" class="lan">{$data.coupon_link}</a><br>
                             抢购：<br>
-                            <a href="https://detail.tmall.com/item.htm?id=527839747670" target="_blank" class="lan">https://detail.tmall.com/item.htm?id=527839747670</a><br>
-                            拉丝不锈钢机身，仿古法手工揉面，新涡轮增压技术，还原古早味麦香面包，18项强大功能 只需两步-->
+                            <a href="{$data.link}" target="_blank" class="lan">{$data.link}</a><br>
                             {$data.guide_info}
                         </p>
 
@@ -222,193 +222,82 @@
     <div id="flyItem" class="fly_item">
         <img src="__STATIC__/index/images/sc.png" width="40" height="40">
     </div>
-    <footer>
-        <div class="footer-content">
-            <div class="fl waper">
-                <img src="__STATIC__/index/images/logo.png" alt="">
-                <ul>
-                    <li>
-                        <a href="/user/user.html" target="_blank">
-                            个人中心
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/user/collect.html" target="_blank">
-                            我的收藏
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/user/fbtg.html" target="_blank">
-                            放单后台
-                        </a>
-                    </li>
 
-                    <li>
-                        <a href="/user/api.html" target="_blank">
-                            开放API
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/user/setting.html" target="_blank">
-                            联盟设置
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/index/news.html" target="_blank">
-                            联系我们
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="fl shu">
-            </div>
-            <div class="fl follow">
-                <h1>
-                    特价客的单子至少可以提升你3倍以上的收入
-                </h1>
-                <p class="f12">
-                    特价客CopyRight 2017粤ICP备15077059号-4
-                </p>
-            </div>
-            <div class="clear">
-            </div>
-        </div>
-    </footer>
-    <!--置顶-->
-    <div id="scroll">
+
+<!--弹出框-->
+<div class="lbOverlay"  onclick="closeDiv()"></div>
+<div class="hidden_pro_au tanchu" style="width: 500px;height: 366px;">
+    <img src="__STATIC__/index/images/close.png" alt=""  class="close" onclick="closeDiv()">
+    <h1>商品纠错</h1>
+    <div class="rong">
+        <p><span class="fl">商品标题：</span>玩儿奶粉的进口国内放技能过节费</p>
+        <p>
+            <span class="fl">类型：</span>
+            <select>
+                <option value="volvo">价格不对/优惠异常</option>
+                <option value="saab">佣金不对/计划取消</option>
+                <option value="opel">其他异常</option>
+            </select>
+        </p>
+        <p style="height: 120px;">
+            <span class="fl">详情描述：</span>
+            <textarea name="" placeholder="详情描述" ></textarea>
+        </p>
+        <p style="    margin-top: 20px;"><span class="fl">&nbsp;</span><input type="button" name="" value="提交" ></p>
     </div>
-    <!--收藏 商品数量 quick_links.js控制-->
-    <div class="mui-mbar-tabs" id="sc">
-        <div class="quick_links_panel">
-            <div id="quick_links" class="quick_links">
-                <li id="shopCart">
-                    <a href="#" class="message_list">
-                        <span class="cart_num">
-                            0
-                        </span>
-                    </a>
-                </li>
-            </div>
-        </div>
+</div>
+
+<div class="zhuanlian tanchu " style="display:none;width: 240px;height: 220px;background: #fff;text-align: center;padding: 30px;">
+    <img src="/static/index/images/close.png" alt=""  class="close" onclick="closeDiv()" style="position: absolute;right: 2px;top: 2px;z-index: 9;cursor: pointer;">
+    <div class="">
+     <img src="/static/index/images/dengl.png" alt="">
     </div>
-
-    <!--弹出框-->
-    <div class="lbOverlay"  onclick="closeDiv()"></div>
-    <div class="hidden_pro_au tanchu" style="width: 500px;height: 366px;">
-        <img src="__STATIC__/index/images/close.png" alt=""  class="close" onclick="closeDiv()">
-        <h1>商品纠错</h1>
-        <div class="rong">
-            <p><span class="fl">商品标题：</span>玩儿奶粉的进口国内放技能过节费</p>
-            <p>
-                <span class="fl">类型：</span>
-                <select>
-                    <option value="volvo">价格不对/优惠异常</option>
-                    <option value="saab">佣金不对/计划取消</option>
-                    <option value="opel">其他异常</option>
-                </select>
-            </p>
-            <p style="height: 120px;">
-                <span class="fl">详情描述：</span>
-                <textarea name="" placeholder="详情描述" ></textarea>
-            </p>
-            <p style="    margin-top: 20px;"><span class="fl">&nbsp;</span><input type="button" name="" value="提交" ></p>
-        </div>
-
-
-    </div>
-
-    <div class="lbOverlay"  onclick="closeDiv()"></div>
-    <div class="zhuanlian tanchu " style="width: 240px;height: 220px;background: #fff;text-align: center;padding: 30px;">
-        <img src="__STATIC__/index/images/close.png" alt=""  class="close" onclick="closeDiv()" style="    position: absolute;right: 2px;top: 2px;z-index: 9;cursor: pointer;">
-        <div class="">
-            <img src="__STATIC__/index/images/dengl.png" alt="">
-        </div>
-        <!--前往登录-->
-        <p style="line-height: 44px;">你还没登录账号</p>
-        <a href="/user_login"><input type="button" name="" value="前往登录" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
+    <!--前往登录-->
+    <p style="line-height: 44px;">你还没登录账号</p>
+    <a href="/user_login"><input type="button" name="" value="前往登录" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
     line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a>
-        <!--前往更新-->
-        <!--    <p style="line-height: 44px;">您的PID已过期</p>
-         <a href="/index/user/set.html"><input type="button" name="" value="前往更新" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
-          line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a> -->
+    <!--前往更新-->
+    <!--    <p style="line-height: 44px;">您的PID已过期</p>
+    <a href="/index/user/set.html"><input type="button" name="" value="前往更新" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
+    line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a> -->
 
-        <!--前往设置-->
-        <!--  <p style="line-height: 44px;">请先设置淘宝账号并设置PID</p>
-       <a href="/index/user/set.html"><input type="button" name="" value="前往设置" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
-        line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a> -->
-    </div>
+    <!--前往设置-->
+    <!--  <p style="line-height: 44px;">请先设置淘宝账号并设置PID</p>
+    <a href="/index/user/set.html"><input type="button" name="" value="前往设置" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
+    line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a> -->
+</div>
 
-</body>
-
-
-<script type="text/javascript" src="__STATIC__/index/js/clipboard.js">
-</script>
-<script type="text/javascript" src="__STATIC__/index/js/common.js"></script>
-<script type="text/javascript" src="__STATIC__/index/js/quick_links.js"></script>
-<!--[if lte IE 8]><script src="__STATIC__/index/js/ieBetter.js"> </script><![endif]-->
-<script type="text/javascript" src="__STATIC__/index/js/parabola.js"></script>
-
-
-<script type="text/javascript" src="__STATIC__/index/js/videojs-ie8.min.js"></script>
+{include file="public/footer" /}
 <script type="text/javascript" src="__STATIC__/index/js/modernizr-custom-v2.7.1.min.js"></script>
+<script type="text/javascript" src="__STATIC__/index/js/videojs-ie8.min.js"></script>
 
 <script type="text/javascript">
-    var clipboard = new Clipboard('.copy', {
-        target: function() {
-            return document.querySelector('.media-text-area');
-        }
-    });
-    clipboard.on('success',
-            function(e) {
-                //console.info(e);
-                $(e.trigger).val('复制成功');
-                e.clearSelection();
-            });
-
-    //隐藏登录注册
-
-    window.onload = function() {
-        var yyy = document.getElementById("admin-ming");
-        var uuu = document.getElementById("admin-an");
-        var hhh = document.getElementById("header");
-
-        yyy.onmouseover = function() {
-            uuu.style.display = "block";
-        };
-        uuu.onmouseover = function() {
-            uuu.style.display = "block";
-        };
-        yyy.onmouseout = function() {
-            uuu.style.display = "none";
-        }
-        hhh.onmouseout = function() {
-            uuu.style.display = "none";
-        }
-    }
-    /*$('.countdown').downCount({
-        date: '29/07/2017',
-        offset: +10
-    }, function () {
-        alert('倒计时结束!');
-    });*/
-
-
     //浮动左边导航
     $(window).scroll(function(){
         if($(this).scrollTop() > 280){
             $("#zuo").addClass('zuofu');
-        }
-        else{
+        }else{
             $("#zuo").removeClass('zuofu');
         }
+
+        var top = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+        $(".hidden_pro_au").css({
+            "top": (document.documentElement.clientHeight/2 + top - $(".hidden_pro_au").css("height").replace("px","")/2 )+"px",
+            "left":($(window).width() - $(".hidden_pro_au").css("width").replace("px",""))/2 +"px"
+        });
+
+        $(".zhuanlian").css({
+            "top": (document.documentElement.clientHeight/2 + top - $(".zhuanlian").css("height").replace("px","")/2 )+"px",
+            "left":($(window).width() - $(".zhuanlian").css("width").replace("px",""))/2 +"px"
+        });
     })
 
     // 焦点图片
-    $('.choice-box li').on({
+    $('.choice-box li').bind({
                 mouseenter: function () {
                     $('.choice-box li').removeClass('cur');
                     $(this).addClass('cur');
-                    var bigImg = $(this).find('img').eq(0).data('500');
+                    var bigImg = $(this).find('img').eq(0).attr('data-500');
                     $('.dadada img').attr('src', bigImg);
                 },
             }
@@ -447,92 +336,13 @@
         var objL=Number(sl)+(Number(cw)-Number(objW))/2; //思路  左移浮动宽度+（（屏幕宽度-对象宽度））/2
         $(".zhuanlian").css("left",objL);
         $(".zhuanlian").slideDown("20000");//这里显示方式多种效果
+        $('.zhuanlian').show();
     }
     function closeDiv(){
         $(".lbOverlay").hide();
         $(".hidden_pro_au").hide();
         $(".zhuanlian").hide();
     }
-    $(document).ready(function(){
-        $(window).scroll(function(){
-            var top = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
-            $(".hidden_pro_au").css({
-                "top": (document.documentElement.clientHeight/2 + top - $(".hidden_pro_au").css("height").replace("px","")/2 )+"px",
-                "left":($(window).width() - $(".hidden_pro_au").css("width").replace("px",""))/2 +"px"
-            });
 
-            $(".zhuanlian").css({
-                "top": (document.documentElement.clientHeight/2 + top - $(".zhuanlian").css("height").replace("px","")/2 )+"px",
-                "left":($(window).width() - $(".zhuanlian").css("width").replace("px",""))/2 +"px"
-            });
-        })
-    })
-
-    //置顶
-    // 获取置顶对象
-    var obj = document.getElementById('scroll');
-    // 置顶对象点击事件
-    obj.onclick = function() {
-        var timer = setInterval(function() {
-                    window.scrollBy(0, -50);
-                    if (document.body.scrollTop == 0) {
-                        clearInterval(timer);
-                    };
-                },
-                30);
-    }
-    // 窗口滚动检测
-    window.onscroll = function() {
-        obj.style.display = (document.body.scrollTop >= 300) ? "block": "none";
-    }
-    //图片懒加载
-    var imgLoad = lazyload.init({
-        anim: true,
-        selectorName: ".lazy"
-    });
-
-    //添加收藏数量
-    // 元素以及其他一些变量
-    var eleFlyElement = document.querySelector("#flyItem"),
-            eleShopCart = document.querySelector("#shopCart");
-    var numberItem = 0;
-    // 抛物线运动
-    var myParabola = funParabola(eleFlyElement, eleShopCart, {
-
-        speed: 400,
-        //抛物线速度
-        curvature: 0.0008,
-        //控制抛物线弧度
-        complete: function() {
-            eleFlyElement.style.visibility = "hidden";
-            eleShopCart.querySelector("span").innerHTML = ++numberItem;
-        }
-    });
-    // 绑定点击事件
-    if (eleFlyElement && eleShopCart) {
-        [].slice.call(document.getElementsByClassName("btnCart")).forEach(function(button) {
-            button.addEventListener("click", function(event) {
-                var gid = $('#gid').val();
-                $.get("{:url('Index/addCollect')}",{gid:gid},function(data){
-                    if(data.code == 1){
-                        // 滚动大小
-                        var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
-                                scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
-                        eleFlyElement.style.left = event.clientX + scrollLeft + "px";
-                        eleFlyElement.style.top = event.clientY + scrollTop + "px";
-                        eleFlyElement.style.visibility = "visible";
-                        // 需要重定位
-                        myParabola.position().move();
-                        $('#collect_action').html('<p>已收藏</p>');
-                    }else{
-                        window.location.href = data.url;
-                    }
-                });
-
-
-            });
-
-        });
-    }
 </script>
 </html>

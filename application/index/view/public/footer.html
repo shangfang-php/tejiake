@@ -103,6 +103,14 @@
         $('.fz').mouseout(function(){
             $(this).parents('.good-price').siblings('.fm').css('display','none');
         });
+        //隐藏登录注册
+        $('.admin-ming,.admin-an').mouseover(function(){
+            $('.admin-an').css('display', 'block');
+        });
+
+        $('.admin-ming,.admin-an').mouseout(function(){
+            $('.admin-an').css('display', 'none');
+        });
     });
 
     var clipboard = new Clipboard('.copy', {

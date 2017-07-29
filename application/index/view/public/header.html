@@ -6,10 +6,10 @@
         <title>
             首页
         </title>
-        <link rel="stylesheet" href="/static/index/css/common.css?v=1.0">
-        <link rel="stylesheet" type="text/css" href="/static/index/css/index.css">
+        <link rel="stylesheet" href="/static/index/css/common.css?v=1.0.1">
+        <link rel="stylesheet" type="text/css" href="/static/index/css/index.css?v=1.0.1">
         <link rel="stylesheet" href="/static/index/css/sc.css">
-        <link rel="stylesheet" href="/static/index/css/style.css?v=1.0">
+        <link rel="stylesheet" href="/static/index/css/style.css?v=1.0.1">
         <link rel="stylesheet" href="/static/index/css/video-js.css">
         <link rel="stylesheet" href="/static/index/css/loaders.css">
         <style type="text/css">
@@ -96,6 +96,10 @@
                             <div class="admin-ming">
                                   <span class="fr baiid" ><img src="/static/index/images/baiid.png" alt="" ></span>
                                   <span class="fl f12 ming" ><a href="{:url('user/index')}" >个人中心</a></span>
+                            </div>
+                            <div class="admin-an" style="position: absolute;" id="admin-an">
+                                  <span class="fr baiid" ><img src="/static/index/images/exit.png" alt="" ></span>
+                                  <span class="fl f12 ming" ><a href="{:url('login/logout')}" >退出登录</a></span>  
                             </div>
                         {else}
                             <div class="admin-me" >
