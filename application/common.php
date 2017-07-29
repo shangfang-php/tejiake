@@ -299,13 +299,13 @@ function init_goods_data($data){
                 $scene  =   7;
                 break;
             case 3:
-                $scene  =   8;
+                $scene  =   10;
                 break;
             case 4:
-                $scene  =   9;
+                $scene  =   8;
                 break;
             case 5:
-                $scene  =   10;
+                $scene  =   9;
                 break;
         }
     }
@@ -453,3 +453,25 @@ function getGoodsExtendsInfo($goods_id, $goods_type){
     }
     return $extends;
 }
+
+/** 
+ * 把秒数转换为时分秒的格式 
+ * @param Int $times 时间，单位 秒 
+ * @return String 
+ */  
+function secondToTime($times){  
+        $result     =   array('hour'=>0,'minute'=>0,'second'=>0);
+        if($times>0) {  
+                $hour   =   floor($times/3600);
+                $hour   =   $hour < 10 ? '0'.$hour : $hour;
+
+                $minute =   floor(($times-3600 * $hour)/60);
+                $minute =   $minute < 10 ? '0'.$minute : $minute;
+
+                $second =   floor((($times-3600 * $hour) - 60 * $minute) % 60);
+                $second =   $second < 10 ? '0'.$second : $second;
+                
+                $result = compact('hour','minute','second'); 
+        }
+        return $result;  
+}  
