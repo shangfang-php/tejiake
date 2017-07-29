@@ -122,24 +122,23 @@
                     </div>
                     <div class="choice-box">
                         <ul>
-
                             <li class="cur" >
                                 <img src="{$data.main_img}" data-src="{$data.main_img}"   data-500="{$data.main_img}">
                                 <div class="cover">
-                                        <span>
-                                            &nbsp;
-                                        </span>
+                                    <span>
+                                        &nbsp;
+                                    </span>
                                 </div>
-
                             </li>
-                            <li> <img src="__STATIC__/index/images/chichi.jpg"  data-src="__STATIC__/index/images/chichi.jpg"   data-500="__STATIC__/index/images/chichi.jpg">
+                            {volist name='goods_image' id='vo'}
+                            <li> <img src="{$vo.image_url}"  data-src="{$vo.image_url}"   data-500="{$vo.image_url}">
                                 <div class="cover">
                                         <span>
                                             &nbsp;
                                         </span>
                                 </div>
                             </li>
-
+                            {/volist}
                             <div class="clear"></div>
                         </ul>
                     </div>
@@ -174,43 +173,34 @@
                     <p class="f14" style="line-height: 36px;margin-top: 10px;text-indent: 15px;">已领<i style="color: #fe5c30;">{$data.coupon_apply_num}</i>/{$data.coupon_total_num}&nbsp;张</p>
                     <p class="f14" style="line-height: 36px;text-indent: 15px;margin-bottom: 10px;">优惠券有效时间 {$data.coupon_start_time|date='Y-m-d',###}至{$data.coupon_end_time|date='Y-m-d',###}</p>
                     <p class="dashed"></p>
-                    <p class="f14 ac" style="line-height: 25px;padding: 10px 0 25px 0">分化瓦解而花费巨额非法非九分裤东莨菪碱刚开发的就赶快开放接口的九分裤????????</p>
+                    <p class="f14 ac" style="line-height: 25px;padding: 10px 0 25px 0">?????????????????????</p>
                     <p class="dashed"></p>
-
                     <p class="zhuan" onclick="show2()"><span>一键转链</span></p>
-
-
                 </div>
-
                 <div class="clear"></div>
             </div>
             <div class="tgwa-box">
-
                 <h1><img src="__STATIC__/index/images/tgwa.png" alt="">&nbsp;&nbsp;推广文案&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="__STATIC__/index/images/fzline.png" alt=""></h1>
-
-
                 <div class="tgwa-con media-text-area">
-
                     <div class="im-im fl">
-                        <img src="__STATIC__/index/images/erferfe.png" alt="">
+                        <img src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
                     </div>
-
                     <div class="fl fm-fm" >
-                        <p>【东菱】111全自动家用智能面包蛋糕机<br>
+                        <p>
+                            <!--【东菱】111全自动家用智能面包蛋糕机<br>
                             【淘抢购199元】券后【159元】包邮<br>
                             领券：<a href="http://shop.m.taobao.com/shop/coupon.htm?seller_id=2786465182&amp;activity_id=1acb87f7c3fa47918605b0e37db246a3" target="_blank" class="lan">http://shop.m.taobao.com/shop/coupon.htm?seller_id=2786465182&amp;activity_id=1acb87f7c3fa47918605b0e37db246a3</a><br>
                             抢购：<br>
                             <a href="https://detail.tmall.com/item.htm?id=527839747670" target="_blank" class="lan">https://detail.tmall.com/item.htm?id=527839747670</a><br>
-                            拉丝不锈钢机身，仿古法手工揉面，新涡轮增压技术，还原古早味麦香面包，18项强大功能 只需两步</p>
+                            拉丝不锈钢机身，仿古法手工揉面，新涡轮增压技术，还原古早味麦香面包，18项强大功能 只需两步-->
+                            {$data.guide_info}
+                        </p>
 
                         <p class="yjfz">
                             <input class="fz fr copy f12" type="button" value=" 一键复制" >
                         </p>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
         <div class="clear"></div>
