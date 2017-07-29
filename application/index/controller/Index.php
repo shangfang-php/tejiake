@@ -29,12 +29,22 @@ class Index extends Common{
      * 限时抢购
      */
     public function flash_sale(){
+        $type               =   isset($_GET['type']) ? intval(trim(input('get.type'))) : 1; ##1正在抢购 2预告
     	self::$goods_type	=	'flash_sale';
-        $goods_list =   $this->get_goods_list(2); ##2为限时抢购
+        $goods_list =   $this->get_goods_list(2,$type); ##2为限时抢购
+        if($goods_list){
+            foreach($goods_list as &$val){
+                $diff_times = $type == 1 ? $val['end_time'] : $val['show_time'];
+                $val['diff_times'] = date('m/d/Y H:i:s', $diff_times);
 
+                preg_match('/(.*)\s/', $val['guide_info'], $matches);
+                $val['short_guide'] =   $matches ? $matches[1] : '';
+            }
+        }
         $data   =   array(
                         'goods_list'    =>  $goods_list,
                         'goods_type'    =>  self::$goods_type,
+                        'type'          =>  $type,
                     );
         $this->assign($data);
         
@@ -46,7 +56,21 @@ class Index extends Common{
      */
     public function live(){
         self::$goods_type   =   'live';
-        $goods_list =   $this->get_goods_list(3); ##2为限时抢购
+        $goods_list =   $this->get_goods_list(4); ##2为限时抢购
+        if($goods_list){
+            foreach($goods_list as &$val){
+                $goods_id   =   $val['id'];
+                $val['diff_time'] = ( $val['show_time'] > time() ) ? date('m/d/Y H:i:s', $val['show_time']) : '';
+                $live_count =   Db::table('goods_live_extends')->field('count(*) as nums, type')->where('gid',$goods_id)->group('type')->select();
+                $count  =   [1=>0,2=>0];
+                if($live_count){
+                    foreach($live_count as $v){
+                        $count[$v['type']]  =   $v['nums'];
+                    }
+                }
+                $val['live_count']  =   $count;
+            }
+        }
 
         $data   =   array(
                         'goods_list'    =>  $goods_list,
@@ -63,7 +87,7 @@ class Index extends Common{
      */
     public function video(){
         self::$goods_type   =   'video';
-        $goods_list =   $this->get_goods_list(4); ##2为限时抢购
+        $goods_list =   $this->get_goods_list(5); ##5为视频单
 
         /**获取视频列表*/
         if($goods_list){
@@ -91,7 +115,7 @@ class Index extends Common{
      */
     public function night(){
         self::$goods_type   =   'night';
-        $goods_list =   $this->get_goods_list(5); ##2为限时抢购
+        $goods_list =   $this->get_goods_list(3); ##3为过夜单
 
         $data   =   array(
                         'goods_list'    =>  $goods_list,
@@ -113,14 +137,22 @@ class Index extends Common{
     }
 
     /**
-     * 获取商品信息
-     * @param  [type]  $goodsType [description]
-     * @param  integer $start     [description]
-     * @param  [type]  $nums      [description]
-     * @return [type]             [description]
+     * 获取展示的产品信息
+     * @param  [type]  $goodsType  [产品类型]
+     * @param  integer $start      [从第几条开始获取]
+     * @param  integer $nums       [获取的条数]
+     * @param  integer $flash_type [限时抢购的类型]
+     * @return [type]              [description]
      */
-    function get_goods_list($goodsType, $start = 0, $nums = 20){
-        $where  =   array('type'=>$goodsType, 'status'=>2);
+    function get_goods_list($goodsType, $flash_type = 1, $start = 0, $nums = 20){
+        $where  =   array('type'=>$goodsType, 'status'=>2, 'end_time'=>['>=',time()]);
+        if($goodsType == 2){
+            if($flash_type == 1){
+                $where['show_time'] =   ['<=', time()];
+            }else{
+                $where['show_time'] =   ['>', time()];
+            }
+        }
         $goods  =   Db::table('goods')->where($where)->order('id', 'desc')->limit($start, $nums)->select();
         return $goods;
     }

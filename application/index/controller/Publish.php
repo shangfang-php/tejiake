@@ -159,7 +159,7 @@ class Publish extends UserCommon{
 		$data['coupon_start_time']		=	$data['coupon_start_time'] ? strtotime($data['coupon_start_time']) : 0;
 		$data['coupon_end_time']		=	$data['coupon_end_time'] ? strtotime($data['coupon_end_time']) : 0;
 
-		if($goods_type == 3){
+		if($goods_type == 4){
 			if(!isset($data['live_info']) || !$data['live_info']){
 				return returnAjaxMsg('620', '请输入直播信息!');
 			}
@@ -167,7 +167,7 @@ class Publish extends UserCommon{
 			unset($data['live_info']);
 		}
 
-		if($goods_type == 4){
+		if($goods_type == 5){
 			$video_url 	=	$data['video_url'];
 			unset($data['video_url']);
 		}

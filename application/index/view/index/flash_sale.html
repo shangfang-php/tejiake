@@ -22,11 +22,11 @@
         </div>
 
         <div class="purchase">
-            <div class="qiang fl yy">
+            <div class="qiang fl {if $type == 1}yy{/if}" onclick="jump('1')">
                 <img src="__STATIC__/index/images/qiang.png" alt="">
                 &nbsp;正在抢购
             </div>
-            <div class="yugao fl">
+            <div class="yugao fl {if $type == 2}yy{/if}" onclick="jump('2')">
                 <img src="__STATIC__/index/images/yugao.png" alt="">
                 &nbsp;预告
             </div>
@@ -55,6 +55,13 @@
                                 {$val.title}
                             </a>
                         </div>
+                        
+                        <div class="good-bei">
+                            <p class="fl f12 p1" style="color: #fd9546">{$val.short_guide}</p>
+                            <p class="fr"><img src="/static/index/images/tao.png" alt="" style="width: 20px; height: 18px;"></p>
+                            <div class="clear"></div>
+                        </div>
+
                         <div class="good-fit">
                             <div class="quan fl">
                                 ￥{$val.coupon_money}&nbsp;
@@ -76,19 +83,19 @@
                         </div>
 
                         <div class="good-yu f12">
-                            <span class="fl">
+                            <!--<span class="fl">
                                 余券
-                            </span>
-                            <span class="fr">
+                            </span>-->
+                            <span class="fl">
                                 全部{$val.coupon_total_num}
                             </span>
                         </div>
 
                         <div class="good-bar">
                             <div class="progress">
-                                <div class="progress-bar" style="width: {:round( ($val.coupon_total_num - $val.coupon_apply_num)/$val.coupon_total_num,2 ) * 100}%; background: #f66d25;height: 3px;">
+                                <div class="progress-bar" style="width: 100%; background: #f66d25;height: 3px;">
                                     <div class="progress-value" style="text-align: center;">
-                                        {$val.coupon_total_num - $val.coupon_apply_num}
+                                        {$val.coupon_total_num}
                                     </div>
                                 </div>
                             </div>
@@ -96,18 +103,46 @@
 
                         <div class="good-sales">
                             <div class="skipper fl f12">
-                                近2个小时跑单
+                                {if $type==1}剩余{else}距离{/if}
                             </div>
-                            <div class="lia fl f12">
-                                <span>
-                                    2
-                                </span>
-                                <span>
-                                    2
-                                </span>
-                                <span>
-                                    2
-                                </span>
+                            <div class="lia fl f12" date="{$val.diff_times}">
+                                <div class="countdown">
+                                    <div>
+                                        <i class="days">
+                                            00
+                                        </i>
+                                    </div>
+                                    <div class="seperator">
+                                        天
+                                    </div>
+                                    <div>
+                                        <i class="hours">
+                                            00
+                                        </i>
+                                      
+                                    </div>
+                                    <div class="seperator">
+                                        时
+                                    </div>
+                                    <div>
+                                        <i class="minutes">
+                                            00
+                                        </i>
+                                      
+                                    </div>
+                                    <div class="seperator">
+                                        分
+                                    </div>
+                                    <div>
+                                        <i class="seconds">
+                                            00
+                                        </i>
+                                    </div>
+                                </div>
+
+                            </div>
+                             <div class="over fl f12">
+                               &nbsp;&nbsp; {if $type==1}结束{else}开始{/if}
                             </div>
                             <div class="xiao fr f12">
                                 销量&nbsp;{$val.sell_num}
@@ -143,7 +178,7 @@
                                 <img class='' src='{$val.main_img}'
                                 style='width:66px;'>
                                 <br/>
-                                成人脊椎保健修复荞麦枕头
+                                {$val.short_title}
                                 <br>
                                 【在售价{$val.price}元，券后价{$val.real_money}元】
                                 <br/>
@@ -167,3 +202,19 @@
     </div>        
 </div>        
 {include file="public/footer" /}
+<script type="text/javascript" src="/static/index/js/jquery.downCount.js?v=1"></script>
+
+<script type="text/javascript">
+    $('.lia').each(function(){
+        var day = $(this).attr('date');
+        $(this).downCount({
+            date: day,
+            offset: +10
+        }, function () {});
+    });
+
+    function jump(type){
+        window.location.href = '/flash_sale?type='+type;
+    }
+</script>
+

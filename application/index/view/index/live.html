@@ -53,47 +53,33 @@
                                 {$val.title}
                             </a>
                         </div>
+                        
                         <div class="good-fit">
-                            <div class="quan fl">
-                                ￥{$val.coupon_money}&nbsp;
+                           <div class="fl f12" style="    width: 124px;    height: 23px;  line-height: 19px;">
+                                券后
+                                <span class="f16 price" style="color: #fe5c30;">
+                                    ￥{$val.real_money}
+                                </span>
                             </div>
-                            <div class="charges f12 fl">
-                                <img src="/static/index/images/yj.png" alt="">
+                            <div class="fl quan">
+                               ￥{$val.coupon_money}&nbsp;
+                            </div>
+                            <div class="charges f12 fr"  style="width: 110px;">
                                 佣金
                                 <span class="a3">
-                                    ￥{$val.taoke_money}
+                                    ￥{:round($val.taoke_money,2)}
                                 </span>
+                                ({:round($val.taoke_money_percent)}%)
                             </div>
-                            <div class="plan f12 fl">
-                                <img src="/static/index/images/jih.png" alt="">
-                                计划
-                                <span class="a3">
-                                    20%
-                                </span>
-                            </div>
+                        
                         </div>
 
-                        <div class="good-yu f12">
-                            <span class="fl">
-                                余券
-                            </span>
-                            <span class="fr">
-                                全部{$val.coupon_total_num}
-                            </span>
-                        </div>
-
-                        <div class="good-bar">
-                            <div class="progress">
-                                <div class="progress-bar" style="width: {:round( ($val.coupon_total_num - $val.coupon_apply_num)/$val.coupon_total_num,2 ) * 100}%; background: #f66d25;height: 3px;">
-                                    <div class="progress-value" style="text-align: center;">
-                                        {$val.coupon_total_num - $val.coupon_apply_num}
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="good-lu">
+                            <p>本单有<i class="lan">{$val['live_count']['1']}</i>段文字，<i class="lan">{$val['live_count']['1']}</i>张图片，<i class="lan">{$val['live_count']['2']}</i>段视频</p>
                         </div>
 
                         <div class="good-sales">
-                            <div class="skipper fl f12">
+                            <!--<div class="skipper fl f12">
                                 近2个小时跑单
                             </div>
                             <div class="lia fl f12">
@@ -106,51 +92,36 @@
                                 <span>
                                     2
                                 </span>
-                            </div>
+                            </div>-->
                             <div class="xiao fr f12">
                                 销量&nbsp;{$val.sell_num}
                             </div>
                         </div>
                         <div class="good-line"></div>
                         <div class="good-price">
-                            <div class="fl f14">
-                                券后
-                                <span class="f20 price">
-                                    ￥{$val.real_money}
-                                </span>
-                            </div>
-                            <input class="fz fr copy f12" type="button" id="fz" value=" 复制文案">
-                            </input>
-                        </div>
-
-                        <div class="yin">
-                            <div class="good-line">
-                            </div>
-                            <div class="good-jian">
-                                <p class="f12">
-                                    <span class="f12">
-                                        推荐：
-                                    </span>
-                                    {$val.guide_info}
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div class="good-wenan fm" id="fm">
-                            <div class="media-text-area f12">
-                                <img class='' src='{$val.main_img}'
-                                style='width:66px;'>
-                                <br/>
-                                成人脊椎保健修复荞麦枕头
-                                <br>
-                                【在售价{$val.price}元，券后价{$val.real_money}元】
-                                <br/>
-                                领券：{$val.coupon_link}
-                                <br>
-                                下单：{$val.link}
-                                <br>
-                                {$val.guide_info}
-                            </div>
+                            {if !$val.diff_time}
+                                <div class="f14" style="text-align: center;">
+                                  <p>已开放链接</p>
+                                </div>
+                            {else}
+                                <div class="f14" style="text-align: center;">
+                                    <p style="color: #6fc1fe;width: 146px;text-align: right" class="fl">距开抢还有:</p>
+                                   <div class="lia fl f12" date='{$val.diff_time}'>
+                                        <div class="countdown" >
+                                            <div><i class="days">00</i></div>
+                                            <div>天</div>
+                                            <div><i class="hours">00</i></div>
+                                            <div> 小时</div>
+                                            <div class="seperator">:</div>
+                                            <div><i class="minutes">00</i></div>
+                                            <div> 分钟</div>
+                                            <div class="seperator" >:</div>
+                                            <div><i class="seconds">00</i></div>
+                                            <div> 秒</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {/if}
                         </div>
 
                     </li>
@@ -165,3 +136,13 @@
     </div>
 </div>
 {include file="public/footer" /}
+<script type="text/javascript" src="/static/index/js/jquery.downCount.js?v=1"></script>
+<script type="text/javascript">
+    $('.lia').each(function(){
+        var day = $(this).attr('date');
+        $(this).downCount({
+            date: day,
+            offset: +10
+        }, function () {});
+    });
+</script>

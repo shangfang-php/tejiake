@@ -108,10 +108,10 @@
                         <input id="taoke_money_percent" type="number" placeholder="1~100" style="width: 117px;">&nbsp;&nbsp;%
                     </p>
 
-                    {if $goods_type == 3}
+                    {if $goods_type == 4}
                         {include file="publish/live" /}
                     {else}
-                        {if $goods_type == 4}
+                        {if $goods_type == 5}
                             <p>
                                 <span>视频地址:</span>
                                 <input id='video_url' type="text" placeholder="如：http://tbm.alicdn.com/64LKfg7lcDXkcInqCcz/UPZMxV01EEqZkt6fDUM%40%40ud.mp4" style="width:600px;">
@@ -531,7 +531,7 @@
             data.activity_type   =   $('.activity_type .jihuaclass').attr('data');
         }
 
-        if(data.goods_type == 3){ //直播单
+        if(data.goods_type == 4){ //直播单
             var live_info   =   get_live_info();
             if(!live_info){
                 return false;
@@ -539,7 +539,7 @@
             data.live_info  =   live_info;
         }
 
-        if(data.goods_type == 4){ //视频单
+        if(data.goods_type == 5){ //视频单
             data.video_url   =   $('#video_url').val();
             if(!data.video_url){
                 msg_show('请输入视频地址!');
@@ -558,7 +558,7 @@
             return false;
         }
 
-        if(data.goods_type != 3){ //非直播单
+        if(data.goods_type != 4){ //非直播单
             data.guide_info     =   $('#guide_info').val();
         }
         data.show_time      =   $('#show_time').val();
