@@ -440,13 +440,13 @@ function getGoodsExtendsInfo($goods_id, $goods_type){
     switch($goods_type){
         case 1: ##爆款
         case 2: ##限时抢购
-        case 5: ##过夜单
+        case 3: ##过夜单
             break;
-        case 3: ##直播单
+        case 4: ##直播单
             $extends    =   Db::table('goods_live_extends')->where(['gid'=>$goods_id])->select();
             $extends    =   array_pad($extends,5, array());
             break;
-        case 4: ##视频单
+        case 5: ##视频单
             $extends    =   Db::table('goods_video_extends')->where(['gid'=>$goods_id])->find();
             break;
         default:

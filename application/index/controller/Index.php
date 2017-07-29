@@ -207,19 +207,26 @@ class Index extends Common{
         //print_r($goods_type);exit;
         $this->assign('goods_type', $goods_type);
         $this->assign('data',$info);
-        
+
         if($info['type'] == 4){
             //直播单
-            $goods_live_extends = Db::name('goods_live_extends')->where(['gid'=>$id])->select();
+            $goods_live_extends = getGoodsExtendsInfo($id,4);
+            //$goods_live_extends = Db::name('goods_live_extends')->where(['gid'=>$id])->select();
             $this->assign('extends_data',$goods_live_extends);
             echo '<pre>';
             print_r($goods_live_extends);exit;
             return $this->fetch('liveinfo');
         }else{
             if($info['type'] == 5){
-                $goods_video_extends = Db::name('goods_video_extends')->where(['gid'=>$id])->select();
+                $goods_video_extends = getGoodsExtendsInfo($id,5);
+                //$goods_video_extends = Db::name('goods_video_extends')->where(['gid'=>$id])->select();
                 $this->assign('extends_data',$goods_video_extends);
+                //echo '<pre>';
+                //print_r($goods_video_extends);exit;
             }
+            //获取多图
+            $images = Db::name('goods_image')->where(['gid'=>$id])->select();
+            $this->assign('goods_image',$images);
             return $this->fetch('goodsinfo');
         }
 

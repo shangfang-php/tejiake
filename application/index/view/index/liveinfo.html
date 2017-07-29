@@ -1,4 +1,5 @@
 {include file='public/header'}
+<!--<link rel="stylesheet" href="__STATIC__/index/css/style.css">-->
         <!-- 加载每个页面内容-->
         <div class="con">
 
@@ -77,21 +78,29 @@
                       
                   </div>
                   <div class="you-content">
-                  <div class="con1 fl">
-                      <span >1</span>
-
-
-                      <div class="one one1">
-
-                      <img src="__STATIC__/index/images/dec1.jpg" alt="">
-                       <p>【东菱】全自动智能面包蛋糕机  汇集于颜值跟多功能一身的面包机，早餐睡前智能预约时间，让厨房新手的你解放双手，活动马上开始~~</p>
-
-                       <input type="button" name="" value="+复制" class="copy1">
-
-                          
+                  {volist name='extends_data' id='vo' key='key'}
+                  <!--奇数-->
+                  <div class="{if condition='$key % 2 eq 1'}con1 fl{else/}con2 fr{/if}">
+                      <span >{$key}</span>
+                      <div class="one one{$key}">
+                          {if condition='$vo.type eq 1'}<!--图片-->
+                              <div id="foo{$key}">
+                                  <img src="{$vo.url}" alt="">
+                                  <p>{$vo.content}</p>
+                              </div>
+                           <input type="button" name="" value="+复制" class="copy" data-clipboard-action="copy" data-clipboard-target="#foo{$key}">
+                          {else/}
+                              <div style="width: 294px;height: 295px;    margin-top: 20px;">
+                                  <img src="{$data.main_img}" alt="" style="width: 100%;">
+                              </div><!--  <img src="__STATIC__/index/images/bigplay.png" alt="" class="bigplay" onclick="show()" class="btn">-->
+                              <!-- <input type="button" name="" value="↓下载视频" class="down"> -->
+                              <a href="{$vo.url}"><input type="button" name="" value="↓下载视频" class="down jp-play-down" ></a>
+                          {/if}
                       </div>
                   </div>
-                   <div class="con2 fr">
+                  {/volist}
+
+                  <!-- <div class="con2 fr">
                      <span >2</span>
                         <div class="one one2">
 
@@ -100,7 +109,6 @@
 
                        <input type="button" name="" value="+复制" class="copy2">
 
-                          
                       </div>
                   </div>
 
@@ -112,16 +120,13 @@
 
                         <div style="width: 294px;height: 295px;    margin-top: 20px;"><img src="__STATIC__/index/images/decvideo.png" alt="" style="width: 100%;"></div>
                         <img src="__STATIC__/index/images/bigplay.png" alt="" class="bigplay" onclick="show()" class="btn">
-                        
-                      
-
-                       <!-- <input type="button" name="" value="↓下载视频" class="down"> -->
+                       &lt;!&ndash; <input type="button" name="" value="↓下载视频" class="down"> &ndash;&gt;
                           <a href="__STATIC__/index/images/controller.mp4.txt"><input type="button" name="" value="↓下载视频" class="down jp-play-down" ></a>
 
                           
                       </div>
                   </div>
-
+-->
                   <div class="clear">
                       
                   </div>
@@ -129,17 +134,22 @@
 
                   <div class="link">
                     <div class="one one4">
-
-                      <img src="__STATIC__/index/images/dec4.jpg" alt="">
-                       <p>东菱】全自动家用智能面包蛋糕机<br/>
-【淘抢购199元】券后【159元】包邮<br/>
-领券：<a href="http://shop.m.taobao.com/shop/coupon.htm?seller_id=2786465182&activity_id=1acb87f7c3fa47918605b0e37db246a3" target="_blank">http://shop.m.taobao.com/shop/coupon.htm?seller_id=2786465182&activity_id=1acb87f7c3fa47918605b0e37db246a3</a><br/>
-抢购：<br/>
-<a href="https://detail.tmall.com/item.htm?id=527839747670" target="_blank">https://detail.tmall.com/item.htm?id=527839747670</a><br/>
-拉丝不锈钢机身，仿古法手工揉面，新涡轮增压技术，还原古早味麦香面包，18项强大功能 只需两步</p>
+                        <div id="guide_info">
+                        <img src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
+                           <p>
+                            <!--东菱】全自动家用智能面包蛋糕机<br/>
+                        【淘抢购199元】券后【159元】包邮<br/>
+                        领券：<a href="http://shop.m.taobao.com/shop/coupon.htm?seller_id=2786465182&activity_id=1acb87f7c3fa47918605b0e37db246a3" target="_blank">http://shop.m.taobao.com/shop/coupon.htm?seller_id=2786465182&activity_id=1acb87f7c3fa47918605b0e37db246a3</a><br/>
+                        抢购：<br/>
+                        <a href="https://detail.tmall.com/item.htm?id=527839747670" target="_blank">https://detail.tmall.com/item.htm?id=527839747670</a><br/>
+                        拉丝不锈钢机身，仿古法手工揉面，新涡轮增压技术，还原古早味麦香面包，18项强大功能 只需两步
+ -->
+                            {$data.guide_info}
+                        </p>
+                        </div>
 
                        <input type="button" name="" value="一键转链"  class="yijian" onclick="show2()">
-                       <input type="button" name="" value="+复制" class="fuzhi copy3">
+                       <input type="button" name="" value="+复制" class="fuzhi copy" data-clipboard-action="copy" data-clipboard-target="#guide_info">
                       </div>
                   </div>
                   </div>
@@ -260,11 +270,11 @@
 <script type="text/javascript" src="__STATIC__/index/js/videojs-ie8.min.js"></script>
 
   <script type="text/javascript">
-        var clipboard = new Clipboard('.copy1', {
+        var clipboard = new Clipboard('.copy'/*, {
             target: function() {
                 return document.querySelector('.one1');
             }
-        });
+        }*/);
         clipboard.on('success',
         function(e) {
             $(e.trigger).val('复制成功');
@@ -356,9 +366,6 @@ function closeDiv(){
 }
 
 $(document).ready(function(){
-   
-  
-   
     $(window).scroll(function(){
         var top = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
         $(".hidden_pro_au").css({

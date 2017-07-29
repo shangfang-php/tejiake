@@ -3,7 +3,7 @@ namespace app\index\controller;
 use think\Controller;
 use think\Db;
 class Spread extends Controller{
-    //获取等待推广数据  准备推广到软件
+    //获取等待推广数据  准备推广到软件  phone
     public function index(){
         $list = Db::name('goods_collect')
             ->alias('gc')
@@ -12,7 +12,7 @@ class Spread extends Controller{
             ->join('goods g','gc.gid=g.id','left')
             ->select();
         if(!empty($list)){
-            return returnAjaxMsg(1,'成功',$list);
+            return returnAjaxMsg(1,'成功',array('data'=>$list));
         }else{
             return returnAjaxMsg(0,'失败');
         }
