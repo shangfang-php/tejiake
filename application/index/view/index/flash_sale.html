@@ -40,6 +40,11 @@
                         <div class="good-img">
                             <a href="/goods?id={$val.id}" target="_blank"><img src="{$val.main_img}"></a>
                         </div>
+                        <div class="good-ppai">
+                            <span class="f12">
+                            {if $val.activity_type == 1}聚划算{else}淘抢购{/if}
+                            </span>
+                        </div>
                         <div class="good-collect">
                             <a  href="javascript:;" class="add_cart_large btnCart"><img src="/static/index/images/sc.png" alt=""></a>
                         </div>

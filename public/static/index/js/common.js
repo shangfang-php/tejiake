@@ -1,3 +1,4 @@
+var isSync = false;
 //ds.base
 ;(function(global, document, undefined){
 	var 

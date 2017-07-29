@@ -82,7 +82,7 @@
 <script type="text/javascript" src="/static/index/js/layer.js"></script>
 <script type="text/javascript" src="/static/index/js/imgLarzy.js"></script>
 <script type="text/javascript" src="/static/index/js/clipboard.js"></script>
-<script type="text/javascript" src="/static/index/js/common.js?v=1.0.1"></script>
+<script type="text/javascript" src="/static/index/js/common.js?v=1.0.2"></script>
 <script type="text/javascript" src="/static/index/js/quick_links.js"></script>
 <!--[if lte IE 8]><script src="js/ieBetter.js"> </script><![endif]-->
 <script type="text/javascript" src="/static/index/js/parabola.js"></script>
@@ -93,6 +93,15 @@
         var nav = $(".head-nav nav li");
         nav.click(function(){
             $(this).addClass("yuan").siblings().removeClass("yuan");
+        });
+        
+        //复制文案显示
+        $('.fz').mouseover(function(){
+            $(this).parents('.good-price').siblings('.fm').css('display','block');
+        });
+        //复制文案隐藏
+        $('.fz').mouseout(function(){
+            $(this).parents('.good-price').siblings('.fm').css('display','none');
         });
     });
 
@@ -111,19 +120,6 @@
         console.info('Trigger:', e.trigger);*/
         e.clearSelection();
     });
-
-
-    //复制文案显示与隐藏
-    window.onload = function() {
-        var oBox = $("#fz");
-        var ooo = $("#fm");
-        oBox.onmouseover = function() {
-            ooo.style.display = "block";
-        };
-        oBox.onmouseout = function() {
-            ooo.style.display = "none";
-        }
-    }
 
     //置顶
     // 获取置顶对象

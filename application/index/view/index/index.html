@@ -59,26 +59,26 @@
                         </div>
 
                         <div class="good-yu f12">
-                            <span class="fl">
+                            <!--<span class="fl">
                                 余券
-                            </span>
-                            <span class="fr">
+                            </span>-->
+                            <span class="fl">
                                 全部{$val.coupon_total_num}
                             </span>
                         </div>
 
                         <div class="good-bar">
                             <div class="progress">
-                                <div class="progress-bar" style="width: {:round( ($val.coupon_total_num - $val.coupon_apply_num)/$val.coupon_total_num,2 ) * 100}%; background: #f66d25;height: 3px;">
+                                <div class="progress-bar" style="width: 100%; background: #f66d25;height: 3px;">
                                     <div class="progress-value" style="text-align: center;">
-                                        {$val.coupon_total_num - $val.coupon_apply_num}
+                                        {$val.coupon_total_num}
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="good-sales">
-                            <div class="skipper fl f12">
+                            <!--<div class="skipper fl f12">
                                 近2个小时跑单
                             </div>
                             <div class="lia fl f12">
@@ -91,7 +91,7 @@
                                 <span>
                                     2
                                 </span>
-                            </div>
+                            </div>-->
                             <div class="xiao fr f12">
                                 销量&nbsp;{$val.sell_num}
                             </div>
@@ -104,7 +104,7 @@
                                     ￥{$val.real_money}
                                 </span>
                             </div>
-                            <input class="fz fr copy f12" type="button" id="fz" value=" 复制文案">
+                            <input class="fz fr copy f12" type="button" value=" 复制文案">
                             </input>
                         </div>
 
@@ -121,12 +121,12 @@
                             </div>
                         </div>
                         
-                        <div class="good-wenan fm" id="fm">
+                        <div class="good-wenan fm">
                             <div class="media-text-area f12">
                                 <img class='' src='{$val.main_img}'
                                 style='width:66px;'>
                                 <br/>
-                                成人脊椎保健修复荞麦枕头
+                                {$val.short_title}
                                 <br>
                                 【在售价{$val.price}元，券后价{$val.real_money}元】
                                 <br/>
