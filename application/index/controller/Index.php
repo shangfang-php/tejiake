@@ -238,7 +238,7 @@ class Index extends Common{
     public function addCollect(){
         $gid = input('get.gid');
         if(!self::$login_user){
-            return returnAjaxMsg(0,'失败',array('url'=>"/user_login"));
+            return returnAjaxMsg(101,'失败',array('url'=>"/user_login"));
         }
         $uid = self::$login_user['id'];
         $info = Db::name('goods')->where(['is_delete'=>0,'id'=>$gid])->find();
