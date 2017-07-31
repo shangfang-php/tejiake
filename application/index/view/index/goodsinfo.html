@@ -197,7 +197,7 @@
                 <h1><img src="__STATIC__/index/images/tgwa.png" alt="">&nbsp;&nbsp;推广文案&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="__STATIC__/index/images/fzline.png" alt=""></h1>
                 <div class="tgwa-con media-text-area">
                     <div class="im-im fl">
-                        <img style="width:279px;height:504px;" src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
+                        <img style="width:279px;height: auto" src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
                     </div>
                     <div class="fl fm-fm" >
                         <p>
@@ -344,5 +344,68 @@
         $(".zhuanlian").hide();
     }
 
+
+    //添加收藏数量
+    // 元素以及其他一些变量
+    var eleFlyElement = document.querySelector("#flyItem"),
+            eleShopCart = document.querySelector("#shopCart");
+
+    var numberItem = 0;
+
+    // 抛物线运动
+    var myParabola = funParabola(eleFlyElement, eleShopCart, {
+
+        speed: 400,
+        //抛物线速度
+        curvature: 0.0008,
+        //控制抛物线弧度
+        complete: function() {
+
+            eleFlyElement.style.visibility = "hidden";
+
+            eleShopCart.querySelector("span").innerHTML = ++numberItem;
+
+        }
+
+    });
+
+    // 绑定点击事件
+    if (eleFlyElement && eleShopCart) {
+
+        [].slice.call(document.getElementsByClassName("btnCart")).forEach(function(button) {
+
+            button.addEventListener("click",
+                    function(event) {
+                        var gid = $('#gid').val();
+                        $.get("{:url('Index/addCollect')}",{gid:gid}, function (data) {
+
+                            if(data.code == 101){
+                                window.location.href = data.url;return false;
+                            }
+                            if(data.code == 1){
+                                $('#collect_action').html("<p>已收藏</p>");return false;
+                            }
+                            alert(data.msg);
+                        });
+
+                        // 滚动大小
+                        var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+
+                                scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+                        eleFlyElement.style.left = event.clientX + scrollLeft + "px";
+
+                        eleFlyElement.style.top = event.clientY + scrollTop + "px";
+
+                        eleFlyElement.style.visibility = "visible";
+
+                        // 需要重定位
+                        myParabola.position().move();
+
+                    });
+
+        });
+
+    }
+
 </script>
-</html>

@@ -60,7 +60,7 @@
                 <li id="shopCart">
                     <a href="#" class="message_list">
                         <span class="cart_num">
-                            0
+                            {$collect_count}
                         </span>
                     </a>
                 </li>
@@ -106,10 +106,14 @@
         //隐藏登录注册
         $('.admin-ming,.admin-an').mouseover(function(){
             $('.admin-an').css('display', 'block');
+            $('.admin-ming').css('border-bottom-right-radius', '0px');
+             $('.admin-ming').css('border-bottom-left-radius', '0px');
         });
 
         $('.admin-ming,.admin-an').mouseout(function(){
             $('.admin-an').css('display', 'none');
+             $('.admin-ming').css('border-bottom-right-radius', '7px');
+             $('.admin-ming').css('border-bottom-left-radius', '7px');
         });
     });
 
