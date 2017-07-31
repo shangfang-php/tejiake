@@ -54,6 +54,9 @@
             handler.unbind('mousedown');
             $(document).unbind('mousemove');
             $(document).unbind('mouseup');
+            $("#handler_drag").val('1');
+            $('#sendCode').addClass('fasong');
+            $.post('/index/login/check_drag');
         }
     };
 })(jQuery);
