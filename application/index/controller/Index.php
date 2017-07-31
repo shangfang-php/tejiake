@@ -270,5 +270,41 @@ class Index extends Common{
         }
     }
 
+    /*
+     * 一键转链
+     * */
+    public function change_link(){
+        if(!self::$login_user){
+            return returnAjaxMsg(101,'失败');//未登陆
+        }
+        $uid = self::$login_user['id'];
+        //获取当前用户信息
+        $username = self::$login_user['taobao_account'];
+        $pidinfo = Db::name('user_pid_records')->where(['uid'=>$uid])->find();
+        if(empty($pidinfo)){
+            return returnAjaxMsg(102,'失败');//PID为空
+        }
+        $pid = $pidinfo['pid'];
+        $pid_arr = explode('_',$pid);
+        $memberid = $pid_arr[1];
+        //print_r($memberid);
+        $param = [
+            'username'=>$username,
+            'memberid'=>$memberid
+        ];
+        $dat = request_post("http://api.00o.cn/info.php",$param);
+        $data = json_decode($dat,true);
+        if($data['code'] == 1){//200
+            //成功 轉鏈 根据高佣API获取当前商品数据
+            return returnAjaxMsg(200,'失败');
+        }elseif($data['code'] == 2){
+            //已過期
+            return returnAjaxMsg(103,'失败');
+        }else{
+            //pid有误
+            return returnAjaxMsg(104,'失败');
+        }
+    }
+
 
 }

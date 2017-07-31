@@ -1,4 +1,21 @@
 {include file='public/header'}
+<style>
+    .alert_pid{
+        border: 1px solid #1a99fb;
+        border-radius: 7px;
+        width: 90px;
+        height: 30px;
+        line-height: 8px;
+        padding: 10px 18px;
+        background: #1a99fb;
+        color: #fff;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    #change_pid p{
+        line-height: 44px;
+    }
+</style>
 <!--<link rel="stylesheet" href="__STATIC__/index/css/style.css">-->
         <!-- 加载每个页面内容-->
         <div class="con">
@@ -40,7 +57,7 @@
                 </div>
                 <div class="fr">
                     {if condition="$data.is_tmall eq 1"}<!--天猫-->
-                    <img src="__STATIC__/index/images/tianmao.png" alt="">
+                    <img style="width: 23px;height: 23px;" src="__STATIC__/index/images/tianmao.png" alt="">
                     {else/}
                     <img src="__STATIC__/index/images/tao.png" alt="">
                     {/if}&nbsp;&nbsp;
@@ -175,25 +192,29 @@
 </div>
 
 <div class="lbOverlay"  onclick="closeDiv()"></div>
-<div class="zhuanlian tanchu " style="width: 240px;height: 220px;background: #fff;text-align: center;padding: 30px;">
+<div class="zhuanlian tanchu" style="width: 240px;height: 220px;background: #fff;text-align: center;padding: 30px;">
          <img src="__STATIC__/index/images/close.png" alt=""  class="close" onclick="closeDiv()" style="    position: absolute;right: 2px;top: 2px;z-index: 9;cursor: pointer;">
    <div class="">
      <img src="__STATIC__/index/images/dengl.png" alt="">
    </div>
    <!--前往登录-->
-   <p style="line-height: 44px;">你还没登录账号</p>
-   <a href="__STATIC__/index/index/login.html"><input type="button" name="" value="前往登录" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
-    line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a>
+    <div id="change_pid">
+        <p >你还没登录账号</p>
+        <a href="/user_login"><input type="button"  value="前往登录" class="alert_pid"></a>
+    </div>
+
   <!--前往更新-->
   <!--    <p style="line-height: 44px;">您的PID已过期</p>
    <a href="/index/user/set.html"><input type="button" name="" value="前往更新" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
     line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a> -->
 
     <!--前往设置-->
-    <!--  <p style="line-height: 44px;">请先设置淘宝账号并设置PID</p>
+    <!--  <p style="line-height: 44px;">请设置淘宝账号及PID</p>
    <a href="/index/user/set.html"><input type="button" name="" value="前往设置" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
     line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a> -->
 </div>
+
+
 {include file="public/footer" /}
      <script type="text/javascript">
        //浮动左边导航
@@ -226,21 +247,54 @@ function show(){
     $(".hidden_pro_au").slideDown("20000");//这里显示方式多种效果
 }
 function show2(){
-    $(".lbOverlay").css({"height":window.screen.availHeight});
-    $(".lbOverlay").show();
- 
-    var st=$(document).scrollTop(); //页面滑动高度
-    var objH=$(".zhuanlian").height();//浮动对象的高度
-    var ch=$(window).height();//屏幕的高度  
-    var objT=Number(st)+(Number(ch)-Number(objH))/2;   //思路  浮动高度+（（屏幕高度-对象高度））/2
-    $(".zhuanlian").css("top",objT);
-     
-    var sl=$(document).scrollLeft(); //页面滑动左移宽度
-    var objW=$(".zhuanlian").width();//浮动对象的宽度
-    var cw=$(window).width();//屏幕的宽度  
-    var objL=Number(sl)+(Number(cw)-Number(objW))/2; //思路  左移浮动宽度+（（屏幕宽度-对象宽度））/2
-    $(".zhuanlian").css("left",objL);
-    $(".zhuanlian").slideDown("20000");//这里显示方式多种效果
+
+    $.get("{:url('Index/change_link')}",function(data){
+        var htmll = '';
+
+        if (data.code == 200)
+        {
+            htmll += '200';//转链数据显示
+        }
+        else if (data.code == 101)
+        {
+            htmll += '<p >你还没登录账号</p><a href="/user_login"><input type="button" name="" value="前往登录" class="alert_pid"></a>';
+        }
+        else if (data.code == 102)
+        {
+            htmll += '<p >请先设置淘宝账号并设置PID</p> <a href="/index/user/set.html"><input type="button" value="前往设置" class="alert_pid"></a>';
+        }
+        else if (data.code == 103)
+        {
+            htmll += '<p >您的PID已过期,请重新设置</p> <a href="{:url('User/set')}"><input type="button" value="前往设置" class="alert_pid"></a>';
+        }
+        else if (data.code == 104)
+        {
+            htmll += '<p >您的PID有误,请重新设置</p> <a href="{:url('User/set')}"><input type="button" value="前往设置" class="alert_pid"></a>';
+        }
+        else
+        {
+            htmll += '<p>数据有误</p>';
+        }
+        $('#change_pid').html(htmll);
+
+        $(".lbOverlay").css({"height":window.screen.availHeight});
+        $(".lbOverlay").show();
+
+        var st=$(document).scrollTop(); //页面滑动高度
+        var objH=$(".zhuanlian").height();//浮动对象的高度
+        var ch=$(window).height();//屏幕的高度
+        var objT=Number(st)+(Number(ch)-Number(objH))/2;   //思路  浮动高度+（（屏幕高度-对象高度））/2
+        $(".zhuanlian").css("top",objT);
+
+        var sl=$(document).scrollLeft(); //页面滑动左移宽度
+        var objW=$(".zhuanlian").width();//浮动对象的宽度
+        var cw=$(window).width();//屏幕的宽度
+        var objL=Number(sl)+(Number(cw)-Number(objW))/2; //思路  左移浮动宽度+（（屏幕宽度-对象宽度））/2
+        $(".zhuanlian").css("left",objL);
+        $(".zhuanlian").slideDown("20000");//这里显示方式多种效果
+        $('.zhuanlian').show();
+    });
+
 }
 function closeDiv(){
     $(".lbOverlay").hide();

@@ -51,6 +51,21 @@
         color: #fff;
         text-align: center;
     }
+    .alert_pid{
+        border: 1px solid #1a99fb;
+        border-radius: 7px;
+        width: 90px;
+        height: 30px;
+        line-height: 8px;
+        padding: 10px 18px;
+        background: #1a99fb;
+        color: #fff;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    #change_pid p{
+        line-height: 44px;
+    }
 </style>
 <link rel="stylesheet" href="__STATIC__/index/css/common.css">
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
@@ -118,7 +133,14 @@
                         offset: +8
                     }, function () {
                         //alert('倒计时结束!');
-                        $('.countdown').html('<p style="color: red;">活动已结束!</p>');
+                        var now = parseInt(new Date().getTime()/1000);
+                        var end_time = {$data.end_time};
+                        if(now >= end_time){
+                            $('.countdown').html('<p style="color: red;">活动已结束!</p>');
+                        }else{
+                            $('.countdown').html('<p style="color: red;">活动正在火热进行中!</p>');
+                        }
+
                     });
                 </script>
                 {elseif condition="$data.type eq 3"}过夜单
@@ -160,7 +182,7 @@
                 <div class="choice-dec fl">
                     <h1>
                         {if condition="$data.is_tmall eq 1"}<!--天猫-->
-                        <img src="__STATIC__/index/images/tianmao.png" alt="">
+                        <img style="width: 23px;height: 23px;" src="__STATIC__/index/images/tianmao.png" alt="">
                         {else/}
                         <img src="__STATIC__/index/images/tao.png" alt="">
                         {/if}
@@ -255,18 +277,18 @@
      <img src="/static/index/images/dengl.png" alt="">
     </div>
     <!--前往登录-->
-    <p style="line-height: 44px;">你还没登录账号</p>
-    <a href="/user_login"><input type="button" name="" value="前往登录" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
-    line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a>
-    <!--前往更新-->
-    <!--    <p style="line-height: 44px;">您的PID已过期</p>
-    <a href="/index/user/set.html"><input type="button" name="" value="前往更新" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
-    line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a> -->
+    <div id="change_pid">
+        <p >你还没登录账号</p>
+        <a href="/user_login"><input type="button" name="" value="前往登录" class="alert_pid"></a>
+    </div>
 
+    <!--前往更新-->
+      <!-- <p >您的PID已过期</p>
+    <a href="{:url('User/set')}"><input type="button" value="前往更新" class="alert_pid"></a>
+-->
     <!--前往设置-->
-    <!--  <p style="line-height: 44px;">请先设置淘宝账号并设置PID</p>
-    <a href="/index/user/set.html"><input type="button" name="" value="前往设置" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
-    line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a> -->
+     <!-- <p >请先设置淘宝账号并设置PID</p>
+    <a href="/index/user/set.html"><input type="button" value="前往设置" class="alert_pid"></a>-->
 </div>
 
 {include file="public/footer" /}
@@ -323,22 +345,53 @@
     }
 
     function show2(){
-        $(".lbOverlay").css({"height":window.screen.availHeight});
-        $(".lbOverlay").show();
+        $.get("{:url('Index/change_link')}",function(data){
+            var htmll = '';
 
-        var st=$(document).scrollTop(); //页面滑动高度
-        var objH=$(".zhuanlian").height();//浮动对象的高度
-        var ch=$(window).height();//屏幕的高度
-        var objT=Number(st)+(Number(ch)-Number(objH))/2;   //思路  浮动高度+（（屏幕高度-对象高度））/2
-        $(".zhuanlian").css("top",objT);
+            if (data.code == 200)
+            {
+                htmll += '200';//转链数据显示
+            }
+            else if (data.code == 101)
+            {
+                htmll += '<p >你还没登录账号</p><a href="/user_login"><input type="button" name="" value="前往登录" class="alert_pid"></a>';
+            }
+            else if (data.code == 102)
+            {
+                htmll += '<p >请先设置淘宝账号并设置PID</p> <a href="/index/user/set.html"><input type="button" value="前往设置" class="alert_pid"></a>';
+            }
+            else if (data.code == 103)
+            {
+                htmll += '<p >您的PID已过期,请重新设置</p> <a href="{:url('User/set')}"><input type="button" value="前往设置" class="alert_pid"></a>';
+            }
+            else if (data.code == 104)
+            {
+                htmll += '<p >您的PID有误,请重新设置</p> <a href="{:url('User/set')}"><input type="button" value="前往设置" class="alert_pid"></a>';
+            }
+            else
+            {
+                htmll += '<p>数据有误</p>';
+            }
+            $('#change_pid').html(htmll);
 
-        var sl=$(document).scrollLeft(); //页面滑动左移宽度
-        var objW=$(".zhuanlian").width();//浮动对象的宽度
-        var cw=$(window).width();//屏幕的宽度
-        var objL=Number(sl)+(Number(cw)-Number(objW))/2; //思路  左移浮动宽度+（（屏幕宽度-对象宽度））/2
-        $(".zhuanlian").css("left",objL);
-        $(".zhuanlian").slideDown("20000");//这里显示方式多种效果
-        $('.zhuanlian').show();
+            $(".lbOverlay").css({"height":window.screen.availHeight});
+            $(".lbOverlay").show();
+
+            var st=$(document).scrollTop(); //页面滑动高度
+            var objH=$(".zhuanlian").height();//浮动对象的高度
+            var ch=$(window).height();//屏幕的高度
+            var objT=Number(st)+(Number(ch)-Number(objH))/2;   //思路  浮动高度+（（屏幕高度-对象高度））/2
+            $(".zhuanlian").css("top",objT);
+
+            var sl=$(document).scrollLeft(); //页面滑动左移宽度
+            var objW=$(".zhuanlian").width();//浮动对象的宽度
+            var cw=$(window).width();//屏幕的宽度
+            var objL=Number(sl)+(Number(cw)-Number(objW))/2; //思路  左移浮动宽度+（（屏幕宽度-对象宽度））/2
+            $(".zhuanlian").css("left",objL);
+            $(".zhuanlian").slideDown("20000");//这里显示方式多种效果
+            $('.zhuanlian').show();
+        });
+
     }
     function closeDiv(){
         $(".lbOverlay").hide();
