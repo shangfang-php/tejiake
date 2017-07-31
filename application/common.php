@@ -201,6 +201,17 @@ function getCouponActivityId($url){
 }
 
 /**
+ * 获取营销计划的优惠券信息
+ * @param  [type] $param_me [description]
+ * @return [type]           [description]
+ */
+function getYingxiaoCouponInfo($param_me){
+    $url    =   'https://uland.taobao.com/cp/coupon?me='.$param_me;
+    $coupon_info    =   request_get($url);
+    return $coupon_info ? json_decode($coupon_info, TRUE) : '';
+}
+
+/**
  * 获取发布产品需要的积分
  * @param  [type] $real_price  [券后价]
  * @param  [type] $coupon_nums [优惠券剩余未领取总数]
@@ -249,12 +260,24 @@ function init_goods_data($data){
     $data['sell_num']=  $goods_info['volume'];
     $data['price']  =   $goods_info['zk_final_price'];
     $images_arr     =   $goods_info['small_images']['string']; ##图片集合
+    $data['is_tmall']=  checkGoodsIsTmall($data['link']);
 
-    $activityId     =   getCouponActivityId($data['coupon_link']); ##获取优惠券活动ID
-    if(!$activityId){
-        return '优惠券链接不正确!';
+    if($data['common_type'] == 1){
+        $activityId     =   getCouponActivityId($data['coupon_link']); ##获取优惠券活动ID
+        if(!$activityId){
+            return '优惠券链接不正确!';
+        }
+        $coupon_info    =   getCouponInfo($activityId, $goods_id);
+        $data['coupon_link']    =   'https://market.m.taobao.com/apps/aliyx/coupon/detail.html?wh_weex=true&activity_id='.$activityId.'&seller_id='.$goods_info['seller_id'];
+    }else{
+        preg_match('/me=(.+)&?/', $data['coupon_link'], $matches);
+        if(!$matches){
+            return '优惠券链接不正确';
+        }
+        $param_me   =   $matches[1];
+        $coupon_info=   getYingxiaoCouponInfo($param_me);
     }
-    $coupon_info    =   getCouponInfo($activityId, $goods_id);
+    
     if(!$coupon_info){
         return '未获取到优惠券信息!';
     }
@@ -271,44 +294,17 @@ function init_goods_data($data){
     $data['coupon_end_time']=   strtotime($coupon_info['effectiveEndTime']);
     $data['real_money']     =   bcsub($data['price'], $data['coupon_money'], 2);
     
-    $scene  =   0;
-    if($data['common_type'] == 1){ ##营销计划
-        switch($data['type']){
-            case 1:
-                $scene  =   1;
-                break;
-            case 2:
-                $scene  =   2;
-                break;
-            case 3:
-                $scene  =   3;
-                break;
-            case 4:
-                $scene  =   4;
-                break;
-            case 5:
-                $scene  =   5;
-                break;
-        }
-    }else{
-        switch($data['type']){
-            case 1:
-                $scene  =   6;
-                break;
-            case 2:
-                $scene  =   7;
-                break;
-            case 3:
-                $scene  =   10;
-                break;
-            case 4:
-                $scene  =   8;
-                break;
-            case 5:
-                $scene  =   9;
-                break;
-        }
+    switch($data['type']){
+        case 2: ##限时抢购
+            $scene  =   'flash_sale';
+            break;
+        case 5: ##视频单
+            $scene  =   'video';
+            break;
+        default:
+            $scene  =   'default';
     }
+
     $check  =   $goods_validate->scene($scene)->check($data);
     if(!$check){
         return $goods_validate->getError();
@@ -474,4 +470,14 @@ function secondToTime($times){
                 $result = compact('hour','minute','second'); 
         }
         return $result;  
-}  
+}
+
+/**
+ * 检测链接是否是天猫
+ * @param  [type] $link [description]
+ * @return [type]       [description]
+ */
+function checkGoodsIsTmall($link){
+    $check  =   strpos($link, 'tmall');
+    return $check === false ? 0 : 1;
+}

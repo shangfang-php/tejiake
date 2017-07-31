@@ -59,7 +59,7 @@ class Publish extends UserCommon{
 						'common_type' 	=>	$common_type,
 						'goods_type'	=>	$goods_type,
 					);
-		if($goods_type == 3){ ##直播单
+		if($goods_type == 4){ ##直播单
 			$data['extends']	=	array(0=>[],1=>[],2=>[],3=>[],4=>[]);
 		}
 		$this->assign($data);
@@ -114,6 +114,7 @@ class Publish extends UserCommon{
 		if(time() >= strtotime($coupon_info['effectiveEndTime'])){
 			return returnAjaxMsg(405,'优惠券已过期!');
 		}
+		$coupon_info['coupon_link'] = '';
 		return returnAjaxMsg(200, $coupon_info);
 	}
 
@@ -243,7 +244,7 @@ class Publish extends UserCommon{
 	        }
 		}
 
-		if($goods_type == 3 && $live_info){
+		if($goods_type == 4 && $live_info){ ##直播单
 			$info 	=	saveGoodsLiveInfo($uid, $insertId, $live_info);
 			if(!$info){
 				Db::rollback();
@@ -251,7 +252,7 @@ class Publish extends UserCommon{
 			}
 		}
 
-		if($goods_type == 4){ ##保存视频单网址信息
+		if($goods_type == 5){ ##保存视频单网址信息
 			$info 	=	saveGoodsVideInfo($uid, $insertId, $video_url);
 			if(!$info){
 				Db::rollback();
@@ -338,4 +339,67 @@ class Publish extends UserCommon{
 		return $this->fetch('publish_edit');
 	}
 
+	/**
+     * 根据营销计划链接获取商品及优惠券信息
+     * @return [type] [description]
+     */
+    public function get_yingxiao_goods(){
+        $link 	=   trim(input('post.link'));
+        if(!$link){
+        	return returnAjaxMsg('701', '请输入营销计划链接!');
+        }
+        if(!preg_match('/s.click.taobao.com\/[a-zA-Z0-9]{7,}\??/', $link)){
+        	return returnAjaxMsg('702', '营销计划链接不正确!');
+        }
+
+        $real_url 	=	get_headers($link);
+        if(!$real_url){
+        	return returnAjaxMsg('703', '获取商品信息失败!');
+        }
+
+        $coupon_info 	=	$this->get_yingxiao_coupon_info($real_url['5']);
+        if(!$coupon_info){
+        	return returnAjaxMsg(self::$code, self::$msg);
+        }
+
+        return returnAjaxMsg(200, '获取成功', $coupon_info);
+    }
+
+    /**
+     * 获取并检测营销计划优惠券信息
+     * @param  [type] $coupon_link [description]
+     * @return [type]              [description]
+     */
+    public function get_yingxiao_coupon_info($coupon_link){
+		preg_match('/me=(.+)&?/', $coupon_link, $matches);
+        $param_me 	=	$matches[1];
+        $coupon_info=	getYingxiaoCouponInfo($param_me);
+        if(!$coupon_info){
+        	self::$code 	=	801;
+        	self::$msg 		=	'获取优惠券信息失败!';
+        	return false;
+        }
+        $coupon_info 	=	$coupon_info['result'];
+        if($coupon_info['retStatus'] != 0){
+        	self::$code 	=	802;
+        	self::$msg 		=	'优惠券已失效!';
+        	return false;
+        }
+
+        if(strtotime($coupon_info['effectiveEndTime']) < time()){
+        	self::$code 	=	802;
+        	self::$msg 		=	'优惠券已过期!';
+        	return false;
+        }
+        $itemId 	=	$coupon_info['item']['itemId'];
+        if($coupon_info['item']['tmall'] == 1){
+        	$goods_link 	=	'https://item.tmall.com/item.htm?id='.$itemId;
+        }else{
+        	$goods_link 	=	'https://item.taobao.com/item.htm?id='.$itemId;
+        }
+        $coupon_link 	=	'https://uland.taobao.com/coupon/edetail?me='.$param_me;
+        $coupon_info['coupon_link']	=	$coupon_link;
+        $goods_info 	=	getGoodsInfo($itemId);
+        return array('coupon_info'=>$coupon_info, 'goods_info'=>$goods_info);
+    }
 }

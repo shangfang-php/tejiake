@@ -12,13 +12,11 @@
                     <input id="goods_link" type="text" placeholder="请输入或粘贴宝贝链接">
                     <input type="button" name="" value="获取商品信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;" onclick="check_goods()">
                 </p>
-                {if $common_type == 1}
-                <p> 
-
-                   <span>优惠券链接：</span>                   <input type="text" id="coupon_link" placeholder="如：https://shop.m.taobao.com/shop/coupon.htm?sellerId=12345…">
+                
+                <p style="display: {if $common_type == 1}block{else}none{/if}"> 
+                   <span>优惠券链接：</span><input type="text" id="coupon_link" placeholder="如：https://shop.m.taobao.com/shop/coupon.htm?sellerId=12345…">
                    <input type="button" name="" value="获取信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;" onclick="get_coupon_info()">
                 </p>
-                {/if}
             
                 <!--隐藏部分-->
                 <div id='goods_detail' style="display:none;">
@@ -285,23 +283,46 @@
             msg_show('正在获取商品信息,请稍候!');
             return false;
         }
-        var id      =   get_goods_id();
-        if(!id){
-            return false;
-        }
 
-        isSync      =   true;
-        var url     =   '/index/publish/get_goods_info';
-        var data    =   {id:id};
-        $.post(url, data, function(msg){
-            isSync  =   false;
-            if(msg.code == 200){
-                show_goods_info(msg.msg);
-            }else{
-                msg_show(msg.msg);
+        var common_type = $('#common_type').val();
+        if(common_type == 1){ //普通计划
+            var id      =   get_goods_id();
+            if(!id){
                 return false;
             }
-        },"json");
+
+            isSync      =   true;
+            var url     =   '/index/publish/get_goods_info';
+            var data    =   {id:id};
+            $.post(url, data, function(msg){
+                isSync  =   false;
+                if(msg.code == 200){
+                    show_goods_info(msg.msg);
+                }else{
+                    msg_show(msg.msg);
+                    return false;
+                }
+            },"json");
+        }else{
+            var link    =   $('#goods_link').val();
+            var preg    =   /s.click.taobao.com\/[a-zA-Z0-9]{7,}\??/;
+            if(!preg.test(link)){
+                msg_show('请输入营销计划链接!');
+                return false;
+            }
+            var url     =   '/index/publish/get_yingxiao_goods';
+            var data    =   {link:link};
+            $.post(url, data, function(msg){
+                if(msg.code != 200){
+                    msg_show(msg.msg);
+                    return false;
+                }else{
+                    show_goods_info(msg.goods_info);
+                    show_coupon_info(msg.coupon_info);
+                }
+            },"json");
+        }
+        
     }
 
     function get_goods_id(){
@@ -405,6 +426,9 @@
         $('#real_money').val(real_money.toFixed(2));
         $('#coupon_start_time,#start_date').val(coupon.effectiveStartTime);
         $('#coupon_end_time,#end_date').val(coupon.effectiveEndTime);
+        if(coupon.coupon_link){
+            $('#coupon_link').val(coupon.coupon_link);
+        }
     }
 
     function count_score(){
@@ -483,13 +507,13 @@
             return false;
         }
 
-        if(data.common_type == 1){ //普通计划需要优惠券链接
-            data.coupon_link     =   $('#coupon_link').val();
-            if(!data.coupon_link){
-                msg_show('请输入优惠券链接!');
-                return false;
-            }
+        data.coupon_link     =   $('#coupon_link').val();
+        if(!data.coupon_link){
+            msg_show('请输入优惠券链接!');
+            return false;
+        }
 
+        if(data.common_type == 1){ //普通计划需要优惠券链接
             data.plan_type       =   $('.plan_type .jihuaclass').attr('data');
         }
         var long_img        =   $('#imghead').attr('src');

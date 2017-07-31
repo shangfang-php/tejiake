@@ -7,6 +7,7 @@ class Goods extends Validate{
         'taobao_goodsId'=>  'require|unique:goods',
         'title'         =>  'require',
         'link'          =>  'require|url',
+        'coupon_link'   =>  'require|url',
         'common_type'   =>  'require|in:1,2',
         'main_img'      =>  'require|url',
         'short_title'   =>  'require',
@@ -43,17 +44,12 @@ class Goods extends Validate{
     ];
     
     protected $scene = [
-        '1'  =>  [],
-        '7'  =>  [ ##普通计划限时抢购
+        'defalut'     =>  [],
+        'flash_sale'  =>  [ ##普通计划限时抢购
                 'plan_type'     =>  'require|in:1,2,3,4',
-                'coupon_link'   =>  'require|url',
                 'activity_type' =>  'require|in:1,2',
                 ],
-        '8'  =>  [ ##普通计划直播单
-                'coupon_link'   =>  'require|url',
-                ],
-        '9'  =>  [ ##普通计划直播单
-                'coupon_link'   =>  'require|url',
+        'video'  =>  [ ##普通计划视频单
                 'video_url'     =>  'require|url',
                 ],
    ];
