@@ -1,5 +1,9 @@
 {include file="public/header" /}
 <!-- 加载每个页面内容-->
+  <style type="text/css" media="screen">
+        .con .good .good-list ul li {height: 495px;}
+            
+        </style>
 <div class="con">
     <div class="content">
         <div class="hot">
@@ -23,16 +27,16 @@
 
         <div class="purchase">
             <div class="qiang fl {if $type == 1}yy{/if}" onclick="jump('1')">
-                <img src="__STATIC__/index/images/qiang.png" alt="">
+                <img src="__STATIC__/index/images/{if $type==1}qiang{else}qiang1-img{/if}.png" alt=""  class="qiang-img">
                 &nbsp;正在抢购
             </div>
             <div class="yugao fl {if $type == 2}yy{/if}" onclick="jump('2')">
-                <img src="__STATIC__/index/images/yugao.png" alt="">
+                <img src="__STATIC__/index/images/{if $type==1}yugao{else}yugao1-img{/if}.png" alt="" class="yugao-img">
                 &nbsp;预告
             </div>
         </div>
 
-        <div class="good goodqiang">
+        <div class="good {if $type == 1}goodqiang{else}goodyugao{/if}">
             <div class="good-list">
                 <ul>
                     {foreach $goods_list as $val}
@@ -94,9 +98,9 @@
                         <div class="good-bar">
                             <div class="progress">
                                 <div class="progress-bar" style="width: 100%; background: #f66d25;height: 3px;">
-                                    <div class="progress-value" style="text-align: center;">
+                                  <!--   <div class="progress-value" style="text-align: center;">
                                         {$val.coupon_total_num}
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -217,4 +221,5 @@
         window.location.href = '/flash_sale?type='+type;
     }
 </script>
+
 
