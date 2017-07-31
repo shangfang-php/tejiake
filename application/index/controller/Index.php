@@ -248,8 +248,14 @@ class Index extends Common{
         }
         $uid = self::$login_user['id'];
         $info = Db::name('goods')->where(['is_delete'=>0,'id'=>$gid])->find();
+        //print_r($gid);exit;
         if(empty($info)){
             return returnAjaxMsg(0,'数据有误');
+        }
+        //不可重复收藏
+        $spread_info = Db::name('goods_collect')->where(['is_spread'=>0,'gid'=>$gid,'uid'=>$uid])->find();
+        if(!empty($spread_info)){
+            return returnAjaxMsg(0,'已收藏');
         }
         $data = [
             'gid'=>$gid,
@@ -263,5 +269,6 @@ class Index extends Common{
             return returnAjaxMsg(0,'失败');
         }
     }
+
 
 }

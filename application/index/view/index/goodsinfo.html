@@ -159,9 +159,11 @@
                 </div>
                 <div class="choice-dec fl">
                     <h1>
-
+                        {if condition="$data.is_tmall eq 1"}<!--天猫-->
+                        <img src="__STATIC__/index/images/tianmao.png" alt="">
+                        {else/}
                         <img src="__STATIC__/index/images/tao.png" alt="">
-
+                        {/if}
                         &nbsp;{$data.short_title}</h1>
                     <input type="hidden" name="gid" id="gid" value="{$data.id}">
                     <div class="qu-qu-qu">
@@ -350,7 +352,9 @@
     var eleFlyElement = document.querySelector("#flyItem"),
             eleShopCart = document.querySelector("#shopCart");
 
-    var numberItem = 0;
+    var cart_num = parseInt($('.cart_num').html());
+
+    var numberItem = cart_num;
 
     // 抛物线运动
     var myParabola = funParabola(eleFlyElement, eleShopCart, {
@@ -383,24 +387,25 @@
                                 window.location.href = data.url;return false;
                             }
                             if(data.code == 1){
+                                // 滚动大小
+                                var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+                                        scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+                                eleFlyElement.style.left = event.clientX + scrollLeft + "px";
+
+                                eleFlyElement.style.top = event.clientY + scrollTop + "px";
+
+                                eleFlyElement.style.visibility = "visible";
+
+                                // 需要重定位
+                                myParabola.position().move();
+
                                 $('#collect_action').html("<p>已收藏</p>");return false;
                             }
                             alert(data.msg);
                         });
 
-                        // 滚动大小
-                        var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
 
-                                scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
-
-                        eleFlyElement.style.left = event.clientX + scrollLeft + "px";
-
-                        eleFlyElement.style.top = event.clientY + scrollTop + "px";
-
-                        eleFlyElement.style.visibility = "visible";
-
-                        // 需要重定位
-                        myParabola.position().move();
 
                     });
 

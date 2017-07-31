@@ -7,7 +7,7 @@
              <div class="fl zuo" id="zuo">
             <div class="team">
                <div class="team-head">
-                  <img src="__STATIC__/index/images/tou.png" alt="">
+                  <img style="width:100px;height:100px;" src="{if $data.head_img}{$data.head_img}{else}/static/index/images/tou.png{/if}" alt="">
                   <p class="f16">{$data.nickname}&nbsp;
                       <span class="f12">
                           {if condition="$data.mtype eq 1"}个人
@@ -39,7 +39,11 @@
                       <span class="f20 price">￥{$data.real_money} </span>
                 </div>
                 <div class="fr">
-                    <img src="__STATIC__/index/images/tao.png" alt="" >&nbsp;&nbsp;
+                    {if condition="$data.is_tmall eq 1"}<!--天猫-->
+                    <img src="__STATIC__/index/images/tianmao.png" alt="">
+                    {else/}
+                    <img src="__STATIC__/index/images/tao.png" alt="">
+                    {/if}&nbsp;&nbsp;
                 </div>                 
             </div>
 
@@ -59,7 +63,7 @@
                 
             </div>
 
-            <div class="xiang-sc">
+            <div class="xiang-sc" id="collect_action">
                 {if condition="$data.is_collect eq 1"}
                 <p>已收藏</p>
                 {else/}
@@ -73,6 +77,7 @@
 
             <div class="fr you">
                   <div class="title">
+                      <input type="hidden" name="gid" id="gid" value="{$data.id}">
                   <h1>{$data.short_title}</h1>
                   <p>—————详情介绍</p>
                       
@@ -89,7 +94,7 @@
                                           <img src="{$vo.url}" alt="" width="200px" >
                                           <p>{$vo.content}</p>
                                       </div>
-                                   <input type="button" name="" value="+复制11" class="copy" data-clipboard-action="copy" data-clipboard-target="#foo{$key}">
+                                   <input type="button" name="" value="+复制" class="copy" data-clipboard-action="copy" data-clipboard-target="#foo{$key}">
                                   {else/}
                                       <div style="width: 294px;height: 295px;    margin-top: 20px;">
                                           <img src="{$data.main_img}" alt="" style="width: 100%;">
@@ -160,61 +165,7 @@
           <div id="flyItem" class="fly_item">
             <img src="__STATIC__/index/images/sc.png" width="40" height="40">
         </div>
-        <footer>
-            <div class="footer-content">
-                <div class="fl waper">
-                    <img src="__STATIC__/index/images/logo.png" alt="">
-                    <ul>
-                       <li>
-                            <a href="/user/user.html" target="_blank">
-                                个人中心
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/user/collect.html" target="_blank">
-                               我的收藏
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/user/fbtg.html" target="_blank">
-                                放单后台
-                            </a>
-                        </li>
 
-                        <li>
-                            <a href="/user/api.html" target="_blank">
-                                开放API
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/user/setting.html" target="_blank">
-                                联盟设置
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/index/news.html" target="_blank">
-                                联系我们
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="fl shu">
-                </div>
-                <div class="fl follow">
-                    <h1>
-                        特价客的单子至少可以提升你3倍以上的收入
-                    </h1>
-                    <p class="f12">
-                        特价客CopyRight 2017粤ICP备15077059号-4
-                    </p>
-                </div>
-                <div class="clear">
-                </div>
-            </div>
-        </footer>
-           <!--置顶-->
-        <div id="scroll">
-        </div>
         <!--视频播放-->
 <div class="lbOverlay"  onclick="closeDiv()"></div>
 <div class="hidden_pro_au">
@@ -243,75 +194,7 @@
    <a href="/index/user/set.html"><input type="button" name="" value="前往设置" style="border: 1px solid #1a99fb;border-radius: 7px;width: 90px;height: 30px;
     line-height: 8px;padding: 10px 18px;background: #1a99fb; color: #fff;cursor: pointer;font-size: 14px;"></a> -->
 </div>
-
-        <!--收藏 商品数量 quick_links.js控制-->
-        <div class="mui-mbar-tabs" id="sc">
-            <div class="quick_links_panel">
-                <div id="quick_links" class="quick_links">
-                    <li id="shopCart">
-                        <a href="#" class="message_list">
-                            <span class="cart_num">
-                                0
-                            </span>
-                        </a>
-                    </li>
-                </div>
-            </div>
-        </div>
-    </body>
-   <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
- 
-    <script type="text/javascript" src="__STATIC__/index/js/clipboard.js">
-    </script>
-    <script type="text/javascript" src="__STATIC__/index/js/common.js"></script>
-    <script type="text/javascript" src="__STATIC__/index/js/quick_links.js"></script>
-    <!--[if lte IE 8]><script src="__STATIC__/index/js/ieBetter.js"> </script><![endif]-->
-    <script type="text/javascript" src="__STATIC__/index/js/parabola.js"></script>
-<script type="text/javascript" src="__STATIC__/index/js/videojs-ie8.min.js"></script>
-
-  <script type="text/javascript">
-        var clipboard = new Clipboard('.copy'/*, {
-            target: function() {
-                return document.querySelector('.one1');
-            }
-        }*/);
-        clipboard.on('success',
-        function(e) {
-            $(e.trigger).val('复制成功');
-            e.clearSelection();
-        });
-        /* var clipboard = new Clipboard('.copy2', {
-            target: function() {
-                return document.querySelector('.one2');
-            }
-        });
-        clipboard.on('success',
-        function(e) {
-           
-            $('.copy2').val('复制成功');
-           
-            console.info('Action:', e.action);
-            console.info('Text:', e.text);
-            console.info('Trigger:', e.trigger);
-            e.clearSelection();
-        });
-         var clipboard = new Clipboard('.copy3', {
-            target: function() {
-                return document.querySelector('.one4');
-            }
-        });
-        clipboard.on('success',
-        function(e) {
-           
-            $('.copy3').val('复制成功');
-           
-            console.info('Action:', e.action);
-            console.info('Text:', e.text);
-            console.info('Trigger:', e.trigger);
-            e.clearSelection();
-        });
-*/
-    </script>
+{include file="public/footer" /}
      <script type="text/javascript">
        //浮动左边导航
 $(window).scroll(function(){
@@ -379,88 +262,71 @@ $(document).ready(function(){
     })
    
 })
-</script>
 
-      
-    <script type="text/javascript">
-    //置顶
-        // 获取置顶对象
-        var obj = document.getElementById('scroll');
-        
+    //添加收藏数量
+    // 元素以及其他一些变量
+    var eleFlyElement = document.querySelector("#flyItem"),
+            eleShopCart = document.querySelector("#shopCart");
 
-        // 置顶对象点击事件
-        obj.onclick = function() {
-            var timer = setInterval(function() {
-                window.scrollBy(0, -50);
-                if (document.body.scrollTop == 0) {
-                    clearInterval(timer);
-                };
-            },
-            30);
+    var cart_num = parseInt($('.cart_num').html());
+
+    var numberItem = cart_num;
+
+    // 抛物线运动
+    var myParabola = funParabola(eleFlyElement, eleShopCart, {
+
+        speed: 400,
+        //抛物线速度
+        curvature: 0.0008,
+        //控制抛物线弧度
+        complete: function() {
+
+            eleFlyElement.style.visibility = "hidden";
+
+            eleShopCart.querySelector("span").innerHTML = ++numberItem;
+
         }
 
-        // 窗口滚动检测
-        window.onscroll = function() {
-            obj.style.display = (document.body.scrollTop >= 300) ? "block": "none";
-          
-        }
-        
+    });
 
-    </script>
-          <script type="text/javascript">
-      //添加收藏数量
-        // 元素以及其他一些变量
-        var eleFlyElement = document.querySelector("#flyItem"),
-        eleShopCart = document.querySelector("#shopCart");
+    // 绑定点击事件
+    if (eleFlyElement && eleShopCart) {
 
-        var numberItem = 0;
+        [].slice.call(document.getElementsByClassName("btnCart")).forEach(function(button) {
 
-        // 抛物线运动
-        var myParabola = funParabola(eleFlyElement, eleShopCart, {
+            button.addEventListener("click",
+                    function(event) {
+                        var gid = $('#gid').val();
+                        $.get("{:url('Index/addCollect')}",{gid:gid}, function (data) {
 
-            speed: 400,
-            //抛物线速度
-            curvature: 0.0008,
-            //控制抛物线弧度
-            complete: function() {
+                            if(data.code == 101){
+                                window.location.href = data.url;return false;
+                            }
+                            if(data.code == 1){
+                                // 滚动大小
+                                var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+                                        scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
 
-                eleFlyElement.style.visibility = "hidden";
+                                eleFlyElement.style.left = event.clientX + scrollLeft + "px";
 
-                eleShopCart.querySelector("span").innerHTML = ++numberItem;
+                                eleFlyElement.style.top = event.clientY + scrollTop + "px";
 
-            }
+                                eleFlyElement.style.visibility = "visible";
+
+                                // 需要重定位
+                                myParabola.position().move();
+
+                                $('#collect_action').html("<p>已收藏</p>");return false;
+                            }
+                            alert(data.msg);return false;
+                        });
+
+
+
+                    });
 
         });
 
-        // 绑定点击事件
-        if (eleFlyElement && eleShopCart) {
+    }
 
-            [].slice.call(document.getElementsByClassName("btnCart")).forEach(function(button) {
-
-                button.addEventListener("click",
-                function(event) {
-
-                    // 滚动大小
-                    var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
-
-                    scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
-
-                    eleFlyElement.style.left = event.clientX + scrollLeft + "px";
-
-                    eleFlyElement.style.top = event.clientY + scrollTop + "px";
-
-                    eleFlyElement.style.visibility = "visible";
-
-                    // 需要重定位
-                    myParabola.position().move();
-
-                });
-
-            });
-
-        }
     </script>
-
-     
-
-</html>

@@ -60,7 +60,9 @@
                 <li id="shopCart">
                     <a href="#" class="message_list">
                         <span class="cart_num">
-                            {$collect_count}
+                             {if $login_user}{$collect_count}
+                            {else/}0
+                            {/if}
                         </span>
                     </a>
                 </li>
@@ -164,7 +166,7 @@
 
     //添加收藏数量
     // 元素以及其他一些变量
-    var eleFlyElement = document.querySelector("#flyItem"),
+   /* var eleFlyElement = document.querySelector("#flyItem"),
     eleShopCart = document.querySelector("#shopCart");
 
     var numberItem = 0;
@@ -212,6 +214,6 @@
 
         });
 
-    }
+    }*/
 </script>
 </html>
