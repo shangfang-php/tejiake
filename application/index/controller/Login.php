@@ -99,6 +99,7 @@ class Login extends Controller{
         $data['login_time'] =   time();
         $data['create_time']=   time();
         $data['login_ip']   =   $_SERVER['REMOTE_ADDR'];
+        $data['secret_key'] =   makeSecretKey(); ##生成密钥
 
         $insert_id  =   Db::table('user')->insertGetId($data);
         if($info === FALSE){

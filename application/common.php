@@ -481,3 +481,12 @@ function checkGoodsIsTmall($link){
     $check  =   strpos($link, 'tmall');
     return $check === false ? 0 : 1;
 }
+
+/**
+ * 生成注册时的密钥
+ * @return [type] [description]
+ */
+function makeSecretKey(){
+    $string     =   uniqid(rand(1,1000)).rand(1,10000).rand(1,10000).rand(1,10000);
+    return md5($string);
+}
