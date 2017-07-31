@@ -69,7 +69,7 @@
     padding-top: 24px;
 }
 .head-mid .content .admin-me {
-    width: 126px;
+    width: 128px;
     height: 36px;
 }
 .head-mid .content .admin-ming {
@@ -77,18 +77,29 @@
     height: 33px;
     line-height: 33px;
     background: #f2f2f2;
-    border-top-right-radius: 7px;
-    border-top-left-radius: 7px;
+    /* border-top-right-radius: 7px;
+    border-top-left-radius: 7px; */
+    border-radius: 7px;
     overflow: hidden;
     margin-left: 12px;
        
+}
+.head-mid .content .admin-ming:hover{
+    border-bottom-right-radius: 0px;
+     border-bottom-left-radius: 0px;
+
+}
+.head-mid .content .admin-an:hover .admin-ming{
+    border-bottom-right-radius: 0px;
+     border-bottom-left-radius: 0px;
+
 }
 .head-mid .content .admin-ming .baiid{
     background: #1a99fb;
     width: 50px;
     height: 33px; 
      text-align: center; 
-      border-top-right-radius: 10px; 
+      /* border-top-right-radius: 10px;  */
        
 }
 .head-mid .content .admin-ming .baiid img{
@@ -127,7 +138,7 @@
     width: 50px;
     height: 33px; 
      text-align: center; 
-      border-bottom-right-radius: 10px; 
+      /* border-bottom-right-radius: 10px;  */
        
 }
 .head-mid .content .admin-an .baiid img{
@@ -154,14 +165,20 @@
 
 .head-mid .content .admin-me .reg {
     float: left;
-    width: 60px;
-    height: 35px;
+    width: 58px;
+    height: 33px;
     background: #67e890;
     color: #fff;
-    line-height: 35px;
+    line-height: 33px;
     text-align: center;
     cursor: pointer;
     border-radius: 2px;
+     border: 1px solid #67e890;
+}
+.head-mid .content .admin-me .reg:hover {
+    background: none;
+    color: #67e890; 
+      border: 1px solid #67e890;
 }
 
 .head-mid .content .admin-me .log {
@@ -174,6 +191,11 @@
     text-align: center;
     cursor: pointer;
     border-radius: 2px;
+}
+
+.head-mid .content .admin-me .log:hover {
+    background: #1a99fb;
+    color: #fff; 
 }
 
 .head-nav {
@@ -193,6 +215,7 @@ nav {
     border: 1px solid #f2f2f2;
     border-radius: 50px;
     background: #fff;
+        box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 6px;
 }
 nav ul {
     height: 80px;
@@ -207,7 +230,7 @@ nav ul li {
 }
 nav ul li a {
     width: 100%;
-    height: 80px;
+    height: 76px;
 }
 nav ul li a img {
     display: block;
@@ -250,7 +273,7 @@ nav ul li a .nav-dec p {
 .con .content .hot span {
     position: absolute;
     right: 16px;
-    top: 33px;
+    top: 60px;
 }
 .con .content .hot-dec {
     background: url('../images/bokd.png') no-repeat center center;
@@ -418,6 +441,19 @@ nav ul li a .nav-dec p {
     top: 5px;
     cursor: pointer;
     background: url('../images/ppai.png') no-repeat center center;
+    height: 20px;
+    text-align: center;
+    border-radius: 50px;
+    padding: 0 10px;
+    line-height: 18px;
+    color: #fff;
+}
+.con .good .good-list ul li .good-taog {
+   position: absolute;
+    right: 8px;
+    top: 5px;
+    cursor: pointer;
+    background: url('../images/taog.png') no-repeat center center;
     height: 20px;
     text-align: center;
     border-radius: 50px;
@@ -686,9 +722,10 @@ nav ul li a .nav-dec p {
 }
 .con .good .good-list ul li .good-jian {
     margin: 8px 9px;
-    height: 70px;
+    /* height: 70px; */
     line-height: 20px;
     overflow: hidden;
+        padding-bottom: 8px;
 }
 .con .good .good-list ul li .good-jian span {
     color: #a1a1a1
@@ -870,6 +907,11 @@ footer .footer-content .follow h1 {
     margin-top: 5px;
     border-radius: 7px;
 
+}
+.hidden_pro_au p input:hover{
+    background: #1a99fb;
+    color: #fff;
+    cursor: pointer
 }
 .hidden_pro_au .close{
     position: absolute;

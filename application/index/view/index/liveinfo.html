@@ -86,7 +86,7 @@
                               <div class="one one{$key}">
                                   {if condition='$vo.type eq 1'}<!--图片-->
                                       <div id="foo{$key}">
-                                          <img src="{$vo.url}" alt="">
+                                          <img src="{$vo.url}" alt="" width="200px" >
                                           <p>{$vo.content}</p>
                                       </div>
                                    <input type="button" name="" value="+复制11" class="copy" data-clipboard-action="copy" data-clipboard-target="#foo{$key}">
@@ -137,7 +137,7 @@
                   <div class="link">
                     <div class="one one4">
                         <div id="guide_info">
-                          <img style="width:130px;height:243px;" src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
+                          <img style="width:130px;height: auto" src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
                           <p>
                               {$data.short_title}<br>
                               【淘抢购{$data.price}元】券后【{$data.real_money}元】<br>

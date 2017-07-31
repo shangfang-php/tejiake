@@ -10,6 +10,12 @@ class Index extends Common{
         parent::_initialize();
         $this->online_num   =   getRandTime();
         $this->assign('online_num', $this->online_num);
+        //获取当前收藏数目
+        if(self::$login_user){
+            $uid = self::$login_user['id'];
+            $collect_count = Db::name('goods_collect')->where(['uid'=>$uid,'is_spread'=>0])->count();
+            $this->assign('collect_count', $collect_count);
+        }
     }
 	
     public function index()
