@@ -7,9 +7,65 @@
         <title>
             注册
         </title>
+        <link rel="stylesheet" href="__STATIC__/index/css/style.css">
         <link rel="stylesheet" href="__STATIC__/index/css/common.css">
         <link rel="stylesheet" href="__STATIC__/index/css/login.css">
         <link rel="stylesheet" href="__STATIC__/index/css/drag.css">
+        <style type="text/css">
+            /*弹出遮罩层*/
+            .msg_body{
+                display: none;
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                zoom: 1;
+                background: #2f2e2e;
+                z-index: 999;
+                width:100%;
+                height:100%;
+                filter:alpha(opacity=50); /*IE滤镜，透明度50%*/
+                -moz-opacity:0.5; /*Firefox私有，透明度50%*/
+                opacity:0.5;/*其他，透明度50%*/
+            }
+            .msg_div {
+                display:none;
+                text-align: left;
+                width: 562px;
+                height: 395px;
+                overflow: auto;
+                position: absolute;
+                background: #fff;
+                top: 0;
+                left: 0;
+                z-index: 9999999;
+                border-radius: 7px;
+            }
+            .msg_div p {
+                text-align: center;
+            }
+            .msg_div p input{
+                border: 1px solid #1a99fb;
+               
+                background: #fff;
+                width: 90px;
+                height: 30px;
+                color: #1a99fb;
+                line-height: 30px;
+                    margin-right: 25px;
+                margin-top: 5px;
+                border-radius: 7px;
+
+            }
+            .msg_div .close{
+                position: absolute;
+                right: 2px;
+                top: 2px;
+                z-index: 9;
+                cursor: pointer;
+            }
+        
+        </style>
        
     </head>
     <body>
@@ -85,9 +141,17 @@
             </div>
         </div>
     </body>
-    
+    <div class="msg_body" onclick="msg_close()" style="height: 824px; display: none;"></div>
+    <div class="msg_div tanchu" style="height: 220px; top: 20%; left: 559.5px; display: none;">
+        <img src="__STATIC__/index/images/close.png" alt="" class="close" onclick="msg_close()">
+        <h1 class='mmsg_title'>消息</h1>
+        <p class="er f16 msg_content" style="overflow:auto;text-align:center;padding-left:10px;line-height:25px;text-indent:0px;margin-top:10px;padding-top:20px;height:80px;">
+        </p>
+        <p class="san" style="margin-top: 10px;"><input type="button" onclick="msg_close()" value="确定" class="fr msg_button"></p>
+    </div>
     <!--<script src="__STATIC__/index/js/jquery.1.7.2.min.js"></script>-->
     <script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-    <script type="text/javascript" src="__STATIC__/index/js/drag.js?v=1.0.1"></script>
+    <script type="text/javascript" src="__STATIC__/alert/alertify.custom.js"></script>
+    <script type="text/javascript" src="__STATIC__/index/js/drag.js?v=1.0.2"></script>
     <script type="text/javascript" src="__STATIC__/index/js/register.js?v=1.0"></script>
 </html>

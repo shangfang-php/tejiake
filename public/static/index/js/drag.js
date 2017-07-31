@@ -34,7 +34,21 @@
                     handler.css({'left': _x});
                     drag_bg.css({'width': _x});
                 }else if(_x > maxWidth){  //鼠标指针移动距离达到最大时清空事件
-                    dragOk();
+                    var phone   =   $('#reg-name').val();
+                    var preg    =   /^1[3578]\d{9}$/;
+                    if(!preg.test(phone)){
+                        msg_show('手机号格式不正确!');
+                        return false;
+                    }else{
+                        $.post('/index/login/check_drag',{phone:phone},function(msg){
+                            if(msg.code == 200){
+                                dragOk();
+                            }else{
+                                msg_show(msg.msg);
+                            }
+                        },"json");
+                    }
+                    
                 }
             }
         }).mouseup(function(e){
@@ -56,7 +70,6 @@
             $(document).unbind('mouseup');
             $("#handler_drag").val('1');
             $('#sendCode').addClass('fasong');
-            $.post('/index/login/check_drag');
         }
     };
 })(jQuery);

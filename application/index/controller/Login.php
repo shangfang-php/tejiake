@@ -61,6 +61,16 @@ class Login extends Controller{
      * @return [type] [description]
      */
     function check_drag(){
+        $phone  =   trim(input('post.phone'));
+        $checkPhone =checkPhone($phone);
+        if(!$checkPhone){
+            return returnAjaxMsg('301', '手机号格式不正确!');
+        }
+
+        $res    =   Db::table('user')->field('id')->where('phone', $phone)->find();
+        if($res){
+            return returnAjaxMsg('302','手机号已注册!');
+        }
         if(session('isRegister')){
             Session::set('check_drag', 1); ##滑动验证码通过
         }
