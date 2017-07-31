@@ -269,7 +269,7 @@ nav ul li a .nav-dec p {
 }
 .con .content .night-dec {
     background: url('../images/night-bg.png') no-repeat center center;
-    height: 272px;
+    height: 230px;
 }
 .con .content .night-dec .night-box {
     width: 600px;
@@ -290,6 +290,7 @@ nav ul li a .nav-dec p {
     color: #fff;
     text-align: center;
     font-size: 18px;
+    margin-top: 30px;
 }
 .con .content .tongzhi img{
     vertical-align: middle
