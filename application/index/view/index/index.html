@@ -40,13 +40,13 @@
                         </div>
                         <div class="good-fit">
                             <div class="quan fl">
-                                ￥{$val.coupon_money}&nbsp;
+                                ￥{:sprintf("%.2f",$val.coupon_money)}&nbsp;
                             </div>
                             <div class="charges f12 fl">
                                 <img src="/static/index/images/yj.png" alt="">
                                 佣金
                                 <span class="a3">
-                                    ￥{$val.taoke_money}
+                                    ￥{:round($val.taoke_money,2)}
                                 </span>
                             </div>
                             <div class="plan f12 fl">
@@ -101,7 +101,7 @@
                             <div class="fl f14">
                                 券后
                                 <span class="f20 price">
-                                    ￥{$val.real_money}
+                                    ￥{:round($val.real_money,2)}
                                 </span>
                             </div>
                             <input class="fz fr copy f12" type="button" value=" 复制文案">
@@ -128,7 +128,7 @@
                                 <br/>
                                 {$val.short_title}
                                 <br>
-                                【在售价{$val.price}元，券后价{$val.real_money}元】
+                                【在售价{:round($val.price,2)}元，券后价{:round($val.real_money,2)}元】
                                 <br/>
                                 领券：{$val.coupon_link}
                                 <br>

@@ -403,8 +403,8 @@
         $('#coupon_money').val(coupon.amount);
         var real_money     =   coupon['item']['discountPrice'] - coupon.amount;
         $('#real_money').val(real_money.toFixed(2));
-        $('#coupon_start_time').val(coupon.effectiveStartTime);
-        $('#coupon_end_time').val(coupon.effectiveEndTime);
+        $('#coupon_start_time,#start_date').val(coupon.effectiveStartTime);
+        $('#coupon_end_time,#end_date').val(coupon.effectiveEndTime);
     }
 
     function count_score(){

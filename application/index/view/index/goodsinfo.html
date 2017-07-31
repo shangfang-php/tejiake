@@ -62,7 +62,7 @@
         <div class="fl zuo" id="zuo">
             <div class="team">
                 <div class="team-head">
-                    <img style="width:100px;height:100px;" src="{if $data.head_img}/static/user/{$data.head_img}{else}/static/index/images/tou.png{/if}" alt="">
+                    <img style="width:100px;height:100px;" src="{if $data.head_img}{$data.head_img}{else}/static/index/images/tou.png{/if}" alt="">
                     <p class="f16">{$data.nickname}&nbsp;
                         <span class="f12">
                             {if condition="$data.mtype eq 1"}个人
