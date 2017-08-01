@@ -1,5 +1,6 @@
 $(function(){
-	$('#drag').drag();
+	init_drag();
+
     //发送验证码
     $("#sendCode").click(function () {
 
@@ -104,3 +105,36 @@ $(function(){
 
     });
 });
+
+function checkPhone(){
+    var phone = $('#reg-name').val();
+    if(!phone){
+        msg_show('请输入手机号!');
+        dragReset();
+        return false;
+    }
+    var patten= /^1[3578]\d{9}$/;
+    if(!patten.test(phone)){
+        msg_show('手机号格式不正确!');
+        dragReset();
+        return false;
+    }
+    $.post('/index/login/check_drag',{phone:phone,type:1},function(msg){
+        if(msg.code != 200){
+            msg_show(msg.msg);
+            dragReset();
+        }else{
+            $('#sendCode').addClass('fasong');
+        }
+    },"json");
+}
+
+function init_drag(){
+    var set = {callback:checkPhone};
+    $('#drag').drag(set);
+}
+
+function dragReset(){
+    $('#drag').html('');
+    init_drag();
+}

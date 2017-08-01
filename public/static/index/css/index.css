@@ -492,6 +492,16 @@ nav ul li a .nav-dec p {
     -o-background-size: cover;
     background-size: cover;
 }
+.icon-tianmao {
+    width: 20px;
+    height: 18px;
+    background: url("../images/tianmao.png") no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 .con .good .good-list ul li .good-title {
     margin: 38px 10px 0;
 }

@@ -2,18 +2,28 @@
 <style>
     .con .good{margin-top: 64px;width: 1220px;}
     .con .good .good-list ul li{height: 580px;width: 380px;margin-right: 24px;}
-    .con .good .good-list ul li .good-img{width: 380px;height: 353px;}
+    .con .good .good-list ul li .good-img{width: 380px;height: 380px;        overflow: hidden;}
     .con .good .good-list ul li .good-img img{
-        transition: 0.5s;
+       
+         transition:transform 0.4s;
+    -moz-transition: transform 0.4s;
+    -webkit-transition: transform 0.4s;
+    -o-transition: transform 0.4s;
     }
     .con .good .good-list ul li .good-img img:hover{
-        transform: scale(1.03);
-        border-radius: 7px;
+         transform: scale(1.2);
+    -moz-transform:scale(1.2);
+    -webkit-transform:scale(1.12);
+    -ms-transform:scale(1.2);
+    -o-transform:scale(1.2);
     }
-    .con .good .good-list ul li .good-collect{top: 362px;}
+    .con .good .good-list ul li .good-collect{top: 362px;z-index: 99}
     .countdown{color: #6fc1fe;}
     .countdown div i{width: 14px;background: none;color: #6fc1fe}
     .countdown div.seperator{color: #6fc1fe;line-height: 32px;}
+    .con .good .good-list ul li .good-title {
+    margin: 10px 10px 0;
+}
 </style>
 
 <!-- 加载每个页面内容-->
@@ -58,16 +68,16 @@
                            <div class="fl f12" style="    width: 124px;    height: 23px;  line-height: 19px;">
                                 券后
                                 <span class="f16 price" style="color: #fe5c30;">
-                                    ￥{$val.real_money}
+                                    ￥{:sprintf('%0.2f',$val.real_money)}
                                 </span>
                             </div>
                             <div class="fl quan">
-                               ￥{$val.coupon_money}&nbsp;
+                               ￥{:sprintf('%0.2f',$val.coupon_money)}&nbsp;
                             </div>
                             <div class="charges f12 fr"  style="width: 110px;">
                                 佣金
                                 <span class="a3">
-                                    ￥{:round($val.taoke_money,2)}
+                                    ￥{:sprintf('%0.2f',$val.taoke_money)}
                                 </span>
                                 ({:round($val.taoke_money_percent)}%)
                             </div>
@@ -131,6 +141,9 @@
                     </div>
                     <div class="clear"></div>
                 </ul>
+            </div>
+            <div class="page">
+                {$goods_list->render()}
             </div>
         </div>
     </div>

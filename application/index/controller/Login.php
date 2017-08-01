@@ -8,6 +8,8 @@ use think\Db;
  */
 class Login extends Controller{
     public $validate = '';
+    private $code   =   0;
+    private $msg    =   '';
 
     public function _initialize(){
         $this->validate = \think\Loader::validate('User');
@@ -29,25 +31,45 @@ class Login extends Controller{
      */
     public function send_code(){
         $phone      =   trim(input('post.phone'));
+        $type       =   trim(input('post.type'));
+        $type       =   $type == 2 ? 2 : 1;
         if(!checkPhone($phone)){
-            return returnAjaxMsg(403, '手机号格式不正确!');
-        }
-
-        /** 检测发送时间间隔 */
-        $send_time  =   session('send_time');
-        $now_time   =   time();
-        if($now_time - $send_time < 60){
-            return returnAjaxMsg(402, '请不要频繁点击发送!');
+            return returnAjaxMsg(401, '手机号格式不正确!');
         }
 
         $phoneInfo  =   Db::table('user')->field('id')->where(['phone'=>$phone])->find();
-        if($phoneInfo){
-            return returnAjaxMsg(403, '该手机号已注册!');
+        if($type == 1 && $phoneInfo){
+            return returnAjaxMsg(402, '该手机号已注册!');
         }
 
-        $rand = rand(100000,999999);
-        Session::set('send_time', $now_time); ##保存发送时间
-        Session::set('send_code', $rand); ##保存发送内容
+        if($type == 2 && !$phoneInfo){
+            return returnAjaxMsg(403, '该手机号尚未注册!');
+        }
+
+        $phone_code_table = 'phone_code_records';
+        $where      =   array('phone'=>$phone,'status'=>1);
+        $record     =   Db::table($phone_code_table)->field('id,create_time')->where($where)->order('id','desc')->limit(1)->find();
+        if(!empty($record)){ ##有发送记录
+            $create_time    =   $record['create_time'];
+            $diff_time      =   time() - $create_time;
+            if( $diff_time <= 60){ ##60s之内
+                return returnAjaxMsg(404,'请不要频繁点击发送！');
+            }else{
+                if($diff_time > 60 * 10){ ##已超出10分钟
+                    $info = Db::table($phone_code_table)->where('id', $record['id'])->update(array('status'=>2));
+                    if($info === false){
+                        return returnAjaxMsg(405, '请再尝试点击发送验证码!');
+                    }
+                    $rand   =   rand(100000,999999);
+                    $info   =   Db::table($phone_code_table)->insert(['phone'=>$phone,'code'=>$rand,'type'=>$type,'create_time'=>time()]);
+                }else{
+                    $rand   =   $record['code'];
+                }
+            }
+        }else{
+            $rand   =   rand(100000,999999);
+            $info   =   Db::table($phone_code_table)->insert(['phone'=>$phone,'code'=>$rand,'type'=>$type,'create_time'=>time()]);
+        }
 
         include_once("SendTemplateSMS.php");
         $datas = array($rand,'10分钟');
@@ -62,17 +84,26 @@ class Login extends Controller{
      */
     function check_drag(){
         $phone  =   trim(input('post.phone'));
+        $type   =   trim(input('post.type')); ##1为注册2为充值密码
+        $type   =   $type == 2 ? 2 : 1; ##默认是注册
+
         $checkPhone =checkPhone($phone);
         if(!$checkPhone){
             return returnAjaxMsg('301', '手机号格式不正确!');
         }
 
         $res    =   Db::table('user')->field('id')->where('phone', $phone)->find();
-        if($res){
+        if($type == 1 && $res){
             return returnAjaxMsg('302','手机号已注册!');
+        }
+        if($type == 2 && !$res){
+            return returnAjaxMsg('303','手机号尚未注册!');
         }
         if(session('isRegister')){
             Session::set('check_drag', 1); ##滑动验证码通过
+            return returnAjaxMsg('200','验证通过');
+        }else{
+            return returnAjaxMsg('304','验证不通过');
         }
     }
 
@@ -82,15 +113,13 @@ class Login extends Controller{
      */
     function register_info(){
         $isRegister =   session('isRegister');
-        $check_drag =   session('check_drag');
-        if(!$isRegister || !$check_drag){
+        if(!$isRegister){
             return returnAjaxMsg(300,'非法操作');
         }
 
-        $session_code   =   session('send_code');
         $code           =   trim(input('post.code'));
-        if(!$code || $code != $session_code){
-            return returnAjaxMsg(301, '手机验证码不正确');
+        if(!$code){
+            return returnAjaxMsg(301, '请输入验证码');
         }
 
         $data   =   array(
@@ -104,6 +133,11 @@ class Login extends Controller{
             return returnAjaxMsg(302, $this->validate->getError() );
         }
 
+        $check_code     =   $this->check_code($data['phone'], $code, 1);
+        if(!$check_code){
+            return returnAjaxMsg($this->code, $this->msg);
+        }
+
         unset($data['password1']);
         $data['password']   =   md5($data['password']);
         $data['login_time'] =   time();
@@ -112,20 +146,21 @@ class Login extends Controller{
         $data['secret_key'] =   makeSecretKey(); ##生成密钥
 
         $insert_id  =   Db::table('user')->insertGetId($data);
-        if($info === FALSE){
+        if($insert_id === FALSE){
             $code = 303;
             $msg  = '注册失败!';
         }else{
+            Db::table('phone_code_records')->where('phone', $data['phone'])->update(['status'=>2]);
             $code = '200';
             $msg  = '注册成功!';
-            $data['id'] =   $insert_id;
+            $data['id']     =   $insert_id;
+            $data['score']  =   0;
 
             /** 清除session */
             Session::delete('send_code');
             Session::delete('isRegister');
-            Session::delete('check_drag');
 
-            Session::set('taoke_user', data); ##保存登陆session
+            Session::set('taoke_user', $data); ##保存登陆session
         }
 
         return returnAjaxMsg($code, $msg);
@@ -182,8 +217,86 @@ class Login extends Controller{
         return returnAjaxMsg($code, $msg);
     }
 
+    /**
+     * 退出登录
+     * @return [type] [description]
+     */
     function logout(){
         Session::set('taoke_user', NULL);
         $this->redirect('/');
+    }
+
+    /**
+     * 忘记密码
+     * @return [type] [description]
+     */
+    function repwd(){
+       return $this->fetch();
+    }
+
+    /**
+     * 重置密码
+     * @return [type] [description]
+     */
+    function reset_password(){
+        $phone  =   trim(input('post.phone'));
+        $code   =   trim(input('post.code'));
+        $pwd    =   trim(input('post.pwd'));
+        if(!$phone || !$code || !$pwd){
+            return returnAjaxMsg('601', '请填入相关信息!');
+        }
+
+        $user   =   Db::table('user')->field('id')->where('phone',$phone)->find();
+        if(!$user){
+            return returnAjaxMsg('602', $phone.':该手机号尚未注册！');
+        }
+
+        $check_code     =   $this->check_code($phone,$code,2);
+        if(!$check_code){
+            return returnAjax($this->code, $this->msg);
+        }
+
+        $pwd    =   md5($pwd);
+        $info   =   Db::table('user')->where('id', $user['id'])->update(['password'=>$pwd]);
+        if($info === false){
+            $this->code     =   603;
+            $this->msg      =   '重置密码失败!';
+        }else{
+            Db::table('phone_code_records')->where('phone', $phone)->update(['status'=>2]);
+            $this->code     =   200;
+            $this->msg      =   '重置密码成功!';
+        }
+        return returnAjaxMsg($this->code, $this->msg);
+    }
+
+    /**
+     * 检测手机号验证码是否正确
+     * @param  [type] $phone [description]
+     * @param  [type] $code  [description]
+     * @param  [type] $type  [description]
+     * @return [type]        [description]
+     */
+    function check_code($phone, $code, $type = 1){
+        $where      =   array('phone'=>$phone, 'status'=>1,'type'=>$type);
+        $result     =   Db::table('phone_code_records')->field('id,code,create_time')->where($where)->order('id','desc')->limit(1)->find();
+        if(!$result){
+            $this->code     =   701;
+            $this->msg      =   '没有相关验证码!';
+            return false;
+        }
+
+        if($result['code'] != $code){
+            $this->code     =   702;
+            $this->msg      =   '验证码错误!';
+            return false;
+        }
+
+        if(time() - $result['create_time'] > 10*60){
+            $this->code     =   702;
+            $this->msg      =   '验证码已过期!';
+            Db::table('phone_code_records')->where('id', $result['id'])->update(['status'=>2]);
+            return false;
+        }
+        return TRUE;
     }
 }

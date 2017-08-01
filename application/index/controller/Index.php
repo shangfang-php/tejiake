@@ -38,19 +38,23 @@ class Index extends Common{
         $type               =   isset($_GET['type']) ? intval(trim(input('get.type'))) : 1; ##1正在抢购 2预告
     	self::$goods_type	=	'flash_sale';
         $goods_list =   $this->get_goods_list(2,$type); ##2为限时抢购
+
+        $extends    =   array();
         if($goods_list){
             foreach($goods_list as &$val){
+                $id     =   $val['id'];
                 $diff_times = $type == 1 ? $val['end_time'] : $val['show_time'];
-                $val['diff_times'] = date('m/d/Y H:i:s', $diff_times);
+                $extends[$id]['diff_times'] = date('m/d/Y H:i:s', $diff_times);
 
                 preg_match('/(.*)\s/', $val['guide_info'], $matches);
-                $val['short_guide'] =   $matches ? $matches[1] : '';
+                $extends[$id]['short_guide'] =   $matches ? $matches[1] : '';
             }
         }
         $data   =   array(
                         'goods_list'    =>  $goods_list,
                         'goods_type'    =>  self::$goods_type,
                         'type'          =>  $type,
+                        'extends'       =>  $extends,
                     );
         $this->assign($data);
         
@@ -150,7 +154,7 @@ class Index extends Common{
      * @param  integer $flash_type [限时抢购的类型]
      * @return [type]              [description]
      */
-    function get_goods_list($goodsType, $flash_type = 1, $start = 0, $nums = 20){
+    function get_goods_list($goodsType, $flash_type = 1, $nums = 20){
         $where  =   array('type'=>$goodsType, 'status'=>2, 'end_time'=>['>=',time()]);
         if($goodsType == 2){
             if($flash_type == 1){
@@ -159,7 +163,7 @@ class Index extends Common{
                 $where['show_time'] =   ['>', time()];
             }
         }
-        $goods  =   Db::table('goods')->where($where)->order('id', 'desc')->limit($start, $nums)->select();
+        $goods  =   Db::table('goods')->where($where)->order('id', 'desc')->paginate($nums, false,['query'=>$_GET]);
         return $goods;
     }
 

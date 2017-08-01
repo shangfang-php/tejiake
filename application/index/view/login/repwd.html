@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>
+           找回密码
+        </title>
+        <link rel="stylesheet" href="__STATIC__/index/css/style.css">
+        <link rel="stylesheet" href="__STATIC__/index/css/common.css">
+        <link rel="stylesheet" href="__STATIC__/index/css/login.css?v=1.0.1">
+        <link rel="stylesheet" href="__STATIC__/index/css/drag.css">
+        <style type="text/css">
+            /*弹出遮罩层*/
+            .msg_body{
+                display: none;
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                zoom: 1;
+                background: #2f2e2e;
+                z-index: 999;
+                width:100%;
+                height:100%;
+                filter:alpha(opacity=50); /*IE滤镜，透明度50%*/
+                -moz-opacity:0.5; /*Firefox私有，透明度50%*/
+                opacity:0.5;/*其他，透明度50%*/
+            }
+            .msg_div {
+                display:none;
+                text-align: left;
+                width: 562px;
+                height: 395px;
+                overflow: auto;
+                position: absolute;
+                background: #fff;
+                top: 0;
+                left: 0;
+                z-index: 9999999;
+                border-radius: 7px;
+            }
+            .msg_div p {
+                text-align: center;
+            }
+            .msg_div p input{
+                border: 1px solid #1a99fb;
+               
+                background: #fff;
+                width: 90px;
+                height: 30px;
+                color: #1a99fb;
+                line-height: 30px;
+                    margin-right: 25px;
+                margin-top: 5px;
+                border-radius: 7px;
+
+            }
+            .msg_div .close{
+                position: absolute;
+                right: 2px;
+                top: 2px;
+                z-index: 9;
+                cursor: pointer;
+            }
+
+            .reg_code{
+                width: 100px!important;
+                height: 42px!important;
+                float: right!important;
+                margin-right: 10px!important;
+                text-align: center!important;
+                color: #666!important;
+                padding-left: 0!important;
+            }
+
+            .fasong{
+                background: #3c9bed;
+                color:#fff!important;
+            }
+        
+        </style>
+        
+    </head>
+    
+    <body>
+        <div class="bg">
+            <div class="login-logo" style="width: 1200px;margin: 0 auto;  overflow: hidden;  position: relative; top: 40px;">
+                <a href="/"><img src="__STATIC__/index/images/logo.png" alt=""></a>
+            </div>
+
+            <div class="repwd-box" style="top:15%;">
+                <div class="repwd-right fr">
+                    <h1 class="f20">
+                        找回密码
+                    </h1>
+                    <div class="repwd-line">
+                    </div>
+                    <form class="repwd-form" method="post" action="">
+                        <div class="mobeil">
+                        <span><img src="__STATIC__/index/images/id.png" alt=""></span>
+                            <input type="text" name="username" class="repwd-name" id="phone"
+                            placeholder="输入手机号">
+                        </div>
+                        <div class="mkeContentBox">
+                            <!--效果html开始-->
+                            <div id="drag" style="width:95%;">  </div>
+                            <!--效果html结束-->
+                       </div>
+                        <div class="code">
+                            <input type="text" name="username" class="repwd-code" id='code' placeholder="输入验证码">
+                            <input type="button" class="reg_code" id="sendCode" value="发送验证码">
+                            <div class="clear"></div>
+                       </div>
+                     
+                        <div class="pwd" >
+                            <input type="text" name="password" class="repwd-pwd" id="pwd" placeholder="输入新密码">
+                        </div>
+                       
+                        <button class="repwd-btn f20" type="button" onclick="reset_passowrd()">
+                            确定
+                        </button>
+                    </form>
+
+               
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
+<div class="msg_body" onclick="msg_close()" style="height: 824px; display: none;"></div>
+<div class="msg_div tanchu" style="height: 220px; top: 20%; left: 559.5px; display: none;">
+    <img src="__STATIC__/index/images/close.png" alt="" class="close" onclick="msg_close()">
+    <h1 class='mmsg_title'>消息</h1>
+    <p class="er f16 msg_content" style="overflow:auto;text-align:center;padding-left:10px;line-height:25px;text-indent:0px;margin-top:10px;padding-top:20px;height:80px;">
+    </p>
+    <p class="san" style="margin-top: 10px;"><input type="button" onclick="msg_close()" value="确定" class="fr msg_button"></p>
+</div>
+
+<script type="text/javascript" src="__STATIC__/index/js/jquery.1.4.2.min.js"></script>
+<script type="text/javascript" src="__STATIC__/alert/alertify.custom.js"></script>
+<script type="text/javascript" src="__STATIC__/index/js/drag.js?v=1.0.3"></script>
+<script type="text/javascript">
+    var isSync  =   false;
+    $(function(){
+        init_drag();
+    });
+
+    function init_drag(){
+        var set = {callback:checkPhone};
+        $('#drag').drag(set);
+    }
+
+    function checkPhone(){
+        var phone = $('#phone').val();
+        if(!phone){
+            msg_show('请输入手机号!');
+            dragReset();
+            return false;
+        }
+        var patten= /^1[3578]\d{9}$/;
+        if(!patten.test(phone)){
+            msg_show('手机号格式不正确!');
+            dragReset();
+            return false;
+        }
+        $.post('/index/login/check_drag',{phone:phone,type:2},function(msg){
+            if(msg.code != 200){
+                msg_show(msg.msg);
+                dragReset();
+            }else{
+                $('#sendCode').addClass('fasong');
+            }
+        },"json");
+    }
+
+    function dragReset(){
+        $('#drag').html('');
+        init_drag();
+    }
+
+    //发送验证码
+    $("#sendCode").click(function () {
+
+        //检测是否已滑动验证
+        if($('#handler_drag').val() != '1'){
+            return false;
+        }
+
+        //防止重复提交
+        var tim =  $("#sendCode").val();
+        if(tim >1){
+            alert('请稍后再重新发送');
+            return false;
+        }
+
+        var phone   =   $('#phone').val();
+        var patten  =   /^1[3578]\d{9}$/;
+        if(!patten.test(phone)){
+            msg_show('请输入正确手机号!');
+            return false;
+        }
+
+        $('#sendCode').removeClass('fasong');
+        $.post("/index/login/send_code",{phone:phone,type:2},function(msg){
+            msg_show(msg.msg);
+        },"json");
+        var num = 61;
+        var timer = setInterval(function(){
+            if(num == 1 ||num <1){
+                $("#sendCode").val('重新发送');
+                clearInterval(timer);
+                $('#sendCode').addClass('fasong');
+            }else{
+                num--;
+                $("#sendCode").val(num);
+            }
+        },1000);
+
+    });
+
+    function reset_passowrd(){
+        var drag_handle = $('#handler_drag').val();
+        if(drag_handle != 1){
+            msg_show('请滑动滑块获取验证码!');
+            return false;
+        }
+        var phone  =   $('#phone').val();
+        var code   =   $('#code').val();
+        var pwd    =   $('#pwd').val();
+        if(!phone){
+            msg_show('请输入手机号!');
+            return false;
+        }
+        if(!code){
+            msg_show('请输入验证码!');
+            return false;
+        }
+        if(!pwd){
+            msg_show('请输入新密码!');
+            return false;
+        }
+        $.post('/index/login/reset_password', {phone:phone,code:code,pwd:pwd},function(msg){
+            msg_show(msg.msg)
+            if(msg.code == 200){
+                $('.msg_button').bind('click',function(){
+                    window.location.href = '/user_login';
+                });
+            }
+        },"json");
+    }
+</script>

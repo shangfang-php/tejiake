@@ -8,12 +8,17 @@
             登录
         </title>
         <link rel="stylesheet" href="__STATIC__/index/css/common.css">
-        <link rel="stylesheet" href="__STATIC__/index/css/login.css">
+        <link rel="stylesheet" href="__STATIC__/index/css/login.css?v=1.0.1">
     </head>
     
     <body>
         <div class="bg">
+            <div class="login-logo" style="width: 1200px;margin: 0 auto;  overflow: hidden;  position: relative; top: 40px;">
+                <a href="/"><img src="__STATIC__/index/images/logo.png" alt=""></a>
+            </div>
             <div class="login-box">
+
+          
                 <div class="login-right fr">
                     <h1 class="f20">
                         会员登录
@@ -24,21 +29,20 @@
                         <div class="user">
                         <span><img src="__STATIC__/index/images/id.png" alt=""></span>
                             <input type="text" name="username" class="login-name" id="login-name"
-                            placeholder="请输入注册账号">
+                            placeholder="请输入手机号">
                         </div>
                         <!--暗文密码输入框-->
                         <div class="pwd" id="pwd1">
-                        <span><img src="__STATIC__/index/images/yaosi.png" alt="" ></span>
-                            <input type="password" name="password" class="login-pwd" id="login-pwd"
-                            placeholder="请输入账号密码">
-                        <i><img src="__STATIC__/index/images/jm.png" alt="" id="jm"></i>
+                            <span><img src="__STATIC__/index/images/yaosi.png" alt="" ></span>
+                            <input type="password" name="password" class="login-pwd" id="login-pwd" placeholder="请输入账号密码">
+                            <i><img src="__STATIC__/index/images/jm.png" alt="" id="jm"></i>
                         </div>
                         
-                        <!--<div class="login-links fr">
-                            <a href="" class="f12">
+                        <div class="login-links fr">
+                            <a href="/repwd" class="f12">
                                 忘记密码？
                             </a>
-                        </div>-->
+                        </div>
                         <button class="login-btn f20" type="button" onclick="submitInfo()">
                             登录
                         </button>
