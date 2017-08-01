@@ -235,6 +235,8 @@ class Index extends Common{
             }
             //获取多图
             $images = Db::name('goods_image')->where(['gid'=>$id])->select();
+            //echo '<pre>';
+            //print_r($images);exit;
             $this->assign('goods_image',$images);
             return $this->fetch('goodsinfo');
         }
@@ -278,6 +280,8 @@ class Index extends Common{
      * 一键转链
      * */
     public function change_link(){
+
+        $gid = input('get.gid');
         if(!self::$login_user){
             return returnAjaxMsg(101,'失败');//未登陆
         }
@@ -292,21 +296,80 @@ class Index extends Common{
         $pid_arr = explode('_',$pid);
         $memberid = $pid_arr[1];
         //print_r($memberid);
-        $param = [
+        $param1 = [
             'username'=>$username,
             'memberid'=>$memberid
         ];
-        $dat = request_post("http://api.00o.cn/info.php",$param);
-        $data = json_decode($dat,true);
-        if($data['code'] == 1){//200
+        $dat1 = request_post("http://api.00o.cn/info.php",$param1);
+        $data1 = json_decode($dat1,true);
+        if($data1['code'] == 1){//200
             //成功 轉鏈 根据高佣API获取当前商品数据
-            return returnAjaxMsg(200,'失败');
-        }elseif($data['code'] == 2){
+            /*
+             * 获取参数
+             * @param item_id淘客商品id
+             * @param adzone_id 推广位id，mm_xx_xx_xx pid三段式中的第三段
+             * @param site_id 备案的网站id, mm_xx_xx_xx pid三段式中的第二段
+             * */
+            $info = Db::name('goods')->field('taobao_goodsId')->where(['id'=>$gid])->find();
+            if(empty($info)){
+                return returnAjaxMsg(105,'数据有误');//商品为空
+            }
+            $item_id = $info['taobao_goodsId'];
+            $adzone_id = $pid_arr[3];
+            $site_id = $pid_arr[2];
+            $param2 = [
+                'token'=>$data1['token'],
+                'item_id'=> $item_id,
+                'adzone_id'=> $adzone_id,
+                'site_id'=> $site_id,
+            ];
+            $dat2 = request_post("http://api.00o.cn/highapi.php",$param2);
+            $data2 = json_decode($dat2,true);
+            return returnAjaxMsg(200,'成功',array('data'=>$data2));
+        }elseif($data1['code'] == 2){
             //已過期
             return returnAjaxMsg(103,'失败');
         }else{
             //pid有误
             return returnAjaxMsg(104,'失败');
+        }
+    }
+
+    /*
+     * 商品纠错
+     * @param gid 商品ID
+     * @param uid 用户ID
+     * */
+    public function addErrorRecovery(){
+        if(!self::$login_user){
+            return returnAjaxMsg(101,'未登录');//未登陆
+        }
+        $uid = self::$login_user['id'];
+        $gid = input('post.gid');
+        $info = Db::name('goods')->where(['id'=>$gid,'is_delete'=>0])->find();
+        if(empty($info)){
+            return returnAjaxMsg(101,'商品有误');
+        }
+        $error_info = Db::name('goods_error_recovery')->where(['uid'=>$uid,'gid'=>$gid])->find();
+        if(!empty($error_info)){
+            return returnAjaxMsg(101,'不可重复提交');
+        }
+        $error = input('post.error_reason');
+        if(empty($error)){
+            return returnAjaxMsg(101,'理由不可为空');
+        }
+        $data = [
+            'uid'          => $uid,
+            'gid'          => $gid,
+            'type'         => input('post.type'),
+            'error_reason' => $error,
+            'create_time'  => time()
+        ];
+        $res = Db::name('goods_error_recovery')->insert($data);
+        if($res){
+            return returnAjaxMsg(1,'成功');
+        }else{
+            return returnAjaxMsg(101,'失败');
         }
     }
 

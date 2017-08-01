@@ -1,5 +1,8 @@
 {include file='public/header'}
-<style type="text/css" src="/static/index/css/quan_detail.css"></style>
+<style type="text/css" src="__STATIC__/index/css/quan_detail.css"></style>
+<link rel="stylesheet" href="__STATIC__/index/css/common.css">
+<link rel="stylesheet" href="__STATIC__/index/css/jplayer.blue.monday.min.css">
+<link rel="stylesheet" href="__STATIC__/index/css/quan_detail.css">
 <style type="text/css" media="screen">
     .countdown div i {
         background: none;
@@ -67,7 +70,7 @@
         line-height: 44px;
     }
 </style>
-<link rel="stylesheet" href="__STATIC__/index/css/common.css">
+
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="__STATIC__/index/js/jquery.downCount.js"></script>
 <!-- 加载每个页面内容-->
@@ -151,6 +154,135 @@
                 <p class="fr red f14" onclick="show()" style="cursor: pointer;"><img src="__STATIC__/index/images/tuiguang-shibai.png" alt="" >&nbsp;商品纠错</p>
             </div>
             <div class="you-content">
+                {if condition='$data.type eq 5'}
+                <div class="datu-box fl">
+                    <div class="detail-wrap">
+                        <div class="detail-content-l">
+                            <div class="detail-content-l-main">
+                                <div class="goods-img">
+                                    <div class="goods-big-img">
+                                        <div id="jp_container_1" data-video="{$extends_data.video_url}" data-post="{$data.main_img}" class="jp-video jp-video-360p" role="application" aria-label="media player">
+                                            <div class="jp-type-single">
+                                                <div id="jquery_jplayer_1" class="jp-jplayer" style="width: 100%; height: 288px;">
+                                                    <img id="jp_poster_0" src="{if condition='!empty($goods_image[0]) eq true'}{$goods_image[0]['image_url']}{else/}{$data.main_img}{/if}" style="width: 100%; height: 288px; display: inline;">
+                                                    <video controls="controls" id="jp_video_0" src="{$extends_data.video_url}" style="width: 0; height: 0;">
+                                                    </video>
+                                                   <!-- <video  width="0" height="0" controls id="jp_video_0">
+                                                        <source src="{$extends_data.video_url}" type="video/mp4">
+                                                    </video>-->
+                                                </div>
+                                                <div class="jp-gui">
+                                                    <div class="jp-video-play" style="display: block;">
+                                                        <button class="jp-video-play-icon" role="button" tabindex="0">
+                                                            play
+                                                        </button>
+                                                    </div>
+                                                    <div class="jp-interface">
+                                                        <div class="jp-progress">
+                                                            <div class="jp-seek-bar" style="width: 100%;">
+                                                                <div class="jp-play-bar" style="width: 0%;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="jp-controls-holder">
+                                                            <div class="jp-controls">
+                                                                <button class="jp-play" role="button" tabindex="0">
+                                                                    play
+                                                                </button>
+                                                                <button class="jp-stop" role="button" tabindex="0">
+                                                                    stop
+                                                                </button>
+                                                            </div>
+                                                            <div class="jp-volume-controls">
+                                                                <button class="jp-mute" role="button" tabindex="0">
+                                                                    mute
+                                                                </button>
+                                                                <div class="jp-volume-bar">
+                                                                    <div class="jp-volume-bar-value" style="width: 50%;">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="jp-toggles">
+                                                                <button class="jp-repeat" role="button" tabindex="0">
+                                                                    repeat
+                                                                </button>
+                                                                <button class="jp-full-screen" role="button" tabindex="0">
+                                                                    full screen
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="jp-no-solution" style="display: none;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="goods-small-img">
+                                        <ul>
+                                            <li class="cur">
+                                                <img src="{$data.main_img}" data-src="{$data.main_img}" data-500="{$data.main_img}">
+                                                <div class="cover">
+                                        <span>
+                                            &nbsp;
+                                        </span>
+                                                </div>
+                                            </li>
+
+                                            {volist name='goods_image' id='vo' key='key'}
+                                            {if condition='$key eq 1'}
+                                            <li>
+                                                <img src="{$vo.image_url}"  data-src="{$vo.image_url}" data-500="{$vo.image_url}">
+                                                <div class="cover">
+                                        <span>
+                                            &nbsp;
+                                        </span>
+                                                </div>
+                                            </li>
+                                            {/if}
+                                            {/volist}
+
+                                           <!-- <li >
+                                                <img src="" data-src="" data-500="">
+                                                <div class="cover">
+                                        <span>
+                                            &nbsp;
+                                        </span>
+                                                </div>
+                                            </li>-->
+
+
+
+                                            <div class="jp-video-txt">
+                                                <div class="jp-video-txt-list">
+
+                                                    <div class="jp-video-txt-item">
+                                                        <a href="{$extends_data.video_url}"
+                                                           download="">
+                                        <span class="jp-play-down">
+                                            下载视频
+                                        </span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="jp-video-txt-item">
+                                                        <!--视频地址-->
+
+                                                        <!--   <span class="jp-play-down" aria-label="http://www.ffquan.com/v/1519260b/">复制视频地址</span> -->
+                                                        <input class="jp-play-down" aria-label="{$extends_data.video_url}" value="复制视频地址" type="button" style="background: #fff;color: #1a99fb"></input>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {else/}
                 <div class="datu-box fl">
                     <div class="dadada">
                         <img src="{$data.main_img}" alt="">
@@ -179,6 +311,9 @@
                         </ul>
                     </div>
                 </div>
+                {/if}
+
+
                 <div class="choice-dec fl">
                     <h1>
                         {if condition="$data.is_tmall eq 1"}<!--天猫-->
@@ -254,20 +389,20 @@
     <img src="__STATIC__/index/images/close.png" alt=""  class="close" onclick="closeDiv()">
     <h1>商品纠错</h1>
     <div class="rong">
-        <p><span class="fl">商品标题：</span>玩儿奶粉的进口国内放技能过节费</p>
+        <p><span class="fl">商品标题：</span>{$data.short_title}</p>
         <p>
             <span class="fl">类型：</span>
-            <select>
-                <option value="volvo">价格不对/优惠异常</option>
-                <option value="saab">佣金不对/计划取消</option>
-                <option value="opel">其他异常</option>
+            <select name="type" id="type">
+                <option value="1">价格不对/优惠异常</option>
+                <option value="2">佣金不对/计划取消</option>
+                <option value="3">其他异常</option>
             </select>
         </p>
         <p style="height: 120px;">
             <span class="fl">详情描述：</span>
-            <textarea name="" placeholder="详情描述" ></textarea>
+            <textarea name="" id="error_reason" placeholder="详情描述" ></textarea>
         </p>
-        <p style="    margin-top: 20px;"><span class="fl">&nbsp;</span><input type="button" name="" value="提交" ></p>
+        <p style="margin-top: 20px;"><span class="fl">&nbsp;</span><input type="button" name="" onclick="submit_error();" value="提交" ></p>
     </div>
 </div>
 
@@ -292,6 +427,9 @@
 </div>
 
 {include file="public/footer" /}
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="__STATIC__/index/js/detail.js"></script>
+<script type="text/javascript" src="__STATIC__/index/js/jquery.jplayer.min.js"></script>
 <script type="text/javascript" src="__STATIC__/index/js/modernizr-custom-v2.7.1.min.js"></script>
 <script type="text/javascript" src="__STATIC__/index/js/videojs-ie8.min.js"></script>
 
@@ -345,12 +483,13 @@
     }
 
     function show2(){
-        $.get("{:url('Index/change_link')}",function(data){
+        var gid = $('#gid').val();
+        $.get("{:url('Index/change_link')}",{gid:gid},function(data){
             var htmll = '';
 
             if (data.code == 200)
             {
-                htmll += '200';//转链数据显示
+                htmll += data.data;//转链数据显示
             }
             else if (data.code == 101)
             {
@@ -466,4 +605,24 @@
 
     }
 
+    function submit_error(){
+        var gid = $('#gid').val();
+        var error_reason = $('#error_reason').val();
+        if(error_reason == ''){
+            alert('请详细描述纠错原因');return false;
+        }
+        var type = $('#type').val();
+        $.post("{:url('Index/addErrorRecovery')}",{gid:gid,error_reason:error_reason,type:type},function(data){
+            if (data.code == 1)
+            {
+                alert(data.msg);
+                window.location.href = '/goods?id='+gid;
+                return false;
+            }
+            else
+            {
+                alert(data.msg); return false;
+            }
+        });
+    }
 </script>
