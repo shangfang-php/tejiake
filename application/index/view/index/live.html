@@ -68,16 +68,16 @@
                            <div class="fl f12" style="    width: 124px;    height: 23px;  line-height: 19px;">
                                 券后
                                 <span class="f16 price" style="color: #fe5c30;">
-                                    ￥{$val.real_money}
+                                    ￥{:sprintf('%0.2f',$val.real_money)}
                                 </span>
                             </div>
                             <div class="fl quan">
-                               ￥{$val.coupon_money}&nbsp;
+                               ￥{:sprintf('%0.2f',$val.coupon_money)}&nbsp;
                             </div>
                             <div class="charges f12 fr"  style="width: 110px;">
                                 佣金
                                 <span class="a3">
-                                    ￥{:round($val.taoke_money,2)}
+                                    ￥{:sprintf('%0.2f',$val.taoke_money)}
                                 </span>
                                 ({:round($val.taoke_money_percent)}%)
                             </div>
