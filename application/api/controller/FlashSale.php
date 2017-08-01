@@ -27,8 +27,8 @@ class FlashSale extends Controller{
 		}
 		
 		$uid			=	1;
-		$userModel		=	\think\Loader::model('User');
-		$check_sign 	=	$userModel->check_sign($uid, $sign, $range_string);
+		$goods_data 	=	urldecode(input('post.goods_data'));
+		$check_sign 	=	$this->check_sign($range_string, $goods_data, $sign);
 		if(!$check_sign){
 			return returnAjaxMsg('303', '签名错误!');
 		}
@@ -44,7 +44,7 @@ class FlashSale extends Controller{
 		$images_arr =	$data['images_arr'];
 
 		Db::startTrans();
-		$insertId 	=	Db::table('goods')->insertGetId($data);
+		$insertId 	=	Db::table('goods')->insertGetId($goods_data);
 		if(!$insertId){
 			Db::rollback();
 			return returnAjaxMsg('保存产品信息失败!');
@@ -69,25 +69,27 @@ class FlashSale extends Controller{
 	function init_data(){
 		$data 	=	array();
 		$goods_info 	=	input('post.goods_data');
-		$goods_info 	=	json_decode($goods_info, TRUE)['result'];
+		$goods_info 	=	urldecode($goods_info);
+		$goods_info 	=	json_decode($goods_info, TRUE)['results']['n_tbk_item'];
 		$coupon_info 	=	input('post.coupon_data');
+		$coupon_info 	=	urldecode($coupon_info);
 		$coupon_info 	=	json_decode($coupon_info, TRUE)['result'];
-
+		
 		$data['taobao_goodsId']=	$goods_info['num_iid'];
 		$data['link']	=	$goods_info['item_url'];
 		$data['title']	=	$goods_info['title'];
-		$images_arr	 	=	$goods_info['small_images'];
+		$images_arr	 	=	$goods_info['small_images']['string'];
 		$data['price']	=	$goods_info['zk_final_price'];
 		$data['main_img']=	$images_arr['1'];
 		$data['short_title']=$data['title'];
-		$data['sell_num']	=$goods_info['post.volume'];
+		$data['sell_num']	=$goods_info['volume'];
 		$data['coupon_money']=$coupon_info['amount'];
 		$data['coupon_limit']=floatval($coupon_info['startFee']);
 		$data['coupon_start_time']	=	strtotime($coupon_info['effectiveStartTime']);
 		$data['coupon_end_time']	=	strtotime($coupon_info['effectiveEndTime']);
-		$data['coupon_link']		=	trim(input('post.coupon_link')); ##优惠券地址
+		$data['coupon_link']		=	urldecode(trim(input('post.coupon_link'))); ##优惠券地址
 		$data['start_time']			=	strtotime(input('post.start_time')); ##活动开始时间
-		$data['end_time']			=	strtotiem(input('post.end_time')); ##活动结束时间
+		$data['end_time']			=	strtotime(input('post.end_time')); ##活动结束时间
 		$data['show_time']			=	$data['start_time']; ##展示时间
 		$data['real_money']			=	$data['price'] - $data['coupon_money']; ##券后价
 		$data['taoke_money_percent']=	trim(input('post.taoke_money_percent')); ##佣金比例
@@ -96,13 +98,25 @@ class FlashSale extends Controller{
 		$data['is_tmall']			=	intval(trim(input('post.is_tmall'))); ##是否是天猫 1天猫 0淘宝
 		$data['coupon_total_num']	=	input('post.coupon_total_num') ? input('post.coupon_total_num') : 999; ##优惠券总数
 		$data['coupon_apply_num']	=	input('post.coupon_apply_num') ? input('post.coupon_apply_num') : 1; ##优惠券已领取数
-		$data['guide_info']			=	trim(inptu('post.guide_info')); ##导购文案
+		$data['guide_info']			=	urldecode(trim(input('post.guide_info'))); ##导购文案
 		$data['status']				=	2; ##直接是展示状态
 		$data['uid']				=	1;
 		$data['common_type']		=	1; ##普通计划
 		$data['plan_type']			=	2; ##通用计划
+		$data['type']				=	2; ##限时抢购
 
 		return array('data'=>$data, 'images_arr'=>$images_arr);
+	}
+
+	/**
+	 * 生成签名并检测
+	 * @param  [type] $rang_string [description]
+	 * @param  [type] $key         [description]
+	 * @return [type]              [description]
+	 */
+	function check_sign($rang_string, $key, $sign){
+		$correct 	=	md5($key.md5($rang_string));
+		return $sign == $correct;
 	}
 
 }
