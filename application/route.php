@@ -16,6 +16,7 @@ return [
 
     'register'  =>  'index/login/register', ##用户注册
     'user_login'=>  'index/login/index', ##用户登录
+    'repwd'     =>  'index/login/repwd', ##忘记密码
     'flash_sale'=>  'index/index/flash_sale', ##限时抢购
     'live' 		=>  'index/index/live', ##直播单
     'video' 	=>  'index/index/video', ##限时抢购

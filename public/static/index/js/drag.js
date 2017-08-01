@@ -7,12 +7,14 @@
 (function($){
     $.fn.drag = function(options){
         var x, drag = this, isMove = false, defaults = {
+            callback:false
         };
         var options = $.extend(defaults, options);
         //添加背景，文字，滑块
         var html = '<div class="drag_bg"></div>'+
                     '<div class="drag_text" onselectstart="return false;" unselectable="on">请按动滑块，拖到最右边</div>'+
-                    '<div class="handler handler_bg"></div>';
+                    '<div class="handler handler_bg"></div>'+
+                    '<input type="hidden" id="handler_drag" value="0">';
         this.append(html);
         
         var handler = drag.find('.handler');
@@ -34,21 +36,7 @@
                     handler.css({'left': _x});
                     drag_bg.css({'width': _x});
                 }else if(_x > maxWidth){  //鼠标指针移动距离达到最大时清空事件
-                    var phone   =   $('#reg-name').val();
-                    var preg    =   /^1[3578]\d{9}$/;
-                    if(!preg.test(phone)){
-                        msg_show('手机号格式不正确!');
-                        return false;
-                    }else{
-                        $.post('/index/login/check_drag',{phone:phone},function(msg){
-                            if(msg.code == 200){
-                                dragOk();
-                            }else{
-                                msg_show(msg.msg);
-                            }
-                        },"json");
-                    }
-                    
+                    dragOk();
                 }
             }
         }).mouseup(function(e){
@@ -68,10 +56,11 @@
             handler.unbind('mousedown');
             $(document).unbind('mousemove');
             $(document).unbind('mouseup');
-            $("#handler_drag").val('1');
-            $('#sendCode').addClass('fasong');
+            $('#handler_drag').val('1');
+            if(options.callback){
+                options.callback();
+            }
+            
         }
     };
 })(jQuery);
-
-

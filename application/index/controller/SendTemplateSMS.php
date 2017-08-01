@@ -53,7 +53,7 @@ function sendTemplateSMS($to,$datas,$tempId)
         $accountToken= '6d78c4e5681e48a6adaa1f9b39644dff';
 
         //应用Id
-        $appId='8a216da859aa5a950159af449e9b02cd';
+        $appId='aaf98f89537e60f9015383b5ae5b0870';
 
         //请求地址，格式如下，不需要写https://
         $serverIP='app.cloopen.com';
