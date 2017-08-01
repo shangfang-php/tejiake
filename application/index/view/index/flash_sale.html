@@ -61,7 +61,7 @@
                         </div>
                         
                         <div class="good-bei">
-                            <p class="fl f12 p1" style="color: #fd9546">{$val.short_guide}</p>
+                            <p class="fl f12 p1" style="color: #fd9546">{$extends[$val.id]['short_guide']}</p>
                             <p class="fr"><img src="/static/index/images/tao.png" alt="" style="width: 20px; height: 18px;"></p>
                             <div class="clear"></div>
                         </div>
@@ -109,7 +109,7 @@
                             <div class="skipper fl f12">
                                 {if $type==1}剩余{else}距离{/if}
                             </div>
-                            <div class="lia fl f12" date="{$val.diff_times}">
+                            <div class="lia fl f12" date="{$extends[$val.id]['diff_times']}">
                                 <div class="countdown">
                                     <div>
                                         <i class="days">
@@ -201,6 +201,9 @@
                     </div>
                     <div class="clear"></div>
                 </ul>
+            </div>
+            <div class="page">
+                {$goods_list->render()}
             </div>
         </div>
     </div>        

@@ -12,7 +12,7 @@
                     {else}
                         您先输入要授权登录淘宝账号:
                     {/if}
-                    <input type="text" id='taobao_account' value="{$taobao_account}" placeholder="淘宝帐号,请不要输入淘宝昵称" class="geshi" style="width: 180px;">
+                    <input type="text" id='taobao_account' value="{if $taobao_account}{$taobao_account}{/if}" placeholder="淘宝帐号,请不要输入淘宝昵称" class="geshi" style="width: 180px;">
                     <input type="button" name="" value="{if $taobao_account}更新{/if}授权" class="gengxin" onclick="check_auth()">
                 </p>
             </div>
