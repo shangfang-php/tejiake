@@ -247,8 +247,8 @@ function show(){
     $(".hidden_pro_au").slideDown("20000");//这里显示方式多种效果
 }
 function show2(){
-
-    $.get("{:url('Index/change_link')}",function(data){
+    var gid = $('#gid').val();
+    $.get("{:url('Index/change_link')}",{gid:gid},function(data){
         var htmll = '';
 
         if (data.code == 200)

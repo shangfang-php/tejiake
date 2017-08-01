@@ -110,7 +110,7 @@ $(function () {
 
   
 
-    // 焦点图片
+/*    // 焦点图片
     $('.goods-small-img li').on(
         {
             mouseenter: function () {
@@ -121,7 +121,7 @@ $(function () {
             },
           
         }
-    );
+    );*/
 
 
 

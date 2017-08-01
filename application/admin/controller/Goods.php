@@ -323,17 +323,49 @@ class Goods extends Common{
      * 商品纠错列表
      * */
     public function wrong(){
-        $list = Db::name('goods')
-            ->alias('g')->field('g.*,u.phone')
+        $status = input('status');
+
+        if( $status == NULL || empty($status)){
+            $status = 0;//默认看到的就是全部状态
+        }
+        $keyword = input('keyword');
+        if(!empty($keyword)){
+            $condition['g.short_title'] = array('like',"%$keyword%");
+        }
+        $condition = array();
+        if($status > 0){//已处理
+            $condition['ge.status'] = $status;
+        }
+        $list = Db::name('goods_error_recovery')
+            ->alias('ge')
+            ->field('ge.*,u.phone,g.short_title')
             //->where(['g.remark'=>array('neq','null')])
-            ->where(['g.status'=>4])
-            ->join('user u','g.uid=u.id','left')
+            ->where($condition)
+            ->join('user u','ge.uid=u.id','left')
+            ->join('goods g','ge.gid=g.id','left')
             ->order('id desc')
             ->paginate(10,false,['query'=>request()->param()]);
         $show = $list->render();
         $this->assign('show',$show);
         $this->assign('data',$list);
         return $this->fetch();
+    }
+
+    /*
+     * 处理纠错
+     * @param geids
+     * */
+    public function handleError(){
+        $geids = input('post.geids/a');
+       /* $ids = implode(',',$geids);*/
+        $data = ['status'=>1];
+        $res = Db::name('goods_error_recovery')->where('id','in',$geids)->update($data);
+        if($res){
+            return returnAjaxMsg(1,'成功');
+        }else{
+            return returnAjaxMsg(0,'失败');
+        }
+
     }
 
     /*
@@ -386,7 +418,7 @@ class Goods extends Common{
                 ->alias('g')
                 ->field('g.*,u.phone')
                 ->join('user u','g.uid=u.id','left')
-                ->join('goods_extend ge','ge.gid = g.id','left')
+                /*->join('goods_extend ge','ge.gid = g.id','left')*/
                 ->find($gid);
            // echo '<pre>';
             //print_r($info);exit;
