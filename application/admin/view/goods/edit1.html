@@ -90,21 +90,27 @@
                                     <input type="text" name="short_title" value="{$data.short_title}" class="form-control">
                                 </div>
                             </div>
-                            <div class="form-group form-inline">
-                                <label style="margin-left: 78px;">券后价：</label> <input type="text" style="margin-left: 17px;" name="real_money" class="form-control" value="{$data.real_money}">
-                                <label style="margin-left: 27px;">原价：</label> <input  type="text"  name="price" class="form-control" value="{$data.price}">
-                                <label style="margin-left: 27px;">销量：</label><input type="text"  name="sell_num" class="form-control"  value="{$data.sell_num}">
+                            <div class="form-group form-inline" >
+                                <label class="col-sm-2 control-label">券后价：</label>
+                                <input style="margin-left: 8px;" type="text" class="form-control"  name="real_money"  value="{$data.real_money}">
+                                <label style="margin-left: 23px;">原价：</label>
+                                <input type="text" class="form-control" name="price"  value="{$data.price}">
+                                <label style="margin-left: 23px;">销量：</label>
+                                <input type="text" class="form-control" name="sell_num"  value="{$data.sell_num}">
                             </div>
-                            <div class="form-group form-inline">
-                                <label style="margin-left: 94px;" >优惠：</label><input style="margin-left: 17px;" type="text" class="form-control"  value="{$data.coupon_money}" name="coupon_money">
-                                <label style="margin-left: 10px;">总券数：</label><input type="text" class="form-control" value="{$data.coupon_total_num}" name="coupon_total_num">
-                                <label style="margin-left: 10px;">已领券数：</label><input type="text" class="form-control" value="{$data.coupon_apply_num}" name="coupon_apply_num">
+                            <div class="form-group form-inline" >
+                                <label class="col-sm-2 control-label">优惠：</label>
+                                <input style="margin-left: 8px;" type="text" class="form-control"  value="{$data.coupon_money}" name="coupon_money">
+                                <label style="margin-left: 23px;">总券数：</label>
+                                <input type="text" class="form-control"   value="{$data.coupon_total_num}" name="coupon_total_num">
+                                <label style="margin-left: 23px;">已领券数：</label>
+                                <input type="text" class="form-control"  value="{$data.coupon_apply_num}" name="coupon_apply_num">
                             </div>
-                            <div class="form-group form-inline">
-                                <label style="margin-left: 22px;">优惠券开始时间：</label>
-                                <input style="margin-left: 17px;" type="text"  class="form-control" value="{$data.coupon_start_time|date='Y-m-d H:i:s',###}">
+                            <div class="form-group form-inline" >
+                                <label class="col-sm-2 control-label">优惠券开始时间：</label>
+                                <input style="margin-left: 8px;" type="text" class="form-control"  value="{$data.coupon_start_time|date='Y-m-d H:i:s',###}">
                                 <label style="margin-left: 23px;">优惠券结束时间：</label>
-                                <input type="text"  class="form-control" value="{$data.coupon_end_time|date='Y-m-d H:i:s',###}">
+                                <input type="text" class="form-control"  value="{$data.coupon_end_time|date='Y-m-d H:i:s',###}">
                             </div>
                             {if condition="$data.plan_type neq 4"}
                             <div class="form-group">
@@ -195,7 +201,7 @@
                             </div>
                             <div class="form-group form-inline" >
                                 <label class="col-sm-2 control-label">开始时间：</label>
-                                <input style="margin-left: 17px;" type="text" class="form-control" placeholder="Helping text" value="{$data.start_time|date='Y-m-d H:i:s',###}">
+                                <input style="margin-left: 8px;" type="text" class="form-control" placeholder="Helping text" value="{$data.start_time|date='Y-m-d H:i:s',###}">
                                 <label style="margin-left: 23px;">结束时间：</label>
                                 <input type="text" class="form-control" placeholder="Helping text"  value="{$data.end_time|date='Y-m-d H:i:s',###}">
                             </div>

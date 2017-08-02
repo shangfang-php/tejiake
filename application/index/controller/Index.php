@@ -284,7 +284,15 @@ class Index extends Common{
      * 一键转链
      * */
     public function change_link(){
-
+        /* $tkl = '￥yc4h01iBqa8￥';
+         $surl = 'http://00o.cn/4KaAPlb ';
+         $sata = [
+             'coupon_url' => $surl,
+             'surl'       => $tkl,
+         ];
+        $data = "<br/>复制这条信息,".$tkl.",打开【手机淘宝】即可领券下单<a href=".$surl." target='_blank' class='lan'>".$surl."</a>";
+        //复制这条信息，￥M4xj01ih3gt￥，打开【手机淘宝】即可领券下单<a href="http://00o.cn/4KaGXfB" target="_blank" class="lan">http://00o.cn/4KaGXfB</a>
+        return returnAjaxMsg(200,'成功',array('data'=>$data));*/
         $gid = input('get.gid');
         if(!self::$login_user){
             return returnAjaxMsg(101,'失败');//未登陆
@@ -314,7 +322,7 @@ class Index extends Common{
              * @param adzone_id 推广位id，mm_xx_xx_xx pid三段式中的第三段
              * @param site_id 备案的网站id, mm_xx_xx_xx pid三段式中的第二段
              * */
-            $info = Db::name('goods')->field('taobao_goodsId')->where(['id'=>$gid])->find();
+            $info = Db::name('goods')->where(['id'=>$gid])->find();
             if(empty($info)){
                 return returnAjaxMsg(105,'数据有误');//商品为空
             }
@@ -329,13 +337,40 @@ class Index extends Common{
             ];
             $dat2 = request_post("http://api.00o.cn/highapi.php",$param2);
             $data2 = json_decode($dat2,true);
-            return returnAjaxMsg(200,'成功',array('data'=>$data2));
+            //成功返回result 失败返回错误原因
+            if(isset($data2['result'])){
+                //获取出转链的短网址---->复制这条信息，￥M4xj01ih3gt￥，打开【手机淘宝】即可领券下单http://00o.cn/4KaGXfB
+                $coupon_click_url = $gy_data['result']['data']['coupon_click_url'];
+                if(!empty($info['coupon_id'])){
+                    $url_uland = $coupon_click_url."&activityId=".$info['coupon_id'];
+                }else{
+                    $url_uland = $coupon_click_url;
+                }
+
+                //$url_uland = $gy_data
+                $tkl_post['url'] = urlencode($url_uland);
+                $tkl_post['logo'] = $info['main_img'];
+                $tkl_post['title'] = $info['title'];
+                $tkl = request_post('http://kl.00o.cn/index.php',$tkl_post);
+                $surl = request_post('http://00o.cn/api.php',array('smallurl'=>$url_uland));
+                if(!$surl){
+                    $surl = '';
+                }else{
+                    $surl = json_decode($surl,true);
+                    $surl = $surl['url'];
+                }
+                $data = "<br/>复制这条信息,".$tkl.",打开【手机淘宝】即可领券下单<a href=".$surl." target='_blank' class='lan'>".$surl."</a>";
+                //复制这条信息，￥M4xj01ih3gt￥，打开【手机淘宝】即可领券下单<a href="http://00o.cn/4KaGXfB" target="_blank" class="lan">http://00o.cn/4KaGXfB</a>
+                return returnAjaxMsg(200,'成功',array('data'=>$data));
+            }else{
+                return returnAjaxMsg(104,'PID有误1');
+            }
         }elseif($data1['code'] == 2){
             //已過期
             return returnAjaxMsg(103,'失败');
         }else{
             //pid有误
-            return returnAjaxMsg(104,'失败');
+            return returnAjaxMsg(104,'PID有误2');
         }
     }
 
