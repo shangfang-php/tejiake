@@ -11,6 +11,9 @@ class Common extends Controller{
     	self::$login_user	=	session('taoke_user');
     	if(self::$login_user){
     		self::$login_user 	=	Db::table('user')->find(self::$login_user['id']);
+            //获取当前收藏数目
+            $collect_count = Db::name('goods_collect')->where(['uid'=>self::$login_user['id'],'is_spread'=>0])->count();
+            $this->assign('collect_count', $collect_count);
     	}
     	$this->assign('login_user', self::$login_user);
     }
