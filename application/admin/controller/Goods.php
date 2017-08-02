@@ -374,39 +374,109 @@ class Goods extends Common{
     }
 
     /*
-     * 商品修改1 跳转页面 get 获取ID
+     * 商品修改1 跳转页面 get 获取ID  1爆款单2限时抢购3过夜单4直播单5视频单
      * @param gid
      * */
     public function edit1(){
         if(request()->post()){
             //获取时间
-            $timet = input('post.timet');
-            $dated = input('post.dated');
-            $tt = strtotime($dated.$timet);
-            $dd = date('Y-m-d H:i:s',$tt);
-            //获取图片数据
-            $ff = input('file.images/a');
+            $data = input('post.');
+            $data['coupon_start_time'] = @strtotime($data['coupon_start_time']);
+            $data['coupon_end_time'] = @strtotime($data['coupon_end_time']);
+            $data['start_time'] = @strtotime($data['start_time']);
+            $data['end_time'] = @strtotime($data['end_time']);
+            $gid = $data['gid'];
+            $goodsinfo = Db::name('goods')->find($gid);
+            //$long_img = input('file.long_img');
+            if(input('file.long_img')){
+                $file = request()->file('long_img');
+                // 移动到框架应用根目录/public/uploads/ 目录下
+                $dir = ROOT_PATH . "public/static". DS ."goods". DS .$goodsinfo['uid'];
+                if (!is_dir($dir)){
+                    //createDir(dirname($dir));
+                    mkdir($dir, 0777,true);
+                }
+                $info = $file->move($dir);
+                if($info){
+                    // 成功上传后 获取上传信息
+                    $data['long_img'] = "/static". DS ."goods". DS .$goodsinfo['uid'].DS.$info->getSaveName();
+                }else{
+                    // 上传失败获取错误信息
+                    $data['long_img'] = '';
+                }
+            }
+            unset($data['gid']);
+            //保存视频扩展信信息
+            if($goodsinfo['type'] == 5 && !empty($data['video_url'])){
+                $video_url = $data['video_url'];
+                Db::name('goods_video_extends')->where(['gid'=>$gid])->update(['video_url'=>$video_url]);
+            }
+            unset($data['video_url']);
+            //保存直播扩展信息
+            if($goodsinfo['type'] == 4){
 
-            echo '<pre>';
-            print_r($ff);exit;
-            $gid = input('post.gid');
-            $data = [
-                'link'               =>input('post.link'),
-                'coupon_link'        =>input('post.coupon_link'),
-                'title'              =>input('post.title'),
-                'short_title'        =>input('post.short_title'),
-                'real_money'         =>input('post.real_money'),
-                'price'              =>input('post.price'),
-                'sell_num'           =>input('post.sell_num'),
-                'coupon_money'       =>input('post.coupon_money'),
-                'coupon_total_num'   =>input('post.coupon_total_num'),
-                'coupon_apply_num'   =>input('post.coupon_apply_num'),
-                'plan_type'          =>input('post.plan_type'),
-                'plan_link'          =>input('post.plan_link'),
-                'taoke_money_percent'=>input('post.taoke_money_percent'),
-                'guide_info'         =>input('post.guide_info'),
-                'submit_message'     =>input('post.submit_message')
-            ];
+                //$pic_url = input('file.pic_url');
+                //获取直播图文
+                if(input('file.pic_url')){
+                    $pic_content = $data['pic_content'];
+                    $pic_url = request()->file('pic_url');
+                    // 移动到框架应用根目录/public/uploads/ 目录下
+                    $live_dir = ROOT_PATH . "public/static". DS ."live". DS .$goodsinfo['uid'];
+                    if (!is_dir($live_dir)){
+                        mkdir($live_dir, 0777,true);
+                    }
+                    $live_data = array();
+                    //$live_url = $pic_url->move($live_dir);
+                    foreach($pic_url as $k=>$v){
+                        // 移动到框架应用根目录/public/uploads/ 目录下
+                        $pic = $v->move($live_dir);
+                        if($pic){
+                            // 成功上传后 获取上传信息
+                            $live_data[$k]['url'] = "/static". DS ."live". DS .$goodsinfo['uid'].DS.$pic->getSaveName();
+                            $live_data[$k]['type'] = 1;
+                            $live_data[$k]['content'] = $pic_content[$k];
+                            $live_data[$k]['gid'] = $gid;
+                            $live_data[$k]['create_time'] = time();
+                        }
+                    }
+
+                }else{
+                    $live_data = array();
+                }
+                //直播视频
+                if(!empty($data['video_url'])){
+                    $video_data = array();
+                    $video_url = $data['video_url'];
+                    foreach($video_url as $k=>$v){
+                        $video_data[$k]['url'] = $v;
+                        $video_data[$k]['type'] = 2;
+                        $video_data[$k]['content'] = '';
+                        $video_data[$k]['gid'] = $gid;
+                        $video_data[$k]['create_time'] = time();
+                    }
+
+                }else{
+                    $video_data = array();
+                }
+                $data_live = array();
+                if(!empty($live_data)&&!empty($video_data)){
+                    $data_live = array_merge($live_data,$video_data);
+                }elseif(empty($live_data)&&!empty($video_data)){
+                    $data_live = $video_data;
+                }elseif(!empty($live_data)&&empty($video_data)){
+                    $data_live = $live_data;
+                }
+                if(!empty($data_live)){
+                    Db::name('goods_live_extends')->insertAll($data_live);
+                }
+                //Db::name('goods_live_extends')->where(['gid'=>$gid])->delete();
+                //echo '<pre>';
+                //print_r($data_live);exit;
+            }
+            unset($data['pic_content']);
+            unset($data['video_url']);
+            //echo '<pre>';
+            //print_r($data);exit;
             $res = Db::name('goods')->where(['id'=>$gid])->update($data);
             if($res){
                 //exit(json_encode(array('status'=>1,'msg'=>'成功')));
@@ -416,7 +486,6 @@ class Goods extends Common{
                 $this->error('修改失败');
                 //exit(json_encode(array('status'=>0,'msg'=>'失败')));
             }
-
         }else{
             $gid = input('gid');
             $info = Db::name('goods')
@@ -425,12 +494,23 @@ class Goods extends Common{
                 ->join('user u','g.uid=u.id','left')
                 /*->join('goods_extend ge','ge.gid = g.id','left')*/
                 ->find($gid);
-           // echo '<pre>';
-            //print_r($info);exit;
-            $this->assign('data',$info);
-            return view();
+            //echo '<pre>';
+            //print_r($info);exit;  //getGoodsExtendsInfo获取扩展数据
+            $goods_images = Db::name('goods_image')->where(['gid'=>$gid,'is_delete'=>0])->select();
+            //获取直播或者视频单的扩展数据
+            $goods_live_extend = getGoodsExtendsInfo($gid,4);
+            $goods_video_extend = getGoodsExtendsInfo($gid,5);
+            $data = [
+                'data'=>$info,
+                'goods_images'=>$goods_images,
+                'live_data' =>$goods_live_extend,
+                'video_data' =>$goods_video_extend,
+            ];
+            $this->assign($data);
+            return $this->fetch();
+            //return view();
         }
-        return $this->fetch();
+
     }
 
 }
