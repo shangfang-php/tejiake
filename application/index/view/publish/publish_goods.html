@@ -9,12 +9,12 @@
             <div class="load-box f14">
                 <p>
                     <span>宝贝链接：</span>
-                    <input id="goods_link" type="text" placeholder="请输入或粘贴宝贝链接">
+                    <input id="goods_link" type="text" placeholder="请输入或粘贴宝贝链接" require="true" autofocus="">
                     <input type="button" name="" value="获取商品信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;" onclick="check_goods()">
                 </p>
                 
                 <p style="display: {if $common_type == 1}block{else}none{/if}"> 
-                   <span>优惠券链接：</span><input type="text" id="coupon_link" placeholder="如：https://shop.m.taobao.com/shop/coupon.htm?sellerId=12345…">
+                   <span>优惠券链接：</span><input type="text" id="coupon_link" require="true" placeholder="如：https://shop.m.taobao.com/shop/coupon.htm?sellerId=12345…">
                    <input type="button" name="" value="获取信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;" onclick="get_coupon_info()">
                 </p>
             
@@ -49,7 +49,10 @@
                         <span>宝贝标题：</span> <input type="text" id="goods_title" placeholder="宝贝标题" readonly="readonly" style="background: #f2f2f2;border:none;">
                     </p>
                     
-                    <p><span>短标题</span> <input id="short_title" type="text" placeholder="10~16个字，精简的标题更能让人记住哦~"></p>  
+                    <p>
+                        <span>短标题</span>
+                        <input id="short_title" type="text" require="true" placeholder="10~16个字，精简的标题更能让人记住哦~">
+                    </p>  
                     <div class="duan-input">
                         <p class="fl"><span>销量：</span> <input id="sale_num" type="text" value="" readonly=""></p>
                         <p class="fl" style="margin-left: 27px;">
@@ -61,10 +64,10 @@
                     <div class="duan-input">
                         <p class="fl"><span>优惠券：</span> <input id="coupon_money" type="text" value="" readonly=""></p>
                         <p class="fl" style="margin-left: 27px;">
-                            <span>优惠券总数：</span> <input id="coupon_total_num" type="number" placeholder="请填入数字">
+                            <span>优惠券总数：</span> <input id="coupon_total_num" type="number" placeholder="请填入数字" require="true">
                         </p>
                         <p class="fl" style="margin-left: 27px;">
-                            <span>优惠券已领数：</span> <input id="coupon_apply_num" type="number" value="0" placeholder="请填入数字">
+                            <span>优惠券已领数：</span> <input id="coupon_apply_num" type="number" value="0" require="true" placeholder="请填入数字">
                         </p> 
                     </div>
             
@@ -126,8 +129,8 @@
                     {/if}
             
                     <div class="duan-input">
-                       <p class="fl"><span>开始时间：</span> <input id="start_date" class="datetime" type="text" placeholder="如：2017-07-12" ></p>
-                       <p class="fl" style="margin-left: 27px;"><span>结束时间：</span> <input class="datetime" id="end_date" type="text" placeholder="如：2017-07-12"> </p>
+                       <p class="fl"><span>开始时间：</span> <input require="true" id="start_date" class="datetime" type="text" placeholder="如：2017-07-12" ></p>
+                       <p class="fl" style="margin-left: 27px;"><span>结束时间：</span> <input require="true" class="datetime" id="end_date" type="text" placeholder="如：2017-07-12"> </p>
                        <div class="clear"></div>
                     </div>
                         
@@ -298,6 +301,7 @@
                 isSync  =   false;
                 if(msg.code == 200){
                     show_goods_info(msg.msg);
+                    $('#coupon_link').select();
                 }else{
                     msg_show(msg.msg);
                     return false;
@@ -319,6 +323,7 @@
                 }else{
                     show_goods_info(msg.goods_info);
                     show_coupon_info(msg.coupon_info);
+                    $('#short_title').select();
                 }
             },"json");
         }
@@ -386,6 +391,7 @@
         $.post(url, data, function(msg){
             if(msg.code == 200){
                 show_coupon_info(msg.msg);
+                $('#short_title').select();
             }else{
                 msg_show(msg.msg);
                 return false;
@@ -695,7 +701,24 @@
         });
 
         return isReturn ? live_info : false;
-        
+    }
+
+    check_input('.load-box');
+    function check_input(className){
+        $(className+' input').each(function(i){
+            var require     =   $(this).attr('require');
+            if(require){
+                $(this).blur(function(){
+                    var value = $(this).val();
+                    if(!value){
+                        var input_name = $(this).siblings('span').html();
+                        msg_show(input_name+'不能为空!');
+                        $(this).select();
+                        return false;
+                    }
+                })
+            }
+        });
     }
     
 </script>
