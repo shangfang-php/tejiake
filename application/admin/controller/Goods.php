@@ -478,14 +478,14 @@ class Goods extends Common{
             //echo '<pre>';
             //print_r($data);exit;
             $res = Db::name('goods')->where(['id'=>$gid])->update($data);
-            if($res){
+            //if($res){
                 //exit(json_encode(array('status'=>1,'msg'=>'成功')));
                 //$this->redirect(url('Goods'));
                 echo '<script> window.location.href = history.go(-1);</script>';exit;
-            }else{
-                $this->error('修改失败');
+           // }/*else{
+               // $this->error('修改失败');
                 //exit(json_encode(array('status'=>0,'msg'=>'失败')));
-            }
+           // }*/
         }else{
             $gid = input('gid');
             $info = Db::name('goods')
