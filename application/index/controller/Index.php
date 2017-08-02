@@ -280,7 +280,15 @@ class Index extends Common{
      * 一键转链
      * */
     public function change_link(){
-
+        $tkl = '￥yc4h01iBqa8￥';
+        $surl = 'http://00o.cn/4KaAPlb ';
+       /* $sata = [
+            'coupon_url' => $surl,
+            'surl'       => $tkl,
+        ];*/
+        $data = "<br/>复制这条信息,".$tkl.",打开【手机淘宝】即可领券下单<a href=".$surl." target='_blank' class='lan'>".$surl."</a>";
+        //复制这条信息，￥M4xj01ih3gt￥，打开【手机淘宝】即可领券下单<a href="http://00o.cn/4KaGXfB" target="_blank" class="lan">http://00o.cn/4KaGXfB</a>
+        return returnAjaxMsg(200,'成功',array('data'=>$data));
         $gid = input('get.gid');
         if(!self::$login_user){
             return returnAjaxMsg(101,'失败');//未登陆
@@ -325,13 +333,33 @@ class Index extends Common{
             ];
             $dat2 = request_post("http://api.00o.cn/highapi.php",$param2);
             $data2 = json_decode($dat2,true);
-            return returnAjaxMsg(200,'成功',array('data'=>$data2));
+            //成功返回result 失败返回错误原因
+            if(isset($data2['result'])){
+                //获取出转链的短网址---->复制这条信息，￥M4xj01ih3gt￥，打开【手机淘宝】即可领券下单http://00o.cn/4KaGXfB
+                $coupon_click_url = $gy_data['result']['data']['coupon_click_url'];
+                $url_uland = $coupon_click_url."&activityId=".$vv['vid'];
+                //$url_uland = $gy_data
+                $tkl_post['url'] = urlencode($url_uland);
+                $tkl_post['logo'] = $logo;
+                $tkl_post['title'] = $title;
+                $tkl = request_post('http://kl.00o.cn/index.php',$tkl_post);
+                $surl = request_post('http://00o.cn/api.php',array('smallurl'=>$url_uland));
+                if(!$surl){
+                    $surl = '';
+                }else{
+                    $surl = json_decode($surl,true);
+                    $surl = $surl['url'];
+                }
+                return returnAjaxMsg(200,'成功',array('data'=>'w32'));
+            }else{
+                return returnAjaxMsg(104,'PID有误1');
+            }
         }elseif($data1['code'] == 2){
             //已過期
             return returnAjaxMsg(103,'失败');
         }else{
             //pid有误
-            return returnAjaxMsg(104,'失败');
+            return returnAjaxMsg(104,'PID有误2');
         }
     }
 

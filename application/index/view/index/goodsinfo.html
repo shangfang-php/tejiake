@@ -363,9 +363,12 @@
                             {$data.short_title}<br>
                             【淘抢购{$data.price}元】券后【{$data.real_money}元】<br>
                             领券：<a href="{$data.coupon_link}" target="_blank" class="lan">{$data.coupon_link}</a><br>
-                            抢购：<br>
-                            <a href="{$data.link}" target="_blank" class="lan">{$data.link}</a><br>
-                            {$data.guide_info}
+                            <div id="rob">
+                                抢购：<br>
+                                <a href="{$data.link}" target="_blank" class="lan">{$data.link}</a><br>
+                                {$data.guide_info}
+                            </div>
+
                         </p>
 
                         <p class="yjfz">
@@ -485,50 +488,59 @@
     function show2(){
         var gid = $('#gid').val();
         $.get("{:url('Index/change_link')}",{gid:gid},function(data){
-            var htmll = '';
 
             if (data.code == 200)
             {
-                htmll += data.data;//转链数据显示
-            }
-            else if (data.code == 101)
-            {
-                htmll += '<p >你还没登录账号</p><a href="/user_login"><input type="button" name="" value="前往登录" class="alert_pid"></a>';
-            }
-            else if (data.code == 102)
-            {
-                htmll += '<p >请先设置淘宝账号并设置PID</p> <a href="/index/user/set.html"><input type="button" value="前往设置" class="alert_pid"></a>';
-            }
-            else if (data.code == 103)
-            {
-                htmll += '<p >您的PID已过期,请重新设置</p> <a href="{:url('User/set')}"><input type="button" value="前往设置" class="alert_pid"></a>';
-            }
-            else if (data.code == 104)
-            {
-                htmll += '<p >您的PID有误,请重新设置</p> <a href="{:url('User/set')}"><input type="button" value="前往设置" class="alert_pid"></a>';
+                var rob = '';
+                rob += data.data;
+                $('#rob').html(rob);
+                //alert(200);//转链数据显示
+                return false;
             }
             else
             {
-                htmll += '<p>数据有误</p>';
+                var htmll = '';
+                if (data.code == 101)
+                {
+                    htmll += '<p >你还没登录账号</p><a href="/user_login"><input type="button" name="" value="前往登录" class="alert_pid"></a>';
+                }
+                else if (data.code == 102)
+                {
+                    htmll += '<p >请先设置淘宝账号并设置PID</p> <a href="/index/user/set.html"><input type="button" value="前往设置" class="alert_pid"></a>';
+                }
+                else if (data.code == 103)
+                {
+                    htmll += '<p >您的PID已过期,请重新设置</p> <a href="{:url('User/set')}"><input type="button" value="前往设置" class="alert_pid"></a>';
+                }
+                else if (data.code == 104)
+                {
+                    htmll += '<p >您的PID有误</p> <a href="{:url('User/set')}"><input type="button" value="前往设置" class="alert_pid"></a>';
+                }
+                else
+                {
+                    htmll += '<p>数据有误</p>';
+                }
+                $('#change_pid').html(htmll);
+
+                $(".lbOverlay").css({"height":window.screen.availHeight});
+                $(".lbOverlay").show();
+
+                var st=$(document).scrollTop(); //页面滑动高度
+                var objH=$(".zhuanlian").height();//浮动对象的高度
+                var ch=$(window).height();//屏幕的高度
+                var objT=Number(st)+(Number(ch)-Number(objH))/2;   //思路  浮动高度+（（屏幕高度-对象高度））/2
+                $(".zhuanlian").css("top",objT);
+
+                var sl=$(document).scrollLeft(); //页面滑动左移宽度
+                var objW=$(".zhuanlian").width();//浮动对象的宽度
+                var cw=$(window).width();//屏幕的宽度
+                var objL=Number(sl)+(Number(cw)-Number(objW))/2; //思路  左移浮动宽度+（（屏幕宽度-对象宽度））/2
+                $(".zhuanlian").css("left",objL);
+                $(".zhuanlian").slideDown("20000");//这里显示方式多种效果
+                $('.zhuanlian').show();
             }
-            $('#change_pid').html(htmll);
 
-            $(".lbOverlay").css({"height":window.screen.availHeight});
-            $(".lbOverlay").show();
 
-            var st=$(document).scrollTop(); //页面滑动高度
-            var objH=$(".zhuanlian").height();//浮动对象的高度
-            var ch=$(window).height();//屏幕的高度
-            var objT=Number(st)+(Number(ch)-Number(objH))/2;   //思路  浮动高度+（（屏幕高度-对象高度））/2
-            $(".zhuanlian").css("top",objT);
-
-            var sl=$(document).scrollLeft(); //页面滑动左移宽度
-            var objW=$(".zhuanlian").width();//浮动对象的宽度
-            var cw=$(window).width();//屏幕的宽度
-            var objL=Number(sl)+(Number(cw)-Number(objW))/2; //思路  左移浮动宽度+（（屏幕宽度-对象宽度））/2
-            $(".zhuanlian").css("left",objL);
-            $(".zhuanlian").slideDown("20000");//这里显示方式多种效果
-            $('.zhuanlian').show();
         });
 
     }
