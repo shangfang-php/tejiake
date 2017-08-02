@@ -67,10 +67,12 @@ class Index extends Common{
     public function live(){
         self::$goods_type   =   'live';
         $goods_list =   $this->get_goods_list(4); ##2为限时抢购
+        $extends    =   array();
         if($goods_list){
-            foreach($goods_list as &$val){
+            foreach($goods_list as $val){
                 $goods_id   =   $val['id'];
-                $val['diff_time'] = ( $val['show_time'] > time() ) ? date('m/d/Y H:i:s', $val['show_time']) : '';
+                $extends[$goods_id]['diff_time'] = ( $val['show_time'] > time() ) ? date('m/d/Y H:i:s', $val['show_time']) : '';
+
                 $live_count =   Db::table('goods_live_extends')->field('count(*) as nums, type')->where('gid',$goods_id)->group('type')->select();
                 $count  =   [1=>0,2=>0];
                 if($live_count){
@@ -78,13 +80,15 @@ class Index extends Common{
                         $count[$v['type']]  =   $v['nums'];
                     }
                 }
-                $val['live_count']  =   $count;
+                $extends[$goods_id]['live_count']   =   $count;
+                //$val['live_count']  =   $count;
             }
         }
 
         $data   =   array(
                         'goods_list'    =>  $goods_list,
                         'goods_type'    =>  self::$goods_type,
+                        'extends'       =>  $extends,
                     );
         $this->assign($data);
         
@@ -101,7 +105,7 @@ class Index extends Common{
 
         /**获取视频列表*/
         if($goods_list){
-            $gids       =   array_column($goods_list, 'id'); ##php5.5及以上才有该函数 获取数组指定字段集合
+            $gids       =   array_column($goods_list->items(), 'id'); ##php5.5及以上才有该函数 获取数组指定字段集合
             $video_urls =   Db::table('goods_video_extends')->field('gid,video_url')->where(['gid'=>['in',$gids]])->select();
             $video_urls =   reverse_array($video_urls, 'gid', 'video_url');
         }else{

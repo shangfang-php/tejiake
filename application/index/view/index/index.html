@@ -24,7 +24,7 @@
             <div class="good-list">
                 <ul>
                     {foreach $goods_list as $val}
-                    <li>
+                    <li data_id="{$val.id}">
                         <div class="good-img">
                             <a href="/goods?id={$val.id}" target="_blank"><img src="{$val.main_img}"></a>
                         </div>
@@ -33,7 +33,7 @@
                         </div>
                         <div class="good-title">
                             <a href="/goods?id={$val.id}" title="{$val.short_title}" target="_blank">
-                                <i class=" icon-tianmao">
+                                <i class="{if $val.is_tmall}icon-tianmao{else}tk-icon-14{/if}">
                                 </i>
                                 {$val.title}
                             </a>
@@ -122,7 +122,7 @@
                         </div>
                         
                         <div class="good-wenan fm">
-                            <div class="media-text-area f12">
+                            <div class="media-text-area f12 copy{$val.id}">
                                 <img class='' src='{$val.main_img}'
                                 style='width:66px;'>
                                 <br/>

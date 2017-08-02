@@ -120,15 +120,17 @@
     });
 
     var clipboard = new Clipboard('.copy', {
-        target: function() {
-            return document.querySelector('.media-text-area');
+        target: function(e) {
+            var id  =   $(e).parents('li').attr('data_id');
+            var elem=   typeof(id) == 'undefined' ? '.media-text-area' : '.copy'+id;
+            return document.querySelector(elem);
         }
     });
-    clipboard.on('success',
-    function(e) {
-       
-        $('.copy').val('复制成功');
-       
+    clipboard.on('success', function(e) {
+        var obj     =   $(e).attr('trigger');
+        $(obj).val('复制成功');
+        //$('.copy').val('复制成功');
+        
         /*console.info('Action:', e.action);
         console.info('Text:', e.text);
         console.info('Trigger:', e.trigger);*/
