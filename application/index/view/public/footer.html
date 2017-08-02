@@ -80,7 +80,8 @@
     <p class="san" style="margin-top: 10px;"><input type="button" onclick="msg_close()" value="确定" class="fr msg_button"></p>
 </div>
 
-<script type="text/javascript" src="/static/index/js/jquery.1.4.2.min.js"></script>
+<!--<script type="text/javascript" src="/static/index/js/jquery.1.4.2.min.js"></script>-->
+<script type="text/javascript" src="/static/index/js/jquery-1.6.4.min.js"></script>
 <script type="text/javascript" src="/static/index/js/layer.js"></script>
 <!--<script type="text/javascript" src="/static/index/js/imgLarzy.js"></script>-->
 <script type="text/javascript" src="/static/index/js/clipboard.js"></script>
@@ -120,15 +121,17 @@
     });
 
     var clipboard = new Clipboard('.copy', {
-        target: function() {
-            return document.querySelector('.media-text-area');
+        target: function(e) {
+            var id  =   $(e).parents('li').attr('data_id');
+            var elem=   typeof(id) == 'undefined' ? '.media-text-area' : '.copy'+id;
+            return document.querySelector(elem);
         }
     });
-    clipboard.on('success',
-    function(e) {
-       
-        $('.copy').val('复制成功');
-       
+    clipboard.on('success', function(e) {
+        var obj     =   $(e).prop('trigger');
+        $(obj).val('复制成功');
+        //$('.copy').val('复制成功');
+        
         /*console.info('Action:', e.action);
         console.info('Text:', e.text);
         console.info('Trigger:', e.trigger);*/

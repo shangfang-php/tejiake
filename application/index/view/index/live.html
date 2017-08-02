@@ -49,7 +49,7 @@
             <div class="good-list" >
                 <ul>
                     {foreach $goods_list as $val}
-                    <li>
+                    <li data_id="{$val.id}">
                         <div class="good-img">
                             <a href="/goods?id={$val.id}" target="_blank"><img src="{$val.main_img}"></a>
                         </div>
