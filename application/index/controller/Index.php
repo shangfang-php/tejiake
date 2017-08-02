@@ -322,7 +322,7 @@ class Index extends Common{
              * @param adzone_id 推广位id，mm_xx_xx_xx pid三段式中的第三段
              * @param site_id 备案的网站id, mm_xx_xx_xx pid三段式中的第二段
              * */
-            $info = Db::name('goods')->field('taobao_goodsId')->where(['id'=>$gid])->find();
+            $info = Db::name('goods')->where(['id'=>$gid])->find();
             if(empty($info)){
                 return returnAjaxMsg(105,'数据有误');//商品为空
             }
@@ -344,8 +344,8 @@ class Index extends Common{
                 $url_uland = $coupon_click_url."&activityId=".$vv['vid'];
                 //$url_uland = $gy_data
                 $tkl_post['url'] = urlencode($url_uland);
-                $tkl_post['logo'] = $logo;
-                $tkl_post['title'] = $title;
+                $tkl_post['logo'] = $info['main_img'];
+                $tkl_post['title'] = $info['title'];
                 $tkl = request_post('http://kl.00o.cn/index.php',$tkl_post);
                 $surl = request_post('http://00o.cn/api.php',array('smallurl'=>$url_uland));
                 if(!$surl){

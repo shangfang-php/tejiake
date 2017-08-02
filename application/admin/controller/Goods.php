@@ -197,9 +197,14 @@ class Goods extends Common{
             ->join('user u','g.uid=u.id','left')
             ->paginate(10,false,['query'=>request()->param()]);
         $show = $list->render();
-        $this->assign('data',$list);
-        $this->assign('type',$type);
-        $this->assign('show',$show);
+        $num = Db::name('goods')->where(['type'=>$type,'status'=>1,'is_delete'=>0])->count();
+        $data = [
+            'data'=>$list,
+            'type'=>$type,
+            'show'=>$show,
+            'num'=>$num
+        ];
+        $this->assign($data);
         return $this->fetch();
     }
 
