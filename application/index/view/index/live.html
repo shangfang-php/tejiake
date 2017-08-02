@@ -58,14 +58,14 @@
                         </div>
                         <div class="good-title">
                             <a href="/goods?id={$val.id}" title="{$val.short_title}" target="_blank">
-                                <i class="tk-icon-14 icon-taobao">
+                                <i class="{if $val.is_tmall}icon-tianmao{else}tk-icon-14{/if}">
                                 </i>
                                 {$val.title}
                             </a>
                         </div>
                         
                         <div class="good-fit">
-                           <div class="fl f12" style="    width: 124px;    height: 23px;  line-height: 19px;">
+                           <div class="fl f12" style="width: 124px; height: 23px; line-height: 19px;">
                                 券后
                                 <span class="f16 price" style="color: #fe5c30;">
                                     ￥{:sprintf('%0.2f',$val.real_money)}

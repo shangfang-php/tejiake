@@ -33,7 +33,7 @@
                         </div>
                         <div class="good-title">
                             <a href="/goods?id={$val.id}" title="{$val.short_title}" target="_blank">
-                                <i class=" icon-tianmao">
+                                <i class="{if $val.is_tmall}icon-tianmao{else}tk-icon-14{/if}">
                                 </i>
                                 {$val.title}
                             </a>
