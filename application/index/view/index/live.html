@@ -85,7 +85,7 @@
                         </div>
 
                         <div class="good-lu">
-                            <p>本单有<i class="lan">{$val['live_count']['1']}</i>段文字，<i class="lan">{$val['live_count']['1']}</i>张图片，<i class="lan">{$val['live_count']['2']}</i>段视频</p>
+                            <p>本单有<i class="lan">{$extends[$val.id]['live_count']['1']}</i>段文字，<i class="lan">{$extends[$val.id]['live_count']['1']}</i>张图片，<i class="lan">{$extends[$val.id]['live_count']['2']}</i>段视频</p>
                         </div>
 
                         <div class="good-sales">
@@ -109,14 +109,14 @@
                         </div>
                         <div class="good-line"></div>
                         <div class="good-price">
-                            {if !$val.diff_time}
+                            {if !$extends[$val.id]['diff_time']}
                                 <div class="f14" style="text-align: center;">
                                   <p>已开放链接</p>
                                 </div>
                             {else}
                                 <div class="f14" style="text-align: center;">
                                     <p style="color: #6fc1fe;width: 146px;text-align: right" class="fl">距开抢还有:</p>
-                                   <div class="lia fl f12" date='{$val.diff_time}'>
+                                   <div class="lia fl f12" date='{$extends[$val.id]['diff_time']}'>
                                         <div class="countdown" >
                                             <div><i class="days">00</i></div>
                                             <div>天</div>

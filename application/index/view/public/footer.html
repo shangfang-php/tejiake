@@ -127,7 +127,7 @@
         }
     });
     clipboard.on('success', function(e) {
-        var obj     =   $(e).prop('trigger');
+        var obj     =   $(e).attr('trigger');
         $(obj).val('复制成功');
         //$('.copy').val('复制成功');
         
