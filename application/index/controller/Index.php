@@ -284,15 +284,15 @@ class Index extends Common{
      * 一键转链
      * */
     public function change_link(){
-        $tkl = '￥yc4h01iBqa8￥';
-        $surl = 'http://00o.cn/4KaAPlb ';
-       /* $sata = [
-            'coupon_url' => $surl,
-            'surl'       => $tkl,
-        ];*/
+        /* $tkl = '￥yc4h01iBqa8￥';
+         $surl = 'http://00o.cn/4KaAPlb ';
+         $sata = [
+             'coupon_url' => $surl,
+             'surl'       => $tkl,
+         ];
         $data = "<br/>复制这条信息,".$tkl.",打开【手机淘宝】即可领券下单<a href=".$surl." target='_blank' class='lan'>".$surl."</a>";
         //复制这条信息，￥M4xj01ih3gt￥，打开【手机淘宝】即可领券下单<a href="http://00o.cn/4KaGXfB" target="_blank" class="lan">http://00o.cn/4KaGXfB</a>
-        return returnAjaxMsg(200,'成功',array('data'=>$data));
+        return returnAjaxMsg(200,'成功',array('data'=>$data));*/
         $gid = input('get.gid');
         if(!self::$login_user){
             return returnAjaxMsg(101,'失败');//未登陆
@@ -341,7 +341,12 @@ class Index extends Common{
             if(isset($data2['result'])){
                 //获取出转链的短网址---->复制这条信息，￥M4xj01ih3gt￥，打开【手机淘宝】即可领券下单http://00o.cn/4KaGXfB
                 $coupon_click_url = $gy_data['result']['data']['coupon_click_url'];
-                $url_uland = $coupon_click_url."&activityId=".$vv['vid'];
+                if(!empty($info['coupon_id'])){
+                    $url_uland = $coupon_click_url."&activityId=".$info['coupon_id'];
+                }else{
+                    $url_uland = $coupon_click_url;
+                }
+
                 //$url_uland = $gy_data
                 $tkl_post['url'] = urlencode($url_uland);
                 $tkl_post['logo'] = $info['main_img'];
@@ -354,7 +359,9 @@ class Index extends Common{
                     $surl = json_decode($surl,true);
                     $surl = $surl['url'];
                 }
-                return returnAjaxMsg(200,'成功',array('data'=>'w32'));
+                $data = "<br/>复制这条信息,".$tkl.",打开【手机淘宝】即可领券下单<a href=".$surl." target='_blank' class='lan'>".$surl."</a>";
+                //复制这条信息，￥M4xj01ih3gt￥，打开【手机淘宝】即可领券下单<a href="http://00o.cn/4KaGXfB" target="_blank" class="lan">http://00o.cn/4KaGXfB</a>
+                return returnAjaxMsg(200,'成功',array('data'=>$data));
             }else{
                 return returnAjaxMsg(104,'PID有误1');
             }
