@@ -75,19 +75,18 @@ class User extends UserCommon{
 		/**
 		 * 将上传的临时文件移动到正式文件夹
 		 */
-		if(strpos($img, 'user_temp')){
-			$file = ROOT_PATH.'public/'.$img;
-			if(!is_file($file)){
-				return returnAjaxMsg(301,'未找到对应的头像!');
-			}
-			$extend_info	=	pathinfo($img,PATHINFO_EXTENSION);
-			$save_img		=	ROOT_PATH.'public/static/user/'.md5($uid).'.'.$extend_info;
-			$info 	=	rename($file, $save_img);
+		if(strpos($img, 'data:image') !== false){
+			$file_path = ROOT_PATH.'public/static/user/';
+			preg_match('/^(data:\s*image\/(\w+);base64,)/', $img, $result);
+			
+			$img_data 	=	str_replace($result[1], '', $img);
+			$file 		=	md5($uid).'.'.$result['2'];
+			$info 		=	saveGoodsBase64Img($file_path, $file, $img_data);
 			if(!$info){
 				return returnAjaxMsg(302,'保存头像失败!');
 			}
-			//$update['head_img']	=	$save_img;
-			Db::table('user')->where(array('id'=>$uid))->update(array('head_img'=>$save_img));
+			//$update['head_img']	=	'/static/user/'.$file;
+			Db::table('user')->where(array('id'=>$uid))->update(array('head_img'=>$file));
 		}
 		/**
 		 * end
