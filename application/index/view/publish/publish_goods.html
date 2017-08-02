@@ -51,15 +51,15 @@
                     
                     <p><span>短标题</span> <input id="short_title" type="text" placeholder="10~16个字，精简的标题更能让人记住哦~"></p>  
                     <div class="duan-input">
-                        <p class="fl"><span>销量：</span> <input id="sale_num" type="text" value=""></p>
+                        <p class="fl"><span>销量：</span> <input id="sale_num" type="text" value="" readonly=""></p>
                         <p class="fl" style="margin-left: 27px;">
-                            <span>原价:</span> <input id="goods_price" type="number" placeholder="请填入数字">
+                            <span>原价:</span> <input id="goods_price" type="number" placeholder="请填入数字" readonly="">
                         </p>
-                        <p class="fl" style="margin-left: 27px;"><span>券后价：</span> <input id="real_money" type="text" value=""> </p> 
+                        <p class="fl" style="margin-left: 27px;"><span>券后价：</span> <input id="real_money" type="text" value="" readonly=""> </p> 
                     </div>
             
                     <div class="duan-input">
-                        <p class="fl"><span>优惠券：</span> <input id="coupon_money" type="text" value="" ></p>
+                        <p class="fl"><span>优惠券：</span> <input id="coupon_money" type="text" value="" readonly=""></p>
                         <p class="fl" style="margin-left: 27px;">
                             <span>优惠券总数：</span> <input id="coupon_total_num" type="number" placeholder="请填入数字">
                         </p>
@@ -69,8 +69,8 @@
                     </div>
             
                     <div class="duan-input">
-                        <p class="fl"><span>优惠券开始时间：</span> <input class="datetime" id="coupon_start_time" type="text" ></p>
-                        <p class="fl" style="margin-left: 27px;"><span>优惠券结束时间：</span> <input class="datetime" id="coupon_end_time" type="text"> </p>
+                        <p class="fl"><span>优惠券开始时间：</span> <input style="width:140px;" readonly=""  id="coupon_start_time" type="text" ></p>
+                        <p class="fl" style="margin-left: 27px;"><span>优惠券结束时间：</span> <input style="width:140px;" id="coupon_end_time" type="text" readonly=""> </p>
                     </div>
                     <div class="clear"></div>
                     {if $goods_type == 2}

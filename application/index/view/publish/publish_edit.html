@@ -61,15 +61,15 @@
                     
                     <p><span>短标题</span> <input id="short_title" type="text" value="{$goods_info.short_title}" placeholder="10~16个字，精简的标题更能让人记住哦~"></p>  
                     <div class="duan-input">
-                        <p class="fl"><span>销量：</span> <input id="sale_num" type="text" value="{$goods_info.sell_num}"></p>
+                        <p class="fl"><span>销量：</span> <input readonly="" id="sale_num" type="text" value="{$goods_info.sell_num}"></p>
                         <p class="fl" style="margin-left: 27px;">
-                            <span>原价:</span> <input id="goods_price" readonly="" type="number" placeholder="请填入数字" value="{:round($goods_info.price,2)}">
+                            <span>原价:</span> <input readonly="" id="goods_price" readonly="" type="number" placeholder="请填入数字" value="{:round($goods_info.price,2)}">
                         </p>
                         <p class="fl" style="margin-left: 27px;"><span>券后价：</span> <input readonly="" id="real_money" type="text" value="{:round($goods_info.real_money, 2)}"> </p> 
                     </div>
             
                     <div class="duan-input">
-                        <p class="fl"><span>优惠券：</span> <input id="coupon_money" type="text" value="{$goods_info.coupon_money}" ></p>
+                        <p class="fl"><span>优惠券：</span> <input id="coupon_money" type="text" value="{$goods_info.coupon_money}" readonly=""></p>
                         <p class="fl" style="margin-left: 27px;">
                             <span>优惠券总数：</span> <input id="coupon_total_num" type="number" placeholder="请填入数字" value="{$goods_info.coupon_total_num}">
                         </p>
@@ -80,10 +80,10 @@
             
                     <div class="duan-input">
                         <p class="fl"><span>优惠券开始时间：</span>
-                            <input class="datetime" id="coupon_start_time" type="text" value="{$goods_info.coupon_start_time|date="Y-m-d H:i:s", ###}">
+                            <input style="width: 140px;" readonly="" id="coupon_start_time" type="text" value="{$goods_info.coupon_start_time|date="Y-m-d H:i:s", ###}">
                         </p>
                         <p class="fl" style="margin-left: 27px;"><span>优惠券结束时间：</span>
-                            <input class="datetime" id="coupon_end_time" type="text" value="{$goods_info.coupon_end_time|date="Y-m-d H:i:s", ###}">
+                            <input readonly="" style="width: 140px" id="coupon_end_time" type="text" value="{$goods_info.coupon_end_time|date="Y-m-d H:i:s", ###}">
                         </p>
                     </div>
                     <div class="clear"></div>
