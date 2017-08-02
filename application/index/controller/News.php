@@ -22,5 +22,15 @@ class News extends Common{
         return $this->fetch();
     }
 
+    /**
+     * 无商品或商品出错时展示页面
+     * @Author   Gary
+     * @DateTime 2017-08-02T17:54:37+0800
+     * @return   [type]
+     */
+    public function no_goods(){
+        return $this->fetch();
+    }
+
     
 }

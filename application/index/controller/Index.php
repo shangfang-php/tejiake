@@ -180,7 +180,8 @@ class Index extends Common{
             ->where(['g.id'=>$id,'g.is_delete'=>0])
             ->find();
         if(empty($info)){
-            $this->error('数据有误');
+            $this->redirect('news/no_goods');
+            //$this->error('数据有误');
         }
 
         $info['head_img'] = '__STATIC__' . DS . 'user'.DS.$info['head_img'];//头像
