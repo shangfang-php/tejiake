@@ -58,7 +58,7 @@
         <div class="quick_links_panel">
             <div id="quick_links" class="quick_links">
                 <li id="shopCart">
-                    <a href="#" class="message_list">
+                    <a href="/index/collect/index.html" class="message_list">
                         <span class="cart_num">
                              {if $login_user}{$collect_count}
                             {else/}0
@@ -156,7 +156,6 @@
     // 窗口滚动检测
     window.onscroll = function() {
         obj.style.display = (document.body.scrollTop >= 300) ? "block": "none";
-      
     }
     
 
@@ -168,10 +167,10 @@
 
     //添加收藏数量
     // 元素以及其他一些变量
-   /* var eleFlyElement = document.querySelector("#flyItem"),
+    var eleFlyElement = document.querySelector("#flyItem"),
     eleShopCart = document.querySelector("#shopCart");
 
-    var numberItem = 0;
+    var numberItem = parseInt($('.cart_num').html());
 
     // 抛物线运动
     var myParabola = funParabola(eleFlyElement, eleShopCart, {
@@ -181,9 +180,7 @@
         curvature: 0.0008,
         //控制抛物线弧度
         complete: function() {
-
             eleFlyElement.style.visibility = "hidden";
-
             eleShopCart.querySelector("span").innerHTML = ++numberItem;
 
         }
@@ -197,25 +194,32 @@
 
             button.addEventListener("click",
             function(event) {
-
-                // 滚动大小
-                var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
-
-                scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
-
-                eleFlyElement.style.left = event.clientX + scrollLeft + "px";
-
-                eleFlyElement.style.top = event.clientY + scrollTop + "px";
-
-                eleFlyElement.style.visibility = "visible";
-
-                // 需要重定位
-                myParabola.position().move();
+                var goods_id = $(this).parents('li').attr('data_id');
+                $.post('/index/index/addCollect?gid='+goods_id,function(msg){
+                    if(msg.code == 101){
+                        msg_show('请先登录再收藏!');
+                        $('.msg_button').bind('click', function(){
+                            window.location.href = msg.url;
+                        });
+                    }else if(msg.code == 1){
+                        // 滚动大小
+                        var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+                        scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
+                        eleFlyElement.style.left = event.clientX + scrollLeft + "px";
+                        eleFlyElement.style.top = event.clientY + scrollTop + "px";
+                        eleFlyElement.style.visibility = "visible";
+                        // 需要重定位
+                        myParabola.position().move();    
+                    }else{
+                        msg_show(msg.msg);
+                    }
+                },"json");
+                
 
             });
 
         });
 
-    }*/
+    }
 </script>
 </html>
