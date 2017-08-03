@@ -37,7 +37,7 @@ class User extends Model{
 	 * @return [type]               [description]
 	 */
 	function make_sign($secret_key, $range_string){
-		return strtolower($secret_key.md5($range_string));
+		return strtolower(md5($secret_key.md5($range_string)));
 	}
 }
 
