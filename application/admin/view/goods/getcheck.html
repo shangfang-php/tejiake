@@ -167,7 +167,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">扣除积分：</label>
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" value="" name="score" style="width: 300px;float: left;"><span style="line-height: 38px;margin-left: 9px;">分</span>
+                                    <input type="number" class="form-control" value="0" name="score" style="width: 300px;float: left;"><span style="line-height: 38px;margin-left: 9px;">分</span>
                                 </div>
                             </div>
                             <input type="hidden" name="rejectid" value="">
@@ -221,6 +221,11 @@
         var param = $('input[name=rejectid]').val();
         var remark = $('textarea[name=remark]').val();
         var score = $('input[name=score]').val();
+        if(!remark){
+            alert('请输入拒绝原因!');
+            $('textarea[name=remark]').select();
+            return false;
+        }
         //alert(remark);return false;
         if(confirm('当前操作不可恢复,确定要删除?')){
             //$.post("{:url('Goods/rejectGood')}",{gid:param}, function (dat) {

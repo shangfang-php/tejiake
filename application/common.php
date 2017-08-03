@@ -123,8 +123,8 @@ function getCommonConfig($name){
  * @return [type]            [description]
  */
 function updateUserScore($uid, $score, $scoreType, $remark='', $operateUid = 0, $temp_score = 0, $gid = 0){
-    $score      =   $score > 0 ? '+'.$score : $score;
-    $temp_score =   $temp_score > 0 ? '+'.$temp_score : $temp_score;
+    $score      =   $score >= 0 ? '+'.$score : $score;
+    $temp_score =   $temp_score >= 0 ? '+'.$temp_score : $temp_score;
     $update     =   array('score'=>['exp', 'score '.$score], 'temp_score'=>['exp', 'temp_score '.$temp_score]);
     $info       =   Db::table('user')->where(array('id'=>$uid))->update($update);
     if($info === FALSE){

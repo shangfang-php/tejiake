@@ -270,9 +270,11 @@ class Goods extends Common{
      * @param gid OR gids
      * */
     public function changeStatus(){
-        $type = input('type');
-        $gid = input('post.gid');
-        $gids = input('post.gids/a');
+        $admin_uid  =   $this->admininfo['id'];
+        $type   = input('type');
+        $gid    = intval(trim(input('post.gid')));
+        $gids   = input('post.gids/a');
+        $score  = intval(trim(input('post.score')));
         if($type == 1){
             $data = ['is_delete'=>1];//修改删除状态
         }elseif($type == 2){
@@ -283,45 +285,49 @@ class Goods extends Common{
         }else{
             exit(json_encode(array('status'=>0,'msg'=>'操作有误')));
         }
-        if(!empty($gid)){
-            if($type == 1){
-                $info = Db::name('goods')->where(['id'=>$gid,'is_delete'=>0])->find();
-            }else{
-                $info = Db::name('goods')->where(['id'=>$gid,'is_delete'=>0,'status'=>1])->find();
-            }
-            if(empty($info)){
-                exit(json_encode(array('status'=>0,'msg'=>'商品数据有误')));
-            }
-            $res = Db::name('goods')->where(['id'=>$gid])->update($data);
-        }elseif(!empty($gids) && is_array($gids)){
-            $gid_str = implode(',',$gids);
-            $res = Db::name('goods')->where('id','in',$gid_str)->update($data);
-        }else{
-            exit(json_encode(array('status'=>0,'msg'=>'操作有误')));
-        }
-        if($res){
-            if($type == 3){//拒绝要扣分
-                $score = intval(input('score'));
-                $info2 = Db::name('goods')
-                    ->alias('g')
-                    ->field('g.*,u.id,u.score')
-                    ->where(['g.id'=>$gid,'g.is_delete'=>0])
-                    ->join('user u','g.uid=u.id','left')
-                    ->find();
-                if($score > $info2['score']){
-                    $score = $info2['score'];
-                    $diff = 0;
-                }else{
-                    $diff = $info2['score']-$score;
-                }
-                Db::name('user_score_record')->insert(['uid'=>$info2['uid'],'score'=>$score,'type'=>4,'remark'=>$remark,'time'=>time(),'operator'=>$this->admininfo['id']]);
-                Db::name('user')->where(['id'=>$info2['uid']])->update(['score'=>$diff]);
-            }
-            exit(json_encode(array('status'=>1,'msg'=>'成功')));
 
-        }else{
-            exit(json_encode(array('status'=>0,'msg'=>'失败')));
+        /**合并gid和gids**/
+        $goods_ids  =   array();
+        $gid && $goods_ids[] = $gid;
+        ( !empty($gids) && is_array($gids) ) && $goods_ids = array_merge($goods_ids, $gids);
+        if(empty($goods_ids)){
+            exit(json_encode(array('status'=>0,'msg'=>'没有要操作的商品')));
         }
+
+        Db::startTrans();
+        $info   =   Db::name('goods')->where('id','in',$goods_ids)->update($data);
+        if($info === false){
+            DB::rollback();
+            exit(json_encode(array('status'=>0,'msg'=>'更新状态失败!')));
+        }
+
+        if($type == 3){ ##拒绝操作
+            /***循环更新积分**/
+            foreach($goods_ids as $goods_id){
+                $goods_info     =   Db::table('goods')->field('id,status,uid,scores')->where('id', $goods_id)->find();
+                if(empty($goods_info)){
+                    continue;
+                }
+                $uid        =   $goods_info['uid'];
+                $goods_score=   $goods_info['scores'];
+                if($score){
+                    $info   =   updateUserScore($uid, '-'.$score, 4, '发布商品'.$goods_id.'未通过,扣除积分',$admin_uid, 0, $goods_id);
+                    if(!$info){
+                        Db::rollback();
+                        exit(json_encode(array('status'=>0,'msg'=>'扣除用户积分失败!')));
+                    }
+                }
+
+                $info   =   updateUserScore($uid, $goods_score, 2, '审核未通过返还冻结积分',$admin_uid, '-'.$goods_score, $goods_id);
+                if(!$info){
+                    Db::rollback();
+                    exit(json_encode(array('status'=>0,'msg'=>'返还冻结积分失败!')));
+                }
+            }
+        }
+
+        Db::commit();
+        exit(json_encode(array('status'=>1,'msg'=>'成功')));
     }
 
     /*
