@@ -62,17 +62,24 @@ class Goods extends UserCommon{
     public function makeGoodsShelves(){
         $uid = self::$login_user['id'];
         $gid = input('get.gid');
-        $info = Db::name('goods')->find($gid);
-        if(empty($info)||$info['is_delete'] == 1 || $info['uid'] != $uid){
-            //exit(json_encode(array('status'=>)));
-            return returnAjaxMsg(0,$uid);
+        $where =    ['id'=>$gid, 'uid'=>$uid, 'is_delete'=>0];
+        $goods_info = Db::table('goods')->where($where)->find();
+        if(empty($goods_info)){
+            return returnAjaxMsg(0, '找不到对应商品信息!');
         }
-        $res = Db::name('goods')->where(['id'=>$gid])->update(['status'=>5]);
-        if($res){
-            return returnAjaxMsg(1,'成功');
-        }else{
-            return returnAjaxMsg(0,'失败');
+
+        if($goods_info['status'] != 2){
+            return returnAjaxMsg(0, '只有展示中的订单才能下架!');
         }
+
+        Db::startTrans();
+        $info   =   endGoods($gid, 7, '商品手动下架', $goods_info, $uid);
+        if(!$info){
+            Db::rollback();
+            return returnAjaxMsg(0, '下架订单失败!');
+        }
+        Db::commit();
+        return returnAjaxMsg(1,'成功');
     }
 
     /*
