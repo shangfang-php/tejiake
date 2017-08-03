@@ -288,6 +288,16 @@ function init_goods_data($data){
     if(time() >= strtotime($coupon_info['effectiveEndTime'])){
         return '优惠券已过期!';
     }
+
+    if($data['type'] == 3){ ##过夜单
+        $next_day_start =   strtotime(date('Y-m-d', strtotime('+1 day')));
+        $diff_time      =   strtotime($coupon_info['effectiveStartTime']) - $next_day_start;
+        if($diff_time <0 || $diff_time > 86399){
+            return '过夜单只能提交第二天开始的优惠券商品!';
+        }
+        $data['show_time']  =   strtotime(date('Y-m-d 20:00:00'));
+    }
+
     $data['coupon_limit']   =   $coupon_info['startFee'];
     $data['coupon_money']   =   $coupon_info['amount'];
     $data['coupon_start_time']= strtotime($coupon_info['effectiveStartTime']);

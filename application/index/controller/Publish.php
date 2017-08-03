@@ -94,6 +94,7 @@ class Publish extends UserCommon{
 	function get_coupon_info(){
 		$activityId	=	trim(input('post.activityId'));
 		$goods_id 	=	trim(input('post.goods_id'));
+		$goods_type	=	intval(trim(input('post.goods_type')));
 		if(!$activityId){
 			return returnAjaxMsg(401,'优惠券链接不正确!');
 		}
@@ -113,6 +114,13 @@ class Publish extends UserCommon{
 		$coupon_info 	=	$coupon_info['result'];
 		if(time() >= strtotime($coupon_info['effectiveEndTime'])){
 			return returnAjaxMsg(405,'优惠券已过期!');
+		}
+		if($goods_type == 3){ ##过夜单
+			$next_day_start	=	strtotime(date('Y-m-d', strtotime('+1 day')));
+			$diff_time 		=	strtotime($coupon_info['effectiveStartTime']) - $next_day_start;
+			if($diff_time <0 || $diff_time > 86399){
+				return returnAjaxMsg(406,'过夜单只能提交第二天开始的优惠券商品!');
+			}
 		}
 		$coupon_info['coupon_link'] = '';
 		return returnAjaxMsg(200, $coupon_info);
