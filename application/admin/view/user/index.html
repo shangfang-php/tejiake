@@ -16,6 +16,8 @@
     <div class="content-page">
         <!-- Start content -->
         <div class="content">
+         <a class="btn btn-primary" href="{:url('User/index',array('status'=>2))}" style="margin-bottom: 16px;margin-left: 16px">封禁列表</a>
+                            <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal" style="margin-bottom: 16px;margin-left: 16px"><font><font>添加用户</font></font></button>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -25,8 +27,7 @@
                             </div>-->
 
                             <h4 class="header-title m-t-0 m-b-30">用户列表(3434)</h4>
-                            <a class="btn btn-primary" href="{:url('User/index',array('status'=>2))}">封禁列表</a>
-                            <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal"><font><font>添加用户</font></font></button>
+                           
                             <p class="text-muted font-13 m-b-25">
 
                             </p>
@@ -49,7 +50,7 @@
 
                             </div>
                             <div class="table-responsive" style="    margin-top: 20px;">
-                                <table class="table m-0" border="1" style="    border: 1px solid #eee;" >
+                                <table class="table m-0" border="1" style="    border: 1px solid #d2d2d2;" >
                                     <thead>
                                     <tr>
                                         <th>编号</th>
@@ -78,10 +79,10 @@
                                             {if condition="$vo['status'] eq 1"}
                                             <a data-toggle="modal" href="{:url('User/info',array('uid'=>$vo['id']))}" data-target="#modal-info" class="btn btn-primary">修改</a>
 
-                                            <a href="{:url('User/editScore',array('uid'=>$vo['id']))}"  class="btn btn-primary">积分操作</a>
-                                            <button onclick="getId({$vo['id']},{$vo['phone']});" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-sm"><font><font>修改密码</font></font></button>
-                                            <a href="javascript:void();" onclick="editStatus({$vo['id']});" class="btn btn-inverse"> 封禁 </a>
-                                            <a onclick="delUser({$vo['id']});"  class="btn btn-primary">删除用户</a>
+                                             <a href="{:url('User/editScore',array('uid'=>$vo['id']))}"  class="btn btn-primary">积分操作</a>
+                                            <button onclick="getId({$vo['id']},{$vo['phone']});" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-sm" style="background: #10c469!important;border: none!important;"><font><font>修改密码</font></font></button>
+                                            <a href="javascript:void();" onclick="editStatus({$vo['id']});" class="btn btn-inverse" style="background: #e6cb47!important;border: none!important;"> 封禁 </a>
+                                            <a onclick="delUser({$vo['id']});"  class="btn btn-primary" style="background: #ff5b5b!important;border: none!important;">删除</a>
                                             {else/}
                                             <a href="javascript:void();" onclick="editStatus({$vo['id']});" class="btn btn-inverse"> 解除封禁 </a>
                                             {/if}
@@ -280,4 +281,9 @@
 
 
 
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("table tr:odd").css("background","#eeeeee");
+    });
 </script>
