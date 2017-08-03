@@ -490,3 +490,36 @@ function makeSecretKey(){
     $string     =   uniqid(rand(1,1000)).rand(1,10000).rand(1,10000).rand(1,10000);
     return md5($string);
 }
+
+/**
+ * 完结商品
+ * @Author   Gary
+ * @DateTime 2017-08-03T15:34:08+0800
+ * @param    [type]  $goods_id   [商品表ID]
+ * @param    [type]  $score_type [积分类型 5商品完结 7商品下架]
+ * @param    string  $remark     [备注]
+ * @param    string  $goods_info [商品信息]
+ * @return   [type]  [description]
+ */
+function endGoods($goods_id, $score_type = 5, $remark = '', $goods_info = '', $operator = 0){
+    if(!$goods_info){
+        $goods_info     =   Db::table('goods')->where('id', $goods_id)->find();
+    }
+    $uid            =   $goods_info['uid'];
+    $goods_score    =   $goods_info['scores'];
+    $goods_score    =   $goods_score > 0 ? '-'.$goods_score : $goods_score;
+    $remark     =   $remark ? $remark : '商品结算';
+
+    $info       =   updateUserScore($uid, 0, $score_type, $remark, $operator, $goods_score, $goods_id);
+    if(!$info){
+        return false;
+    }
+
+    $score_type == 5 && $update_status = 3; ##商品过期状态
+    $score_type == 7 && $update_status = 5; ##商品下架状态
+    $info   =   Db::table('goods')->where('id', $goods_id)->update(['status'=>$update_status]);
+    if($info === false){
+        return false;
+    }
+    return TRUE;
+}
