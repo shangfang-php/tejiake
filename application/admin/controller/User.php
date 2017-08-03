@@ -40,9 +40,19 @@ class User extends Common{
             ->join('merchant_apply_record m','u.id=m.uid','left')
             ->order('u.id desc')
             ->paginate($pagesize,false,['query'=>request()->param()]);
+        $usertotal = Db::name('user')
+            ->alias('u')
+            ->field('u.*,m.nickname,m.qq')
+            ->where($where)
+            ->join('merchant_apply_record m','u.id=m.uid','left')
+            ->count();
         $show = $list->render();
-        $this->assign('data',$list);
-        $this->assign('show',$show);
+        $data = [
+            'data'=>$list,
+            'show'=>$show,
+            'usertotal'=>$usertotal
+        ];
+        $this->assign($data);
         return $this->fetch();
     }
     /*
@@ -58,31 +68,36 @@ class User extends Common{
             if(empty($info)||$info['status'] == 2){
                 $this->error('用户数据有误');
             }
-
             $score = intval(input('post.score'));
             $type = input('post.type');
             $remark = input('post.remark');
-            $diff = $info['score'];
-            if($type == 3){
-                //添加
-                $diff += $score;
-            }elseif($type == 4){
-                //删减
-                if($info['score'] == 0){
-                    $this->error('用户积分不够执行此操作');
-                }
-                $diff -= $score;
-                if($diff<0)$diff =0;
+            /*  $diff = $info['score'];
+              if($type == 3){
+                  //添加
+                  $diff += $score;
+              }elseif($type == 4){
+                  //删减
+                  if($info['score'] == 0){
+                      $this->error('用户积分不够执行此操作');
+                  }
+                  $diff -= $score;
+                  if($diff<0)$diff =0;
             }
-            $data = [
-                'uid'     =>$uid,
-                'score'   =>$score,
-                'type'    =>$type,
-                'remark'  =>$remark,
-                'time'    =>time(),
-                'operator'=>$this->admininfo['id']
-            ];
-            $res = Db::name('user_score_record')->insert($data);
+             /* $data = [
+                  'uid'     =>$uid,
+                  'score'   =>$score,
+                  'type'    =>$type,
+                  'remark'  =>$remark,
+                  'time'    =>time(),
+                  'operator'=>$this->admininfo['id']
+              ];
+             $res = Db::name('user_score_record')->insert($data);
+            */
+           // $type = 3//添加
+           if($type == 4){//删减
+               $score = '-'.$score;
+            }
+            $res = updateUserScore($uid,$score, $type,$remark, $this->admininfo['id']);
             if($res){
                 Db::name('user')->where(['id'=>$uid])->update(['score'=>$diff]);
                 $this->redirect(url('Finance/scoreDetail'));
@@ -216,27 +231,28 @@ class User extends Common{
     public function info(){
         if(request()->post()){
             $uid = input('post.uid');
-            //$type = input('post.type');
-           /* $data_user = [
-                'type'=>input('post.type'),
-            ];*/
+            $userinfo = Db::name('user')->find($uid);
+            $type = input('post.type');
+            $data_user = [
+                'type'=>$type,
+            ];
             $data_merchant = [
-                'free_trial'  =>json_encode(input('post.free_trial/a')),
-                'type'        =>input('post.mtype'),
-                'nickname'    =>input('post.nickname'),
-                'qq'          =>input('post.qq'),
-                'wechat'      =>input('post.wechat'),
-                'month_income'=>input('post.month_income'),
-                'introduce'   =>input('post.introduce'),
+                'free_trial'  => json_encode(input('post.free_trial/a')),
+                'type'        => input('post.mtype'),
+                'nickname'    => input('post.nickname'),
+                'qq'          => input('post.qq'),
+                'wechat'      => input('post.wechat'),
+                'month_income'=> input('post.month_income'),
+                'introduce'   => input('post.introduce'),
             ];
             //echo '<pre>';
-            //print_r(json_encode(input('post.free_trial/a')));exit;
-            $res = Db::name('merchant_apply_record')->where(['uid'=>$uid])->update($data_merchant);
-            if($res){
-                echo '<script> window.location.href = history.go(-1);</script>';exit;
-            }else{
-                $this->error('修改失败');
+            //print_r($data_merchant);exit;
+            if($type != $userinfo['type']){
+                Db::name('user')->where(['id'=>$uid])->update($data_user);
             }
+             Db::name('merchant_apply_record')->where(['uid'=>$uid])->update($data_merchant);
+             echo '<script> window.location.href = history.go(-1);</script>';exit;
+
         }else{
             //获取用户信息
             $uid = input('uid');
