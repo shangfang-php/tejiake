@@ -318,7 +318,7 @@ class Goods extends Common{
                     }
                 }
 
-                $info   =   updateUserScore($uid, $goods_score, 2, '审核未通过返还冻结积分',$admin_uid, '-'.$goods_score, $goods_id);
+                $info   =   updateUserScore($uid, $goods_score, 6, '审核未通过返还冻结积分',$admin_uid, '-'.$goods_score, $goods_id);
                 if(!$info){
                     Db::rollback();
                     exit(json_encode(array('status'=>0,'msg'=>'返还冻结积分失败!')));
