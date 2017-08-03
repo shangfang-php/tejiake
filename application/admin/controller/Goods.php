@@ -473,9 +473,16 @@ class Goods extends Common{
                     $data_live = $live_data;
                 }
                 if(!empty($data_live)){
-                    Db::name('goods_live_extends')->insertAll($data_live);
+                    Db::startTrans();
+                    $res1 = Db::name('goods_live_extends')->where(['gid'=>$gid])->delete();
+                    $res2 = Db::name('goods_live_extends')->insertAll($data_live);
+                    if($res1 && $res2){
+                        Db::commit();
+                    }else{
+                        Db::rollback();
+                    }
                 }
-                //Db::name('goods_live_extends')->where(['gid'=>$gid])->delete();
+
                 //echo '<pre>';
                 //print_r($data_live);exit;
             }

@@ -124,7 +124,8 @@
                                             {/if}
                                         </td>
                                         <td>
-                                            <a data-toggle="modal" href="{:url('Goods/edit',array('gid'=>$vo['id']))}" data-target="#custom-width-modal" class="label label-primary" style="background: #9a9ce6!important;border: none!important;    padding: 5px 12px;">查看</a>
+                                            <!--<a data-toggle="modal" href="{:url('Goods/edit',array('gid'=>$vo['id']))}" data-target="#custom-width-modal" class="label label-primary" style="background: #9a9ce6!important;border: none!important;    padding: 5px 12px;">查看</a>-->
+                                            <a href="{:url('Goods/edit1',array('gid'=>$vo['id']))}"  class="label label-primary" style="background: #9a9ce6!important;border: none!important;    padding: 5px 12px;">查看</a>
                                             <a onclick="passGood({$vo['id']});"  class="label label-purple" style="background: #10c469!important;border: none!important;    padding: 5px 12px;">通过</a>
                                        <!--     <a onclick="rejectGood({$vo['id']});"  class="label label-danger">拒绝</a>-->
                                             <button onclick="rejectGoodmodal({$vo['id']});" class="label label-danger waves-effect waves-light" data-toggle="modal" data-target=".reject-modal" style="background: #ee6e6e!important;border: none!important;    padding: 5px 12px;"><font><font>拒绝</font></font></button>
@@ -181,7 +182,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">扣除积分：</label>
                                 <div class="col-md-10">
-                                    <input type="number" class="form-control" value="0" name="score" style="width: 300px;float: left;"><span style="line-height: 38px;margin-left: 9px;">分</span>
+                                    <input type="text" class="form-control" value="" name="score" style="width: 300px;float: left;"><span style="line-height: 38px;margin-left: 9px;">分</span>
                                 </div>
                             </div>
                             <input type="hidden" name="rejectid" value="">
@@ -235,11 +236,6 @@
         var param = $('input[name=rejectid]').val();
         var remark = $('textarea[name=remark]').val();
         var score = $('input[name=score]').val();
-        if(!remark){
-            alert('请输入拒绝原因!');
-            $('textarea[name=remark]').select();
-            return false;
-        }
         //alert(remark);return false;
         if(confirm('当前操作不可恢复,确定要删除?')){
             //$.post("{:url('Goods/rejectGood')}",{gid:param}, function (dat) {

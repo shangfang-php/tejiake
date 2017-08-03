@@ -12,20 +12,66 @@
         vertical-align: middle!important;
         line-height: 20px!important; height: 20px!important;
     }
-  .checkbox .shiwu:before {
+/*   .checkbox .shiwu:before {
    
     top: 0px!important;
 }
  .checkbox label:before {
    
     top: 5px;
+} */
+.quan label::before {
+    top: 7px;
+}
+.quan label::after {
+    top: -10px!important;
+}
+.checkbox, .radio {
+   
+    margin-top: 0px; 
+    margin-bottom: 0px; 
+}
+.checkbox label::after {
+   
+    top: -2px;
+ 
 }
 .table-responsive {
    
     overflow-x: visible!important;
 }
 
-        
+.seltype{
+    color:#ff1493;
+}
+.selstatus{
+    color:#ff1493;
+}
+/* .btn-primary {
+    background-color: #fff !important;
+    border: 1px solid #fff !important;
+    color: #333!important;
+}
+.btn-primary:hover {
+  background-color: #fff !important;
+   border: 1px solid #fff !important;
+}
+.btn-default {
+    background-color:#fff;
+    border-color: #fff;
+}
+       
+ .btn-default:hover {
+    background-color: #fff !important;
+   border: 1px solid #fff !important;
+}
+.btn-sm{
+    font-size: 14px;
+}
+.btn-group-sm > .btn, .btn-sm {
+    padding: 5px 14px !important;
+} */
+      
     </style>
     <div class="content-page">
         <!-- Start content -->
@@ -37,47 +83,95 @@
                             <!--<div class="dropdown pull-right">
                                     <a href="{:url('Menu/addMenu')}" class="card-drop">添加用户</a>
                             </div>-->
-                            <h4 class="header-title m-t-0 m-b-30">商品管理(454)</h4>
+                            <h4 class="header-title m-t-0 m-b-30">商品管理(共454)</h4>
                             <p class="text-muted font-13 m-b-25">
                             </p>
-                            <div class="" style="display: inline-block">
-                                <a onclick="getType(0);" class="btn btn-primary waves-effect waves-light">全部</a>
+
+                          <!--   <div style="border: 1px  solid #eee;height: 50px;line-height: 50px;"> -->
+                            <!--  <div class="" style="display: inline-block">
+                                <a  class="btn btn-primary waves-effect waves-light">类型:</a>
+                            </div> -->
+                            <div class="" style="display: inline-block" >
+                               <!--  <input id="checkbox4" type="checkbox" >
+                                <label for="checkbox4" class="shiwu"></label> -->
+                                <a onclick="getType(0);" class="btn  waves-effect waves-light {if condition='$param.type eq 0'}seltype{else/}btn-primary{/if}">全部</a>
+
                             </div>
                             <div class="" style="display: inline-block">
-                                <a onclick="getType(1);" class="btn btn-primary waves-effect waves-light">爆款单</a>
+                             <!-- <input id="checkbox5" type="checkbox" >
+                                <label for="checkbox5" class="shiwu"></label> -->
+                                <a onclick="getType(1);" class="btn waves-effect waves-light {if condition='$param.type eq 1'}seltype{else/}btn-primary{/if}">爆款单</a>
                             </div>
                             <div class="" style="display: inline-block">
-                                <a onclick="getType(2);"  class="btn btn-primary waves-effect waves-light">限时抢购</a>
+                           <!--   <input id="checkbox6" type="checkbox" >
+                                <label for="checkbox6" class="shiwu"></label> -->
+                                <a onclick="getType(2);"  class="btn waves-effect waves-light {if condition='$param.type eq 2'}seltype{else/}btn-primary{/if}">限时抢购</a>
                             </div>
                             <div class="" style="display: inline-block">
-                                <a onclick="getType(3);"  class="btn btn-primary waves-effect waves-light">过夜单</a>
+                            <!--  <input id="checkbox7" type="checkbox" >
+                                <label for="checkbox7" class="shiwu"></label> -->
+                                <a onclick="getType(3);"   class="btn waves-effect waves-light {if condition='$param.type eq 3'}seltype{else/}btn-primary{/if}">过夜单</a>
                             </div>
                             <div class="" style="display: inline-block">
-                                <a onclick="getType(4);"  class="btn btn-primary waves-effect waves-light">直播单</a>
+                             <!-- <input id="checkbox8" type="checkbox" >
+                                <label for="checkbox8" class="shiwu"></label> -->
+                                <a onclick="getType(4);"  class="btn waves-effect waves-light {if condition='$param.type eq 4'}seltype{else/}btn-primary{/if}">直播单</a>
                             </div>
                             <div class="" style="display: inline-block">
-                                <a onclick="getType(5);" class="btn btn-primary waves-effect waves-light">视频单</a>
-                            </div>
+                            <!--  <input id="checkbox9" type="checkbox" >
+                                <label for="checkbox9" class="shiwu"></label> -->
+                                <a onclick="getType(5);" class="btn waves-effect waves-light {if condition='$param.type eq 5'}seltype{else/}btn-primary{/if}">视频单</a>
+                            </div><br/>
+                        <!--   </div> -->
+
+                     <!--    <div style="border: 1px  solid #eee;border-top:none;height: 50px;line-height: 50px;"> -->
                             <div class=" btn-group" >
-                                <button onclick="getStatus(0);"  class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
-                                    <span>全部</span>
+                             <!--  <button  class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                <span>状态:</span>
+                                </button> -->
+                                <button onclick="getStatus(0);"  class="btn btn-default buttons-copy buttons-html5 btn-sm {if condition='$param.status eq 0'}selstatus{/if}" tabindex="0" aria-controls="datatable-buttons">
+                                <span >全部</span>
                                 </button>
-                                <!--<button onclick="getStatus(1);"  class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                <button onclick="getStatus(1);"  class="btn btn-default buttons-copy buttons-html5 btn-sm {if condition='$param.status eq 1'}selstatus{/if}" tabindex="0" aria-controls="datatable-buttons">
                                     <span>待审核</span>
-                                </button>-->
-                                <button onclick="getStatus(2);" class="btn btn-default buttons-csv buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                </button>
+                                <button onclick="getStatus(2);" class="btn btn-default buttons-csv buttons-html5 btn-sm {if condition='$param.status eq 2'}selstatus{/if}" tabindex="0" aria-controls="datatable-buttons">
                                     <span>展示</span>
                                 </button>
-                                <button onclick="getStatus(3);" class="btn btn-default buttons-excel buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                <button onclick="getStatus(3);" class="btn btn-default buttons-excel buttons-html5 btn-sm {if condition='$param.status eq 3'}selstatus{/if}" tabindex="0" aria-controls="datatable-buttons">
                                     <span>过期</span>
                                 </button>
-                                <button onclick="getStatus(5);" class="btn btn-default buttons-excel buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                <button onclick="getStatus(5);" class="btn btn-default buttons-excel buttons-html5 btn-sm {if condition='$param.status eq 5'}selstatus{/if}" tabindex="0" aria-controls="datatable-buttons">
                                     <span>下架</span>
                                 </button>
+                          <!--   </div> -->
+<!-- 
+                             <div class="" style="display: inline-block">
+                                <a  class="btn btn-primary waves-effect waves-light">状态:</a>
+                            </div>
+                            <div class="checkbox checkbox-primary quan" style="display: inline-block">
+                                <input id="checkbox10" type="checkbox" >
+                                <label for="checkbox10" class="shiwu"></label>
+                                <a onclick="getType(0);" class="btn btn-primary waves-effect waves-light">所有</a>
+
+                            </div>
+                            <div class="checkbox checkbox-primary quan" style="display: inline-block">
+                             <input id="checkbox11" type="checkbox" >
+                                <label for="checkbox11" class="shiwu"></label>
+                                <a onclick="getType(1);" class="btn btn-primary waves-effect waves-light">正常</a>
+                            </div>
+                            <div class="checkbox checkbox-primary quan" style="display: inline-block">
+                             <input id="checkbox12" type="checkbox" >
+                                <label for="checkbox12" class="shiwu"></label>
+                                <a onclick="getType(2);"  class="btn btn-primary waves-effect waves-light">下架</a>
+                            </div>
+                            -->
+                           
+                           
                             </div>
                             <!-- Right(Notification and Searchbox -->
 
-                                <div class="hidden-xs" style="width:215px;right: 20px;position: absolute;top: 48px;" >
+                                <div class="hidden-xs" style="width:300px;right: 22px;position: absolute;top: 0px;" >
                                     <form role="search" class="app-search" action="#" method="get">
                                         <input  type="text" placeholder="输入商品名或用户手机" name="keyword" class="form-control">
                                         <a ><i class="fa fa-search"></i></a>
@@ -86,7 +180,7 @@
                                     <input type="hidden" name="type" value="{$param.type}">
                                 </div>
                             <div class="table-responsive" style="margin-top: 20px;"  scroll='no'>
-                                <table class="table m-0" border="1" style="border: 1px  solid #eee" >
+                                <table class="table m-0" border="1" style="border: 1px  solid #d2d2d2" >
                                     <thead>
                                     <tr>
                                         <th>
@@ -152,8 +246,8 @@
                                             {if condition="$vo['is_delete'] eq 1"}
                                             <a class="label label-warning">已删除</a>
                                             {else/}
-                                           <!-- <a href="{:url('Goods/edit',array('gid'=>$vo['id']))}"  class="label label-purple">修改</a>-->
-                                            <a data-toggle="modal" href="{:url('Goods/edit',array('gid'=>$vo['id']))}" data-target="#custom-width-modal" class="label label-primary" style="background: #10c469!important;border: none!important;    padding: 5px 12px;">修改</a>
+                                            <a style="background: #10c469!important;border: none!important;padding: 5px 12px;" href="{:url('Goods/edit1',array('gid'=>$vo['id']))}"  class="label label-purple">修改</a>
+                                            <!--<a data-toggle="modal" href="{:url('Goods/edit',array('gid'=>$vo['id']))}" data-target="#custom-width-modal" class="label label-primary" style="background: #10c469!important;border: none!important;padding: 5px 12px;">修改</a>-->
                                             <a onclick="delGood({$vo['id']});"  class="label label-danger" style="background: #ff5b5b!important;border: none!important;    padding: 5px 12px;">删除</a>
                                             {/if}
 
@@ -266,4 +360,9 @@
     }
 
 
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("table tr:odd").css("background","#eeeeee");
+    });
 </script>
