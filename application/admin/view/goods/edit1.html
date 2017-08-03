@@ -1,13 +1,32 @@
 {include file='public/header' /}
 <script src="__STATIC__/admin/js/uploadPreview.js"></script>
-<link href="__STATIC__/admin/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
-<link href="__STATIC__/admin/plugins/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
-<link href="__STATIC__/admin/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
-<link href="__STATIC__/admin/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-<!--<link href="__STATIC__/admin/plugins/fileuploads/css/dropify.min.css" rel="stylesheet" type="text/css" />-->
+<link type="text/css" href="__STATIC__/index/css/jquery-ui-1.8.16.custom.css" rel="stylesheet"  />
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
+<style>
+    .ui-datepicker-year{
+        color: black;
+    }
+    .ui-datepicker-month{
+        color: black;
+    }
+    .main_img_sel i{
+        position: absolute;
+        width: 53px;
+        height: 47px;
+        font-size: 0;
+        line-height: 0;
+        right: 2px;
+        bottom: 2px;
+        background: url(__STATIC__/index/images/gouxuan.png) no-repeat right bottom;
+        z-index: 99;
+        display: none;
+    }
+    .selected i{
+        display: block;
+    }
+</style>
 <div class="content-page">
     <!-- Start content -->
     <div class="content">
@@ -44,7 +63,7 @@
                             </div>
                             {if condition="$data.plan_type eq 4"}
                             <div class="form-group">
-                                <label class="col-md-2 control-label" >营销计划链接：</label>
+                                <label class="col-md-2 control-label">营销计划链接：</label>
                                 <div class="col-md-10">
                                     <input type="text" name="plan_link" value="{$data.plan_link}" class="form-control" >
                                 </div>
@@ -53,13 +72,13 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">宝贝链接：</label>
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name="link" value="{$data.link}">
+                                    <input type="text" class="form-control"  value="{$data.link}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label" >优惠券链接：</label>
                                 <div class="col-md-10">
-                                    <input type="text" name="coupon_link" value="{$data.coupon_link}" class="form-control" >
+                                    <input type="text"  value="{$data.coupon_link}" class="form-control" >
                                 </div>
                             </div>
                            {/if}
@@ -68,20 +87,23 @@
                                 <div class="col-md-4 warp" >
                                     <!--<input type="file" name="long_img"  class="dropify" data-default-file="__STATIC__/admin/images/gallery/1.jpg" />-->
                                     <input type="file" name="long_img" style="display: none;"  id="up_img_WU_FILE_0" >
-                                    <img src="" alt="" id="imgShow_WU_FILE_0" class="img-circle thumb-xl img-thumbnail m-b-10"  onclick="$('#up_img_WU_FILE_0').click();">
-
+                                    <img src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}__STATIC__/index/images/shangc.png{/if}" alt="" id="imgShow_WU_FILE_0" class="img-square thumb-xl img-thumbnail m-b-10"  onclick="$('#up_img_WU_FILE_0').click();">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">主图：</label>
-                                <div class="col-md-4">
-                                    <img src="{$data.main_img}" alt="" class="img-circle thumb-xl img-thumbnail m-b-10">
+                                <input type="hidden" name="main_img" value="{if condition='!empty($data.main_img)'}{$data.main_img}{/if}">
+                                {volist name='goods_images' id='vo'}
+                                <div style="width: 140px;height: 120px;" onclick="select_img(this)" class="col-md-3 main_img_sel {if condition='$data.main_img eq $vo.image_url'}selected{/if}">
+                                    <img src="{$vo.image_url}"  alt="" class="img-square thumb-xl img-thumbnail m-b-10 ">
+                                    <i style="background: "></i>
                                 </div>
+                                {/volist}
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">宝贝标题：</label>
                                 <div class="col-md-10">
-                                    <input type="text"  name="title" value="{$data.title}" class="form-control" >
+                                    <input type="text" value="{$data.title}" class="form-control" >
                                 </div>
                             </div>
                             <div class="form-group">
@@ -94,23 +116,23 @@
                                 <label class="col-sm-2 control-label">券后价：</label>
                                 <input style="margin-left: 8px;" type="text" class="form-control"  name="real_money"  value="{$data.real_money}">
                                 <label style="margin-left: 23px;">原价：</label>
-                                <input type="text" class="form-control" name="price"  value="{$data.price}">
+                                <input type="text" class="form-control" value="{$data.price}">
                                 <label style="margin-left: 23px;">销量：</label>
-                                <input type="text" class="form-control" name="sell_num"  value="{$data.sell_num}">
+                                <input type="text" class="form-control" value="{$data.sell_num}">
                             </div>
                             <div class="form-group form-inline" >
                                 <label class="col-sm-2 control-label">优惠：</label>
                                 <input style="margin-left: 8px;" type="text" class="form-control"  value="{$data.coupon_money}" name="coupon_money">
                                 <label style="margin-left: 23px;">总券数：</label>
-                                <input type="text" class="form-control"   value="{$data.coupon_total_num}" name="coupon_total_num">
+                                <input type="text" class="form-control" value="{$data.coupon_total_num}" name="coupon_total_num">
                                 <label style="margin-left: 23px;">已领券数：</label>
-                                <input type="text" class="form-control"  value="{$data.coupon_apply_num}" name="coupon_apply_num">
+                                <input type="text" class="form-control" value="{$data.coupon_apply_num}" name="coupon_apply_num">
                             </div>
                             <div class="form-group form-inline" >
                                 <label class="col-sm-2 control-label">优惠券开始时间：</label>
-                                <input style="margin-left: 8px;" type="text" class="form-control"  value="{$data.coupon_start_time|date='Y-m-d H:i:s',###}">
+                                <input style="margin-left: 8px;" type="text" class="form-control" name="coupon_start_time"  value="{$data.coupon_start_time|date='Y-m-d H:i:s',###}" id="coupon_start_time">
                                 <label style="margin-left: 23px;">优惠券结束时间：</label>
-                                <input type="text" class="form-control"  value="{$data.coupon_end_time|date='Y-m-d H:i:s',###}">
+                                <input type="text" class="form-control" name="coupon_end_time" value="{$data.coupon_end_time|date='Y-m-d H:i:s',###}" id="coupon_end_time">
                             </div>
                             {if condition="$data.plan_type neq 4"}
                             <div class="form-group">
@@ -152,44 +174,39 @@
                                 <div class="col-md-10">
                                     <input type="text"  name="taoke_money_percent" class="form-control" value="{$data.taoke_money_percent}">
                                 </div>
-                            </div>
+                            </div><!--1爆款单2限时抢购3过夜单4直播单5视频单-->
+                            {if condition="$data.type eq 4"}
+                            {volist name="live_data" id='vo' key='key'}
+                            {if condition="!empty($vo.url) eq true"}
+                            {if condition="$vo['type'] eq 1"}<!--图文-->
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">直播信息(图文)：</label>
-                                <div class="col-sm-10 warp">
-                                    <input type="file" name="long_img" style="display: none;"  id="up_img_WU_FILE_1" >
-                                    <img src="" alt="" id="imgShow_WU_FILE_1" class="img-circle thumb-xl img-thumbnail m-b-10"  onclick="$('#up_img_WU_FILE_1').click();">
-                                    <textarea class="form-control" rows="5" name="text[]"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">直播信息(图文)：</label>
-                                <div class="col-sm-10 warp">
-                                    <input type="file" name="long_img" style="display: none;"  id="up_img_WU_FILE_2" >
-                                    <img src="" alt="" id="imgShow_WU_FILE_2" class="img-circle thumb-xl img-thumbnail m-b-10"  onclick="$('#up_img_WU_FILE_2').click();">
-                                    <textarea class="form-control" rows="5" name="text[]"></textarea>
-                                </div>
-                            </div>
-                            {if condition="!empty($data['image_text']) eq true"}
-                            {volist name="data.image_text" id='vo' key='key'}
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">直播信息(图文)：</label>
-                                <!--<div class="col-sm-9" style="border:1px solid #E3E3E3;max-width: 100%;min-height: 90px;border-radius: 4px;padding: 7px 12px;font-size: 14px;margin-left: 10px;">-->
                                 <div class="col-sm-10 warp">
                                     <!--<img src="__STATIC__/admin/images/users/avatar-1.jpg" alt="">-->
                                     <!--<input type="file" class="dropify" name="images[]" data-default-file="__STATIC__/admin/images/gallery/1.jpg"  />-->
-                                    <input type="file" name="images[]" style="display: none;"  id="up_img_WU_FILE_{$key}" >
-                                    <img src="" alt="" id="imgShow_WU_FILE_{$key}" class="img-circle thumb-xl img-thumbnail m-b-10"  onclick='$("#up_img_WU_FILE_"+{$key}+"").click();'>
-                                    <textarea class="form-control" rows="5" name="text[]"></textarea>
+                                    <input type="file" name="pic_url[]" style="display: none;"  id="up_img_WU_FILE_{$key}" >
+                                    <img src="{$vo.url}"  alt="" id="imgShow_WU_FILE_{$key}" class="img-square thumb-xl img-thumbnail m-b-10"  onclick='$("#up_img_WU_FILE_"+{$key}+"").click();' >
+                                    <textarea class="form-control" rows="5" name="pic_content[]">{$vo.content}</textarea>
                                 </div>
                             </div>
-                            {/volist}
-                            {/if}
-                            {if condition="!empty($data['video_link']) eq true"}
+                            {else/}
                             <div class="form-group">
                                 <label class="col-md-2 control-label">直播信息(视频)：</label>
                                 <div class="col-md-10">
-                                    <input type="text"  name="video_link[]" class="form-control" value="">
-                                    <a href="" target="_blank">查看视频</a>
+                                    <input type="text"  name="video_url[]" class="form-control" value="{$vo.url}">
+                                    <a href="{$vo.url}" target="_blank">查看视频</a>
+                                </div>
+                            </div>
+                            {/if}
+                            {/if}
+                            {/volist}
+                            {/if}
+                            {if condition="$data.type eq 5"}
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">视频地址：</label>
+                                <div class="col-md-10">
+                                    <input type="text"  name="video_url" class="form-control" value="{$video_data.video_url}">
+                                    <a href="{$video_data.video_url}" target="_blank">查看视频</a>
                                 </div>
                             </div>
                             {/if}
@@ -201,31 +218,10 @@
                             </div>
                             <div class="form-group form-inline" >
                                 <label class="col-sm-2 control-label">开始时间：</label>
-                                <input style="margin-left: 8px;" type="text" class="form-control" placeholder="Helping text" value="{$data.start_time|date='Y-m-d H:i:s',###}">
+                                <input style="margin-left: 8px;" type="text" class="form-control" name="start_time" value="{$data.start_time|date='Y-m-d H:i:s',###}" id="start_time">
                                 <label style="margin-left: 23px;">结束时间：</label>
-                                <input type="text" class="form-control" placeholder="Helping text"  value="{$data.end_time|date='Y-m-d H:i:s',###}">
+                                <input type="text" class="form-control" name="end_time"  value="{$data.end_time|date='Y-m-d H:i:s',###}" id="end_time">
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Default Time Picker：</label>
-                                <div class="input-group col-sm-8">
-
-                                    <div class="bootstrap-timepicker" style="margin-left: 10px;">
-                                        <input id="timepicker" name="timet" type="text" class="form-control" style="border-radius: 3px;">
-                                    </div>
-                                    <span class="input-group-addon bg-primary b-0 text-white"><i class="glyphicon glyphicon-time"></i></span>
-                                </div><!-- input-group -->
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Auto Close：</label>
-                                <div class="col-sm-8">
-                                    <div class="input-group">
-                                        <input type="text" name="dated" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclose">
-                                        <span class="input-group-addon bg-primary b-0 text-white"><i class="ti-calendar"></i></span>
-                                    </div><!-- input-group -->
-                                </div>
-                            </div>
-
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">审核语：</label>
                                 <div class="col-sm-10">
@@ -234,7 +230,6 @@
                             </div>
                             <input type="hidden" name="gid" value="{$data.id}">
                             <div  style="margin-left: 142px;">
-                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
                                 <button type="submit" class="btn btn-info waves-effect waves-light">提交</button>
                             </div>
                         </form>
@@ -258,11 +253,10 @@
 
 <!-- END wrapper -->
 {include file='public/footer' /}
-<!--<script src="__STATIC__/admin/plugins/fileuploads/js/dropify.min.js"></script>-->
-<script src="__STATIC__/admin/plugins/timepicker/bootstrap-timepicker.min.js"></script>
-<script src="__STATIC__/admin/plugins/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
-<script src="__STATIC__/admin/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="__STATIC__/admin/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script  language="javascript" type="text/javascript" src="__STATIC__/index/js/jquery-1.4.2.min.js"></script>
+<script  language="javascript" type="text/javascript" src="__STATIC__/index/js/jquery-ui-1.8.16.custom.min.js" charset='utf-8'></script>
+<script language="javascript" type="text/javascript" src="__STATIC__/index/js/jquery-ui-timepicker-addon.js" charset='utf-8'></script>
+<script language="javascript" type="text/javascript" src="__STATIC__/index/js/jquery.ui.datepicker-zh-CN.js" charset='utf-8'></script>
 <script type="text/javascript">
    /* $('.dropify').dropify({
         messages: {
@@ -275,6 +269,49 @@
             'fileSize': 'The file size is too big (1M max).'
         }
     });*/
+   //时间选择器
+   $(function(){
+       $("#coupon_start_time").datetimepicker({
+           changeYear : true,
+           changeMonth : true,
+           showSecond : true,
+           timeFormat : 'hh:mm:ss',
+           dateFormat : 'yy-mm-dd',
+           stepHour : 1,
+           stepMinute : 1,
+           stepSecond : 1
+       });
+       $("#coupon_end_time").datetimepicker({
+           changeYear : true,
+           changeMonth : true,
+           showSecond : true,
+           timeFormat : 'hh:mm:ss',
+           dateFormat : 'yy-mm-dd',
+           stepHour : 1,
+           stepMinute : 1,
+           stepSecond : 1
+       });
+       $("#start_time").datetimepicker({
+           changeYear : true,
+           changeMonth : true,
+           showSecond : true,
+           timeFormat : 'hh:mm:ss',
+           dateFormat : 'yy-mm-dd',
+           stepHour : 1,
+           stepMinute : 1,
+           stepSecond : 1
+       });
+       $("#end_time").datetimepicker({
+           changeYear : true,
+           changeMonth : true,
+           showSecond : true,
+           timeFormat : 'hh:mm:ss',
+           dateFormat : 'yy-mm-dd',
+           stepHour : 1,
+           stepMinute : 1,
+           stepSecond : 1
+       });
+   });
     function changeType(obj,param) {
         $('input[name=plan_type]').val(param);
         $('.plantype button').siblings().attr('class', 'btn btn-default');
@@ -286,31 +323,10 @@
             $('.jihualink').css('display','none');
         }
     }
-   // Time Picker
-   jQuery('#timepicker').timepicker({
-       defaultTIme : false
-   });
-   jQuery('#timepicker2').timepicker({
-       showMeridian : false
-   });
-   jQuery('#timepicker3').timepicker({
-       minuteStep : 15
-   });
-   // Date Picker
-   jQuery('#datepicker').datepicker();
-   jQuery('#datepicker-autoclose').datepicker({
-       autoclose: true,
-       todayHighlight: true
-   });
-   jQuery('#datepicker-inline').datepicker();
-   jQuery('#datepicker-multiple-date').datepicker({
-       format: "mm/dd/yyyy",
-       clearBtn: true,
-       multidate: true,
-       multidateSeparator: ","
-   });
-   jQuery('#date-range').datepicker({
-       toggleActive: true
-   });
 
+   function select_img(obj){
+       $(obj).addClass('selected').siblings().removeClass('selected');
+       var vall = $(obj).children('img').attr('src');
+       $('input[name=main_img]').val(vall);
+   }
 </script>
