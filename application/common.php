@@ -269,6 +269,7 @@ function init_goods_data($data){
         }
         $coupon_info    =   getCouponInfo($activityId, $goods_id);
         $data['coupon_link']    =   'https://market.m.taobao.com/apps/aliyx/coupon/detail.html?wh_weex=true&activity_id='.$activityId.'&seller_id='.$goods_info['seller_id'];
+        $data['coupon_id']  =   $activityId;
     }else{
         preg_match('/me=(.+)&?/', $data['coupon_link'], $matches);
         if(!$matches){
