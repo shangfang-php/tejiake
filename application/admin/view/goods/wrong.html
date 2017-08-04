@@ -3,27 +3,22 @@
     <!-- Start right Content here -->
     <!-- ============================================================== -->
       <style type="text/css" media="screen">
-
-
-    table,thead,tbody,tr,td,th{
-        text-align: center;
-        height: 50px!important;
-        line-height: 50px!important;
-        vertical-align: middle!important;
-        line-height: 20px!important; height: 20px!important;
-    }
-
-.checkbox label::after {
-   
-    top: -2px;
- 
-}
-.table-responsive {
-   
-    overflow-x: visible!important;
-}
-
-      
+        table,thead,tbody,tr,td,th{
+            text-align: center;
+            height: 50px!important;
+            line-height: 50px!important;
+            vertical-align: middle!important;
+            line-height: 20px!important; height: 20px!important;
+        }
+        .checkbox label::after {
+            top: -2px;
+        }
+        .table-responsive {
+            overflow-x: visible!important;
+        }
+      .seltype{
+          background: #ccc;
+      }
     </style>
     <div class="content-page">
         <!-- Start content -->
@@ -40,13 +35,13 @@
                             </p>
 
                             <div class=" btn-group" style="    margin-bottom: 10px;">
-                                <a href="{:url('Goods/wrong')}" class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
-                                    <span style="color: #188ae2">全部</span>
+                                <a href="{:url('Goods/wrong')}" class="btn buttons-copy buttons-html5 btn-sm {if condition='$type eq 0'}seltype{else/}btn-default{/if}" tabindex="0" aria-controls="datatable-buttons">
+                                    <span>全部</span>
                                 </a>
-                                <a href="{:url('Goods/wrong',array('status'=>1))}"  class="btn btn-default buttons-csv buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                <a href="{:url('Goods/wrong',array('status'=>1))}"  class="btn buttons-csv buttons-html5 btn-sm {if condition='$type eq 1'}seltype{else/}btn-default{/if}" tabindex="0" aria-controls="datatable-buttons">
                                     <span>已处理</span>
                                 </a>
-                                <a href="{:url('Goods/wrong',array('status'=>2))}" class="btn btn-default buttons-excel buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                <a href="{:url('Goods/wrong',array('status'=>2))}" class="btn buttons-excel buttons-html5 btn-sm {if condition='$type eq 2'}seltype{else/}btn-default{/if}" tabindex="0" aria-controls="datatable-buttons">
                                     <span>未处理</span>
                                 </a>
                             </div>
