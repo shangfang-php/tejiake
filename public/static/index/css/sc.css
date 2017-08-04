@@ -7,7 +7,7 @@
     top: -72px;}
 .quick_links a.message_list{background: url(../images/ibar_sprites.png) no-repeat;line-height: 16px;height: 66px;background-position: -23px -225px;color: #fff;margin: 72px 0 10px;}
 .quick_links a.message_list .span{width: 16px;display: block;height: 48px;margin: 38px 0 0 14px;cursor: pointer;}
-.quick_links a.message_list .cart_num{width: 30px;height: 30px;display: block;text-align: center;line-height: 21px;margin: 9px 0 0 10px;cursor: pointer;color: #2ce26f;position: relative;top: 14px; right: -8px; font-size: 15px;}
+.quick_links a.message_list .cart_num{width: 30px;height: 30px;display: block;text-align: center;line-height: 21px;margin: 9px 0 0 10px;cursor: pointer;color: #2ce26f;position: relative;top: 16px; right: -8px; font-size: 15px;}
 .fly_item{width:42px; height: 42px; overflow: hidden; position: absolute; visibility: hidden; opacity: .5; filter: alpha(opacity=50);}
  @media screen and (max-width: 1360px){
               .mui-mbar-tabs{
