@@ -32,5 +32,15 @@ class News extends Common{
         return $this->fetch();
     }
 
+    /**
+     * api接口文档
+     * @Author   Gary
+     * @DateTime 2017-08-04T09:53:00+0800
+     * @return   [type]                   [description]
+     */
+    public function api(){
+        return $this->fetch();
+    }
+
     
 }

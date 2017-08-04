@@ -81,7 +81,7 @@ class Goods extends Controller{
 		}
 		
 		$where['id']=	['>=',$first_gid['0']['id']];
-		$field 		=	['taobao_goodsId'=>'itemId', 'title', 'short_title', 'link', 'plan_type', 'type', 'plan_link', 'main_img', 'price', 'real_money', 'sell_num','coupon_link', 'coupon_total_num', 'coupon_apply_num', 'coupon_money', 'coupon_start_time', 'coupon_end_time', 'taoke_money_percent', 'taoke_money', 'guide_info','is_tmall'];
+		$field 		=	['id','taobao_goodsId'=>'itemId', 'title', 'short_title', 'link', 'plan_type', 'type', 'plan_link', 'main_img', 'price', 'real_money', 'sell_num','coupon_link', 'coupon_total_num', 'coupon_apply_num', 'coupon_money', 'coupon_start_time', 'coupon_end_time', 'taoke_money_percent', 'taoke_money', 'guide_info','is_tmall'];
 		if($type == 2){ ##限时抢购
 			$field[]	=	'activity_type';
 		}
@@ -94,7 +94,8 @@ class Goods extends Controller{
 				$type == 5 && $name = 'video_url';
 				$extends 	=	$this->get_goods_extends($gids, $type);
 				foreach($data as &$val){
-					$gid 	=	$val['gid'];
+					$gid 	=	$val['id'];
+					unset($val['id']);
 					$extend =	isset($extends[$gid]) ? ($type == 5 ? $extends[$gid][0] : $extends[$gid]) : '';
 
 					$val[$name]	= $extend;
@@ -117,17 +118,25 @@ class Goods extends Controller{
 		$where['gid'] 	=	['in', $gids];
 		if($type ==4){ ##直播单
 			$table 	=	'goods_live_extends';
-			$field 	=	'video_url,gid';
+			$field 	=	'url,content,gid,type';
 		}
 		if($type == 5){ ##视频单
 			$table 	=	'goods_video_extends';
-			$field 	=	'url,content,gid';
+			$field 	=	'video_url,gid';
 		}
 		$data 	=	Db::table($table)->field($field)->where($where)->select();
 		if(!empty($data)){
 			foreach($data as $val){
 				$gid 	=	$val['gid'];
 				unset($val['gid']);
+				if($type == 4 && $val['type'] == 1){
+					$val['url']	=	'http://www.tejiake.com'.$val['url'];
+					unset($val['type']);
+				}
+
+				if($type == 5){
+					$val 	=	$val['video_url'];
+				}
 				$return[$gid][] 	=	$val;
 			}
 		}

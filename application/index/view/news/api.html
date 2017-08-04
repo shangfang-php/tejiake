@@ -1,0 +1,265 @@
+{include file="public/header" /}
+<div class="con" style=" background-color: #fff!important">
+    <div class="content" style="background-color: #fff!important">
+        <div class="api-main" >
+            <h2 style="font-size:24px; text-align:center;"><strong>商品数据API接口</strong>
+                <span class="h1_span ">特价客开放平台</span>
+                <span class="h1_span2 ">免费</span>
+            </h2>
+            <p class="doc_api_decsP" style="min-height: 100px; line-height:28px; font-size:14px; margin-top:20px;">
+                共享优质大数据，帮助开发者构建优质内容！在内容为王的电商时代，特价客平台专注导购内容生产，旗下几千家招商淘客共享优质商品！并且建立完善的内容管控制度，专业编辑审核团队，百名导购志愿者、商品黑名单库、大众监督举报，确保数据优质且准确...<br>
+                <!-- <font color="red">通用接口类型：“全站领券API接口” 、“实时销量榜”、“TOP100人气榜” 均为实时有效数据，该处接口不提供转链！ </font><br> -->
+                <!-- <font color="red">用户加入推广接口：提供 “QQ群专用接口” 、“网站专用接口”、“安卓专用接口” 、“IOS专用接口” ，该处接口为“用户加入推广”的数据接口，并且提供转链服务！</font>简单讲，如果你加入推广的数据要
+                用于QQ群推广，那么利用特价客助手进行QQ群PID的转链，该数据即可显示在对应QQ群专用接口里面！网站和安卓的使用方式一样！ <br> -->
+             ----------------------------------------
+            </p>
+
+            <div id="api_arguments" class="clearfix f12" style="margin-top: 20px;">
+                <div class="doc_arguments">
+                    <!--<p><b>数据ID：</b><font color="#ff9445">21</font></p>-->
+                    <p><b>接口状态：</b><font color="#88c773"><span style="color:#88c773;">正常</span></font></p>
+                </div>
+                <div class="doc_arguments">
+                    <!--<p><b>连接应用数：</b><font color="#777">6920</font></p>-->
+                    <p><b>接入服务商：</b><font color="#03c5ff">特价客联盟</font></p>
+                </div>
+                <!-- <div class="doc_arguments">
+                    <p><b>连接应用数：</b><font color="#777">6920</font></p>
+                    <p><b>其他：</b><a href="#" target="_blank" style="color:#03c5ff">appkey申请</a> <a href="#" target="_blank" style="color:#03c5ff; margin-left:15px;">转链助手</a></p>
+                </div> -->
+            </div>
+
+            <div class="docs_api_tab f12">
+                <ul class="tabul clearfix">
+                    <li id="apilists" class="bodd" onclick="tabNav(1, 'cnt')">API</li>
+                    <li id="errorcode" class="" onclick="tabNav(2, 'cnt')">错误码参照</li>
+                    <li id="apicontact" class="" onclick="tabNav(3, 'cnt')">其他相关</li>
+                </ul>
+            </div>
+
+            <div class="cnt f12" id="cnt_1" style="display: block;">
+                <div style="padding-left: 0px; display: block;" class="docs_api_show clearfix">
+                    <ul class="das_left">
+                        <li class="clearfix lanlan" onclick="tabNav(1,'nnt')" href="javascript:;">
+                            1.商品查询接口
+                        </li>
+                        <!-- <li onclick="tabNav(2,'nnt')" href="javascript:;">
+                            2.QQ群发专用API接口
+                        </li> -->
+                    </ul>
+                
+                    <div id="nnt_1" class="das_right nnt" style="display: block; width: 999px;">
+                        <div class="simpleline"><strong>接口地址：</strong><span class="url">http://www.tejiake.com/api/goods</span></div>
+                        <div class="simpleline"><strong>支持格式：</strong><span class="url">json</span></div>
+                        <div class="simpleline"><strong>请求方式：</strong><span class="url">post</span></div>
+                        <div class="simpleline"><strong>请求示例：</strong><span class="url">sign=c0964a2f5d8198e11ac8872d061df0fc&user_id=1&amp;timestamp=13333333333&type=1&page=1</span></div>
+                
+                
+                        <div class="simpleline simpleTable">
+                            <strong>请求参数说明：</strong>
+                            <table class="api_table" border="0" cellspacing="0" cellpadding="0">
+                                <tbody><tr class="title">
+                                    <th width="20"></th>
+                                    <th width="100">名称</th>
+                                    <th width="80">类型</th>
+                                    <th width="60">必填</th>
+                                    <th>说明</th>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url">user_id</td>
+                                    <td class="url">int</td>
+                                    <td class="url">是</td>
+                                    <td>特价客注册时分配的用户ID</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url">timestamp</td>
+                                    <td class="url">String</td>
+                                    <td class="url">是</td>
+                                    <td>时间戳</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url">sign</td>
+                                    <td class="url">string</td>
+                                    <td class="url">是</td>
+                                    <td>加密签名，加密格式为md5(appkey+md5(timestamp)) + 只表示连接符,不参与加密</font></td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url">type</td>
+                                    <td class="url">int</td>
+                                    <td class="url">是</td>
+                                    <td>商品类型 1爆款单 2限时抢购 3过夜单 4直播单 5视频单</font></td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url">page</td>
+                                    <td class="url">int</td>
+                                    <td class="url">否</td>
+                                    <td>分页获取数据（每页100条）</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="simpleline simpleTable">
+                            <strong>返回参数说明：</strong>
+                            <table class="api_table" border="0" cellspacing="0" cellpadding="0">
+                                <tbody><tr class="title">
+                                    <th width="20"></th>
+                                    <th width="100">名称</th>
+                                    <th width="80">类型</th>
+                                    <th>说明</th>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="url">见JSON返回示例</td>
+                                    <td class="url">-</td>
+                                    <td>-</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="simpleline simpleTable">
+                            <b>JSON返回示例：</b>
+                            <div class="prediv">
+                                <pre>
+                                {
+                                    "code": "200",      <font color="red">/*错误码 只有200表示正确返回*/</font>
+                                    "msg": "获取成功",      <font color="red">/*信息提示，错误时返回错误信息*/</font>
+                                    "total": 1,     <font color="red">/*返回信息总数*/</font>
+                                    "result": [
+                                        {
+                                            "itemId": "546810203149",   <font color="red">/*淘宝商品ID*/</font>
+                                            "title": "夏季新款瑜伽服专业健身运动跑步紧身速干套装宽松大码时尚短袖女",  <font color="red">/*商品标题*/</font>
+                                            "short_title": "瑜伽服专业健身运动跑步",   <font color="red">/*商品短标题*/</font>
+                                            "link": "http://item.taobao.com/item.htm?id=546810203149",  <font color="red">/*商品链接*/</font>
+                                            "plan_type": 2, <font color="red">/*计划类型1定向计划 2通用计划 3鹊桥 4营销计划*/</font>
+                                            "type": 1,  <font color="red">/*特价客商品类型 1爆款单 2限时抢购 3过夜单 4直播单 5视频单*/</font>
+                                            "plan_link": "0", <font color="red">/*定向计划链接 只有计划类型为定向计划才有值*/</font>
+                                            "main_img": "http://img3.tbcdn.cn/tfscom/i1/471784030/TB2cX7ocjZnyKJjSZFxXXabIpXa_!!471784030.jpg", <font color="red">/*商品主图*/</font>
+                                            "price": "49.000",  <font color="red">/*原价*/</font>
+                                            "real_money": "39.000", <font color="red">/*券后价*/</font>
+                                            "sell_num": 66, <font color="red">/*销量*/</font>
+                                            "coupon_link": "https://uland.taobao.com/coupon/edetail?e=hNecHIeuWoYGQASttHIRqVHVsV7C9rPru4BBwQY3iJ2pDCbUtnhOBoEWbUinat7qt%2B8UQyocIMWd3EGEe4py5ZQ5wfGz%2Fu%2BNAtY9WDAhVfNnGhJJZ7YFtg%3D%3D&activityId=a359cd4afc064e87a604f8b3edf4fece",  <br>                                            <font color="red">/*优惠券链接*/</font>
+                                            "coupon_total_num": 500,    <font color="red">/*优惠券总数*/</font>
+                                            "coupon_apply_num": 0,  <font color="red">/*优惠券已领取数*/</font>
+                                            "coupon_money": "10.000",   <font color="red">/*优惠券金额*/</font>
+                                            "coupon_start_time": 1501171200,    <font color="red">/*优惠券开始时间  时间戳*/</font>
+                                            "coupon_end_time": 1501948799,  <font color="red">/*优惠券结束时间   时间戳*/</font>
+                                            "taoke_money_percent": "50.000",    <font color="red">/*佣金比例*/</font>
+                                            "taoke_money": "19.500",    <font color="red">/*佣金*/</font>
+                                            "guide_info": "透气速干吸汗透气不起球不变形送运费险", <font color="red">/*导购文案*/</font>
+                                            "is_tmall": 0,   <font color="red">/*0淘宝 1天猫*/</font>
+                                            "activity_type": 1, <font color="red">/*只有type为2 限时抢购时才会返回,1聚划算2淘抢购*/</font>
+                                            "live_info": [ <font color="red">/*直播信息 只有type为4 直播单时才会返回 会有多条信息*/</font>
+                                                            {
+                                                                "url": "http://www.tejiake.com/static/live/1/30_0.jpeg",    <font color="red">/*链接*/</font>
+                                                                "content": "上班一个"   <font color="red">/*内容*/</font>
+                                                            },
+                                                            {
+                                                                "url": "http://www.tejiake.com/static/live/1/30_1.jpeg",
+                                                                "content": "撒大声地"
+                                                            }
+                                                        ],
+                                            "video_url": "http://tbm.alicdn.com/17Fv0XeLWNSiqVHvC6K/INjRWOvKgWRdLxbzr4M%40%40sd.mp4"    <font color="red">/*视频地址 只有type为5 视频单时才会返回*/</font>
+                                        }
+                                    ]
+                                }
+                                </pre>
+                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         
+            <div class="cnt" id="cnt_2" style="display: none;">
+                <div class="docs_api_show" style="display: block;">
+                    <div class="simpleline simpleTable">
+                        <b>服务级错误码参照(error_code)：</b>
+                        <table class="api_table" border="0" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <th width="20">&nbsp;</th>
+                                <th width="200">错误码</th>
+                                <th>说明</th>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="url">202101</td>
+                                <td class="text">参数错误</td>
+                                <!--                            <td class="url">201</td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="simpleline simpleTable">
+                        <b>系统级错误码参照：</b>
+                        <table class="api_table" border="0" cellspacing="0" cellpadding="0">
+                            <tbody><tr>
+                                <th width="20">&nbsp;</th>
+                                <th width="200">错误码</th>
+                                <th>说明</th>
+                                <th width="150">旧版本（resultcode）</th>
+                            </tr>
+                            <!--                        <tr>-->
+                            <!--                            <td>&nbsp;</td>-->
+                            <!--                            <td class="url">10001</td>-->
+                            <!--                            <td class="text">错误的请求KEY</td>-->
+                            <!--                            <td class="url">101</td>-->
+                            <!--                        </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cnt" id="cnt_3" style="display: none;">
+                <div class="simpleline simpleTable">
+                    <b>其他相关内容</b>
+                    <table class="api_table" border="0" cellspacing="0" cellpadding="0">
+                        <tbody><tr class="title">
+                            <td width="40">&nbsp;</td>
+                            <td width="200">内容</td>
+                            <td>详细</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td class="text">技术支持:</td>
+                            <td class="url">特价客联盟</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td class="text">联系QQ:</td>
+                            <td class="url">2675584174</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+{include file="public/footer" /}
+<script type="text/javascript">
+    $(function(){
+        var basic = $(".tabul li");
+        basic.click(function(){
+            $(this).addClass("bodd").siblings().removeClass("bodd");
+        });
+
+        var basic = $(".das_left li");
+        basic.click(function(){
+            $(this).addClass("lanlan").siblings().removeClass("lanlan");
+        });
+    })
+    function tabNav(num,id_pre){
+        $('.'+id_pre).hide();
+        $('#'+id_pre+'_'+num).show();
+        // for(var i = 1; i < 4; i++){
+        //     document.getElementById('cnt_' + i).style.display = 'none';
+        // }
+        // document.getElementById('cnt_' + num).style.display = 'block';
+    }
+</script>
