@@ -407,5 +407,71 @@ class Index extends Common{
         }
     }
 
+    /**
+     * 商品搜索
+     */
+    public function search(){
+
+        $keywords = trim(input('get.keywords'));
+        // var_dump($keywords);exit;
+        if ($keywords) {
+
+                if ( is_numeric($keywords) ) {//根据ID查询
+
+                $goods = Db::name('goods');
+
+                $where['taobao_goodsId'] = array('eq', $keywords);
+
+                $goods_list = $goods->where($where)//分页带查询条件
+                              ->paginate(12, false, [
+                                     'query' => request()->param(),
+                                ]);
+                // echo $goods->getlastsql();
+                $nums = $goods->where($where)->count();//统计数量
+
+                $data   =   array(
+                                'goods_list'    =>  $goods_list,
+                                'goods_type'    =>  self::$goods_type,
+                                'keywords'      =>  $keywords,
+                                'nums'          =>  $nums,
+                            );
+                $this->assign($data);
+                return $this->fetch('search');
+
+            } else {//根据标题查询
+
+                $goods = Db::name('goods');
+                $where['title'] = array('like', '%'.$keywords.'%');//模糊查询
+                $nums = $goods->where($where)->count();//统计数量
+                $goods_list = $goods->where($where)//分页带查询条件
+                                    ->paginate(12, false, [
+                                     'query' => request()->param(),
+                                ]);
+                $data   =   array(
+                                'goods_list'    =>  $goods_list,
+                                'keywords'      =>  $keywords,
+                                'goods_type'    =>  self::$goods_type,
+                                'nums'          =>  $nums,
+                            );
+                $this->assign($data);
+
+                return $this->fetch('search');
+            }
+            
+        } else {
+
+            $goods_list =   $this->get_goods_list(1); ##1为爆款单
+
+            $data   =   array(
+                            'goods_list'    =>  $goods_list,
+                            'goods_type'    =>  self::$goods_type,
+                        );
+            $this->assign($data);
+            return $this->fetch('index');
+            
+        } 
+
+    }
+
 
 }

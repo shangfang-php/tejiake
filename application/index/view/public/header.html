@@ -82,14 +82,16 @@
                             <img src="/static/index/images/logo.png" alt="特价客">
                         </a>
                     </div>
+                    <form action="{:url('/index/index/search')}" method="get">
                     <div class="search">
                         <div class="search-input">
-                            <input type="text" value="请输入商品关键字或者商品ID" onblur="if(value=='') {value='请输入商品关键字或者商品ID'}" onFocus="if(value=='请输入商品关键字或者商品ID'){value=''}"#ED1C24">
+                             <input type="text" id="bb" name="keywords" value="请输入商品关键字或者商品ID" onblur="if(value=='') {value='请输入商品关键字或者商品ID'}" onFocus="if(value=='请输入商品关键字或者商品ID'){value=''}"#ED1C24">
                             <span>
-                                <img src="/static/index/images/shousuo.png" alt="">
+                                <img src="/static/index/images/shousuo.png" alt="" onclick="search()">
                             </span>
                         </div>
                     </div>
+                    </form>
                     <div class="admin">
                         {if $login_user}
                             <!--登录成功之后-->
@@ -185,4 +187,27 @@
                     </ul>
                 </nav>
             </div>
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+            
+            <script>
+                
+                function search() {
+
+                    var keywords = $("input[name='keywords']").val();
+                    
+                    if( keywords === '请输入商品关键字或者商品ID' ){
+
+                            alert(keywords);
+
+                    } else {
+                            
+                            window.location.href='ceshi.tejiake.com/index/index/search.html?keywords='+keywords;
+                        
+                    }
+
+                   
+
+                }
+
+            </script>
         </header>
