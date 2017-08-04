@@ -16,5 +16,6 @@ class Common extends Controller{
             $this->assign('collect_count', $collect_count);
     	}
     	$this->assign('login_user', self::$login_user);
+        $this->assign('keywords', '');
     }
 }

@@ -435,7 +435,7 @@ class Index extends Common{
             $data   =   array(
                             'goods_list'    =>  $goods_list,
                             'keywords'      =>  $keywords,
-                            'goods_type'    =>  self::$goods_type,
+                            'goods_type'    =>  '',
                             'nums'          =>  $nums,
                         );
             $this->assign($data);
