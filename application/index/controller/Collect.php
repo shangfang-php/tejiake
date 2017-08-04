@@ -27,7 +27,7 @@ class Collect extends UserCommon{
         $condition['gc.is_delete'] = 0;
         $list = Db::name('goods_collect')
             ->alias('gc')
-            ->field('gc.*,g.type,g.short_title,g.coupon_money,g.real_money,g.price,g.coupon_total_num,g.coupon_apply_num,g.end_time,g.taoke_money_percent,g.start_time,g.taoke_money,g.plan_type,g.create_time,g.is_tmall')
+            ->field('gc.*,g.type,g.short_title,g.coupon_money,g.real_money,g.price,g.coupon_total_num,g.coupon_apply_num,g.end_time,g.taoke_money_percent,g.start_time,g.taoke_money,g.plan_type,g.create_time,g.is_tmall,g.main_img')
             ->where($condition)
             ->join('goods g','gc.gid=g.id','left')
             ->order('gc.id desc')
