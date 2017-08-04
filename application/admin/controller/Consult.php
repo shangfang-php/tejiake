@@ -63,9 +63,11 @@ class Consult extends Common{
         $cid = input('cid');
         $res = Db::name('Consult')->delete($cid);
         if($res){
-            return json_encode(array('status'=>1,'msg'=>'成功'));
+            //return json_encode(array('status'=>1,'msg'=>'成功'));
+            return returnAjaxMsg(1,'成功');
         }else{
-            return json_encode(array('status'=>0,'msg'=>'失败'));
+            //return json_encode(array('status'=>0,'msg'=>'失败'));
+            return returnAjaxMsg(0,'失败');
         }
     }
 

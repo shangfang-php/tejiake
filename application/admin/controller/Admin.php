@@ -5,8 +5,13 @@ use think\Controller;
 use think\Db;
 class Admin extends Common{
     public function index(){
+        $condition['id'] =  array('neq','1');
+        $keyword = isset($_GET['keyword'])?$_GET['keyword']:'';
+        if(!empty($keyword)){
+            $condition['username'] = array("like","%$keyword%");
+        }
         //获取全部用户
-        $list = Db::name('admin')->where(array('id'=>array('neq','1')))->select();
+        $list = Db::name('admin')->where($condition)->select();
         //print_r($list);exit;
         //获取每个用户的菜单权限
         if(!empty($list)&&is_array($list)){
@@ -35,6 +40,7 @@ class Admin extends Common{
             $menus = input('post.menu/a');
             //$menus = request()->post('menu/a');
             $status = input('post.status');
+            $remark = input('post.remark');
             $info = Db::name('admin')->where(array('username'=>$username))->find();
             //exit(json_encode(array('status'=>0,'msg'=>count($menus))));
             if(!empty($info)){
@@ -43,7 +49,7 @@ class Admin extends Common{
             if(empty($menus)||count($menus)==0){
                 exit(json_encode(array('status'=>0,'msg'=>'菜单不可为空')));
             }
-            $res = Db::name('admin')->insert(array('username'=>$username,'password'=>$password,'status'=>$status));
+            $res = Db::name('admin')->insert(array('username'=>$username,'password'=>$password,'status'=>$status,'remark'=>$remark));
             if(!$res){
                 exit(json_encode(array('status'=>0,'msg'=>'用户添加失败')));
             }
@@ -81,6 +87,7 @@ class Admin extends Common{
         if(request()->post()){
             $id = input('post.id');
             $username = input('post.username');
+            $remark = input('post.remark');
 
             $menus = input('post.menu/a');
             //$menus = request()->post('menu/a');
@@ -99,6 +106,7 @@ class Admin extends Common{
                 $password = pswCrypt(input('post.password'));
                 $editparam['password']  = $password;
             }
+            $editparam['remark'] = $remark;
             $res = Db::name('admin')->where(array('id'=>$id))->update($editparam);
             if(!$res){
                 exit(json_encode(array('status'=>0,'msg'=>'修改错误')));
