@@ -2,7 +2,7 @@
 <!-- ============================================================== -->
     <!-- Start right Content here -->
     <!-- ============================================================== -->
-        <style type="text/css" media="screen">
+  <style type="text/css" media="screen">
 
 
     table,thead,tbody,tr,td,th{
@@ -10,9 +10,12 @@
         height: 50px!important;
         line-height: 50px!important;
     }
+    .seltype{
+        background: #ccc;
+    }
 
         
-    </style>
+  </style>
     <div class="content-page">
         <!-- Start content -->
         <div class="content">
@@ -32,13 +35,13 @@
 
                             </p>
                             <div class=" btn-group" >
-                                <a href="{:url('User/index')}"  class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                <a href="{:url('User/index')}"  class="btn buttons-copy buttons-html5 btn-sm {if condition='$type eq 0'}seltype{else/}btn-default{/if}" tabindex="0" aria-controls="datatable-buttons">
                                     <span>全部</span>
                                 </a>
-                                <a href="{:url('User/index',array('type'=>1))}" class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                <a href="{:url('User/index',array('type'=>1))}" class="btn buttons-copy buttons-html5 btn-sm {if condition='$type eq 1'}seltype{else/}btn-default{/if}" tabindex="0" aria-controls="datatable-buttons">
                                     <span>普通淘客</span>
                                 </a>
-                                <a href="{:url('User/index',array('type'=>2))}" class="btn btn-default buttons-csv buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
+                                <a href="{:url('User/index',array('type'=>2))}" class="btn buttons-csv buttons-html5 btn-sm {if condition='$type eq 2'}seltype{else/}btn-default{/if}" tabindex="0" aria-controls="datatable-buttons">
                                     <span>招商淘客</span>
                                 </a>
                             </div>

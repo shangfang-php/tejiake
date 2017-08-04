@@ -42,35 +42,19 @@
 }
 
 .seltype{
-    color:#ff1493;
+    color:#fff;
+    background: #ccc;
 }
 .selstatus{
-    color:#ff1493;
+    color:#188ae2;
 }
-/* .btn-primary {
-    background-color: #fff !important;
-    border: 1px solid #fff !important;
-    color: #333!important;
-}
-.btn-primary:hover {
-  background-color: #fff !important;
-   border: 1px solid #fff !important;
-}
-.btn-default {
-    background-color:#fff;
-    border-color: #fff;
-}
-       
- .btn-default:hover {
-    background-color: #fff !important;
-   border: 1px solid #fff !important;
-}
-.btn-sm{
-    font-size: 14px;
+.btn {
+    
+    padding: 6px 30px;
 }
 .btn-group-sm > .btn, .btn-sm {
-    padding: 5px 14px !important;
-} */
+    padding: 5px 30px !important;
+}
       
     </style>
     <div class="content-page">
@@ -83,7 +67,7 @@
                             <!--<div class="dropdown pull-right">
                                     <a href="{:url('Menu/addMenu')}" class="card-drop">添加用户</a>
                             </div>-->
-                            <h4 class="header-title m-t-0 m-b-30">商品管理(共454)</h4>
+                            <h4 class="header-title m-t-0 m-b-30">商品管理({$goods_num})</h4>
                             <p class="text-muted font-13 m-b-25">
                             </p>
 
@@ -100,7 +84,7 @@
                             <div class="" style="display: inline-block">
                              <!-- <input id="checkbox5" type="checkbox" >
                                 <label for="checkbox5" class="shiwu"></label> -->
-                                <a onclick="getType(1);" class="btn waves-effect waves-light {if condition='$param.type eq 1'}seltype{else/}btn-primary{/if}">爆款单</a>
+                                <a onclick="getType(1);" class="btn waves-effect waves-light {if condition='$param.type eq 1'}seltype{else/}btn-primary{/if}" >爆款单</a>
                             </div>
                             <div class="" style="display: inline-block">
                            <!--   <input id="checkbox6" type="checkbox" >
@@ -125,7 +109,7 @@
                         <!--   </div> -->
 
                      <!--    <div style="border: 1px  solid #eee;border-top:none;height: 50px;line-height: 50px;"> -->
-                            <div class=" btn-group" >
+                            <div class=" btn-group" style="    margin-top: 10px;">
                              <!--  <button  class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons">
                                 <span>状态:</span>
                                 </button> -->
@@ -239,6 +223,7 @@
                                             {if condition="$vo['status'] eq 1"}待审核
                                                 {elseif condition="$vo['status'] eq 2"}展示
                                                 {elseif condition="$vo['status'] eq 3"}过期
+                                                {elseif condition="$vo['status'] eq 5"}下架
                                             {/if}
                                         </td>
                                         <td>

@@ -344,6 +344,10 @@
         $('#gettime').click(function () {
             var time = $('#time').val();
             var timestamp2 = Date.parse(new Date(time));
+            var timestampnow = Date.parse(new Date());
+            if(timestamp2<=timestampnow){
+                alert('时间有误，推广时间必须大于当前时间');return false;
+            }
             timestamp2 = timestamp2 / 1000;  //时间戳
             //alert(timestamp2);
             var spreaf_gcid = $('input[name=spread_gcid]').val();
