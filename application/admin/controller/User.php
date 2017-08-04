@@ -17,6 +17,8 @@ class User extends Common{
         $type = input('type');
         if(!empty($type)){
             $where['u.type'] = $type;
+        }else{
+            $type = 0;
         }
         //获取封禁用户列表
         $status = input('status');
@@ -50,7 +52,8 @@ class User extends Common{
         $data = [
             'data'=>$list,
             'show'=>$show,
-            'usertotal'=>$usertotal
+            'usertotal'=>$usertotal,
+            'type'=>$type
         ];
         $this->assign($data);
         return $this->fetch();

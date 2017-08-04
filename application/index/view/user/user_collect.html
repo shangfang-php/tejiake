@@ -344,6 +344,10 @@
         $('#gettime').click(function () {
             var time = $('#time').val();
             var timestamp2 = Date.parse(new Date(time));
+            var timestampnow = Date.parse(new Date());
+            if(timestamp2<=timestampnow){
+                alert('时间有误，推广时间必须大于当前时间');return false;
+            }
             timestamp2 = timestamp2 / 1000;  //时间戳
             //alert(timestamp2);
             var spreaf_gcid = $('input[name=spread_gcid]').val();
@@ -479,5 +483,35 @@
         })
 
     })
+
+
+    //点击搜索
+        function search() {
+
+            var keywords = $("input[name='keywords']").val();
+
+            if( keywords.length == 0 ){
+
+                    alert('请输入商品关键字或者商品ID');
+
+            } else {
+
+                    window.location.href='/index/index/search.html?keywords='+keywords;    
+            }
+
+        }
+
+
+    $('#bb').click( function () {
+
+            $('#bb').attr('placeholder', '');
+
+    } );
+
+    $('#bb').blur( function () {
+
+            $('#bb').attr('placeholder', '请输入商品关键字或者商品ID');
+
+    } );
 </script>
 </html>

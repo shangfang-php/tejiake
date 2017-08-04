@@ -221,5 +221,36 @@
         });
 
     }
+
+    //点击搜索
+        function search() {
+
+            var keywords = $("input[name='keywords']").val();
+
+            if( keywords.length == 0 ){
+
+                    alert('请输入商品关键字或者商品ID');
+
+            } else {
+
+                    window.location.href='/index/index/search.html?keywords='+keywords;    
+            }
+
+        }
+
+
+    $('#bb').click( function () {
+
+            $('#bb').attr('placeholder', '');
+
+    } );
+
+    $('#bb').blur( function () {
+
+            $('#bb').attr('placeholder', '请输入商品关键字或者商品ID');
+
+    } );
+
+
 </script>
 </html>

@@ -47,17 +47,27 @@ class Goods extends Common{
             ->join('user u','g.uid=u.id','left')
             ->paginate($pagesize,false,['query'=>request()->param()]);
         //分配当前的type及status
+
         $param = [
             'type'=>$type,
             'status'=>$status
         ];
-
+        $goods_num = Db::name('goods')
+            ->alias('g')
+            ->field('g.*,u.phone')
+            ->where($condition)
+            ->join('user u','g.uid=u.id','left')
+            ->count();
         //echo '<pre>';
         //print_r($goods);exit;
         $show = $goods->render();
-        $this->assign('data',$goods);
-        $this->assign('param',$param);
-        $this->assign('show',$show);
+        $data = [
+            'data'=>$goods,
+            'param'=>$param,
+            'show'=>$show,
+            'goods_num'=>$goods_num
+        ];
+        $this->assign($data);
         return $this->fetch();
     }
 
@@ -357,8 +367,12 @@ class Goods extends Common{
             ->order('id desc')
             ->paginate(10,false,['query'=>request()->param()]);
         $show = $list->render();
-        $this->assign('show',$show);
-        $this->assign('data',$list);
+        $data = [
+            'show'=>$show,
+            'data'=>$list,
+            'type'=>$status
+        ];
+        $this->assign($data);
         return $this->fetch();
     }
 
