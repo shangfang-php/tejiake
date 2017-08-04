@@ -2515,3 +2515,102 @@ border-radius: 7px;
 .gxs{
 	border-color: rgb(44, 226, 111)!important;
 }
+
+/*api*/
+.content .api-main{
+	width: 1200px;
+	margin: 0 auto;
+	min-height: 1600px;
+	margin-top: 50px;
+}
+.api-main h2 {
+    font-size: 20px;
+    line-height: 20px;
+    padding: 10px 0;
+    color: #555;
+}
+.api-main h2 strong {
+    padding-right: 5px;
+}
+.api-main .h1_span {
+    display: inline-block;
+    font-size: 12px;
+    line-height: 14px;
+    vertical-align: top;
+    border-radius: 2px;
+    font-weight: 400;
+    padding: 2px 6px;
+    margin-right: 3px;
+    color: #03c5ff;
+    border: 1px solid #03c5ff;
+}
+.api-main .h1_span2 {
+    display: inline-block;
+    font-size: 12px;
+    line-height: 14px;
+    vertical-align: top;
+    border-radius: 2px;
+    font-weight: 400;
+    padding: 2px 6px;
+    margin-right: 3px;
+    color: #58d8a3;
+    border: 1px solid #58d8a3;
+}
+.doc_arguments {
+    float: left;
+    height: 20px;
+    line-height: 20px;
+    color: #666;
+    padding-right: 40px;
+    padding-left: 2px;
+}
+.docs_api_tab{padding-top: 60px;}
+.tabul{height: 30px; line-height: 30px; border-bottom: 1px solid #ddd;}
+.tabul li{float: left; height: 28px; line-height: 28px; padding: 0 30px; cursor: pointer;border: 1px solid #fff; background: #fff; color: #666;cursor: pointer}
+.tabDiv .docs_api_show{display: none; margin-top: 20px; padding-left: 20px;}
+.tabul .active{height: 28px; padding-bottom: 1px; color: #03c5ff; font-weight: bold; border: 1px solid #ddd; border-bottom: 1px solid #fff;}
+.bodd{
+	height: 29px!important;
+    padding-bottom: 1px;
+    color: #03c5ff!important;
+    font-weight: bold;
+    border: 1px solid #ddd!important;
+    border-bottom: 1px solid #fff!important;
+}
+
+.docs_api_show{display: none; margin-top: 20px; padding-left: 20px;}
+
+.das_left{float: left; width: 180px; border-right: 1px solid #f2f2f2; min-height: 220px}
+.das_left li{line-height: 35px; height: 35px; overflow: hidden;cursor: pointer}
+.das_left li a{  padding-left: 15px;}
+.das_left li .selected{color: #00B7EE;  background: url(../images/store.png) 0px -90px no-repeat;}
+.das_left li a:hover{text-decoration: none;}
+.das_right{float: right; width: 735px; }
+.simpleline{line-height: 20px; padding: 12px 0; width: 100%; overflow: hidden; word-break: break-all; color: #777; border-bottom: 1px dashed #f2f2f2;}
+.simpleline b{color: #555;}
+.simpleline strong{color: #555; font-weight: normal;}
+.simpleline span{font-family:inherit;}
+.api_table{margin-top: 10px; width: 100%; font-family: Menlo,Monaco,Consolas,"Courier New",monospace; font-size: 12px; border:1px solid #E6E6E6;}
+.api_table th{text-align: left; font-weight: 400;border-bottom: 1px solid #E6E6E6; color: #555; height: 34px; line-height: 34px;}
+.api_table td{line-height: 20px; padding: 5px 0; border-bottom: 1px solid #E6E6E6; }
+.api_table tr.title{ background: #fbfbfb;}
+.api_table a{ color:#00B7EE;}
+/*.api_table tr:nth-child(2n){background: #fafafa;}*/
+.prediv{}
+.prediv pre{padding: 20px 0 20px 20px; margin: 10px 0; overflow: hidden; border: 1px solid #eee; background: #fbfbfb;border-radius:4px; color: #666;white-space: pre; line-height: 16px; display: block;overflow: hidden; font-family: Georgia, "Times New Roman", Times, serif,Menlo,Monaco,Consolas,"Courier New",monospace;}
+.api_table .url, .simpleline .url{font-family: Georgia, "Times New Roman", Times, serif;}
+.docs_api_show .simpleline:last-child{border-bottom: 0;}
+.simpleline .blue{color: #00B7EE;}
+.sdkBtn{background: #03C5FF; padding: 2px 10px;}
+.sdkBtn:hover{text-decoration: none;}
+.simpleTable{margin-bottom: 20px; border-bottom: 0;}
+
+.das_right{
+    display: none;
+    float: left;
+    margin-left: 20px;
+    width: auto;
+}
+.lanlan{
+	color: #188ae2!important;
+}
