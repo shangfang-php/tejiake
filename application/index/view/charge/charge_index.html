@@ -129,7 +129,7 @@
     $.post('/index/charge/submit_order', {price:price}, function(msg){
       if(msg.code == 200){
         $('#submit_order').attr('action', msg.msg);
-        $('#submit_order').submit();
+        window.open(msg.msg);
       }else{
         alert(msg.msg);
       }
