@@ -420,7 +420,6 @@ class Goods extends Common{
             unset($data['video_url']);
             //保存直播扩展信息
             if($goodsinfo['type'] == 4){
-
                 //$pic_url = input('file.pic_url');
                 //获取直播图文
                 if(input('file.pic_url')){
@@ -445,7 +444,6 @@ class Goods extends Common{
                             $live_data[$k]['create_time'] = time();
                         }
                     }
-
                 }else{
                     $live_data = array();
                 }
@@ -460,7 +458,6 @@ class Goods extends Common{
                         $video_data[$k]['gid'] = $gid;
                         $video_data[$k]['create_time'] = time();
                     }
-
                 }else{
                     $video_data = array();
                 }
@@ -473,9 +470,15 @@ class Goods extends Common{
                     $data_live = $live_data;
                 }
                 if(!empty($data_live)){
-                    Db::name('goods_live_extends')->insertAll($data_live);
+                    Db::startTrans();
+                    $res1 = Db::name('goods_live_extends')->where(['gid'=>$gid])->delete();
+                    $res2 = Db::name('goods_live_extends')->insertAll($data_live);
+                    if($res1 && $res2){
+                        Db::commit();
+                    }else{
+                        Db::rollback();
+                    }
                 }
-                //Db::name('goods_live_extends')->where(['gid'=>$gid])->delete();
                 //echo '<pre>';
                 //print_r($data_live);exit;
             }
@@ -516,7 +519,6 @@ class Goods extends Common{
             return $this->fetch();
             //return view();
         }
-
     }
 
 }

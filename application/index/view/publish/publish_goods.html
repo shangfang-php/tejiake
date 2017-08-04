@@ -386,8 +386,9 @@
         if(!goods_id){
             return false;
         }
+        var goods_type= $('#goods_type').val();
         var url     =   '/index/publish/get_coupon_info';
-        var data    =   {activityId:activityId,goods_id:goods_id};
+        var data    =   {activityId:activityId,goods_id:goods_id,goods_type:goods_type};
         $.post(url, data, function(msg){
             if(msg.code == 200){
                 show_coupon_info(msg.msg);

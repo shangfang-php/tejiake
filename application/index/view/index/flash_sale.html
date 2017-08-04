@@ -216,8 +216,10 @@
         var day = $(this).attr('date');
         $(this).downCount({
             date: day,
-            offset: +10
-        }, function () {});
+            offset: +8
+        }, function(){
+            window.location.reload();
+        });
     });
 
     function jump(type){
