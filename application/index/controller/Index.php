@@ -184,7 +184,8 @@ class Index extends Common{
             //$this->error('数据有误');
         }
 
-        $info['head_img'] = '__STATIC__' . DS . 'user'.DS.$info['head_img'];//头像
+        //$info['head_img'] = '__STATIC__' . DS . 'user'.DS.$info['head_img'];//头像
+        $info['head_img'] = $info['head_img'] ? '__STATIC__' . DS . 'user'.DS.$info['head_img'] : '';//头像
         $info['addday'] = ceil((time()-$info['ucreate_time'])/86400);//入驻天数
         $goods_num = Db::name('goods')->where("uid=".$info['uid']." and is_delete=0 and status=2 and start_time<=".time()." and end_time>=".time()."")->count();
         $info['line_goods_num'] = $goods_num;//线上商品 状态为展示中 当前时间在商品的活动期
