@@ -286,7 +286,7 @@
                 var data = JSON.parse(dat);
                 alert(data.msg);
                 if(data.status == 1){
-                    window.location.href = "{:url('Goods/index')}";
+                    window.location.href = "{:url('Goods/index')}?status=2";
                 }
                 return false;
             });
@@ -314,7 +314,7 @@
                     var data = JSON.parse(dat);
                     alert(data.msg);
                     if(data.status == 1){
-                        window.location.href = "{:url('Goods/index')}";
+                        window.location.href = "{:url('Goods/index')}?status=2";
                     }
                     return false;
                 });

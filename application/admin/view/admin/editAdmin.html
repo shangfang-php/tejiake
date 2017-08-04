@@ -28,19 +28,23 @@
 
                             <form action="{:url('User/addUser')}" data-parsley-validate  method="post">
                                 <div class="form-group">
-                                    <label for="name">管理员名称</label>
-                                    <input type="text" name="username" parsley-trigger="change" required placeholder="输入用户名"  class="form-control" id="name" value="{$data.username}" disabled>
+                                    <label for="username">账号</label>
+                                    <input type="text" name="username" parsley-trigger="change" required placeholder="输入用户名"  class="form-control" id="username" value="{$data.username}" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">登录密码</label>
-                                    <input type="password" name="password" parsley-trigger="change" required placeholder="******"  class="form-control" id="name">
+                                    <label for="password">密码</label>
+                                    <input type="password" name="password" parsley-trigger="change" required placeholder="******"  class="form-control" id="password">
+                                </div>
+                                 <div class="form-group">
+                                    <label for="remark">备注</label>
+                                    <input type="text" name="remark" parsley-trigger="change" required placeholder="输入备注"  class="form-control" id="remark" value="{$data.remark}">
                                 </div>
                                 <div class="form-group ">
-                                    <label >权限菜单</label>
+                                    <label >添加权限</label>
                                     {volist name="menulist" id="vo"}
                                     {if condition="!empty($vo['cmenu']) eq true"}
                                     <div class="col-sm-12" style="margin: 5px 0 0 0;">
-                                        <div style="background: #eeeeee;border: 1px solid #eeeee;" >
+                                        <div  >
                                            <input name="menu[]" class="a{$vo.id}" value="{$vo.id}"  type="checkbox" data-parsley-multiple="group1" onclick="getAll(this);" {if condition="in_array($vo['id'],$menu)"}checked{/if} > <label  >{$vo.name}</label>
                                         </div>
                                         <ul class="a{$vo.id}" style="padding-left: 20px ; list-style: none;">
@@ -54,7 +58,7 @@
                                     </div>
                                     {else/}
                                     <div class="col-sm-12 " style="margin: 5px 0 0 0;">
-                                        <div style="background: #eeeeee;" >
+                                        <div  >
                                             <input name="menu[]" class="a{$vo.id}" value="{$vo.id}"  type="checkbox" data-parsley-multiple="group1" onclick="getAll(this);" {if condition="in_array($vo['id'],$menu)"}checked{/if}> <label  >{$vo.name}</label>
                                         </div>
                                     </div>
@@ -180,10 +184,11 @@
         //alert(typeof myarrs);
         var username = $('input[name=username]').val();
         var password = $('input[name=password]').val();
+        var remark = $('input[name=remark]').val();
         var id = $('input[name=id]').val();
         var status = $('input[name=status]:checked').val();
         //alert(status);
-        $.post("{:url('Admin/editAdmin')}",{id:id,username:username,password:password,status:status,menu:myarrs}, function (dat) {
+        $.post("{:url('Admin/editAdmin')}",{id:id,username:username,password:password,status:status,menu:myarrs,remark:remark}, function (dat) {
             var data = JSON.parse(dat);
             alert(data.msg);
             if(data.status == 1) {

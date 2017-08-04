@@ -77,6 +77,9 @@ class Collect extends UserCommon{
     public function addSpread(){
         $gcid = $_POST['gcid'];
         $spread_time = input('post.spread_time');
+        if($spread_time <= time()){
+            return returnAjaxMsg(0,'时间有误，推广时间必须大于当前时间');
+        }
         $data = ['is_spread'=>3,'spread_time'=>$spread_time];
         if(is_numeric($gcid)){
             $info = Db::name('goods_collect')->where(['id'=>$gcid])->find();

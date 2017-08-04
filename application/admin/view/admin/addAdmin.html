@@ -12,19 +12,6 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card-box">
-                            <div class="dropdown pull-right">
-                                <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="zmdi zmdi-more-vert"></i>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
-                            </div>
-
                             <h4 class="header-title m-t-0 m-b-30">添加管理员</h4>
 
                             <form action="{:url('User/addUser')}" data-parsley-validate  method="post">
@@ -38,12 +25,16 @@
                                     <input type="password" name="password" parsley-trigger="change" required
                                            placeholder="输入登录密码"  class="form-control" id="name">
                                 </div>
+                                  <div class="form-group">
+                                    <label for="name">备注</label>
+                                    <input type="text" name="remark" parsley-trigger="change" required placeholder="输入备注"  class="form-control" id="remark">
+                                </div>
                                 <div class="form-group ">
-                                    <label >权限菜单</label>
+                                    <label >添加权限</label>
                                     {volist name="menulist" id="vo"}
                                     {if condition="!empty($vo['cmenu']) eq true"}
                                     <div class="col-sm-12" style="margin: 5px 0 0 0;">
-                                        <div style="background: #eeeeee;border: 1px solid #eeeee;" >
+                                        <div style="border: 1px solid #eeeee;" >
                                            <input name="menu[]" class="a{$vo.id}" value="{$vo.id}"  type="checkbox" data-parsley-multiple="group1" onclick="getAll(this);"> <label  >{$vo.name}</label>
                                         </div>
                                         <ul class="a{$vo.id}" style="padding-left: 20px ; list-style: none;">
@@ -65,7 +56,7 @@
                                     </div>
                                     {else/}
                                     <div class="col-sm-12 " style="margin: 5px 0 0 0;">
-                                        <div style="background: #eeeeee;" >
+                                        <div  >
                                             <input name="menu[]" class="a{$vo.id}" value="{$vo.id}"  type="checkbox" data-parsley-multiple="group12121" onclick="getAll(this);"> <label  >{$vo.name}</label>
                                         </div>
                                     </div>
@@ -208,9 +199,10 @@
         //alert(typeof myarrs);
         var username = $('input[name=username]').val();
         var password = $('input[name=password]').val();
+        var remark = $('input[name=remark]').val();
         var status = $('input[name=status]:checked').val();
         //alert(status);
-        $.post("{:url('Admin/addAdmin')}",{username:username,password:password,status:status,menu:myarrs}, function (dat) {
+        $.post("{:url('Admin/addAdmin')}",{username:username,password:password,remark:remark,status:status,menu:myarrs}, function (dat) {
             var data = JSON.parse(dat);
             alert(data.msg);
             if(data.status == 1) {
