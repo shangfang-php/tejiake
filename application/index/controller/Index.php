@@ -417,9 +417,8 @@ class Index extends Common{
         $goods = Db::name('goods');
         //var_dump($keywords);exit;
         if ( empty($keywords) ) {
-
-            return file_get_contents(url('index/index/index','',true,true)); 
-
+            $this->redirect('index/index');
+            //return file_get_contents(url('index/index/index','',true,true)); 
         } else {
 
             if ( is_numeric($keywords) ) {
