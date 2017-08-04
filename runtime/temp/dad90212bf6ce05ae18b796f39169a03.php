@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:75:"D:\wamp\www\tejiake\public/../application/index\view\user\user_collect.html";i:1501745318;s:71:"D:\wamp\www\tejiake\public/../application/index\view\public\header.html";i:1501761982;s:74:"D:\wamp\www\tejiake\public/../application/index\view\public\user_menu.html";i:1501745318;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:75:"D:\wamp\www\tejiake\public/../application/index\view\user\user_collect.html";i:1501745318;s:71:"D:\wamp\www\tejiake\public/../application/index\view\public\header.html";i:1501814407;s:74:"D:\wamp\www\tejiake\public/../application/index\view\public\user_menu.html";i:1501745318;}*/ ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -86,9 +86,9 @@
                     <form action="<?php echo url('/index/index/search'); ?>" method="get">
                     <div class="search">
                         <div class="search-input">
-                            <input type="text" name="keywords" placeholders="请输入商品关键字或者商品ID" onblur="if(placeholders=='') {placeholders='请输入商品关键字或者商品ID'}" onFocus="if(placeholders=='请输入商品关键字或者商品ID'){placeholders=''}"#ED1C24">
+                             <input type="text" id="bb" name="keywords" value="" onblur="if(value=='') {value='请输入商品关键字或者商品ID'}" onFocus="if(value=='请输入商品关键字或者商品ID'){value=''}"#ED1C24">
                             <span>
-                                <img src="/static/index/images/shousuo.png" alt="">
+                                <img src="/static/index/images/shousuo.png" alt="" onclick="search()">
                             </span>
                         </div>
                     </div>
@@ -188,6 +188,26 @@
                     </ul>
                 </nav>
             </div>
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+            
+            <script>
+                
+                function search() {
+
+                    var keywords = $("input[name='keywords']").val();
+                    
+                    if( keywords === '请输入商品关键字或者商品ID' ){
+
+                            alert(keywords);
+
+                    } else {
+
+                            window.location.href='http://demo.com/index/index/search.html?keywords='+keywords;    
+                    }
+
+                }
+
+            </script>
         </header>
 <link rel="stylesheet" href="__STATIC__/index/css/common.css">
 <link type="text/css" href="__STATIC__/index/css/jquery-ui-1.8.16.custom.css" rel="stylesheet"  />

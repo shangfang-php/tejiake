@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:69:"D:\wamp\www\tejiake\public/../application/index\view\index\index.html";i:1501745318;s:71:"D:\wamp\www\tejiake\public/../application/index\view\public\header.html";i:1501809532;s:71:"D:\wamp\www\tejiake\public/../application/index\view\public\footer.html";i:1501745318;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:69:"D:\wamp\www\tejiake\public/../application/index\view\index\index.html";i:1501745318;s:71:"D:\wamp\www\tejiake\public/../application/index\view\public\header.html";i:1501817861;s:71:"D:\wamp\www\tejiake\public/../application/index\view\public\footer.html";i:1501818331;}*/ ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -86,7 +86,7 @@
                     <form action="<?php echo url('/index/index/search'); ?>" method="get">
                     <div class="search">
                         <div class="search-input">
-                             <input type="text" id="bb" name="keywords" value="请输入商品关键字或者商品ID" onblur="if(value=='') {value='请输入商品关键字或者商品ID'}" onFocus="if(value=='请输入商品关键字或者商品ID'){value=''}"#ED1C24">
+                             <input type="text" id="bb" name="keywords" value="" placeholder='请输入商品关键字或者商品ID' "#ED1C24">
                             <span>
                                 <img src="/static/index/images/shousuo.png" alt="" onclick="search()">
                             </span>
@@ -188,29 +188,6 @@
                     </ul>
                 </nav>
             </div>
-    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-            
-            <script>
-                
-                function search() {
-
-                    var keywords = $("input[name='keywords']").val();
-                    
-                    if( keywords === '请输入商品关键字或者商品ID' ){
-
-                            alert(keywords);
-
-                    } else {
-                            
-                            window.location.href='http://demo.com/index/index/search.html?keywords='+keywords;
-                        
-                    }
-
-                   
-
-                }
-
-            </script>
         </header>
 <!-- 加载每个页面内容-->
 <div class="con">
@@ -587,5 +564,30 @@
         });
 
     }
+
+    //点击搜索
+        function search() {
+
+            var keywords = $("input[name='keywords']").val();
+
+            if( keywords.length == 0 ){
+
+                    alert('请输入商品关键字或者商品ID');
+
+            } else {
+
+                    window.location.href='/index/index/search.html?keywords='+keywords;    
+            }
+
+        }
+
+
+    $('#bb').click( function () {
+
+            $('#bb').attr('placeholder', '');
+
+    } );
+
+
 </script>
 </html>

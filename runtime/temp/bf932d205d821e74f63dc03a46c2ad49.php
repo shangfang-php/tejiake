@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:69:"D:\wamp\www\tejiake\public/../application/index\view\index\video.html";i:1501745318;s:71:"D:\wamp\www\tejiake\public/../application/index\view\public\header.html";i:1501746838;s:71:"D:\wamp\www\tejiake\public/../application/index\view\public\footer.html";i:1501745318;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:69:"D:\wamp\www\tejiake\public/../application/index\view\index\video.html";i:1501745318;s:71:"D:\wamp\www\tejiake\public/../application/index\view\public\header.html";i:1501815227;s:71:"D:\wamp\www\tejiake\public/../application/index\view\public\footer.html";i:1501815649;}*/ ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -83,16 +83,15 @@
                             <img src="/static/index/images/logo.png" alt="特价客">
                         </a>
                     </div>
-                    <form action="<?php echo url('/index/index/search'); ?>" method="post">
+                    <form action="<?php echo url('/index/index/search'); ?>" method="get">
                     <div class="search">
                         <div class="search-input">
-                            <input type="text" name="keywords" placeholders="请输入商品关键字或者商品ID" onblur="if(placeholders=='') {placeholders='请输入商品关键字或者商品ID'}" onFocus="if(placeholders=='请输入商品关键字或者商品ID'){placeholders=''}"#ED1C24">
+                             <input type="text" id="bb" name="keywords" value="" placeholder='请输入商品关键字或者商品ID' "#ED1C24">
                             <span>
-                                <img src="/static/index/images/shousuo.png" alt="">
+                                <img src="/static/index/images/shousuo.png" alt="" onclick="search()">
                             </span>
                         </div>
                     </div>
-                    <input type="submit" value="搜索">
                     </form>
                     <div class="admin">
                         <?php if($login_user): ?>
@@ -575,6 +574,22 @@
         });
 
     }
+
+                
+        function search() {
+
+            var keywords = $("input[name='keywords']").val();
+            if( keywords.length == 0 ){
+
+                    alert('请输入商品关键字或者商品ID');
+
+            } else {
+
+                    window.location.href='/index/index/search.html?keywords='+keywords;    
+            }
+
+        }
+
 </script>
 </html>
 
