@@ -532,5 +532,10 @@ function endGoods($goods_id, $score_type = 5, $remark = '', $goods_info = '', $o
     if($info === false){
         return false;
     }
+
+    $info   =   Db::table('goods_collect')->where('gid', $goods_id)->update(['is_delete'=>1]);
+    if($info === false){
+        return false;
+    }
     return TRUE;
 }
