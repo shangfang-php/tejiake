@@ -68,7 +68,7 @@ class Goods extends Controller{
 	 */
 	function search_data($type, $page){
 		$data 		=	array();
-		$page_num 	=	1;
+		$page_num 	=	100;
 		$limit 		=	($page - 1) * $page_num;
 
 		$where		=	['type'=>$type, 'status'=>2];
