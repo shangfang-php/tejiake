@@ -80,8 +80,9 @@
         <div class="fl zuo" id="zuo">
             <div class="team">
                 <div class="team-head">
-                    <img style="width:100px;height:100px;" src="{if $data.head_img}{$data.head_img}{else}/static/index/images/tou.png{/if}" alt="">
-                    <p class="f16">{$data.nickname}&nbsp;
+                    <a href="/team_show?id={$data.uid}"><img style="width:100px;height:100px;" src="{if $data.head_img}{$data.head_img}{else}/static/index/images/tou.png{/if}" alt=""></a>
+                    <p class="f16">
+                        <a href="/team_show?id={$data.uid}">{$data.nickname}&nbsp;</a>
                         <span class="f12">
                             {if condition="$data.mtype eq 1"}个人
                             {else/}团队
@@ -89,17 +90,17 @@
                         </span>
                     </p>
                     <div class="tubiao">
-                        <img src="__STATIC__/index/images/tubiao.png" alt="">
+                        <a href="/team_show?id={$data.uid}"><img src="__STATIC__/index/images/tubiao.png" alt=""></a>
                     </div>
 
                 </div>
 
                 <div class="team-dec">
                     <div class="time fl">
-                        <p class="f12">入驻时间<br/><span class="f16">{$data.addday}天</span></p>
+                        <a href="/team_show?id={$data.uid}"><p class="f12">入驻时间<br/><span class="f16">{$data.addday}天</span></p></a>
                     </div>
                     <div class="line fl">
-                        <p class="f12">在线商品<br/><span class="f16">{$data.line_goods_num}款</span></p>
+                        <a href="/team_show?id={$data.uid}"><p class="f12">在线商品<br/><span class="f16">{$data.line_goods_num}款</span></p></a>
                     </div>
                 </div></div>
             <div class="xiang1" id="collect_action">

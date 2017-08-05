@@ -22,6 +22,7 @@ return [
     'video' 	=>  'index/index/video', ##限时抢购
     'night'     =>  'index/index/night', ##过夜单
     'item'      =>  'index/index/goods', ##商品详情
+    'team_show' =>  'index/index/team_show', ##招商团队展示
     /*'[user]'     => [
         ':'   => ['index/index/detail',['method' => 'get']]
     ],

@@ -456,5 +456,38 @@ class Index extends Common{
 
     }
 
+    /**
+     * 招商团队展示
+     * @Author   Gary
+     * @DateTime 2017-08-05T15:32:52+0800
+     * @return   [type]                   [description]
+     */
+    function team_show(){
+        $uid    =   intval(trim(input('get.id')));
+        if(!$uid){
+            $this->redirect('news/no_goods');
+        }
+
+        ##团队信息
+        $team_info  =   Db::table('merchant_apply_record')->where(array('uid'=>$uid, 'status'=>2))->find();
+        if(empty($team_info)){
+            $this->redirect('news/no_goods');
+        }
+
+        $user_info  =   Db::table('user')->where('id', $uid)->find();
+
+
+        $where      =   array('uid'=>$uid, 'status'=>2);
+        $goods_data =   Db::table('goods')->where($where)->paginate();
+
+        $data       =   array(
+                            'goods_data'    =>  $goods_data,
+                            'web_title'     =>  '团队展示',
+                            'team_info'     =>  $team_info,
+                            'user_info'     =>  $user_info,
+                        );
+        $this->assign($data);
+        return $this->fetch();
+    }
 
 }
