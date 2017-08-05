@@ -20,9 +20,9 @@ img{
 	height: 247px;
 	text-align: center;
 	position: relative;
-	    border: 1px solid #ccc;
-	    border-top-right-radius: 10px;
-	    border-top-left-radius: 10px;
+	    border: 1px solid #e6e6e6;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
 
 }
 .team-head img{
