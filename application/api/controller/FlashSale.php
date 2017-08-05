@@ -37,6 +37,7 @@ class FlashSale extends Controller{
 
 		$goods_data =	$data['data'];
 		$taobao_goodsId = $goods_data['taobao_goodsId'];
+
 		$goods 		=	Db::table('goods')->field('id')->where('taobao_goodsId', $taobao_goodsId)->find();
 		if($goods){
 			return returnAjaxMsg('304', '已有该产品!');
@@ -74,6 +75,9 @@ class FlashSale extends Controller{
 		$coupon_info 	=	input('post.coupon_data');
 		$coupon_info 	=	urldecode($coupon_info);
 		$coupon_info 	=	json_decode($coupon_info, TRUE)['result'];
+		$short_title 	=	trim(input('post.short_title'));
+		$type 			=	intval(trim(input('post.type')));
+		$type 			=	$type ? $type : 2; ##默认是2 限时抢购 1爆款单
 		
 		$data['taobao_goodsId']=	$goods_info['num_iid'];
 		$data['link']	=	$goods_info['item_url'];
@@ -81,7 +85,7 @@ class FlashSale extends Controller{
 		$images_arr	 	=	$goods_info['small_images']['string'];
 		$data['price']	=	$goods_info['zk_final_price'];
 		$data['main_img']=	$images_arr['1'];
-		$data['short_title']=$data['title'];
+		$data['short_title']= $short_title ? $short_title : $data['title'];
 		$data['sell_num']	=$goods_info['volume'];
 		$data['coupon_money']=$coupon_info['amount'];
 		$data['coupon_limit']=floatval($coupon_info['startFee']);
@@ -103,7 +107,8 @@ class FlashSale extends Controller{
 		$data['uid']				=	1;
 		$data['common_type']		=	1; ##普通计划
 		$data['plan_type']			=	2; ##通用计划
-		$data['type']				=	2; ##限时抢购
+		$data['create_time']		=	time();
+		$data['type']				=	$type;
 
 		return array('data'=>$data, 'images_arr'=>$images_arr);
 	}
