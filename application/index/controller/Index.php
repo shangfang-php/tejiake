@@ -475,6 +475,9 @@ class Index extends Common{
         }
 
         $user_info  =   Db::table('user')->where('id', $uid)->find();
+        if(!$user_info){
+            $this->redirect('news/no_goods');
+        }
 
 
         $where      =   array('uid'=>$uid, 'status'=>2);
@@ -485,6 +488,7 @@ class Index extends Common{
                             'web_title'     =>  '团队展示',
                             'team_info'     =>  $team_info,
                             'user_info'     =>  $user_info,
+                            'goods_type'    =>  '',
                         );
         $this->assign($data);
         return $this->fetch();
