@@ -65,6 +65,7 @@ class Goods extends UserCommon{
             'show' =>$show,
             'total'=>$total,
             'param'=>$param,
+            'web_title'=>'宝贝管理'
         ];
         //echo '<pre>';
         //print_r($count_3);exit;

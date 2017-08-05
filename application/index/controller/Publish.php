@@ -35,6 +35,7 @@ class Publish extends UserCommon{
 		$mianshen 	=	self::$team_info['free_trial'] ? json_decode(self::$team_info['free_trial']) : array(); ##免审项目
 		$data 		=	array(
 							'mianshen'	=>	$mianshen,
+							'web_title'	=>	'发布宝贝',
 						);
 		$this->assign($data);
 		return $this->fetch('publish_index');
@@ -58,6 +59,7 @@ class Publish extends UserCommon{
 		$data 	=	array(
 						'common_type' 	=>	$common_type,
 						'goods_type'	=>	$goods_type,
+						'web_title'		=>	'发布宝贝_第二步'
 					);
 		if($goods_type == 4){ ##直播单
 			$data['extends']	=	array(0=>[],1=>[],2=>[],3=>[],4=>[]);
@@ -347,6 +349,7 @@ class Publish extends UserCommon{
 						'goods_info'	=>	$goods_info,
 						'images_arr'	=>	$images_arr,
 						'extends'		=>	$extends_info,
+						'web_title'		=>	'修改宝贝'
 					);
 		$this->assign($data);
 		return $this->fetch('publish_edit');

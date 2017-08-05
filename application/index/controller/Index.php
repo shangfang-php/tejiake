@@ -15,10 +15,11 @@ class Index extends Common{
     public function index()
     {	
         $goods_list =   $this->get_goods_list(1); ##1为爆款单
-
+        $web_title            =   '爆款单';
         $data   =   array(
                         'goods_list'    =>  $goods_list,
                         'goods_type'    =>  self::$goods_type,
+                        'web_title'     =>  $web_title,
                     );
         $this->assign($data);
     	
@@ -31,6 +32,7 @@ class Index extends Common{
     public function flash_sale(){
         $type               =   isset($_GET['type']) ? intval(trim(input('get.type'))) : 1; ##1正在抢购 2预告
     	self::$goods_type	=	'flash_sale';
+        $web_title          =   '限时抢购';
         $goods_list =   $this->get_goods_list(2,$type); ##2为限时抢购
 
         $extends    =   array();
@@ -49,6 +51,7 @@ class Index extends Common{
                         'goods_type'    =>  self::$goods_type,
                         'type'          =>  $type,
                         'extends'       =>  $extends,
+                        'web_title'     =>  $web_title,
                     );
         $this->assign($data);
         
@@ -60,6 +63,7 @@ class Index extends Common{
      */
     public function live(){
         self::$goods_type   =   'live';
+        $web_title          =   '直播单';
         $goods_list =   $this->get_goods_list(4,0,30); ##4为直播单
         $extends    =   array();
         if($goods_list){
@@ -83,6 +87,7 @@ class Index extends Common{
                         'goods_list'    =>  $goods_list,
                         'goods_type'    =>  self::$goods_type,
                         'extends'       =>  $extends,
+                        'web_title'     =>  $web_title,
                     );
         $this->assign($data);
         
@@ -95,6 +100,7 @@ class Index extends Common{
      */
     public function video(){
         self::$goods_type   =   'video';
+        $web_title          =   '视频单';
         $goods_list =   $this->get_goods_list(5); ##5为视频单
 
         /**获取视频列表*/
@@ -111,6 +117,7 @@ class Index extends Common{
                         'goods_list'    =>  $goods_list,
                         'goods_type'    =>  self::$goods_type,
                         'video_urls'    =>  $video_urls,
+                        'web_title'     =>  $web_title,
                     );
         $this->assign($data);
         
@@ -123,11 +130,13 @@ class Index extends Common{
      */
     public function night(){
         self::$goods_type   =   'night';
+        $web_title          =   '过夜单';
         $goods_list =   $this->get_goods_list(3); ##3为过夜单
 
         $data   =   array(
                         'goods_list'    =>  $goods_list,
                         'goods_type'    =>  self::$goods_type,
+                        'web_title'     =>  $web_title,
                     );
         $this->assign($data);
         
@@ -217,6 +226,8 @@ class Index extends Common{
         //print_r($goods_type);exit;
         $this->assign('goods_type', $goods_type);
         $this->assign('data',$info);
+        $web_title  =   $info['title'];
+        $this->assign('web_title', $web_title);
         
         if($info['type'] == 4){
             //直播单
@@ -240,7 +251,6 @@ class Index extends Common{
             $this->assign('goods_image',$images);
             return $this->fetch('goodsinfo');
         }
-
     }
 
     /*
@@ -412,7 +422,7 @@ class Index extends Common{
      * 商品搜索
      */
     public function search(){
-
+        $web_title          =   '搜索';    
         $keywords = trim(input('get.keywords'));
         $goods = Db::name('goods');
         //var_dump($keywords);exit;
@@ -437,6 +447,7 @@ class Index extends Common{
                             'keywords'      =>  $keywords,
                             'goods_type'    =>  '',
                             'nums'          =>  $nums,
+                            'web_title'     =>  $web_title,
                         );
             $this->assign($data);
 

@@ -43,6 +43,7 @@ class Collect extends UserCommon{
             'spread_count' =>$spread_count,
             'show'         =>$show,
             'type_arr'     =>$type_arr,
+            'web_title'    =>'收藏',
         );
         $this->assign($data);
         return $this->fetch('user/user_collect');

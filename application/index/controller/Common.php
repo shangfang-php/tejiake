@@ -15,7 +15,15 @@ class Common extends Controller{
             $collect_count = Db::name('goods_collect')->where(['uid'=>self::$login_user['id'],'is_spread'=>0])->count();
             $this->assign('collect_count', $collect_count);
     	}
-    	$this->assign('login_user', self::$login_user);
-        $this->assign('keywords', '');
+
+        $web_info   =   Db::table('setting')->find(1);
+        $data       =   array(
+                            'login_user'    =>  self::$login_user, ##登录帐号信息
+                            'keywords'      =>  '', ##头部搜索关键词
+                            'web_info'      =>  $web_info, ##网站标题关键字相关信息、
+                            'web_title'     =>  '首页',
+                        );
+    	
+        $this->assign($data);
     }
 }

@@ -34,7 +34,7 @@ class Charge extends UserCommon{
 			$res 	=	Db::table('user_score_record')->where($where)->order('id', 'desc')->paginate(5,false,$query);
 		}
 
-		$data	=	array('type'=>$type, 'res'=>$res);
+		$data	=	array('type'=>$type, 'res'=>$res, 'web_title'=>'充值');
 		return $this->fetch('charge_index', $data);
 	}
 

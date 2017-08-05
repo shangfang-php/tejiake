@@ -16,11 +16,13 @@ class Login extends Controller{
     }
 
     public function index(){
-       return $this->fetch();
+        $this->assign(['web_title'=>'登录']);
+        return $this->fetch();
     }
 
     //注册
     public function register(){
+        $this->assign(['web_title'=>'注册']);
         Session::set('isRegister', 1); ##防止脚本提交验证
         return $this->fetch();
     }
@@ -231,7 +233,8 @@ class Login extends Controller{
      * @return [type] [description]
      */
     function repwd(){
-       return $this->fetch();
+        $this->assign(['web_title'=>'重置密码']);
+        return $this->fetch();
     }
 
     /**
