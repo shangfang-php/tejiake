@@ -60,7 +60,7 @@ class Index extends Common{
      */
     public function live(){
         self::$goods_type   =   'live';
-        $goods_list =   $this->get_goods_list(4); ##2为限时抢购
+        $goods_list =   $this->get_goods_list(4,0,30); ##4为直播单
         $extends    =   array();
         if($goods_list){
             foreach($goods_list as $val){
@@ -152,7 +152,7 @@ class Index extends Common{
      * @param  integer $flash_type [限时抢购的类型]
      * @return [type]              [description]
      */
-    function get_goods_list($goodsType, $flash_type = 1, $nums = 20){
+    function get_goods_list($goodsType, $flash_type = 1, $nums = 40){
         $where  =   array('type'=>$goodsType, 'status'=>2, 'end_time'=>['>=',time()]);
         if($goodsType == 2){
             if($flash_type == 1){
