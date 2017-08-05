@@ -21,7 +21,7 @@ class Publish extends UserCommon{
 			$this->redirect('user/show_checking');
 		}
         
-        if(self::$team_info['status'] == 3){ ##审核中
+        if(self::$team_info['status'] == 3){ ##审核失败
 			$this->redirect('user/apply_fail');
 		}
 	}
