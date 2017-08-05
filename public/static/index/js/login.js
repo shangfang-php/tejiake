@@ -19,9 +19,10 @@ function submitInfo(){
     isSaveUser  =   isSaveUser == 'checked' ? 1 : 0;
     var data    =   {phone:phone, password:password, isSaveUser:isSaveUser};
     $.post('/index/login/login_info', data, function(msg){
-        alert(msg.msg);
         if(msg.code == 200){
             window.location.href = '/index/user/index';
+        }else{
+            alert(msg.msg);
         }
     },"json");
 
