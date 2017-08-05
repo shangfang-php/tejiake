@@ -4,9 +4,9 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>
-            登录
-        </title>
+        <meta name="keywords" content="{$web_info.keyword}">
+        <meta name="description" content="{$web_info.describe}">
+        <title>{$web_title}_{$web_info.title}</title>
         <link rel="stylesheet" href="__STATIC__/index/css/common.css">
         <link rel="stylesheet" href="__STATIC__/index/css/login.css?v=1.0.1">
     </head>
@@ -58,4 +58,5 @@
     </body>
     <script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="/static/index/js/login.js?v=1.0.2"></script>
+    {:htmlspecialchars_decode($web_info['code'])}
 </html>

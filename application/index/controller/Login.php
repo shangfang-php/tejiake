@@ -13,6 +13,8 @@ class Login extends Controller{
 
     public function _initialize(){
         $this->validate = \think\Loader::validate('User');
+        $web_info       =   Db::table('setting')->find(1);
+        $this->assign('web_info',$web_info);
     }
 
     public function index(){
@@ -233,7 +235,7 @@ class Login extends Controller{
      * @return [type] [description]
      */
     function repwd(){
-        $this->assign(['web_title'=>'重置密码']);
+        $this->assign(['web_title'=>'找回密码']);
         return $this->fetch();
     }
 
