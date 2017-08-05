@@ -35,8 +35,8 @@
             <a href="index.html" class="logo"><span>后台管理</span><i class="zmdi zmdi-layers"></i></a>
         </div>
         <!-- Button mobile view to collapse sidebar menu -->
-        <div class="navbar navbar-default" role="navigation">
-            <div class="container">
+        <div class="navbar navbar-default" role="navigation" style=" padding: 0">
+            <div class="container" style="background: #fff;height: 50px;">
 
                 <!-- Page title -->
                 <ul class="nav navbar-nav navbar-left">
@@ -50,32 +50,43 @@
                     </li>
                 </ul>
                 <!-- Right(Notification and Searchbox -->
-                <!--<ul class="nav navbar-nav navbar-right">
-                    <li>
-                        &lt;!&ndash; Notification &ndash;&gt;
+                <ul class="nav navbar-nav navbar-right">
+                    <li style="width: 40px; height: 50px; line-height: 50px;">
+                       <!--  &lt;!&ndash; Notification &ndash;&gt; -->
                         <div class="notification-box">
                             <ul class="list-inline m-b-0">
                                 <li>
-                                    <a href="javascript:void(0);" class="right-bar-toggle">
-                                        <i class="zmdi zmdi-notifications-none"></i>
+                                    <a href="javascript:void(0);" class="right-bar-toggle" style="line-height: 50px">
+                                        <i class="zmdi zmdi-notifications-none" ></i>
                                     </a>
                                     <div class="noti-dot">
-                                        <span class="dot"></span>
-                                        <span class="pulse"></span>
+                                        <span class="dot" style="top: -5px;"></span>
+                                        <span class="pulse" style="top: 6px;"></span>
                                     </div>
                                 </li>
                             </ul>
                         </div>
-                        &lt;!&ndash; End Notification bar &ndash;&gt;
+                       <!--  &lt;!&ndash; End Notification bar &ndash;&gt; -->
                     </li>
-                    <li class="hidden-xs">
-                        <form role="search" class="app-search">
+                    <!--<li class="hidden-xs " style="width: 40px;height: 50px;line-height: 50px;">-->
+                      <!--   <form role="search" class="app-search">
                             <input type="text" placeholder="搜索..."
                                    class="form-control">
                             <a href=""><i class="fa fa-search"></i></a>
-                        </form>
+                        </form> -->
+                    <!--    <img src="__STATIC__/admin/images/brightness-7.png" alt="">
                     </li>
-                </ul>-->
+                      <li class="hidden-xs " style="width: 100px;overflow: hidden;    padding-right: 10px;">-->
+                      <!--   <form role="search" class="app-search">
+                            <input type="text" placeholder="搜索..."
+                                   class="form-control">
+                            <a href=""><i class="fa fa-search"></i></a>
+                        </form> -->
+                       <!-- <p style="height: 50px;line-height: 50px;"><span style="width: 100px;overflow: hidden; padding-right: 10px;">haoma</span><img src="__STATIC__/admin/images/chevron-down.png" alt=""></p>
+                    </li>-->
+
+
+                </ul>
             </div><!-- end container -->
         </div><!-- end navbar -->
     </div>
@@ -88,15 +99,15 @@
             <div class="user-box">
                 <div class="user-img">
                     <img src="__STATIC__/admin/images/users/avatar-1.jpg" alt="user-img" title="Mat Helme" class="img-circle img-thumbnail img-responsive">
-                    <div class="user-status offline"><i class="zmdi zmdi-dot-circle"></i></div>
+                    <!--<div class="user-status offline"><i class="zmdi zmdi-dot-circle"></i></div>-->
                 </div>
-                <h5><a href="#">{$Think.session.admin_user}</a> </h5>
+                <h5>{$Think.session.admin_user} </h5>
                 <ul class="list-inline">
-                    <li>
+                   <!-- <li>
                         <a href="#">
                             <i class="zmdi zmdi-settings"></i>
                         </a>
-                    </li>
+                    </li>-->
 
                     <li>
                         <a href="{:url('Login/loginout')}" class="text-custom">
@@ -122,7 +133,7 @@
                         <a href="javascript:void(0);" class="waves-effect"><i class="zmdi {$vo.icon}"></i> <span> {$vo.name} </span> <span class="menu-arrow"></span></a>
                         <ul class="list-unstyled">
                             {volist name="vo.cmenu" id="vv"}<!--1爆款单2限时抢购3过夜单4直播单5视频单-->
-                            {if condition="$vv.id eq 18"}<li><a href="{:url('Goods/getCheck',array('type'=>1))}" id="a{$vv.id}" name="{:url($vv.url)}" target="i"><i class="zmdi {$vv.icon}"></i>{$vv.name}</a></li>
+                            {if condition="$vv.id eq 18"}<li><a href="{:url('Goods/getCheck',array('type'=>1))}" id="a{$vv.id}" name="{:url($vv.url)}" target="i"><i class="zmdi {$vv.icon} "></i>{$vv.name}</a></li>
                             {elseif condition="$vv.id eq 19"}<li><a href="{:url('Goods/getCheck',array('type'=>2))}" id="a{$vv.id}" name="{:url($vv.url)}" target="i"><i class="zmdi {$vv.icon}"></i>{$vv.name}</a></li>
                             {elseif condition="$vv.id eq 20"}<li><a href="{:url('Goods/getCheck',array('type'=>4))}" id="a{$vv.id}" name="{:url($vv.url)}" target="i"><i class="zmdi {$vv.icon}"></i>{$vv.name}</a></li>
                             {elseif condition="$vv.id eq 21"}<li><a href="{:url('Goods/getCheck',array('type'=>5))}" id="a{$vv.id}" name="{:url($vv.url)}" target="i"><i class="zmdi {$vv.icon}"></i>{$vv.name}</a></li>

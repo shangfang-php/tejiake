@@ -95,7 +95,10 @@ function returnAjaxMsg( $code = 200, $msg = '', $arr = array() ){
 function checkPhone($phone){
     return preg_match("/^1[3587]\d{9}$/", $phone);
 }
-
+function checkQq($qq) {
+    $pattern = '/^[1-9]\d{4,8}$/';
+    return preg_match($pattern, $qq);
+}
 //获取当前URL
 function getActionUrl(){
     $module = request()->module();

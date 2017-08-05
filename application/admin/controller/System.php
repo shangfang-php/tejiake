@@ -17,6 +17,9 @@ class System extends Common{
             if($newpwd != $confirmnewpwd){
                 return json_encode(array('status'=>0,'msg'=>'2次输入的密码不一致'));
             }
+            if(strlen($newpwd)<6){
+                exit(json_encode(array('status'=>0,'msg'=>'密码长度必须大于OR等于6位')));
+            }
             $res = Db::name('admin')->where(['id'=>$info['id']])->update(['password'=>pswCrypt($newpwd)]);
             if($res){
                 return json_encode(array('status'=>1,'msg'=>'成功'));

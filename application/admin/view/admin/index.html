@@ -77,7 +77,9 @@
 
     </div>
 
-
+<footer class="footer">
+    2016 © 特价客 To.
+</footer>
     <!-- ============================================================== -->
     <!-- End Right content here -->
     <!-- ============================================================== -->
@@ -91,7 +93,7 @@
             var data = JSON.parse(dat);
             if(data.status == 1){
                 alert(data.msg);
-                window.location.href = window.location.href;
+                window.location.reload();
             }else{
                 alert(data.msg);return false;
             }
@@ -104,7 +106,7 @@
                 var data = JSON.parse(dat);
                 alert(data.msg);
                 if(data.status == 1){
-                    window.location.href = window.location.href;
+                    window.location.reload();
                 }
                 return false;
             });

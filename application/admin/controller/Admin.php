@@ -36,7 +36,11 @@ class Admin extends Common{
         if(request()->post()){
             //print_r($_POST);exit;
             $username = input('post.username');
-            $password = pswCrypt(input('post.password'));
+            $pwd = input('post.password');
+            if(strlen($pwd)<6){
+                exit(json_encode(array('status'=>0,'msg'=>'密码长度必须大于OR等于6位')));
+            }
+            $password = pswCrypt($pwd);
             $menus = input('post.menu/a');
             //$menus = request()->post('menu/a');
             $status = input('post.status');
@@ -103,7 +107,11 @@ class Admin extends Common{
             $editparam['status'] = $status;
             //修改密码
             if(!empty(input('post.password'))){
-                $password = pswCrypt(input('post.password'));
+                $pwd = input('post.password');
+                if(strlen($pwd)<6){
+                    exit(json_encode(array('status'=>0,'msg'=>'密码长度必须大于OR等于6位')));
+                }
+                $password = pswCrypt($pwd);
                 $editparam['password']  = $password;
             }
             $editparam['remark'] = $remark;
