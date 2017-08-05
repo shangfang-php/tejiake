@@ -129,20 +129,20 @@
                </span>
                             </div>
                             <div class="box-price fl">
-                                <p>￥{$vo.real_money}<br/><i class="back f12">{$vo.price}</i></p>
+                                <p>￥{:sprintf('%0.2f',$vo.real_money)}<br/><i class="back f12">{:sprintf('%0.2f',$vo.price)}</i></p>
                             </div>
 
                             <div class="box-quan fl">
-                                <p class="quan f12">￥{$vo.coupon_money}</p>
+                                <p class="quan f12">￥{:sprintf('%0.2f',$vo.coupon_money)}</p>
                                 <p class="f12 yu">剩余 <i>{$vo.coupon_total_num-$vo.coupon_apply_num}</i>／{$vo.coupon_total_num} </p>
                                 <p class="f12 yu">到期 <i>{$vo.end_time|date='Y-m-d',###}</i></p>
                             </div>
                             <div class="box-price fl">
-                                <p><span class="f14">佣金：</span>{$vo.taoke_money}元<br/>
+                                <p><span class="f14">佣金：</span>{:sprintf('%0.2f',$vo.taoke_money)}元<br/>
                                     <!--1定向计划2通用计划3鹊桥4营销计划-->
                                     <i class="back f12">
                                         计划
-                                        {$vo.taoke_money_percent}%</i>
+                                        {:round($vo.taoke_money_percent)}%</i>
                                 </p>
                             </div>
                             <div class=" box-btn fl">

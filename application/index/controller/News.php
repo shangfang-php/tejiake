@@ -19,6 +19,7 @@ class News extends Common{
      */
     public function zs_news()
     {	
+        $this->assign(['web_title'=>'审核说明']);
         return $this->fetch();
     }
 
@@ -29,6 +30,7 @@ class News extends Common{
      * @return   [type]
      */
     public function no_goods(){
+        $this->assign(['web_title'=>'结果']);
         return $this->fetch();
     }
 
@@ -39,6 +41,7 @@ class News extends Common{
      * @return   [type]                   [description]
      */
     public function api(){
+        $this->assign(['web_title'=>'接口文档']);
         return $this->fetch();
     }
 

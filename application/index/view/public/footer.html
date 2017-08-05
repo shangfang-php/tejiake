@@ -89,7 +89,7 @@
 <!--[if lte IE 8]><script src="js/ieBetter.js"> </script><![endif]-->
 <script type="text/javascript" src="/static/index/js/parabola.js"></script>
 <script type="text/javascript" src="/static/alert/alertify.custom.js"></script>
-
+{:htmlspecialchars_decode($web_info['code'])}
 <script type="text/javascript">
     $(function(){
         var nav = $(".head-nav nav li");
@@ -195,12 +195,15 @@
             button.addEventListener("click",
             function(event) {
                 var goods_id = $(this).parents('li').attr('data_id');
+                if(typeof(goods_id) == 'undefined'){
+                    return false;
+                }
                 $.post('/index/index/addCollect?gid='+goods_id,function(msg){
                     if(msg.code == 101){
-                        msg_show('请先登录再收藏!');
-                        $('.msg_button').bind('click', function(){
+                        //msg_show('请先登录再收藏!');
+                        //$('.msg_button').bind('click', function(){
                             window.location.href = msg.url;
-                        });
+                        //});
                     }else if(msg.code == 1){
                         // 滚动大小
                         var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
@@ -223,32 +226,21 @@
     }
 
     //点击搜索
-        function search() {
-
-            var keywords = $("input[name='keywords']").val();
-
-            if( keywords.length == 0 ){
-
-                    alert('请输入商品关键字或者商品ID');
-
-            } else {
-
-                    window.location.href='/index/index/search.html?keywords='+keywords;    
-            }
-
+    function search() {
+        var keywords = $("input[name='keywords']").val();
+        if( keywords.length == 0 ){
+            alert('请输入商品关键字或者商品ID');
+        } else {
+            window.location.href='/index/index/search.html?keywords='+keywords;    
         }
-
+    }
 
     $('#bb').click( function () {
-
-            $('#bb').attr('placeholder', '');
-
+        $('#bb').attr('placeholder', '');
     } );
 
     $('#bb').blur( function () {
-
-            $('#bb').attr('placeholder', '请输入商品关键字或者商品ID');
-
+        $('#bb').attr('placeholder', '请输入商品关键字或者商品ID');
     } );
 
 

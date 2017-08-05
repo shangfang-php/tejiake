@@ -21,7 +21,7 @@ class Publish extends UserCommon{
 			$this->redirect('user/show_checking');
 		}
         
-        if(self::$team_info['status'] == 3){ ##审核中
+        if(self::$team_info['status'] == 3){ ##审核失败
 			$this->redirect('user/apply_fail');
 		}
 	}
@@ -35,6 +35,7 @@ class Publish extends UserCommon{
 		$mianshen 	=	self::$team_info['free_trial'] ? json_decode(self::$team_info['free_trial']) : array(); ##免审项目
 		$data 		=	array(
 							'mianshen'	=>	$mianshen,
+							'web_title'	=>	'发布宝贝',
 						);
 		$this->assign($data);
 		return $this->fetch('publish_index');
@@ -58,6 +59,7 @@ class Publish extends UserCommon{
 		$data 	=	array(
 						'common_type' 	=>	$common_type,
 						'goods_type'	=>	$goods_type,
+						'web_title'		=>	'发布宝贝_第二步'
 					);
 		if($goods_type == 4){ ##直播单
 			$data['extends']	=	array(0=>[],1=>[],2=>[],3=>[],4=>[]);
@@ -74,6 +76,11 @@ class Publish extends UserCommon{
 		$goods_id 	=	trim(input('post.id'));
 		if(!$goods_id){
 			return returnAjaxMsg(301, '请输入商品ID');
+		}
+
+		$res 	=	Db::table('goods')->field('id')->where('taobao_goodsId', $goods_id)->find();
+		if($res){
+			return returnAjaxMsg(303,'该商品已存在!');
 		}
 
 		$goods_info 	=	getGoodsInfo($goods_id);
@@ -342,6 +349,7 @@ class Publish extends UserCommon{
 						'goods_info'	=>	$goods_info,
 						'images_arr'	=>	$images_arr,
 						'extends'		=>	$extends_info,
+						'web_title'		=>	'修改宝贝'
 					);
 		$this->assign($data);
 		return $this->fetch('publish_edit');
@@ -360,7 +368,7 @@ class Publish extends UserCommon{
         	return returnAjaxMsg('702', '营销计划链接不正确!');
         }
 
-        $real_url 	=	get_headers($link);
+        $real_url 	=	@get_headers($link);
         if(!$real_url){
         	return returnAjaxMsg('703', '获取商品信息失败!');
         }
@@ -369,8 +377,15 @@ class Publish extends UserCommon{
         if(!$coupon_info){
         	return returnAjaxMsg(self::$code, self::$msg);
         }
+        $itemId 		=	$coupon_info['item']['itemId'];
+        $res 			=	Db::table('goods')->field('id')->where('taobao_goodsId', $itemId)->find();
+        if($res){
+        	return returnAjaxMsg('704', '该商品已存在!');
+        }
 
-        return returnAjaxMsg(200, '获取成功', $coupon_info);
+        $goods_info 	=	getGoodsInfo($itemId);
+        $data 			=	array('coupon_info'=>$coupon_info, 'goods_info'=>$goods_info);
+        return returnAjaxMsg(200, '获取成功', $data);
     }
 
     /**
@@ -380,6 +395,11 @@ class Publish extends UserCommon{
      */
     public function get_yingxiao_coupon_info($coupon_link){
 		preg_match('/me=(.+)&?/', $coupon_link, $matches);
+		if(empty($matches)){
+			self::$code 	=	799;
+        	self::$msg 		=	'地址不正确!';
+        	return false;
+		}
         $param_me 	=	$matches[1];
         $coupon_info=	getYingxiaoCouponInfo($param_me);
         if(!$coupon_info){
@@ -399,15 +419,10 @@ class Publish extends UserCommon{
         	self::$msg 		=	'优惠券已过期!';
         	return false;
         }
-        $itemId 	=	$coupon_info['item']['itemId'];
-        if($coupon_info['item']['tmall'] == 1){
-        	$goods_link 	=	'https://item.tmall.com/item.htm?id='.$itemId;
-        }else{
-        	$goods_link 	=	'https://item.taobao.com/item.htm?id='.$itemId;
-        }
+        
         $coupon_link 	=	'https://uland.taobao.com/coupon/edetail?me='.$param_me;
         $coupon_info['coupon_link']	=	$coupon_link;
-        $goods_info 	=	getGoodsInfo($itemId);
-        return array('coupon_info'=>$coupon_info, 'goods_info'=>$goods_info);
+        
+        return $coupon_info;
     }
 }

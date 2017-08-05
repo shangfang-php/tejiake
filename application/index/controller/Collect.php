@@ -8,30 +8,33 @@ class Collect extends UserCommon{
     public function index(){
         $uid = self::$login_user['id'];
         $condition['gc.uid'] = $uid;
-        $action = isset($_GET['action'])?input('get.action'):'collect';
+        $action = isset($_GET['action']) ? input('get.action') : 'collect';
         //获取type
-        $type = isset($_GET['type'])?input('get.type'):'1';
-        if($type == '1'){
-            $type_arr = array('1');
-        }else{
+        $type = isset($_GET['type']) ? input('get.type') : 0;
+
+        if($type){ ##传有type类型
             $type_arr = explode(',',$type);
+            $condition['g.type'] = array('in',"$type");
+        }else{
+            $type_arr = array(1,2,3,4,5);
         }
-        $condition['g.type'] = array('in',"$type");
+        
         if($action == 'spread'){
             $condition['gc.is_spread'] = array('in','1,2,3');
         }else{
             $condition['gc.is_spread'] = 0;
         }
+        $condition['gc.is_delete'] = 0;
         $list = Db::name('goods_collect')
             ->alias('gc')
-            ->field('gc.*,g.type,g.short_title,g.coupon_money,g.real_money,g.price,g.coupon_total_num,g.coupon_apply_num,g.end_time,g.taoke_money_percent,g.start_time,g.taoke_money,g.plan_type,g.create_time')
+            ->field('gc.*,g.type,g.short_title,g.coupon_money,g.real_money,g.price,g.coupon_total_num,g.coupon_apply_num,g.end_time,g.taoke_money_percent,g.start_time,g.taoke_money,g.plan_type,g.create_time,g.is_tmall,g.main_img')
             ->where($condition)
             ->join('goods g','gc.gid=g.id','left')
             ->order('gc.id desc')
             ->paginate(10,false,['query'=>request()->param()]);
         //exit;
-        $collect_count = Db::name('goods_collect')->where(['uid'=>$uid,'is_spread'=>0])->count();
-        $spread_count = Db::name('goods_collect')->where(['uid'=>$uid,'is_spread'=>array('in','1,2,3')])->count();
+        $collect_count = Db::name('goods_collect')->where(['uid'=>$uid,'is_spread'=>0,'is_delete'=>0])->count();
+        $spread_count = Db::name('goods_collect')->where(['uid'=>$uid,'is_spread'=>array('in','1,2,3'), 'is_delete'=>0])->count();
         $show = $list->render();
         $data = array(
             'action'       =>$action,
@@ -40,6 +43,7 @@ class Collect extends UserCommon{
             'spread_count' =>$spread_count,
             'show'         =>$show,
             'type_arr'     =>$type_arr,
+            'web_title'    =>'收藏',
         );
         $this->assign($data);
         return $this->fetch('user/user_collect');

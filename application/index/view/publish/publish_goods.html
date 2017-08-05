@@ -505,6 +505,10 @@
      * @return {[type]} [description]
      */
     function get_goods_data(){
+        var check = check_input('.load-box');
+        if(!check){
+            return false;
+        }
         var data            =   new Object();
         data.common_type     =   $('#common_type').val();
         data.goods_type      =   $('#goods_type').val();
@@ -704,22 +708,22 @@
         return isReturn ? live_info : false;
     }
 
-    check_input('.load-box');
     function check_input(className){
+        var check   =   true;
         $(className+' input').each(function(i){
             var require     =   $(this).attr('require');
             if(require){
-                $(this).blur(function(){
-                    var value = $(this).val();
-                    if(!value){
-                        var input_name = $(this).siblings('span').html();
-                        msg_show(input_name+'不能为空!');
-                        $(this).select();
-                        return false;
-                    }
-                })
+                var value = $(this).val();
+                if(!value){
+                    var input_name = $(this).siblings('span').html();
+                    msg_show(input_name+'不能为空!');
+                    $(this).select();
+                    check = false;
+                    return false;
+                }
             }
         });
+        return check;
     }
     
 </script>

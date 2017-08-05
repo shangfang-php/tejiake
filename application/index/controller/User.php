@@ -20,7 +20,8 @@ class User extends UserCommon{
 	public function index(){
 
 		$days	=	ceil( (time() - self::$login_user['create_time'] )/86400);
-		return $this->fetch('user_index', compact('days'));
+		$web_title='个人中心';
+		return $this->fetch('user_index', compact('days', 'web_title'));
 	}
 
 	/**
@@ -35,6 +36,7 @@ class User extends UserCommon{
 		$data 	=	array(
 						'login_user' 	=>	$userInfo,
 						'teamInfo'		=>	$teamInfo,
+						'web_title'		=>	'基本资料',
 					);
 		return $this->fetch('user_basic', $data);
 	}
@@ -153,7 +155,7 @@ class User extends UserCommon{
 
 		$taobao_account	=	$userInfo['taobao_account'];
 
-		$data	=	array('pids'=>$pids, 'taobao_account'=>$taobao_account);
+		$data	=	array('pids'=>$pids, 'taobao_account'=>$taobao_account,'web_title'=>'授权管理');
 		return $this->fetch('user_set', $data);
 	}
 
@@ -239,6 +241,7 @@ class User extends UserCommon{
 	 * @return [type] [description]
 	 */
 	public function apply(){
+		$this->assign(['web_title'=>'招商淘客申请']);
 		return $this->fetch();
 	}
 
@@ -289,6 +292,7 @@ class User extends UserCommon{
 	 * @return [type] [description]
 	 */
 	function show_checking(){
+		$this->assign(['web_title'=>'审核中']);
 		return $this->fetch();
 	}
     
@@ -297,6 +301,7 @@ class User extends UserCommon{
         $fail_info 			=	empty($user_apply_info) ? '' : $user_apply_info['remark'];
         $data 				=	array(
         							'fail_info'	=>	$fail_info,
+        							'web_title' =>	'审核失败',
         						);
         $this->assign($data);
        	return $this->fetch('apply_fail');

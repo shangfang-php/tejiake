@@ -13,14 +13,18 @@ class Login extends Controller{
 
     public function _initialize(){
         $this->validate = \think\Loader::validate('User');
+        $web_info       =   Db::table('setting')->find(1);
+        $this->assign('web_info',$web_info);
     }
 
     public function index(){
-       return $this->fetch();
+        $this->assign(['web_title'=>'登录']);
+        return $this->fetch();
     }
 
     //注册
     public function register(){
+        $this->assign(['web_title'=>'注册']);
         Session::set('isRegister', 1); ##防止脚本提交验证
         return $this->fetch();
     }
@@ -231,7 +235,8 @@ class Login extends Controller{
      * @return [type] [description]
      */
     function repwd(){
-       return $this->fetch();
+        $this->assign(['web_title'=>'找回密码']);
+        return $this->fetch();
     }
 
     /**

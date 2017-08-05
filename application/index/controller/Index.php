@@ -15,10 +15,11 @@ class Index extends Common{
     public function index()
     {	
         $goods_list =   $this->get_goods_list(1); ##1为爆款单
-
+        $web_title            =   '爆款单';
         $data   =   array(
                         'goods_list'    =>  $goods_list,
                         'goods_type'    =>  self::$goods_type,
+                        'web_title'     =>  $web_title,
                     );
         $this->assign($data);
     	
@@ -31,6 +32,7 @@ class Index extends Common{
     public function flash_sale(){
         $type               =   isset($_GET['type']) ? intval(trim(input('get.type'))) : 1; ##1正在抢购 2预告
     	self::$goods_type	=	'flash_sale';
+        $web_title          =   '限时抢购';
         $goods_list =   $this->get_goods_list(2,$type); ##2为限时抢购
 
         $extends    =   array();
@@ -49,6 +51,7 @@ class Index extends Common{
                         'goods_type'    =>  self::$goods_type,
                         'type'          =>  $type,
                         'extends'       =>  $extends,
+                        'web_title'     =>  $web_title,
                     );
         $this->assign($data);
         
@@ -60,7 +63,8 @@ class Index extends Common{
      */
     public function live(){
         self::$goods_type   =   'live';
-        $goods_list =   $this->get_goods_list(4); ##2为限时抢购
+        $web_title          =   '直播单';
+        $goods_list =   $this->get_goods_list(4,0,30); ##4为直播单
         $extends    =   array();
         if($goods_list){
             foreach($goods_list as $val){
@@ -83,6 +87,7 @@ class Index extends Common{
                         'goods_list'    =>  $goods_list,
                         'goods_type'    =>  self::$goods_type,
                         'extends'       =>  $extends,
+                        'web_title'     =>  $web_title,
                     );
         $this->assign($data);
         
@@ -95,6 +100,7 @@ class Index extends Common{
      */
     public function video(){
         self::$goods_type   =   'video';
+        $web_title          =   '视频单';
         $goods_list =   $this->get_goods_list(5); ##5为视频单
 
         /**获取视频列表*/
@@ -111,6 +117,7 @@ class Index extends Common{
                         'goods_list'    =>  $goods_list,
                         'goods_type'    =>  self::$goods_type,
                         'video_urls'    =>  $video_urls,
+                        'web_title'     =>  $web_title,
                     );
         $this->assign($data);
         
@@ -123,11 +130,13 @@ class Index extends Common{
      */
     public function night(){
         self::$goods_type   =   'night';
+        $web_title          =   '过夜单';
         $goods_list =   $this->get_goods_list(3); ##3为过夜单
 
         $data   =   array(
                         'goods_list'    =>  $goods_list,
                         'goods_type'    =>  self::$goods_type,
+                        'web_title'     =>  $web_title,
                     );
         $this->assign($data);
         
@@ -152,7 +161,7 @@ class Index extends Common{
      * @param  integer $flash_type [限时抢购的类型]
      * @return [type]              [description]
      */
-    function get_goods_list($goodsType, $flash_type = 1, $nums = 20){
+    function get_goods_list($goodsType, $flash_type = 1, $nums = 40){
         $where  =   array('type'=>$goodsType, 'status'=>2, 'end_time'=>['>=',time()]);
         if($goodsType == 2){
             if($flash_type == 1){
@@ -184,7 +193,8 @@ class Index extends Common{
             //$this->error('数据有误');
         }
 
-        $info['head_img'] = '__STATIC__' . DS . 'user'.DS.$info['head_img'];//头像
+        //$info['head_img'] = '__STATIC__' . DS . 'user'.DS.$info['head_img'];//头像
+        $info['head_img'] = $info['head_img'] ? '__STATIC__' . DS . 'user'.DS.$info['head_img'] : '';//头像
         $info['addday'] = ceil((time()-$info['ucreate_time'])/86400);//入驻天数
         $goods_num = Db::name('goods')->where("uid=".$info['uid']." and is_delete=0 and status=2 and start_time<=".time()." and end_time>=".time()."")->count();
         $info['line_goods_num'] = $goods_num;//线上商品 状态为展示中 当前时间在商品的活动期
@@ -216,6 +226,8 @@ class Index extends Common{
         //print_r($goods_type);exit;
         $this->assign('goods_type', $goods_type);
         $this->assign('data',$info);
+        $web_title  =   $info['title'];
+        $this->assign('web_title', $web_title);
         
         if($info['type'] == 4){
             //直播单
@@ -239,7 +251,6 @@ class Index extends Common{
             $this->assign('goods_image',$images);
             return $this->fetch('goodsinfo');
         }
-
     }
 
     /*
@@ -411,14 +422,13 @@ class Index extends Common{
      * 商品搜索
      */
     public function search(){
-
+        $web_title          =   '搜索';    
         $keywords = trim(input('get.keywords'));
         $goods = Db::name('goods');
         //var_dump($keywords);exit;
         if ( empty($keywords) ) {
-
-            return file_get_contents(url('index/index/index','',true,true)); 
-
+            $this->redirect('index/index');
+            //return file_get_contents(url('index/index/index','',true,true)); 
         } else {
 
             if ( is_numeric($keywords) ) {
@@ -435,8 +445,9 @@ class Index extends Common{
             $data   =   array(
                             'goods_list'    =>  $goods_list,
                             'keywords'      =>  $keywords,
-                            'goods_type'    =>  self::$goods_type,
+                            'goods_type'    =>  '',
                             'nums'          =>  $nums,
+                            'web_title'     =>  $web_title,
                         );
             $this->assign($data);
 
@@ -445,5 +456,42 @@ class Index extends Common{
 
     }
 
+    /**
+     * 招商团队展示
+     * @Author   Gary
+     * @DateTime 2017-08-05T15:32:52+0800
+     * @return   [type]                   [description]
+     */
+    function team_show(){
+        $uid    =   intval(trim(input('get.id')));
+        if(!$uid){
+            $this->redirect('news/no_goods');
+        }
+
+        ##团队信息
+        $team_info  =   Db::table('merchant_apply_record')->where(array('uid'=>$uid, 'status'=>2))->find();
+        if(empty($team_info)){
+            $this->redirect('news/no_goods');
+        }
+
+        $user_info  =   Db::table('user')->where('id', $uid)->find();
+        if(!$user_info){
+            $this->redirect('news/no_goods');
+        }
+
+
+        $where      =   array('uid'=>$uid, 'status'=>2);
+        $goods_data =   Db::table('goods')->where($where)->paginate();
+
+        $data       =   array(
+                            'goods_data'    =>  $goods_data,
+                            'web_title'     =>  '团队展示',
+                            'team_info'     =>  $team_info,
+                            'user_info'     =>  $user_info,
+                            'goods_type'    =>  '',
+                        );
+        $this->assign($data);
+        return $this->fetch();
+    }
 
 }
