@@ -5,6 +5,23 @@ use think\paginator;
 use think\Db;
 //宝贝管理
 class Goods extends UserCommon{
+    public function _initialize(){
+
+        parent::_initialize();
+        /** 获取招商信息 没有则跳到申请页面*/
+        $team_info  =   Db::table('merchant_apply_record')->where(array('uid'=>self::$login_user['id']))->order('id', 'desc')->find();
+        if(!$team_info){ ##未申请招商淘客
+            $this->redirect('user/apply');
+        }
+
+        if($team_info['status'] == 1){ ##审核中
+            $this->redirect('user/show_checking');
+        }
+        
+        if($team_info['status'] == 3){ ##审核失败
+            $this->redirect('user/apply_fail');
+        }
+    }
     /*
      * 宝贝列表
      * @param type 商品类型
