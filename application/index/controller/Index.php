@@ -163,14 +163,19 @@ class Index extends Common{
      */
     function get_goods_list($goodsType, $flash_type = 1, $nums = 40){
         $where  =   array('type'=>$goodsType, 'status'=>2, 'end_time'=>['>=',time()]);
+
         if($goodsType == 2){
             if($flash_type == 1){
                 $where['show_time'] =   ['<=', time()];
+                $order              =   ['end_time'=>'asc']; ##快结束的优先
             }else{
                 $where['show_time'] =   ['>', time()];
+                $order              =   ['show_time'=>'asc']; ##快开始的优先
             }
+        }else{
+            $order  =   ['id'=>'desc'];
         }
-        $goods  =   Db::table('goods')->where($where)->order('id', 'desc')->paginate($nums, false,['query'=>$_GET]);
+        $goods  =   Db::table('goods')->where($where)->order($order)->paginate($nums, false,['query'=>$_GET]);
         return $goods;
     }
 
