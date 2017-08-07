@@ -96,11 +96,11 @@
                         {if $login_user}
                             <!--登录成功之后-->
                             <div class="admin-ming">
-                                  <span class="fr baiid" ><img src="/static/index/images/baiid.png" alt="" ></span>
+                                  <span class="fr baiid" ><a href="{:url('user/index')}" ><img src="/static/index/images/baiid.png" alt="" ></a></span>
                                   <span class="fl f12 ming" ><a href="{:url('user/index')}" >个人中心</a></span>
                             </div>
                             <div class="admin-an" style="position: absolute;" id="admin-an">
-                                  <span class="fr baiid" ><img src="/static/index/images/exit.png" alt="" ></span>
+                                  <span class="fr baiid" ><a href="{:url('login/logout')}" ><img src="/static/index/images/exit.png" alt="" ></a></span>
                                   <span class="fl f12 ming" ><a href="{:url('login/logout')}" >退出登录</a></span>  
                             </div>
                         {else}

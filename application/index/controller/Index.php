@@ -42,7 +42,7 @@ class Index extends Common{
                 $diff_times = $type == 1 ? $val['end_time'] : $val['show_time'];
                 $extends[$id]['diff_times'] = date('m/d/Y H:i:s', $diff_times);
 
-                preg_match('/(.*)\s/', $val['guide_info'], $matches);
+                preg_match('/(.*)\s\S/U', $val['guide_info'], $matches);
                 $extends[$id]['short_guide'] =   $matches ? $matches[1] : '';
             }
         }

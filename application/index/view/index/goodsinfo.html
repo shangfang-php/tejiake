@@ -326,7 +326,7 @@
                             &nbsp;<a href="{$data.link}">{:mb_substr($data.short_title,0,16,'utf-8')}....</a>
                         </span>
                         {if $data.type == 2}
-                            <span class="canjia fl {if $data.is_tmall==1}jhs{else}tqg{/if}">正在参加{if $data.is_tmall==1}聚划算{else}淘抢购{/if}</span>
+                            <span class="canjia fl {if $data.is_tmall==1}jhs{else}tqg{/if}">正在参加{if $data.activity_type==1}聚划算{else}淘抢购{/if}</span>
                         {/if}
                     </h1>
                     <input type="hidden" name="gid" id="gid" value="{$data.id}">
