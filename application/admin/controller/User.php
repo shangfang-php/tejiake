@@ -200,6 +200,7 @@ class User extends Common{
             'phone'      =>$param['phone'],
             'password'   =>Md5($param['password']),
             'login_ip'   =>request()->ip(),
+            'secret_key' =>makeSecretKey(),
             'login_time' =>time(),
             'create_time'=>time(),
         );
@@ -218,7 +219,11 @@ class User extends Common{
      * */
     public function editUserPwd(){
         $editid = input('post.editid');
+        $userinfo = Db::name('user')->find($editid);
         $editpwd = Md5(input('post.editpwd'));
+        if($editpwd == $userinfo['password']){
+            return json_encode(array('status'=>0,'msg'=>'不可与原密码一样'));
+        }
         $res = Db::name('user')->where(['id'=>$editid])->update(['password'=>$editpwd]);
         if($res){
             return json_encode(array('status'=>1,'msg'=>'成功'));
@@ -250,11 +255,19 @@ class User extends Common{
             ];
             //echo '<pre>';
             //print_r($data_merchant);exit;
+            Db::startTrans();
             if($type != $userinfo['type']){
-                Db::name('user')->where(['id'=>$uid])->update($data_user);
+                $res1 = Db::name('user')->where(['id'=>$uid])->update($data_user);
+                if(!$res1){
+                    Db::rollback();
+                }
             }
-             Db::name('merchant_apply_record')->where(['uid'=>$uid])->update($data_merchant);
-             echo '<script> window.location.href = history.go(-1);</script>';exit;
+            $res2 = Db::name('merchant_apply_record')->where(['uid'=>$uid])->update($data_merchant);
+            if(!$res2){
+                Db::rollback();
+            }
+            Db::commit();
+            echo '<script> window.location.href = history.go(-1);</script>';exit;
 
         }else{
             //获取用户信息

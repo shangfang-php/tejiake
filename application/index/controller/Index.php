@@ -480,15 +480,21 @@ class Index extends Common{
         }
 
 
-        $where      =   array('uid'=>$uid, 'status'=>2);
-        $goods_data =   Db::table('goods')->where($where)->paginate();
-
-        $data       =   array(
+        $where       =   array('uid'=>$uid, 'status'=>2);
+        $goods_data  =   Db::table('goods')->where($where)->paginate(12, false, [
+                                     'query' => request()->param(),
+                                ]);
+            $nums    =   $goods_data->total();//统计数量
+        $create_time =   $user_info['create_time'];
+        $times       =   ceil(time()-$create_time/86400);//入驻天数
+        $data        =   array(
                             'goods_data'    =>  $goods_data,
                             'web_title'     =>  '团队展示',
                             'team_info'     =>  $team_info,
                             'user_info'     =>  $user_info,
                             'goods_type'    =>  '',
+                            'nums'          =>  $nums,
+                            'times'         =>  $times,
                         );
         $this->assign($data);
         return $this->fetch();
