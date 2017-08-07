@@ -1,0 +1,129 @@
+{include file="public/header" /}
+<!-- 加载每个页面内容-->
+<div class="buin-content">
+    <div class="buin-dec">
+        <p><img src="/images/tou.png" alt=""></p>
+        <p class="f20">好嘛 <span style="  font-size: 12px;     padding: 2px 4px 1px 4px; background: #1a99fb;
+    color: #fff;
+    border-radius: 2px;
+   ">团队</span></p>
+        <p class="f14" style="line-height: 44px;">QQ:{$team_info->qq} （月收入:{$team_info->month_income}）</p>
+        <p class="f14">{$team_info->introduce}</p>
+        <p class="ruzhu f18">入驻时间 <span>{$times}天</span> / 在线商品 <span>{$nums}个</span></p>
+    </div>
+</div>
+        <div class="con">
+            <div class="content"> 
+                <div class="good">
+                    <div class="good-list">
+                        <ul>
+                            {foreach $goods_data as $val}
+                                <li data_id="{$val.id}">
+                                    <div class="good-img">
+                                        <a href="/item?id={$val.id}" target="_blank"><img src="{$val.main_img}"></a>
+                                    </div>
+                                    <div class="good-collect">
+                                        <a  href="javascript:;" class="add_cart_large btnCart"><img src="/static/index/images/sc.png" alt=""></a>
+                                    </div>
+                                    <div class="good-title">
+                                        <a href="/item?id={$val.id}" title="{$val.short_title}" target="_blank">
+                                            <i class="{if $val.is_tmall}icon-tianmao{else}tk-icon-14{/if}">
+                                            </i>
+                                            {$val.title}
+                                        </a>
+                                    </div>
+                                    <div class="good-fit">
+                                        <div class="quan fl">
+                                            ￥{:sprintf("%.2f",$val.coupon_money)}&nbsp;
+                                        </div>
+                                        <div class="charges f12 fl">
+                                            <img src="/static/index/images/yj.png" alt="">
+                                            佣金
+                                            <span class="a3">
+                                                ￥{:sprintf('%0.2f',$val.taoke_money)}
+                                            </span>
+                                        </div>
+                                        <div class="plan f12 fl">
+                                            <img src="/static/index/images/jih.png" alt="">
+                                            计划
+                                            <span class="a3">
+                                                {:round($val.taoke_money_percent)}%
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="good-yu f12">
+                                        <span class="fl">
+                                            全部{$val.coupon_total_num}
+                                        </span>
+                                    </div>
+
+                                    <div class="good-bar">
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: 100%; background: #f66d25;height: 3px;">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="good-sales">
+                                        <div class="xiao fr f12">
+                                            销量&nbsp;{$val.sell_num}
+                                        </div>
+                                    </div>
+                                    <div class="good-line"></div>
+                                    <div class="good-price">
+                                        <div class="fl f14">
+                                            券后
+                                            <span class="f20 price">
+                                                ￥{:sprintf('%0.2f',$val.real_money)}
+                                            </span>
+                                        </div>
+                                        <input class="fz fr copy f12" type="button" value=" 复制文案">
+                                        </input>
+                                    </div>
+
+                                    <div class="yin">
+                                        <div class="good-line">
+                                        </div>
+                                        <div class="good-jian">
+                                            <p class="f12">
+                                                <span class="f12">
+                                                    推荐：
+                                                </span>
+                                                {$val.guide_info}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="good-wenan fm">
+                                        <div class="media-text-area f12 copy{$val.id}">
+                                            <img class='' src='{$val.main_img}'
+                                            style='width:66px;'>
+                                            <br/>
+                                            {$val.short_title}
+                                            <br>
+                                            【在售价{:sprintf('%0.2f',$val.price)}元，券后价{:sprintf('%0.2f',$val.real_money)}元】
+                                            <br/>
+                                            领券：{$val.coupon_link}
+                                            <br>
+                                            下单：{$val.link}
+                                            <br>
+                                            {$val.guide_info}
+                                        </div>
+                                    </div>
+
+                                </li>
+                            {/foreach}
+                              <div id="flyItem" class="fly_item">
+                                    <img src="/images/sc.png" width="40" height="40">
+                              </div>
+                            <div class="clear"></div>
+                        </ul>
+                    </div>
+                </div>
+                <div class="page">
+                      {$goods_data->render()}
+                </div>
+            </div>
+        </div>  
+{include file="public/footer" /}
