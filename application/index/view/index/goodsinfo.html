@@ -317,17 +317,23 @@
 
                 <div class="choice-dec fl">
                     <h1>
-                        {if condition="$data.is_tmall eq 1"}<!--天猫-->
-                        <img style="width: 23px;height: 23px;" src="__STATIC__/index/images/tianmao.png" alt="">
-                        {else/}
-                        <img src="__STATIC__/index/images/tao.png" alt="">
+                        <span style="display: block;width: 70%;overflow: hidden;height: 30px" class="fl">
+                            {if condition="$data.is_tmall eq 1"}<!--天猫-->
+                            <img style="width: 23px;height: 23px;" src="__STATIC__/index/images/tianmao.png" alt="">
+                            {else/}
+                            <img src="__STATIC__/index/images/tao.png" alt="">
+                            {/if}
+                            &nbsp;<a href="{$data.link}">{:mb_substr($data.short_title,0,16,'utf-8')}....</a>
+                        </span>
+                        {if $data.type == 2}
+                            <span class="canjia fl {if $data.is_tmall==1}jhs{else}tqg{/if}">正在参加{if $data.is_tmall==1}聚划算{else}淘抢购{/if}</span>
                         {/if}
-                        &nbsp;{$data.short_title}</h1>
+                    </h1>
                     <input type="hidden" name="gid" id="gid" value="{$data.id}">
                     <div class="qu-qu-qu">
                         <p class="fl f14" style=" margin-left: 15px;">
                             券后 <span style="color: #fe5c30;font-size: 36px;">
-                    ￥{$data.real_money}&nbsp;&nbsp;</span>原价：<i>{$data.price}</i>
+                    ￥{:round($data.real_money,2)}&nbsp;&nbsp;</span>原价：<i>{:round($data.price,2)}</i>
                             <!--   <span class="f14 ac fr" style="    margin-left: 88px;">
                               销量 1212</span> -->
                         </p>

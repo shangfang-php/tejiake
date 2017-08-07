@@ -2400,17 +2400,12 @@ border-radius: 7px;
 	width: 68px;
 	height: 68px;
 }
-.you-content .choice-dec{
-	text-align: left;
-	    width: 458px;
-	margin-left: 20px;
-	height: 400px;
-	
-}
+
 .you-content .choice-dec h1{
 	font-weight: normal;
 	font-size: 16px;
 	margin-bottom: 15px;
+	height: 30px;
 }
 .you-content .choice-dec .qu-qu-qu{
 	background: url('../images/quanhou.png') no-repeat center center;
@@ -2627,4 +2622,27 @@ border-radius: 7px;
 }
 .lanlan{
 	color: #188ae2!important;
+}
+
+.you-content .choice-dec h1 .jhs{
+	position: absolute;
+	/* right: 0; */
+	color: #fff;
+	width: 114px;
+	text-align: center;
+	line-height: 24px;
+	background: url('../images/jhs.png') no-repeat center center;
+	height: 24px;
+	font-size: 14px;
+}
+.you-content .choice-dec h1 .tqg{
+	position: absolute;
+	/* right: 0; */
+	color: #fff;
+	width: 114px;
+	text-align: center;
+	line-height: 24px;
+	background: url('../images/tqg.png') no-repeat center center;
+	height: 24px;
+	font-size: 14px;
 }
