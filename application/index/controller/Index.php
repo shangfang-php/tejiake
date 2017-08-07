@@ -436,9 +436,9 @@ class Index extends Common{
             } else {
                 $where['title'] = array('like', '%'.$keywords.'%');//模糊查询
             }
-
+            $where['status']    =   2;
             $goods_list = $goods->where($where)//分页带查询条件
-                                    ->paginate(12, false, [
+                                    ->paginate(40, false, [
                                      'query' => request()->param(),
                                 ]);
             $nums   =   $goods_list->total();//统计数量
