@@ -8,11 +8,15 @@
         <div class="fr user-main">
             <div class="load-box f14">
                 <p>
+                    {if condition='$common_type eq 1'}
                     <span>宝贝链接：</span>
-                    <input id="goods_link" type="text" placeholder="请输入或粘贴宝贝链接" require="true" autofocus="">
+                    {else/}
+                    <span>营销计划链接：</span>
+                    {/if}
+                    <input id="goods_link" type="text" placeholder="请输入或粘贴链接" require="true" autofocus="">
                     <input type="button" name="" value="获取商品信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;" onclick="check_goods()">
                 </p>
-                
+
                 <p style="display: {if $common_type == 1}block{else}none{/if}"> 
                    <span>优惠券链接：</span><input type="text" id="coupon_link" require="true" placeholder="如：https://shop.m.taobao.com/shop/coupon.htm?sellerId=12345…">
                    <input type="button" name="" value="获取信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;" onclick="get_coupon_info()">
@@ -311,7 +315,7 @@
             var link    =   $('#goods_link').val();
             var preg    =   /s.click.taobao.com\/[a-zA-Z0-9]{7,}\??/;
             if(!preg.test(link)){
-                msg_show('请输入营销计划链接!');
+                msg_show('请输入正确的营销计划链接!');
                 return false;
             }
             var url     =   '/index/publish/get_yingxiao_goods';
@@ -518,14 +522,19 @@
             return false;
         }
 
-        data.coupon_link     =   $('#coupon_link').val();
-        if(!data.coupon_link){
-            msg_show('请输入优惠券链接!');
-            return false;
-        }
-
         if(data.common_type == 1){ //普通计划需要优惠券链接
             data.plan_type       =   $('.plan_type .jihuaclass').attr('data');
+            //移动 2017-8-7
+            data.coupon_link     =   $('#coupon_link').val();
+            if(!data.coupon_link){
+                msg_show('请输入优惠券链接!');
+                return false;
+            }
+        }
+        var goods_title = $('#goods_title').val();
+        if(!goods_title){
+            msg_show('请获取商品信息!');
+            return false;
         }
         var long_img        =   $('#imghead').attr('src');
         preg                =   /shangc\.png/;
@@ -713,15 +722,20 @@
         $(className+' input').each(function(i){
             var require     =   $(this).attr('require');
             if(require){
-                var value = $(this).val();
-                if(!value){
-                    var input_name = $(this).siblings('span').html();
-                    msg_show(input_name+'不能为空!');
-                    $(this).select();
-                    check = false;
-                    return false;
+                var common_type = $('#common_type').val();
+                if(common_type != 2 && $(this).attr('id')!='coupon_link'){
+                    var value = $(this).val();
+                    if(!value){
+                        var input_name = $(this).siblings('span').html();
+                        msg_show(input_name+'不能为空!');
+                        $(this).select();
+                        check = false;
+                        return false;
+                    }
                 }
+
             }
+
         });
         return check;
     }
