@@ -323,7 +323,7 @@
                             {else/}
                             <img src="__STATIC__/index/images/tao.png" alt="">
                             {/if}
-                            &nbsp;<a href="{$data.link}">{:mb_substr($data.short_title,0,16,'utf-8')}....</a>
+                            &nbsp;<a target="_blank" href="{$data.link}">{:mb_substr($data.short_title,0,16,'utf-8')}....</a>
                         </span>
                         {if $data.type == 2}
                             <span class="canjia fl {if $data.activity_type==1}jhs{else}tqg{/if}">正在参加{if $data.activity_type==1}聚划算{else}淘抢购{/if}</span>
