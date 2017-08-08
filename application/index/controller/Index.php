@@ -435,22 +435,14 @@ class Index extends Common{
         $keywords = trim(input('get.keywords'));
         //var_dump($keywords);exit;
         if ( empty($keywords) ) {
-
             $this->redirect('index/index');
-
         } else {
-
-            if (strpos($keywords, 'tmall')||strpos($keywords, 'taobao')) {
-                $keywords = getGoodsId($keywords);//调用自定义函数，获取商品id
-                if (isset($res)) {
-
-                $where['taobao_goodsId'] = array('eq', $keywords);//根据ID查询
-                    
-                }
-                
+            if (strpos($keywords, 'tmall')!==false||strpos($keywords, 'taobao')!==false) {
+                    $keywords = getGoodsId($keywords);//调用自定义函数，获取商品id
+                    // var_dump($keywords); 
             }
             if ( is_numeric($keywords) ) {
-                $where['taobao_goodsId'] = array('eq', $keywords);//根据ID查询
+                $where['taobao_goodsId'] = $keywords;//根据ID查询
             } else {
                 $where['title'] = array('like', '%'.$keywords.'%');//模糊查询
             }
@@ -460,6 +452,7 @@ class Index extends Common{
                                     ->paginate(40, false, [
                                      'query' => request()->param(),
                                 ]);
+            echo Db::table('goods')->getLastSql();
             $nums   =   $goods_list->total();//统计数量
             $data   =   array(
                             'goods_list'    =>  $goods_list,
