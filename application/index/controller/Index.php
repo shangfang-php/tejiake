@@ -172,6 +172,8 @@ class Index extends Common{
                 $where['show_time'] =   ['>', time()];
                 $order              =   ['show_time'=>'asc']; ##快开始的优先
             }
+        }else if($goodsType==1){
+                $order  =   ['is_top'=>'desc', 'is_collection'=>'asc', 'id'=>'desc'];
         }else{
             $order  =   ['id'=>'desc'];
         }
@@ -323,8 +325,10 @@ class Index extends Common{
             'username'=>$username,
             'memberid'=>$memberid
         ];
+        print_r($param1);exit;
         $dat1 = request_post("http://api.00o.cn/info.php",$param1);
         $data1 = json_decode($dat1,true);
+        print_r($data1);exit;
         if($data1['code'] == 1){//200
             //成功 轉鏈 根据高佣API获取当前商品数据
             /*
