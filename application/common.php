@@ -182,6 +182,7 @@ function getGoodsId($url){
     return $matches ? $matches[1] : '';
 }
 
+
 /**
  * 获取优惠券信息
  * @return [type] [description]
