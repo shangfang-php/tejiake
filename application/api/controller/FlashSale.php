@@ -109,6 +109,7 @@ class FlashSale extends Controller{
 		$data['plan_type']			=	2; ##通用计划
 		$data['create_time']		=	time();
 		$data['type']				=	$type;
+		$data['is_collection']		=	1; ##标识采集字段
 
 		return array('data'=>$data, 'images_arr'=>$images_arr);
 	}
