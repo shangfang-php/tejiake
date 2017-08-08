@@ -225,6 +225,66 @@ class Goods extends Controller{
 		return returnAjaxMsg('200','更新成功');
 	}
 
+	/**
+	 * 获取商品上次销量记录时间
+	 * @Author   Gary
+	 * @DateTime 2017-08-08T16:00:14+0800
+	 * @return   [type] [description]
+	 */
+	function get_goods_sell_time(){
+		$return 	=	array();
+		$itemId 	=	intval(trim(input('post.gid')));
+		$where 		=	array('a.id'=>['>', $itemId], 'a.status'=>2);
+		$field 		=	'a.id,a.create_time,b.time';
+		$goods_info =	Db::table('goods')->alias('a')->join('goods_sell_num_records b', 'a.id = b.gid', 'left')
+						->field($field)->where($where)->order('a.id', 'asc')->select();
+		if(!empty($goods_info)){
+			foreach($goods_info as $val){
+				$gid 	=	$val['id'];
+				$time 	=	$val['time'] ? $val['time'] : $val['create_time'];
+				!$time && $time = strtotime('-50 minutes');
+				$return[]	=	['gid'=>$gid, 'time'=>$time];
+			}
+		}
+		return returnAjaxMsg('200', '拉取成功', ['data'=>$return]);
+	}
+
+	/**
+	 * 接收商品销量信息
+	 * @Author   Gary
+	 * @DateTime 2017-08-08T16:33:35+0800
+	 * @return   [type]                   [description]
+	 */
+	function receive_goods_sell_nums(){
+		$return 	=	array();
+		$gid 		=	intval(trim(input('post.gid')));
+		$sell_num 	=	intval(trim(input('post.nums')));
+		if(!$gid){
+			return returnAjaxMsg('601', '未传递gid');
+		}
+
+		if(!$sell_num){
+			return returnAjaxMsg('602','未传递销量');
+		}
+
+		$where 	=	array('gid'=>$gid);
+		$res 	=	Db::table('goods_sell_num_records')->field('gid,sell_num')->where($where)->find();
+		if(!$res){
+			$two_hour_sell_num	=	$sell_num - $res['sell_num'];
+			$info 	=	Db::table('goods_sell_num_records')->where($where)->update(['sell_num'=>$sell_num,'time'=>time()]);
+			$info 	=	Db::table('goods')->where('id', $gid)->update(['two_hour_sell_num'=>$two_hour_sell_num]);
+		}else{
+			$info 	=	Db::table('goods_sell_num_records')->insert(['gid'=>$gid,'sell_num'=>$sell_num,'time'=>time()]);
+		}
+
+		if($info === false){
+			return returnAjaxMsg('603', '更新销量失败!');
+		}else{
+			return returnAjaxMsg('200', '更新销量成功!');
+		}
+
+	}
+
 }
 
 ?>
