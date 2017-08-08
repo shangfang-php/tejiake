@@ -235,7 +235,7 @@ class Goods extends Controller{
 		$return 	=	array();
 		$itemId 	=	intval(trim(input('post.gid')));
 		$where 		=	array('a.id'=>['>', $itemId], 'a.status'=>2);
-		$field 		=	'a.id,a.create_time,b.time';
+		$field 		=	'a.id,a.create_time,b.time,a.taobao_goodsId as itemId';
 		$goods_info =	Db::table('goods')->alias('a')->join('goods_sell_num_records b', 'a.id = b.gid', 'left')
 						->field($field)->where($where)->order('a.id', 'asc')->select();
 		if(!empty($goods_info)){
@@ -243,7 +243,7 @@ class Goods extends Controller{
 				$gid 	=	$val['id'];
 				$time 	=	$val['time'] ? $val['time'] : $val['create_time'];
 				!$time && $time = strtotime('-50 minutes');
-				$return[]	=	['gid'=>$gid, 'time'=>$time];
+				$return[]	=	['gid'=>$gid, 'itemId'=>$val['itemId'],'time'=>$time];
 			}
 		}
 		return returnAjaxMsg('200', '拉取成功', ['data'=>$return]);
