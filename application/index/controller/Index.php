@@ -452,7 +452,7 @@ class Index extends Common{
                                     ->paginate(40, false, [
                                      'query' => request()->param(),
                                 ]);
-            echo Db::table('goods')->getLastSql();
+            // echo Db::table('goods')->getLastSql();
             $nums   =   $goods_list->total();//统计数量
             $data   =   array(
                             'goods_list'    =>  $goods_list,
