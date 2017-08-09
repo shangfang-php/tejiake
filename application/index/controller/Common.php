@@ -8,9 +8,8 @@ class Common extends Controller{
 	public static $code       = 0;
 	public static $msg        = '';
     public function _initialize(){
-    	self::$login_user	=	session('taoke_user');
+        $this->check_cookie_username();
     	if(self::$login_user){
-    		self::$login_user 	=	Db::table('user')->find(self::$login_user['id']);
             //获取当前收藏数目
             $collect_count = Db::name('goods_collect')->where(['uid'=>self::$login_user['id'],'is_spread'=>0])->count();
             $this->assign('collect_count', $collect_count);
@@ -25,5 +24,26 @@ class Common extends Controller{
                         );
     	
         $this->assign($data);
+    }
+
+    /**
+     * 检测cookie里的手机号和密码是否正确
+     * @Author   Gary
+     * @DateTime 2017-08-09T15:14:35+0800
+     * @return   [type]                   [description]
+     */
+    function check_cookie_username(){
+        $cookie_phone       =   cookie('phone');
+        $cookie_sign        =   cookie('sign');
+        if($cookie_phone && $cookie_sign){
+            $userInfo   =   Db::table('user')->where('phone', $cookie_phone)->find(); ##获取用户信息
+            if($userInfo){
+                $password   =   $userInfo['password']; 
+                $current_sign=  cookie_encode($password); ##获取加密之后的密码
+                if($current_sign == $cookie_sign){ ##检测是否与cookie中的一致
+                    self::$login_user   =   $userInfo;
+                }
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 namespace app\index\controller;
 use think\Controller;
 use think\Session;
+use think\Cookie;
 use think\Db;
 /**
  * 登录类
@@ -211,7 +212,10 @@ class Login extends Controller{
 
         $info   =   Db::table('user')->where(array('id'=>$phoneInfo['id']))->update($data);
         if($info !== FALSE){
-            Session::set('taoke_user', $phoneInfo);
+            $cookie_time    =   $isSaveUser ? 86400 * 365 : 86400;
+            $sign           =   cookie_encode($phoneInfo['password']); ##密码加密
+            Cookie::set('phone', $phone, $cookie_time);
+            Cookie::set('sign', $sign, $cookie_time);
             $code = 200;
             $msg  = '登录成功!';
         }else{
@@ -226,7 +230,9 @@ class Login extends Controller{
      * @return [type] [description]
      */
     function logout(){
-        Session::set('taoke_user', NULL);
+        //Session::set('taoke_user', NULL);
+        Cookie::delete('phone');
+        Cookie::delete('sign');
         $this->redirect('/');
     }
 
