@@ -11,7 +11,7 @@ class Common extends Controller{
         $this->check_cookie_username();
     	if(self::$login_user){
             //获取当前收藏数目
-            $collect_count = Db::name('goods_collect')->where(['uid'=>self::$login_user['id'],'is_spread'=>0])->count();
+            $collect_count = Db::name('goods_collect')->where(['uid'=>self::$login_user['id'],'is_spread'=>0,'is_delete'=>0])->count();
             $this->assign('collect_count', $collect_count);
     	}
 
