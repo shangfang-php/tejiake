@@ -230,7 +230,9 @@ class Login extends Controller{
      * @return [type] [description]
      */
     function logout(){
-        Session::set('taoke_user', NULL);
+        //Session::set('taoke_user', NULL);
+        Cookie::delete('phone');
+        Cookie::delete('sign');
         $this->redirect('/');
     }
 
