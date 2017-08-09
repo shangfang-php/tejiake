@@ -60,13 +60,14 @@
                     {if condition="$data.is_tmall eq 1"}<!--天猫-->
                     <img style="width: 23px;height: 23px;" src="__STATIC__/index/images/tianmao.png" alt="">
                     {else/}
-                    <img src="__STATIC__/index/images/tao.png" alt="">
+                    <img src="__STATIC__/index/images/tao.png" alt="" style="width: 26px;
+    height: 26px;">
                     {/if}&nbsp;&nbsp;
                 </div>                 
             </div>
 
             <div class="xiang-fit">
-               <div class="quan fl">￥{:sprintf('%0.2f',$data.coupon_money)}</div>
+               <div class="quan fl"><span>￥{:sprintf('%0.2f',$data.coupon_money)}</span></div>
                <div class="fr f12 ac">已领取:&nbsp;{$data.coupon_apply_num}/{$data.coupon_total_num}&nbsp;</div>
             </div>
 
