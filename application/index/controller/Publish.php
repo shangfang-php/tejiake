@@ -399,7 +399,7 @@ class Publish extends UserCommon{
 		preg_match('/me=(.+)&?/', $coupon_link, $matches);
 		if(empty($matches)){
 			self::$code 	=	799;
-        	self::$msg 		=	'地址不正确!';
+        	self::$msg 		=	'非营销计划链接!';
         	return false;
 		}
         $param_me 	=	$matches[1];
