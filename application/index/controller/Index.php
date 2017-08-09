@@ -320,13 +320,13 @@ class Index extends Common{
         $memberid = $pid_arr[1];
         //print_r(md5($username."eeetui"));
         $param1 = [
-            'username'=> 'liuhuanpeng',
-            'password'=> md5("liuhuanpengeeetui"),// MyConvertClass.md5(MainForm.AliUserName + "eeetui", 32)
+            'username'=> $username,
+            'password'=> md5($username."eeetui"),// MyConvertClass.md5(MainForm.AliUserName + "eeetui", 32)
             'memberid'=> ''//'16356866'
         ];
         $dat1 = request_post("http://api.00o.cn/user.php",$param1);
         $data1 = json_decode($dat1,true);
-        //return returnAjaxMsg(105,$dat1);
+        //return returnAjaxMsg(105,md5($username."eeetui"));
         if($data1['code'] == 1002){//200
             //成功 轉鏈 根据高佣API获取当前商品数据
             /*
@@ -344,9 +344,9 @@ class Index extends Common{
             $site_id = $pid_arr[2];
             $param2 = [ //mm_24014030_14752654_57680521
                 'token'=>$data1['data']['token'],
-                'item_id'=> '545431199680',
-                'adzone_id'=> '57680521',// '70142930',
-                'site_id'=> '14752654'//'20660596',
+                'item_id'=> $item_id,
+                'adzone_id'=> $adzone_id,// '70142930',
+                'site_id'=> $site_id//'20660596',
             ];
             //return returnAjaxMsg(105,json_encode($param2));
             $dat2 = request_post("http://tbapi.00o.cn/highapi.php",$param2);
