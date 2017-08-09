@@ -520,11 +520,11 @@
             msg_show('请输入商品链接!');
             return false;
         }
-
+        data.coupon_link     =   $('#coupon_link').val();
         if(data.common_type == 1){ //普通计划需要优惠券链接
             data.plan_type       =   $('.plan_type .jihuaclass').attr('data');
             //移动 2017-8-7
-            data.coupon_link     =   $('#coupon_link').val();
+
             if(!data.coupon_link){
                 msg_show('请输入优惠券链接!');
                 return false;
