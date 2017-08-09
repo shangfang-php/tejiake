@@ -60,6 +60,15 @@ class FlashSale extends Controller{
 			Db::rollback();
 			return returnAjaxMsg('305', '保存图片失败!');
 		}
+
+		if($goods_data['type'] == 5){ ##视频单
+			$video_url 	=	trim(input('post.video_url'));
+			$info 	=	saveGoodsVideInfo(1, $insertId, $video_url);
+			if(!$info){
+				Db::rollback();
+				return returnAjaxMsg('306', '保存视频信息失败！');
+			}
+		}
 		Db::commit();
 		return returnAjaxMsg('200', '保存成功!');
 	}
