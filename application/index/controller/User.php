@@ -197,7 +197,7 @@ class User extends UserCommon{
 	function return_auth(){
 		$json	=	$_GET['json'];
 		if($json){
-			echo '<script type="text/javascript">window.parent.location.reload();</script>';
+			echo '<script type="text/javascript">window.location.href = "/Index/User/set";</script>';
 			exit;
 		}
 	}
