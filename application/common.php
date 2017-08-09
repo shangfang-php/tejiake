@@ -563,3 +563,14 @@ function curlGetLocation($url){
     curl_close($ch);
     return $redirectURL;
 }
+
+/**
+ * 加密cookie保存的用户名
+ * @Author   Gary
+ * @DateTime 2017-08-09T14:41:28+0800
+ * @param    [type]                   $username [description]
+ * @return   [type]                             [description]
+ */
+function cookie_encode($str){
+    return sha1(base64_encode($str));
+}
