@@ -172,6 +172,8 @@ class Index extends Common{
                 $where['show_time'] =   ['>', time()];
                 $order              =   ['show_time'=>'asc']; ##快开始的优先
             }
+        }else if($goodsType==1){
+                $order  =   ['is_top'=>'desc', 'is_collection'=>'asc', 'id'=>'desc'];
         }else{
             $order  =   ['id'=>'desc'];
         }
@@ -434,23 +436,26 @@ class Index extends Common{
     public function search(){
         $web_title          =   '搜索';    
         $keywords = trim(input('get.keywords'));
-        $goods = Db::name('goods');
         //var_dump($keywords);exit;
         if ( empty($keywords) ) {
             $this->redirect('index/index');
-            //return file_get_contents(url('index/index/index','',true,true)); 
         } else {
-
+            if (strpos($keywords, 'tmall')!==false||strpos($keywords, 'taobao')!==false) {
+                    $keywords = getGoodsId($keywords);//调用自定义函数，获取商品id
+                    // var_dump($keywords); 
+            }
             if ( is_numeric($keywords) ) {
-                $where['taobao_goodsId'] = array('eq', $keywords);//根据ID查询
+                $where['taobao_goodsId'] = $keywords;//根据ID查询
             } else {
                 $where['title'] = array('like', '%'.$keywords.'%');//模糊查询
             }
             $where['status']    =   2;
+            $goods = Db::name('goods');
             $goods_list = $goods->where($where)//分页带查询条件
                                     ->paginate(40, false, [
                                      'query' => request()->param(),
                                 ]);
+            // echo Db::table('goods')->getLastSql();
             $nums   =   $goods_list->total();//统计数量
             $data   =   array(
                             'goods_list'    =>  $goods_list,

@@ -14,12 +14,12 @@
                     <span>营销计划链接：</span>
                     {/if}
                     <input id="goods_link" type="text" placeholder="请输入或粘贴链接" require="true" autofocus="">
-                    <input type="button" name="" value="获取商品信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;" onclick="check_goods()">
+                    <a><input type="button" name="" value="获取商品信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;cursor: pointer;" onclick="check_goods()"></a>
                 </p>
 
                 <p style="display: {if $common_type == 1}block{else}none{/if}"> 
                    <span>优惠券链接：</span><input type="text" id="coupon_link" require="true" placeholder="如：https://shop.m.taobao.com/shop/coupon.htm?sellerId=12345…">
-                   <input type="button" name="" value="获取信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;" onclick="get_coupon_info()">
+                     <a><input type="button" name="" value="获取信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;cursor: pointer;" onclick="get_coupon_info()"></a>
                 </p>
             
                 <!--隐藏部分-->
@@ -122,9 +122,8 @@
                                 <input id='video_url' type="text" placeholder="如：http://tbm.alicdn.com/64LKfg7lcDXkcInqCcz/UPZMxV01EEqZkt6fDUM%40%40ud.mp4" style="width:600px;">
                             </p>
                         {/if}
-                        <p><span>导购文案</span><textarea id="guide_info" name="" placeholder="请输入文案，在100个字以内"></textarea></p>
                     {/if}
-
+                    <p><span>导购文案</span><textarea id="guide_info" name="" placeholder="请输入文案，在100个字以内"></textarea></p>
                     {if in_array($goods_type,[2])}
                     <p>
                         <span>链接开放时间：</span>

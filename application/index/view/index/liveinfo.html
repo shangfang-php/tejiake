@@ -45,7 +45,7 @@
                    
                   </div>
                   <div class="line fl">
-                    <a href="/index/goods/index.html"><p class="f12">在线商品<br/><span class="f16">{$data.line_goods_num}款</span></p>《</a>
+                    <a href="/index/goods/index.html"><p class="f12">在线商品<br/><span class="f16">{$data.line_goods_num}款</span></p></a>
                       
                   </div>
                    
@@ -54,29 +54,30 @@
 
             <div class="xiang-price">
                 <div class="fl f12">券后
-                      <span class="f20 price">￥{$data.real_money} </span>
+                      <span class="f20 price">￥{:round($data.real_money,2)} </span>
                 </div>
                 <div class="fr">
                     {if condition="$data.is_tmall eq 1"}<!--天猫-->
                     <img style="width: 23px;height: 23px;" src="__STATIC__/index/images/tianmao.png" alt="">
                     {else/}
-                    <img src="__STATIC__/index/images/tao.png" alt="">
+                    <img src="__STATIC__/index/images/tao.png" alt="" style="width: 26px;
+    height: 26px;">
                     {/if}&nbsp;&nbsp;
                 </div>                 
             </div>
 
             <div class="xiang-fit">
-               <div class="quan fl">￥{$data.coupon_money}</div>
+               <div class="quan fl"><span>￥{:sprintf('%0.2f',$data.coupon_money)}</span></div>
                <div class="fr f12 ac">已领取:&nbsp;{$data.coupon_apply_num}/{$data.coupon_total_num}&nbsp;</div>
             </div>
 
             <div class="xiang-chan f12">
             <div class="changes fl">
-             佣金：<span style="color: #333;">￥{$data.taoke_money}</span>
+             佣金：<span style="color: #333;">￥{:round($data.taoke_money,2)}</span>
                 
             </div>
             <div class="fr plan">
-                计划：{$data.taoke_money_percent}%&nbsp;&nbsp;
+                计划：{:round($data.taoke_money_percent,2)}%&nbsp;&nbsp;
             </div>
                 
             </div>
@@ -163,7 +164,7 @@
                           <img style="width:130px;height: auto" src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
                           <p>
                               {$data.short_title}<br>
-                              【淘抢购{$data.price}元】券后【{$data.real_money}元】<br>
+                              【在售价{:round($data.price,2)}元】券后【{:round($data.real_money,2)}元】<br>
                               领券：<a href="{$data.coupon_link}" target="_blank" class="lan">{$data.coupon_link}</a><br>
                               抢购：<br>
                               <a href="{$data.link}" target="_blank" class="lan">{$data.link}</a><br>
