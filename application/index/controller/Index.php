@@ -172,8 +172,6 @@ class Index extends Common{
                 $where['show_time'] =   ['>', time()];
                 $order              =   ['show_time'=>'asc']; ##快开始的优先
             }
-        }else if($goodsType==1){
-                $order  =   ['is_top'=>'desc', 'is_collection'=>'asc', 'id'=>'desc'];
         }else{
             $order  =   ['id'=>'desc'];
         }
@@ -320,15 +318,15 @@ class Index extends Common{
         $pid = $pidinfo['pid'];
         $pid_arr = explode('_',$pid);
         $memberid = $pid_arr[1];
-        //print_r($memberid);
+        //print_r(md5($username."eeetui"));
         $param1 = [
-            'username'=> $username,//'wanbai2010',
-            'password'=> md5($username."eeetui", 32),// MyConvertClass.md5(MainForm.AliUserName + "eeetui", 32)
-            'memberid'=> $memberid//'16356866'
+            'username'=> $username,
+            'password'=> md5($username."eeetui"),// MyConvertClass.md5(MainForm.AliUserName + "eeetui", 32)
+            'memberid'=> ''//'16356866'
         ];
         $dat1 = request_post("http://api.00o.cn/user.php",$param1);
         $data1 = json_decode($dat1,true);
-        //return returnAjaxMsg(102,$dat1);
+        //return returnAjaxMsg(105,md5($username."eeetui"));
         if($data1['code'] == 1002){//200
             //成功 轉鏈 根据高佣API获取当前商品数据
             /*
@@ -344,16 +342,16 @@ class Index extends Common{
             $item_id = $info['taobao_goodsId'];
             $adzone_id = $pid_arr[3];
             $site_id = $pid_arr[2];
-            $param2 = [
+            $param2 = [ //mm_24014030_14752654_57680521
                 'token'=>$data1['data']['token'],
-                'item_id'=> $item_id,//'545431199680',
-                'adzone_id'=> $adzone_id,//'70142930',
+                'item_id'=> $item_id,
+                'adzone_id'=> $adzone_id,// '70142930',
                 'site_id'=> $site_id//'20660596',
             ];
             //return returnAjaxMsg(105,json_encode($param2));
             $dat2 = request_post("http://tbapi.00o.cn/highapi.php",$param2);
             $data2 = json_decode($dat2,true);
-            //return returnAjaxMsg(105,$data2);
+            //return returnAjaxMsg(105,$dat2);
             //成功返回result 失败返回错误原因
             if(isset($data2['result'])){
                 //获取出转链的短网址---->复制这条信息，￥M4xj01ih3gt￥，打开【手机淘宝】即可领券下单http://00o.cn/4KaGXfB
@@ -436,26 +434,23 @@ class Index extends Common{
     public function search(){
         $web_title          =   '搜索';    
         $keywords = trim(input('get.keywords'));
+        $goods = Db::name('goods');
         //var_dump($keywords);exit;
         if ( empty($keywords) ) {
             $this->redirect('index/index');
+            //return file_get_contents(url('index/index/index','',true,true)); 
         } else {
-            if (strpos($keywords, 'tmall')!==false||strpos($keywords, 'taobao')!==false) {
-                    $keywords = getGoodsId($keywords);//调用自定义函数，获取商品id
-                    // var_dump($keywords); 
-            }
+
             if ( is_numeric($keywords) ) {
-                $where['taobao_goodsId'] = $keywords;//根据ID查询
+                $where['taobao_goodsId'] = array('eq', $keywords);//根据ID查询
             } else {
                 $where['title'] = array('like', '%'.$keywords.'%');//模糊查询
             }
             $where['status']    =   2;
-            $goods = Db::name('goods');
             $goods_list = $goods->where($where)//分页带查询条件
                                     ->paginate(40, false, [
                                      'query' => request()->param(),
                                 ]);
-            // echo Db::table('goods')->getLastSql();
             $nums   =   $goods_list->total();//统计数量
             $data   =   array(
                             'goods_list'    =>  $goods_list,
