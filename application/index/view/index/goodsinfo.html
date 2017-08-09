@@ -323,7 +323,7 @@
                             {else/}
                             <img src="__STATIC__/index/images/tao.png" alt="">
                             {/if}
-                            &nbsp;<a target="_blank" href="{$data.link}">{:mb_substr($data.short_title,0,16,'utf-8')}....</a>
+                            &nbsp;<a target="_blank" href="{$data.link}" title="{$data.short_title}">{:mb_substr($data.short_title,0,16,'utf-8')}....</a>
                         </span>
                         {if $data.type == 2}
                             <span class="canjia fl {if $data.activity_type==1}jhs{else}tqg{/if}">正在参加{if $data.activity_type==1}聚划算{else}淘抢购{/if}</span>
@@ -368,7 +368,7 @@
                     <div class="fl fm-fm" >
                         <p>
                             {$data.short_title}<br>
-                            【淘抢购{$data.price}元】券后【{$data.real_money}元】<br>
+                            【在售价{:round($data.price,2)}元】券后【{:round($data.real_money,2)}元】<br>
                             领券：<a href="{$data.coupon_link}" target="_blank" class="lan">{$data.coupon_link}</a><br>
                             <div id="rob">
                                 抢购：<br>
