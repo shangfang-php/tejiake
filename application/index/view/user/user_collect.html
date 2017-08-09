@@ -191,61 +191,7 @@
 <div id="flyItem" class="fly_item">
     <img src="__STATIC__/index/images/sc.png" width="40" height="40">
 </div>
-<footer>
-    <div class="footer-content">
-        <div class="fl waper">
-            <img src="__STATIC__/index/images/logo.png" alt="">
-            <ul>
-                <li>
-                    <a href="/user/user.html" target="_blank">
-                        个人中心
-                    </a>
-                </li>
-                <li>
-                    <a href="/user/collect.html" target="_blank">
-                        我的收藏
-                    </a>
-                </li>
-                <li>
-                    <a href="/user/fbtg.html" target="_blank">
-                        放单后台
-                    </a>
-                </li>
 
-                <li>
-                    <a href="/user/api.html" target="_blank">
-                        开放API
-                    </a>
-                </li>
-                <li>
-                    <a href="/user/setting.html" target="_blank">
-                        联盟设置
-                    </a>
-                </li>
-                <li>
-                    <a href="/index/news.html" target="_blank">
-                        联系我们
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="fl shu">
-        </div>
-        <div class="fl follow">
-            <h1>
-                特价客的单子至少可以提升你3倍以上的收入
-            </h1>
-            <p class="f12">
-                特价客CopyRight 2017粤ICP备15077059号-4
-            </p>
-        </div>
-        <div class="clear">
-        </div>
-    </div>
-</footer>
-<!--置顶-->
-<div id="scroll">
-</div>
 <!--弹出框-->
 <div class="lbOverlay"  onclick="closeDiv()"></div>
 <form action="" method="post">
@@ -257,26 +203,8 @@
         <p class="san"><input type="button" name="" value="确定" class="fr" id="gettime"></p>
     </div>
 </form>
-<!--收藏 商品数量 quick_links.js控制-->
-<div class="mui-mbar-tabs" id="sc">
-    <div class="quick_links_panel">
-        <div id="quick_links" class="quick_links">
-            <li id="shopCart">
-                <a href="#" class="message_list">
-                    <span class="cart_num">
-                        0
-                    </span>
-                </a>
-            </li>
-        </div>
-    </div>
-</div>
-</body>
-<script  language="javascript" type="text/javascript" src="__STATIC__/index/js/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="__STATIC__/index/js/common.js"></script>
-<script type="text/javascript" src="__STATIC__/index/js/quick_links.js"></script>
-<!--[if lte IE 8]><script src="__STATIC__/index/js/ieBetter.js"> </script><![endif]-->
-<script type="text/javascript" src="__STATIC__/index/js/parabola.js"></script>
+
+{include file="public/footer" /}
 
 <script  language="javascript" type="text/javascript" src="__STATIC__/index/js/jquery-ui-1.8.16.custom.min.js" charset='utf-8'></script>
 <script language="javascript" type="text/javascript" src="__STATIC__/index/js/jquery-ui-timepicker-addon.js" charset='utf-8'></script>
@@ -370,37 +298,14 @@
                 var data = JSON.parse(dat);
                 alert(data.msg);
                 if(data.code == 1){
-                    window.location.href = window.location.href;
+                    //window.location.href = window.location.href;
+                    window.location.reload();
                 }
                 return false;
             });
         }
     }
 
-
-    // 置顶对象点击事件
-    obj.onclick = function() {
-        var timer = setInterval(function() {
-                    window.scrollBy(0, -50);
-                    if (document.body.scrollTop == 0) {
-                        clearInterval(timer);
-                    };
-                },
-                30);
-    }
-
-    // 窗口滚动检测
-    window.onscroll = function() {
-        obj.style.display = (document.body.scrollTop >= 300) ? "block": "none";
-
-    }
-
-
-    //图片懒加载
-    var imgLoad = lazyload.init({
-        anim: true,
-        selectorName: ".lazy"
-    });
 
     //收藏全选
     function choise(value)
@@ -485,35 +390,4 @@
         })
 
     })
-
-
-    //点击搜索
-        function search() {
-
-            var keywords = $("input[name='keywords']").val();
-
-            if( keywords.length == 0 ){
-
-                    alert('请输入商品关键字或者商品ID');
-
-            } else {
-
-                    window.location.href='/index/index/search.html?keywords='+keywords;    
-            }
-
-        }
-
-
-    $('#bb').click( function () {
-
-            $('#bb').attr('placeholder', '');
-
-    } );
-
-    $('#bb').blur( function () {
-
-            $('#bb').attr('placeholder', '请输入商品关键字或者商品ID');
-
-    } );
 </script>
-</html>
