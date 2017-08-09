@@ -111,9 +111,12 @@
 
 
                             </div>
-                            <div class="pic-img fl"><img src="{$vo.main_img}" alt=""></div>
+                            <div class="pic-img fl">
+                                <a href="/item?id={$vo.gid}" target="_blank"><img src="{$vo.main_img}" alt=""></a>
+                            </div>
                             <div class="box-title fl">
-                                <p class="f14"><img src="__STATIC__/index/images/{if $vo.is_tmall}tianmao{else}tao{/if}.png" alt="">{$vo.short_title}</p>
+                                <p class="f14">
+                                <a href="/item?id={$vo.gid}" target="_blank"><img src="__STATIC__/index/images/{if $vo.is_tmall}tianmao{else}tao{/if}.png" alt="">{$vo.short_title}</p></a>
                <span class="ban f14"><img src="__STATIC__/index/images/{if $vo.is_tmall}tianmao{else}tao{/if}.png" alt="" style="width:20px;height: 20px;">
                   {if condition="$vo['type'] eq 1"}
                    <img src="__STATIC__/index/images/BAO.png" alt="">
@@ -129,20 +132,19 @@
                </span>
                             </div>
                             <div class="box-price fl">
-                                <p>￥{:sprintf('%0.2f',$vo.real_money)}<br/><i class="back f12">{:sprintf('%0.2f',$vo.price)}</i></p>
+                                <p>￥{:round($vo.real_money,2)}<br/><i class="back f12">{:round($vo.price,2)}</i></p>
                             </div>
 
                             <div class="box-quan fl">
-                                <p class="quan f12">￥{:sprintf('%0.2f',$vo.coupon_money)}</p>
+                                <p class="quan f12">￥{:round($vo.coupon_money,2)}</p>
                                 <p class="f12 yu">剩余 <i>{$vo.coupon_total_num-$vo.coupon_apply_num}</i>／{$vo.coupon_total_num} </p>
                                 <p class="f12 yu">到期 <i>{$vo.end_time|date='Y-m-d',###}</i></p>
                             </div>
                             <div class="box-price fl">
-                                <p><span class="f14">佣金：</span>{:sprintf('%0.2f',$vo.taoke_money)}元<br/>
+                                <p><span class="f14">佣金：</span>{:round($vo.taoke_money,2)}元<br/>
                                     <!--1定向计划2通用计划3鹊桥4营销计划-->
                                     <i class="back f12">
-                                        计划
-                                        {:round($vo.taoke_money_percent)}%</i>
+                                        计划{:round($vo.taoke_money_percent)}%</i>
                                 </p>
                             </div>
                             <div class=" box-btn fl">
