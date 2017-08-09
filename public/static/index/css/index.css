@@ -448,7 +448,7 @@ nav ul li a .nav-dec p {
     line-height: 18px;
     color: #fff;
 }
-.con .good .good-list ul li .good-taog {
+ .good-taog {
    position: absolute;
     right: 8px;
     top: 5px;

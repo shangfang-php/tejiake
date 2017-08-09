@@ -44,7 +44,7 @@
                         <div class="good-img">
                             <a href="/item?id={$val.id}" target="_blank"><img src="{$val.main_img}"></a>
                         </div>
-                        <div class="good-ppai">
+                        <div class="good-ppai {if $val.activity_type==2}good-taog{/if}">
                             <span class="f12">
                             {if $val.activity_type == 1}聚划算{else}淘抢购{/if}
                             </span>
