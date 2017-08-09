@@ -21,8 +21,10 @@
                         <p class="fl f20">
                             <input class="checkbox" type="checkbox" name="" value="1" checked="checked">&nbsp;爆款单 
                             <i class="f12 red">
+                                {if $mianshen neq null}
                                 {if in_array(1, $mianshen)}
                                 <img src="__STATIC__/index/images/mianshen.png" alt="" style="vertical-align: text-bottom;">
+                                {/if}
                                 {/if}
                                 &nbsp;* 单日领券量在3000张以上或者隔天5000张的领券量才会审核通过。
                             </i>
@@ -30,8 +32,10 @@
                         <p class="fl f20">
                             <input class="checkbox" type="checkbox" name="" value="2">&nbsp;限时抢购 
                             <i class="f12">
+                                {if $mianshen neq null}
                                 {if in_array(2, $mianshen)}
                                 <img src="__STATIC__/index/images/mianshen.png" alt="" style="vertical-align: text-bottom;">
+                                {/if}
                                 {/if}
                                 *  只有正在参加聚划算和淘抢购活动的单子才会审核通过。
                             </i>
@@ -39,8 +43,10 @@
                         <p class="fl f20">
                             <input class="checkbox" type="checkbox" name="" value="4">&nbsp;直播单 
                             <i class="f12">
+                                {if $mianshen neq null}
                                 {if in_array(3, $mianshen)}
                                 <img src="__STATIC__/index/images/mianshen.png" alt="" style="vertical-align: text-bottom;">
+                                {/if}
                                 {/if}
                                 * 请在直播消息中填写商品多条介绍文案，容易转化才会审核通过。
                             </i>
@@ -48,8 +54,10 @@
                         <p class="fl f20">
                             <input class="checkbox" type="checkbox" name=""  value="5">&nbsp;视频单 
                             <i class="f12">* 
+                                {if $mianshen neq null}
                                 {if in_array(4, $mianshen)}
                                 <img src="__STATIC__/index/images/mianshen.png" alt="" style="vertical-align: text-bottom;">
+                                {/if}
                                 {/if}
                                 真人实拍、验货视频、容易转化的视频单子才会审核通过。
                             </i>
@@ -57,8 +65,10 @@
                         <p class="fl f20">
                             <input class="checkbox" type="checkbox" name="" value="3">&nbsp;过夜单 
                             <i class="f12">*  
+                                {if $mianshen neq null}
                                 {if in_array(5, $mianshen)}
                                 <img src="__STATIC__/index/images/mianshen.png" alt="" style="vertical-align: text-bottom;">
+                                {/if}
                                 {/if}
                                 过夜单必须是独家，不通过当天跑过的单子，0点券生效才会审核通过。
                             </i>
