@@ -33,6 +33,10 @@ class Index extends Common{
         ];
         $this->assign($data);
         return $this->fetch();
+/*
+        $real_url 	=	get_headers("https://s.click.taobao.com/euIubdw?pid=mm_0_0_0");
+        echo '<pre>';
+        print_r($real_url);*/
     }
 
 

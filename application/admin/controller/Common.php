@@ -44,7 +44,8 @@ class Common extends Controller{
             //print_r(request()->ip());exit;
             if($url != 'admin/Index/index'){
                 if(empty($auth)){
-                    $this->error('没有操作权限');
+                    //$this->error('没有操作权限');
+                    echo '<script>alert("没有权限"); window.location.href = history.go(-1);</script>';exit;
                 }
             }
             $adminauth = Db::name('adminauth')->where(array('adminid'=>$this->admininfo['id']))->select();
@@ -83,9 +84,6 @@ class Common extends Controller{
                 }
             }
         }
-
-
-
         //echo '<pre>';
         //print_r($nmenu);exit;
         //$time = getRandTime();

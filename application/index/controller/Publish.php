@@ -367,13 +367,15 @@ class Publish extends UserCommon{
         if(!preg_match('/s.click.taobao.com\/[a-zA-Z0-9]{7,}\??/', $link)){
         	return returnAjaxMsg('702', '营销计划链接不正确!');
         }
-
-        $real_url 	=	@get_headers($link);
+		
+        //$real_url 	=	@get_headers($link);
+		$real_url = curlGetLocation($link);
         if(!$real_url){
         	return returnAjaxMsg('703', '获取商品信息失败!');
         }
 
-        $coupon_info 	=	$this->get_yingxiao_coupon_info($real_url['5']);
+        //$coupon_info 	=	$this->get_yingxiao_coupon_info($real_url['5']);
+        $coupon_info 	=	$this->get_yingxiao_coupon_info($real_url);
         if(!$coupon_info){
         	return returnAjaxMsg(self::$code, self::$msg);
         }

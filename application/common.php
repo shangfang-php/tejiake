@@ -542,3 +542,23 @@ function endGoods($goods_id, $score_type = 5, $remark = '', $goods_info = '', $o
     }
     return TRUE;
 }
+
+/*
+ * CURL获取重定向location
+ * @param $url 营销计划链接
+ * */
+function curlGetLocation($url){
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT ,0);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+    curl_exec($ch);
+    $redirectURL = curl_getinfo($ch,CURLINFO_EFFECTIVE_URL );
+    curl_close($ch);
+    return $redirectURL;
+}
