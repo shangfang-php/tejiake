@@ -17,7 +17,7 @@
                     <span>&nbsp;</span>
                     <img id="head_img" src="{if $login_user.head_img}__STATIC__/user/{$login_user.head_img}{else}__STATIC__/index/images/tou.png{/if}" alt="">
                     {if $teamInfo}
-                    <i onclick="$('#previewImg').click();">修改</i>
+                    <i onclick="$('#previewImg').click();">上传图片</i>
                     {/if}
                     <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
                 </p>
@@ -147,6 +147,11 @@
         //var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
         //status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
         //div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+      }
+      var data =   $('#head_img').attr('src');
+      //console.log(data);
+      if(data){
+        msg_show('上传成功，请点击保存按钮保存图片!');
       }
     }
 </script>
