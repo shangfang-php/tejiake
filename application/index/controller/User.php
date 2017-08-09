@@ -30,7 +30,7 @@ class User extends UserCommon{
 	 */
 	public function basic(){
 		$uid 	=	self::$login_user['id'];
-		$teamInfo 	=	Db::table('merchant_apply_record')->where(array('id'=>$uid,'status'=>2))->find();
+		$teamInfo 	=	Db::table('merchant_apply_record')->where(array('uid'=>$uid,'status'=>2))->find();
 		$userInfo	=	Db::table('user')->where(array('id'=>$uid))->find();
 		
 		$data 	=	array(
