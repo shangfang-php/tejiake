@@ -6,7 +6,7 @@
 }
 .head-mid {
     height: 70px;
-    border-bottom: 1px solid #fdfdfd;
+    
 }
 .head-mid .content {
     width: 1200px;
@@ -431,7 +431,7 @@ nav ul li a .nav-dec p {
 .con .good .good-list ul li .good-collect {
     position: absolute;
     right: 8px;
-    top: 267px;
+    top: 272px;
     cursor: pointer;
    
 }
@@ -532,6 +532,13 @@ nav ul li a .nav-dec p {
     margin: 8px 10px;
     height: 23px;
     font-size: 13px;
+}
+.con .good .good-list ul li .good-fit .quan span{
+    width: 60px;
+    text-align: center;
+    margin-left: 20px;
+    font-size: 12px;
+    display: block;
 }
 .con .good .good-list ul li .good-lu {
    background: #eafcf1;

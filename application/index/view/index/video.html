@@ -6,7 +6,7 @@
             <img src="/static/index/images/video.png" alt="视频单" style="padding-top: 64px">
             <span class="f12">
                 <img src="/static/index/images/tu.png" alt="">
-                &nbsp;在线淘客数：{$online_num}人
+                <i style="position: relative;top: 24px;">&nbsp;在线淘客数：{$online_num}人</i>
             </span>
         </div>
         <div class="video-dec">
@@ -42,20 +42,20 @@
                         </div>
                         <div class="good-fit">
                             <div class="quan fl">
-                                ￥{:sprintf("%.2f",$val.coupon_money)}&nbsp;
+                                <span>{:round($val.coupon_money,2)}元</span>
                             </div>
                             <div class="charges f12 fl">
                                 <img src="/static/index/images/yj.png" alt="">
                                 佣金
                                 <span class="a3">
-                                    ￥{:sprintf('%0.2f',$val.taoke_money)}
+                                    ￥{:round($val.taoke_money,2)}
                                 </span>
                             </div>
                             <div class="plan f12 fl">
                                 <img src="/static/index/images/jih.png" alt="">
                                 计划
                                 <span class="a3">
-                                    {:round($val.taoke_money_percent)}%
+                                    {:round($val.taoke_money_percent,2)}%
                                 </span>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                             <div class="fl f14">
                                 券后
                                 <span class="f20 price">
-                                    ￥{:sprintf('%0.2f',$val.real_money)}
+                                    ￥{:round($val.real_money,2)}
                                 </span>
                             </div>
                             <input class="fz fr copy f12" type="button" id="fz" value=" 复制文案">
@@ -130,7 +130,7 @@
                                 <br/>
                                 {$val.short_title}
                                 <br>
-                                【在售价{:sprintf('%0.2f',$val.price)}元，券后价{:sprintf('%0.2f',$val.real_money)}元】
+                                【在售价{:round($val.price,2)}元，券后价{:round($val.real_money,2)}元】
                                 <br/>
                                 领券：{$val.coupon_link}
                                 <br>
@@ -194,4 +194,16 @@
         $('.video_jump').attr('href', url);
         $('.video_word').click();
     }
+
+    $(document).ready(function(){
+    $(window).scroll(function(){
+        var top = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+        $(".hidden_pro_au").css({
+            "top": (document.documentElement.clientHeight/2 + top - $(".hidden_pro_au").css("height").replace("px","")/2 )+"px",
+            "left":($(window).width() - $(".hidden_pro_au").css("width").replace("px",""))/2 +"px"
+        });
+        
+    })
+   
+})
 </script>

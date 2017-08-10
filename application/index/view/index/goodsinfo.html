@@ -366,7 +366,7 @@
                     </div>
 
                     <div class="ji-ji-ji">
-                        <span class="un  quan">￥{:round($data.coupon_money)}</span>
+                        <span class="un  quan">{:round($data.coupon_money)}元</span>
                         <span class="un">佣金：<i class="lan">￥{:round($data.taoke_money,2)}</i></span>
                         <span class="un f12" style="border: none">计划 {:round($data.taoke_money_percent,2)}%</span>
 
@@ -392,9 +392,11 @@
                             【在售价{:round($data.price,2)}元】券后【{:round($data.real_money,2)}元】<br>
                             <span id="rob">
                                 领券：<a href="{$data.coupon_link}" target="_blank" class="lan">{$data.coupon_link}</a><br>
+                                领券：<a href="{$data.coupon_link}" target="_blank" class="lan">{$data.coupon_link}</a><br>
                                 抢购：<br>
                                 <a href="{$data.link}" target="_blank" class="lan">{$data.link}</a><br>
                             </span>
+                        {$data.guide_info}
 
                          {$data.guide_info}
 

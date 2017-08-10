@@ -2,14 +2,14 @@
 <!-- 加载每个页面内容-->
 <div class="buin-content">
     <div class="buin-dec">
-        <p><img style="width: 100px; height: 100px;" src="{if $user_info['head_img']}/static/user/{$user_info['head_img']}{else}/static/index/images/tou.png{/if}" alt=""></p>
+        <p><img style="width: 100px; height: 100px;border-radius: 50%" src="{if $user_info['head_img']}/static/user/{$user_info['head_img']}{else}/static/index/images/tou.png{/if}" alt=""></p>
         <p class="f20">{$team_info['nickname']} <span style="  font-size: 12px;     padding: 2px 4px 1px 4px; background: #1a99fb;
     color: #fff;
     border-radius: 2px;
    ">团队</span></p>
         <p class="f14" style="line-height: 44px;">QQ:{$team_info['qq']} （月收入:{$team_info['month_income']}万）</p>
         <p class="f14">{$team_info['introduce']}</p>
-        <p class="ruzhu f18">入驻时间 <span>{$times}天</span> / 在线商品 <span>{$nums}个</span></p>
+        <p class="ruzhu f16">入驻时间 <span>{$times}天</span> / 在线商品 <span>{$nums}个</span></p>
     </div>
 </div>
         <div class="con">

@@ -120,6 +120,14 @@ img{
         color: #2ce26f;
    
 }
+.xiang .xiang-fit .quan span{
+	width: 60px;
+    text-align: center;
+    margin-left: 20px;
+    font-size: 12px;
+    display: block;
+   
+}
 .xiang .xiang-chan{
   margin: 8px 10px;
     height: 20px;
@@ -152,7 +160,8 @@ img{
 	font-size: 30px;
     font-weight: normal;
     color: #fff;
-    line-height: 67px;
+       line-height: 50px;
+    padding-top: 25px;
 }
 .title p{
 	    text-align: right;
@@ -212,7 +221,7 @@ img{
      cursor: pointer
 
 }
-.you .you-content .con1 .one .bigplay{
+.you .you-content  .one .bigplay{
 	    position: absolute;
     right: 150px;
     top: 150px;
@@ -221,7 +230,7 @@ cursor: pointer
 }
 .you .you-content .con2{
 	background: url('../images/decbg2.png')no-repeat center center;
-	height: 481px;
+	height: 479px;
 	width: 471px;
 	position: relative
 	
@@ -255,14 +264,14 @@ cursor: pointer
     background: #70bdf7;
     color: #fff;
     position: absolute;
-    top: 0;
+    top: -1px;
     right: 0;
     font-size: 18px;
      cursor: pointer
 	
 }
 .you .you-content .link{
-	width: 769px;
+	width: 768px;
 	margin: 0 auto;
 	background: url('../images/decbg3.png')no-repeat center center;
 	height: 777px;
@@ -566,6 +575,12 @@ border: 1px solid #ccc;
     top: 7px;
 
 }
+.tab-pane .tab-pane-tou .tou img{
+	
+	 border-radius: 50%;
+	
+
+}
 .tab-pane .tab-pane-tou .xiu{
 	    position: absolute;
     width: 26px;
@@ -674,7 +689,8 @@ color: #333;
 	  text-align: center;
 	      border-radius: 7px;
 	       font-size: 16px;
-	       margin-left: 30px
+	       margin-left: 30px;
+	        cursor: pointer
 }
 .user-main  .connnn p .geshi{
 	    border: 1px solid #ccc;
@@ -996,6 +1012,7 @@ color: #333;
 border: 1px  solid #1a99fb;
 text-align: center;
 border-radius: 7px;
+cursor: pointer
 }
 
 .user-main .jihua .fen{
@@ -1012,7 +1029,8 @@ border-radius: 7px;
 .user-main .jihua p{
     width: 549px;
 	border-bottom: 1px  solid #ccc;
-	overflow: hidden
+	overflow: hidden;
+	cursor: pointer
 
 }
 
@@ -1048,6 +1066,7 @@ color: #a7a7a7;
 	color: #fff;
 	border-radius: 7px;
 	font-size: 16px;
+	cursor: pointer
 }
 .user-main .next .next-btn{
 	background: #1a99fb;
@@ -1178,6 +1197,7 @@ width: 204px;
 	background: #9a9a9a;
 	width: 90px;
 	height: 30px;
+	cursor: pointer;
 	line-height: 30px;
 	border-radius: 7px;
 	font-size: 16px;    margin-right: 15px;
@@ -1190,6 +1210,7 @@ width: 204px;
 	height: 30px;
 	line-height: 30px;
 	border-radius: 7px;
+	 cursor: pointer;
 	font-size: 16px;
 }
   .box-content{
@@ -1318,6 +1339,7 @@ width: 204px;
 	line-height: 20px;
 	color: #fff;
 	border-radius: 7px;
+	 cursor: pointer
 }
 
 
@@ -1327,6 +1349,7 @@ width: 204px;
 	background: #f94157;line-height: 20px;
 	color: #fff;
 	border-radius: 7px;
+	 cursor: pointer
 }
 
 
@@ -1392,6 +1415,7 @@ width: 204px;
 	  border-bottom: 1px  solid #ccc;
 	  padding-left: 20px;
 	  font-weight: normal;
+	   cursor: pointer
 
 }
 .E-tui p span{
@@ -1404,6 +1428,7 @@ width: 204px;
     font-size: 16px;
     padding: 5px 24px;
     margin-left: 20px;
+     cursor: pointer;
 
 }
 
@@ -1678,8 +1703,8 @@ width: 204px;
 .load-box   .zhutu li i{
          position:absolute; width:53px;
        height:47px; font-size:0;
-   line-height:0; right:2px;
-    bottom:2px;
+   line-height:0; right:0px;
+    bottom:0px;
      background:url(../images/gouxuan.png) no-repeat right bottom; z-index:99; 
      display:none;
  }
@@ -2103,6 +2128,7 @@ border-radius: 7px;
     height: 20px;
     line-height: 20px;
     border-radius: 7px;
+    cursor: pointer
 	
 
 }
@@ -2114,6 +2140,7 @@ border-radius: 7px;
     height: 20px;
     line-height: 20px;
     border-radius: 7px;
+     cursor: pointer
 	
 
 }
@@ -2125,6 +2152,7 @@ border-radius: 7px;
     height: 20px;
     line-height: 20px;
     border-radius: 7px;
+     cursor: pointer
 	
 
 }
@@ -2136,6 +2164,7 @@ border-radius: 7px;
     height: 20px;
     line-height: 20px;
     border-radius: 7px;
+     cursor: pointer
 	
 
 }
@@ -2211,7 +2240,8 @@ border-radius: 7px;
     padding-left: 10px;
     border-radius: 7px;
     
-    border: 1px  solid #ccc
+    border: 1px  solid #ccc;
+    cursor: pointer
 }
 
 .load-box   .zhutu{
@@ -2239,12 +2269,17 @@ border-radius: 7px;
 .load-box   .zhutu li i{
          position:absolute; width:53px;
        height:47px; font-size:0;
-   line-height:0; right:2px;
-    bottom:2px;
+   line-height:0;     right: -3px;
+    bottom: -2px;
      background:url(../images/gouxuan.png) no-repeat right bottom; z-index:99; 
      display:none;
  }
-.load-box   .zhutu li.selected a{ border:3px solid #1a99fb; padding:0;border-radius: 7px;}
+ .load-box   .zhutu ul li img{
+ 	    border-radius: 4px;
+ }
+.load-box   .zhutu li.selected a{ border:3px solid #1a99fb; padding:0;border-radius: 7px;position: relative;
+    top: -3px;
+    right: 3px;}
 .load-box   .zhutu li.selected i{ display:block;}
 
 
@@ -2507,6 +2542,35 @@ border-radius: 7px;
 	text-align: right;
 	margin-top: 0!important;
 }
+.tgwa-box .tgwa-con .fm-fm .zhuan{
+	text-align: center;
+	margin-top: 0!important;
+	
+}
+.tgwa-box .tgwa-con .fm-fm .zhuan span{
+	 border: 1px solid #2ce26f;
+    border-radius: 7px;
+    width: 80px;
+    height: 18px;
+    line-height: 20px;
+    padding: 10px 18px;
+    color: #2ce26f;
+    cursor: pointer;
+    font-size: 16px;
+    background: #fff;
+    position: absolute;
+    bottom: 50px;
+    right: 200px;
+	
+}
+.tgwa-box .tgwa-con .fm-fm .zhuan span:hover{
+	
+	 background: #2ce26f;
+   
+    color: #fff;
+   
+	
+}
 .tgwa-box .tgwa-con .fm-fm .yjfz .copy{
 	  border: 1px solid #1a99fb;
     border-radius: 7px;
@@ -2521,6 +2585,14 @@ border-radius: 7px;
      position: absolute;
     bottom: 50px;
     right: 68px;
+}
+.tgwa-box .tgwa-con .fm-fm .yjfz .copy:hover{
+	
+	 background: #1a99fb;
+   
+    color: #fff;
+   
+	
 }
 .gxs{
 	border-color: rgb(44, 226, 111)!important;

@@ -91,7 +91,7 @@ class FlashSale extends Controller{
 		$data['taobao_goodsId']=	$goods_info['num_iid'];
 		$data['link']	=	$goods_info['item_url'];
 		$data['title']	=	$goods_info['title'];
-		$images_arr	 	=	$goods_info['small_images']['string'];
+		$images_arr	 	=	array_filter($goods_info['small_images']['string']);
 		$data['price']	=	$goods_info['zk_final_price'];
 		$data['main_img']=	$images_arr['1'];
 		$data['short_title']= $short_title ? $short_title : $data['title'];

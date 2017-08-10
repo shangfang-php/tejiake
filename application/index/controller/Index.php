@@ -193,7 +193,7 @@ class Index extends Common{
             ->join('merchant_apply_record m','g.uid=m.uid','left')
             ->where(['g.id'=>$id,'g.is_delete'=>0])
             ->find();
-        if(empty($info)){
+        if(empty($info) || $info['status'] != 2){
             $this->redirect('news/no_goods');
             //$this->error('数据有误');
         }
@@ -219,6 +219,14 @@ class Index extends Common{
         if($info['type'] == 1){
             $goods_type = 'hot';
         }elseif($info['type'] == 2){
+            if($info['show_time'] > time()){
+                $diff_time =    date('m/d/Y H:i:s', $info['show_time']);
+                $day_type  =    1;  ##预告
+            }else{
+                $diff_time =    date('m/d/Y H:i:s', $info['end_time']);
+                $day_type  =    2;  ##正在抢购
+            }
+            $this->assign(['diff_time'=>$diff_time, 'day_type'=>$day_type]);
             $goods_type = 'flash_sale';
         }elseif($info['type'] == 3){
             $goods_type = 'night';
