@@ -14,12 +14,14 @@
                     <span>营销计划链接：</span>
                     {/if}
                     <input id="goods_link" type="text" placeholder="请输入或粘贴链接" require="true" autofocus="">
+                    {if $common_type == 2}
                     <a><input type="button" name="" value="获取商品信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;cursor: pointer;" onclick="check_goods()"></a>
+                    {/if}
                 </p>
 
                 <p style="display: {if $common_type == 1}block{else}none{/if}"> 
                    <span>优惠券链接：</span><input type="text" id="coupon_link" require="true" placeholder="如：https://shop.m.taobao.com/shop/coupon.htm?sellerId=12345…">
-                     <a><input type="button" name="" value="获取信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;cursor: pointer;" onclick="get_coupon_info()"></a>
+                     <a><input type="button" name="" value="获取商品信息" style="width: 100px;height: 30px; background: #1a99fb;color: #fff;line-height: 30px; margin-left: 10px;border:none;cursor: pointer;" onclick="get_all_info()"></a>
                 </p>
             
                 <!--隐藏部分-->
@@ -124,7 +126,7 @@
                         {/if}
                     {/if}
                     <p><span>导购文案</span><textarea id="guide_info" name="" placeholder="请输入文案，在100个字以内"></textarea></p>
-                    {if in_array($goods_type,[2])}
+                    {if in_array($goods_type,[2,4])}
                     <p>
                         <span>链接开放时间：</span>
                         <input id='show_time' class="datetime" type="text"  placeholder="如：2017-07-12 12:14" style="width: 140px;">
@@ -297,11 +299,9 @@
                 return false;
             }
 
-            isSync      =   true;
             var url     =   '/index/publish/get_goods_info';
             var data    =   {id:id};
             $.post(url, data, function(msg){
-                isSync  =   false;
                 if(msg.code == 200){
                     show_goods_info(msg.msg);
                     $('#coupon_link').select();
@@ -319,10 +319,10 @@
             }
             var url     =   '/index/publish/get_yingxiao_goods';
             var data    =   {link:link};
+            isSync  =   true;
             $.post(url, data, function(msg){
                 if(msg.code != 200){
                     msg_show(msg.msg);
-                    return false;
                 }else{
                     show_goods_info(msg.goods_info);
                     show_coupon_info(msg.coupon_info);
@@ -400,6 +400,7 @@
                 msg_show(msg.msg);
                 return false;
             }
+
         },"json");
     }
 
@@ -737,6 +738,23 @@
 
         });
         return check;
+    }
+
+    function get_all_info(){
+        var goods_link  =   $('#goods_link').val();
+        if(!goods_link){
+            msg_show('请输入商品链接!');
+            return false;
+        }
+
+        var coupon_link     =   $('#coupon_link').val();
+        if(!coupon_link){
+            msg_show('请输入优惠券链接!');
+            return false;
+        }
+        $('#short_title').select();
+        check_goods();
+        get_coupon_info();
     }
     
 </script>

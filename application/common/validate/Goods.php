@@ -48,9 +48,13 @@ class Goods extends Validate{
         'flash_sale'  =>  [ ##普通计划限时抢购
                 'plan_type'     =>  'require|in:1,2,3,4',
                 'activity_type' =>  'require|in:1,2',
+                'show_time'     =>  'require',
                 ],
         'video'  =>  [ ##普通计划视频单
                 'video_url'     =>  'require|url',
+                ],
+        'live'  =>  [
+                'show_time'     =>  'require',
                 ],
    ];
 }
