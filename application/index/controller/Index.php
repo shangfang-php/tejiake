@@ -202,6 +202,8 @@ class Index extends Common{
         $info['head_img'] = $info['head_img'] ? '__STATIC__' . DS . 'user'.DS.$info['head_img'] : '';//头像
         $info['addday'] = ceil((time()-$info['ucreate_time'])/86400);//入驻天数
         $goods_num = Db::name('goods')->where("uid=".$info['uid']." and is_delete=0 and status=2 and start_time<=".time()." and end_time>=".time()."")->count();
+        // echo goods::getLastSql();
+        // echo db('goods')->getlastsql();
         $info['line_goods_num'] = $goods_num;//线上商品 状态为展示中 当前时间在商品的活动期
 
         if(self::$login_user){
@@ -512,7 +514,10 @@ class Index extends Common{
         $goods_data  =   Db::table('goods')->where($where)->paginate(40, false, [
                                      'query' => request()->param(),
                                 ]);
-            $nums    =   $goods_data->total();//统计数量
+        
+        $goods_num = Db::name('goods')->where("uid=".$uid." and is_delete=0 and status=2 and start_time<=".time()." and end_time>=".time()."")->count();//统计数量
+            // echo db('goods')->getlastsql();
+
         $create_time =   $user_info['create_time'];
         $times       =   ceil((time()-$create_time)/86400);//入驻天数
         $data        =   array(
@@ -521,7 +526,7 @@ class Index extends Common{
                             'team_info'     =>  $team_info,
                             'user_info'     =>  $user_info,
                             'goods_type'    =>  '',
-                            'nums'          =>  $nums,
+                            'nums'          =>  $goods_num,
                             'times'         =>  $times,
                         );
         $this->assign($data);

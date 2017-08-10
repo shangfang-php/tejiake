@@ -98,7 +98,7 @@
             this.o = $.extend({
                     // Config
                     min: this.$.data('min') !== undefined ? this.$.data('min') : 0,
-                    max: this.$.data('max') !== undefined ? this.$.data('max') : 100,
+                    max: this.$.data('max') !== undefined ? this.$.data('max') : 10000,
                     stopper: true,
                     readOnly: this.$.data('readonly') || (this.$.attr('readonly') === 'readonly'),
 
@@ -456,7 +456,7 @@
 
         this._validate = function (v) {
             var val = (~~ (((v < 0) ? -0.5 : 0.5) + (v/this.o.step))) * this.o.step;
-            return Math.round(val * 100) / 100;
+            return Math.round(val * 10000) / 10000;
         };
 
         // Abstract methods
@@ -588,7 +588,7 @@
                         mwTimerStop = setTimeout(function () {
                             s.rH(v);
                             mwTimerStop = null;
-                        }, 100);
+                        }, 10000);
 
                         // Handle mousewheel releases
                         if (!mwTimerRelease) {
@@ -678,7 +678,7 @@
 
             this.$.val(this.v);
             this.w2 = this.w / 2;
-            this.cursorExt = this.o.cursor / 100;
+            this.cursorExt = this.o.cursor / 10000;
             this.xy = this.w2 * this.scale;
             this.lineWidth = this.xy * this.o.thickness;
             this.lineCap = this.o.lineCap;
