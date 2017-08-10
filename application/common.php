@@ -316,6 +316,9 @@ function init_goods_data($data){
         case 5: ##视频单
             $scene  =   'video';
             break;
+        case 4:
+            $scene  =   'live';
+            break;
         default:
             $scene  =   'default';
     }
@@ -532,7 +535,8 @@ function endGoods($goods_id, $score_type = 5, $remark = '', $goods_info = '', $o
 
     $score_type == 5 && $update_status = 3; ##商品过期状态
     $score_type == 7 && $update_status = 5; ##商品下架状态
-    $info   =   Db::table('goods')->where('id', $goods_id)->update(['status'=>$update_status]);
+    $taobao_goodsId     =   $goods_info['taobao_goodsId'].'_'.$goods_id;
+    $info   =   Db::table('goods')->where('id', $goods_id)->update(['status'=>$update_status,'taobao_goodsId'=>$taobao_goodsId]);
     if($info === false){
         return false;
     }

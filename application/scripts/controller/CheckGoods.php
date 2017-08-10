@@ -16,7 +16,7 @@ class CheckGoods extends Controller{
 	 */
 	public function index(){
 		$where 	=	['status'=>2, 'coupon_end_time|end_time'=>['<=', time()]];
-		$res 	=	Db::table('goods')->field('id,coupon_end_time,end_time,uid,scores')->where($where)->select();
+		$res 	=	Db::table('goods')->field('id,coupon_end_time,end_time,uid,scores,taobao_goodsId')->where($where)->select();
 		if(!empty($res)){
 			foreach($res as $val){
 				$goods_id 	=	$val['id'];
