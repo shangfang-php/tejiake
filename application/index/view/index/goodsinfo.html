@@ -123,41 +123,32 @@
                 <p class="fl f20 lan"><img src="__STATIC__/index/images/shipd.png" alt="">&nbsp;
                     {if condition="$data.type eq 1"}爆款单
                     {elseif condition="$data.type eq 2"}限时抢购&nbsp;&nbsp;<img src="__STATIC__/index/images/time-icon.png" alt="">&nbsp;
-                    <div class="lia fl f16">
+                    <div class="lia fl f16" date="{$diff_time}">
                         <div class="countdown" >
-                            <div>剩余&nbsp;</div>
-                             <div>
-                                        <i class="days">
-                                            00
-                                        </i>
-                                    </div>
-                                    <div class="seperator">
-                                        天
-                                    </div>
-                                    <div>
-                                        <i class="hours">
-                                            00
-                                        </i>
-                                      
-                                    </div>
-                                    <div class="seperator">
-                                        时
-                                    </div>
-                                    <div>
-                                        <i class="minutes">
-                                            00
-                                        </i>
-                                      
-                                    </div>
-                                    <div class="seperator">
-                                        分
-                                    </div>
-                                    <div>
-                                        <i class="seconds">
-                                            00
-                                        </i>
-                                    </div>
-                            <div>&nbsp;结束</div>
+                            <div>{if $day_type == 1}还有{else}剩余{/if}&nbsp;</div>
+                                <div>
+                                    <i class="days">00</i>
+                                </div>
+                                <div class="seperator">天</div>
+                                <div>
+                                    <i class="hours">00</i>
+                                </div>
+                                <div class="seperator">时</div>
+                                <div>
+                                    <i class="minutes">
+                                        00
+                                    </i>
+                                  
+                                </div>
+                                <div class="seperator">
+                                    分
+                                </div>
+                                <div>
+                                    <i class="seconds">
+                                        00
+                                    </i>
+                                </div>
+                            <div>&nbsp;{if $day_type == 1}开始{else}结束{/if}</div>
                         </div>
                     </div>
                 <script>
@@ -383,7 +374,7 @@
                     <p class="f14" style="line-height: 36px;margin-top: 10px;text-indent: 15px;">已领<i style="color: #fe5c30;">{$data.coupon_apply_num}</i>/{$data.coupon_total_num}&nbsp;张</p>
                     <p class="f14" style="line-height: 36px;text-indent: 15px;margin-bottom: 10px;">优惠券有效时间 {$data.coupon_start_time|date='Y-m-d',###}至{$data.coupon_end_time|date='Y-m-d',###}</p>
                     <p class="dashed"></p>
-                    <p class="f14 ac" style="line-height: 25px;padding: 10px 0 25px 0">{$data.title}</p>
+                    <p class="f14 ac" style="line-height: 25px;padding: 10px 0 25px 0">{$data.guide_info}</p>
                     <p class="dashed"></p>
                    <!--  <p class="zhuan" onclick="show2()"><span>一键转链</span></p> -->
                 </div>
@@ -473,8 +464,18 @@
 <script type="text/javascript" src="__STATIC__/index/js/jquery.jplayer.min.js"></script>
 <script type="text/javascript" src="__STATIC__/index/js/modernizr-custom-v2.7.1.min.js"></script>
 <script type="text/javascript" src="__STATIC__/index/js/videojs-ie8.min.js"></script>
+<script type="text/javascript" src="/static/index/js/jquery.downCount.js?v=1"></script>
 
 <script type="text/javascript">
+    //倒计时
+    $('.lia').each(function(){
+        var day = $(this).attr('date');
+        $(this).downCount({
+            date: day,
+            offset: +8
+        }, function(){});
+    });
+
     //浮动左边导航
     $(window).scroll(function(){
         if($(this).scrollTop() > 280){
