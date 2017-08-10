@@ -117,9 +117,9 @@
                                   {else/}
                                       <div style="width: 294px;height: 295px;    margin-top: 20px;">
                                           <img src="{$data.main_img}" alt="" style="width: 100%;">
-                                      </div>  <img src="__STATIC__/index/images/bigplay.png" alt="" class="bigplay" onclick="show()" class="btn">
+                                      </div>  <img src="__STATIC__/index/images/bigplay.png" alt="" class="bigplay" onclick="show('{$vo.url}')" class="btn">
                                       <!-- <input type="button" name="" value="↓下载视频" class="down"> -->
-                                      <a href="{$vo.url}" target="_blank"><input type="button" name="" value="↓下载视频" class="down jp-play-down" ></a>
+                                      <!-- <a href="{$vo.url}" target="_blank"><input type="button" name="" value="↓下载视频" class="down jp-play-down" ></a> -->
                                   {/if}
                               </div>
                           </div>
@@ -185,12 +185,12 @@
             <img src="__STATIC__/index/images/sc.png" width="40" height="40">
         </div>
 
-        <!--视频播放-->
+<!--视频播放-->
 <div class="lbOverlay"  onclick="closeDiv()"></div>
 <div class="hidden_pro_au">
 <img src="__STATIC__/index/images/close.png" alt=""  class="close" onclick="closeDiv()">
-      <video width="562" height="408" src="__STATIC__/index/images/controller.mp4.txt"   controls="controls" class="video-js"></video>
-        <p> <a href="__STATIC__/index/images/controller.mp4.txt"><input type="button" name="" value="↓下载视频" class="down jp-play-down" ></a></p>
+      <video width="562" height="408" src=""   controls="controls" class="video-js"></video>
+        <p> <a class="down_class" href="" download><input type="button" name="" value="↓下载视频" class="down jp-play-down" ></a></p>
 </div>
 
 <div class="lbOverlay"  onclick="closeDiv()"></div>
@@ -231,9 +231,12 @@ $(window).scroll(function(){
         </script>
 <script>
 
-function show(){
+function show(url){
     $(".lbOverlay").css({"height":window.screen.availHeight});
     $(".lbOverlay").show();
+
+    $('.video-js').attr('src', url);
+    $('.down_class').attr('href', url);
  
     var st=$(document).scrollTop(); //页面滑动高度
     var objH=$(".hidden_pro_au").height();//浮动对象的高度
