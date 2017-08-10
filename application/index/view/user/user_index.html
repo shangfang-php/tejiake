@@ -9,10 +9,10 @@
 
             <div class="tab-pane">
                  <div class="tab-pane-tou">
-                     <div class="tou"><img src="__STATIC__/index/images/tou.png" alt=""></div>
-                     <div class="xiu">
+                     <div class="tou"><img style="width:100px;height:100px;" src="{if $login_user.head_img}/static/user/{$login_user.head_img}{else}__STATIC__/index/images/tou.png{/if}" alt=""></div>
+                     <!-- <div class="xiu">
                          <a href="#"><img src="__STATIC__/index/images/xiu.png" alt=""></a>
-                     </div>
+                     </div> -->
                      <p class="hao f20">{$login_user.phone}</p>
                      <p class="day f20">已入驻{$days}天</p>
                     <div class="jifen">
