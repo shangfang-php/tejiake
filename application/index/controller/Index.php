@@ -510,7 +510,9 @@ class Index extends Common{
         }
 
         $where       =   array('uid'=>$uid, 'status'=>2, 'is_delete'=>0, );
-        $goods_data  =   Db::table('goods')->where($where)->where('start_time', 'elt', time())->where('end_time', 'egt', time())->paginate(40, false, [
+        $where['start_time'] = ['<=', time()];
+        $where['end_time'] = ['>=', time()];
+        $goods_data  =   Db::table('goods')->where($where)->paginate(40, false, [
                                      'query' => request()->param(),
                                 ]);
         
