@@ -386,19 +386,19 @@
                     <div class="im-im fl">
                         <img style="width:279px;height: auto" src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
                     </div>
-                    <div class="fl fm-fm " id="robb">
+                    <div class="fl fm-fm robb">
                         <p>
                             {$data.short_title}<br>
                             【在售价{:round($data.price,2)}元】券后【{:round($data.real_money,2)}元】<br>
-                            <div id="rob">
+                            <span id="rob">
                                 领券：<a href="{$data.coupon_link}" target="_blank" class="lan">{$data.coupon_link}</a><br>
                                 抢购：<br>
                                 <a href="{$data.link}" target="_blank" class="lan">{$data.link}</a><br>
-                            </div>
+                            </span>
                         {$data.guide_info}
 
                         </p>
-                         <p class="zhuan" onclick="show2()"><span>一键转链</span></p>
+                         <p class="zhuan"><span onclick="show2()">一键转链</span></p>
                         <p class="yjfz">
 
                             <input class="fz fr copy f12" type="button" value=" 一键复制" >
@@ -533,7 +533,7 @@
                 var rob = '';
                 rob += data.data;
                 $('#rob').html('');
-                $('#robb p').append(rob);
+                $('.robb p:first').append(rob);
                 $('.zhuan').html('<span>转链成功</span>');
                 //alert(200);//转链数据显示
                 return false;

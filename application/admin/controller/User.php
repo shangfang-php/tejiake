@@ -336,7 +336,6 @@ class User extends Common{
             $this->assign('data',$info);
             return view();
         }
-
     }
 
     /*
