@@ -234,6 +234,12 @@ class Index extends Common{
             $goods_type = 'night';
         }elseif($info['type'] == 4){
             $goods_type = 'live';
+            if($info['show_time'] > time()){
+                $diff_time =    date('Y-m-d H:i:s', $info['show_time']);
+            }else{
+                $diff_time = 0;
+            }
+            $this->assign('diff_time', $diff_time);
         }else{
             $goods_type = 'video';
         }

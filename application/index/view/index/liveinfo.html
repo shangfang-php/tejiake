@@ -159,23 +159,27 @@
 
 
                   <div class="link">
-                    <div class="one one4">
+                      <div class="one one4">
+                        {if $diff_time}
+                            该商品在{$diff_time}开始抢购
+                        {else}
                         <div id="guide_info" class="robb">
-                          <img style="width:130px;height: auto" src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
-                          <p>
-                              {$data.short_title}<br>
-                              【在售价{:round($data.price,2)}元】券后【{:round($data.real_money,2)}元】<br>
-                            <span id="rob">
-                              领券：<a href="{$data.coupon_link}" target="_blank" class="lan">{$data.coupon_link}</a><br>
-                              抢购：<br>
-                              <a href="{$data.link}" target="_blank" class="lan">{$data.link}</a><br>
-                            </span>
-                              {$data.guide_info}
-                          </p>
+                            <img style="width:130px;height: auto" src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
+                            <p>
+                                {$data.short_title}<br>
+                                【在售价{:round($data.price,2)}元】券后【{:round($data.real_money,2)}元】<br>
+                              <span id="rob">
+                                领券：<a href="{$data.coupon_link}" target="_blank" class="lan">{$data.coupon_link}</a><br>
+                                抢购：<br>
+                                <a href="{$data.link}" target="_blank" class="lan">{$data.link}</a><br>
+                              </span>
+                                {$data.guide_info}
+                            </p>
                         </div>
                        <input type="button" name="" value="一键转链"  class="yijian" onclick="show2()">
                        <input type="button" name="" value="+复制" class="fuzhi copy" data-clipboard-action="copy" data-clipboard-target="#guide_info">
-                      </div>
+                       {/if}
+                    </div>
                   </div>
                   </div>
             </div>
