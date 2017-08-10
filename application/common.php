@@ -353,7 +353,7 @@ function check_goods_mianshen($uid, $goods_type){
 function saveGoodsBase64Img($file_path, $file,$image_data){
     clearstatcache();
     if(!is_dir($file_path)){
-        $mk     =   mkdir($file_path, '0777', true);
+        $mk     =   mkdir($file_path, 0777, true);
         if(!$mk){
             return false;
         }
