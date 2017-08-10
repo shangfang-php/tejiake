@@ -50,7 +50,7 @@ class Login extends Controller
                 $password = Cookie::get('CSDFDSA');
                 if($username && $password) {
                     $this->assign('username',$username);
-                    $this->assign('password',pswCrypt($password));
+                    $this->assign('password',$password);
                 }
                 return view('index');
             }
