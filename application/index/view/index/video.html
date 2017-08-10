@@ -194,4 +194,16 @@
         $('.video_jump').attr('href', url);
         $('.video_word').click();
     }
+
+    $(document).ready(function(){
+    $(window).scroll(function(){
+        var top = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+        $(".hidden_pro_au").css({
+            "top": (document.documentElement.clientHeight/2 + top - $(".hidden_pro_au").css("height").replace("px","")/2 )+"px",
+            "left":($(window).width() - $(".hidden_pro_au").css("width").replace("px",""))/2 +"px"
+        });
+        
+    })
+   
+})
 </script>

@@ -67,7 +67,7 @@
             </div>
 
             <div class="xiang-fit">
-               <div class="quan fl"><span>￥{:round($data.coupon_money,2)}</span></div>
+               <div class="quan fl"><span>{:round($data.coupon_money,2)}元</span></div>
                <div class="fr f12 ac">已领取:&nbsp;{$data.coupon_apply_num}/{$data.coupon_total_num}&nbsp;</div>
             </div>
 
@@ -117,7 +117,7 @@
                                   {else/}
                                       <div style="width: 294px;height: 295px;    margin-top: 20px;">
                                           <img src="{$data.main_img}" alt="" style="width: 100%;">
-                                      </div><!--  <img src="__STATIC__/index/images/bigplay.png" alt="" class="bigplay" onclick="show()" class="btn">-->
+                                      </div>  <img src="__STATIC__/index/images/bigplay.png" alt="" class="bigplay" onclick="show()" class="btn">
                                       <!-- <input type="button" name="" value="↓下载视频" class="down"> -->
                                       <a href="{$vo.url}" target="_blank"><input type="button" name="" value="↓下载视频" class="down jp-play-down" ></a>
                                   {/if}
