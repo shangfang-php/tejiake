@@ -32,7 +32,7 @@ class User extends Common{
         $keyword = input('keyword');
 
         if(!empty($keyword)){
-            $where['m.qq|u.phone'] = array('like',"%$keyword%");
+            $where['m.nickname|m.qq|u.phone'] = array('like',"%$keyword%");
         }
         //print_r($where);exit;
         $list = Db::name('user')

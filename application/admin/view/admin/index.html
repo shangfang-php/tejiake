@@ -56,7 +56,8 @@
                                         <th scope="row">{$key}</th>
                                         <td>{$vo.username}</td>
                                         <td style="text-align: left">{$vo.menu}</td>
-                                        <td>{if condition="$vo['status'] eq 1"}正常{else/}禁用{/if}</td>
+                                        <td>{$vo.remark}</td>
+                                        <!--<td>{if condition="$vo['status'] eq 1"}正常{else/}禁用{/if}</td>-->
                                         <td>
                                             <a href="{:url('Admin/editAdmin',array('adminid'=>$vo['id']))}"  class="btn btn-primary" style="background: #10c469!important;border: none!important">编辑</a>          <a onclick="delAdmin({$vo['id']});" class="btn btn-primary" style="background: #ff5b5b!important;border: none!important">删除</a>
                                         </td>
@@ -77,9 +78,7 @@
 
     </div>
 
-<footer class="footer">
-    2016 © 特价客 To.
-</footer>
+
     <!-- ============================================================== -->
     <!-- End Right content here -->
     <!-- ============================================================== -->

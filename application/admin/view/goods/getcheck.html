@@ -39,7 +39,11 @@
    
     overflow-x: visible!important;
 }
-    
+    .label {
+   
+    line-height: 3;
+   
+}
         
     </style>
     <div class="content-page">
@@ -100,7 +104,7 @@
                                             </div>
                                         </th>
                                         <th scope="row">{$key}</th>
-                                        <td><img src="{$vo.main_img}" alt="" style="width: 100px;height: 100px;"></td>
+                                        <td><img src="{$vo.main_img}" alt="" class="img-square thumb-xl img-thumbnail m-b-10"></td>
                                         <td>{$vo.short_title}</td>
                                         <td>
                                             <label>¥{$vo.real_money}</label><br/>

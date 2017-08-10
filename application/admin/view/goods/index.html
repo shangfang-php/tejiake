@@ -55,6 +55,12 @@
 .btn-group-sm > .btn, .btn-sm {
     padding: 5px 30px !important;
 }
+
+.label {
+   
+    line-height: 3;
+   
+}
       
     </style>
     <div class="content-page">
@@ -195,7 +201,7 @@
                                             </div>
                                         </th>
                                         <th scope="row">{$key}</th>
-                                        <td><img src="{$vo.main_img}" alt="" class="img-circle thumb-xl img-thumbnail m-b-10"></td>
+                                        <td><a href="/item?id={$vo.id}" target="_blank"><img src="{$vo.main_img}" alt="" class="img-square thumb-xl img-thumbnail m-b-10" style="max-width: none;"></a></td>
                                         <td>{$vo.short_title}</td>
                                         <td>
                                             {if condition="$vo['type'] eq 1"}爆款单
@@ -231,7 +237,7 @@
                                             {if condition="$vo['is_delete'] eq 1"}
                                             <a class="label label-warning">已删除</a>
                                             {else/}
-                                            <a style="background: #10c469!important;border: none!important;padding: 5px 12px;" href="{:url('Goods/edit1',array('gid'=>$vo['id']))}"  class="label label-purple">修改</a>
+                                            <a style="background: #10c469!important;border: none!important;padding: 5px 12px;   " href="{:url('Goods/edit1',array('gid'=>$vo['id']))}"  class="label label-purple">修改</a>
                                             <!--<a data-toggle="modal" href="{:url('Goods/edit',array('gid'=>$vo['id']))}" data-target="#custom-width-modal" class="label label-primary" style="background: #10c469!important;border: none!important;padding: 5px 12px;">修改</a>-->
                                             <a onclick="delGood({$vo['id']});"  class="label label-danger" style="background: #ff5b5b!important;border: none!important;    padding: 5px 12px;">删除</a>
                                             {/if}
@@ -266,9 +272,7 @@
     </div>
 </div>
 <!-- /.modal end-->
-<footer class="footer">
-    2016 © 特价客 To.
-</footer>
+
     <!-- ============================================================== -->
     <!-- End Right content here -->
     <!-- ============================================================== -->
