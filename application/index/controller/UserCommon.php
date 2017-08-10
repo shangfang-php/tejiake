@@ -11,8 +11,8 @@ class UserCommon extends Common{
             $this->redirect('/user_login');
         }
     	$this->assign('goods_type', self::$goods_type);
-		$uid = self::$login_user['id'];
-		$collect_count = Db::name('goods_collect')->where(['uid'=>$uid,'is_spread'=>0])->count();
-		$this->assign('collect_count', $collect_count);
+		//$uid = self::$login_user['id'];
+		//$collect_count = Db::name('goods_collect')->where(['uid'=>$uid,'is_spread'=>0])->count();
+		//$this->assign('collect_count', $collect_count);
     }
 }
