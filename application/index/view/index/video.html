@@ -86,9 +86,7 @@
                             <div class="lia fl f12">
                                 {if $val.two_hour_sell_num}
                                     {assign name="two_hour_sell_num" value=":str_split($val.two_hour_sell_num)" }
-                                    {for start="0" end="4-count($two_hour_sell_num)"}
-                                    <span>0</span>
-                                    {/for}
+                                    
                                     {foreach $two_hour_sell_num as $v}
                                         <span>{$v}</span>
                                     {/foreach}
