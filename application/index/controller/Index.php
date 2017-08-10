@@ -503,15 +503,13 @@ class Index extends Common{
             $this->redirect('news/no_goods');
         }
 
-
-        $where       =   array('uid'=>$uid, 'status'=>2);
-        $goods_data  =   Db::table('goods')->where($where)->paginate(40, false, [
+        $where       =   array('uid'=>$uid, 'status'=>2, 'is_delete'=>0, );
+        $goods_data  =   Db::table('goods')->where($where)->where('start_time', 'elt', time())->where('end_time', 'egt', time())->paginate(40, false, [
                                      'query' => request()->param(),
                                 ]);
         
-        $goods_num = Db::name('goods')->where("uid=".$uid." and is_delete=0 and status=2 and start_time<=".time()." and end_time>=".time()."")->count();//统计数量
             // echo db('goods')->getlastsql();
-
+        $nums = $goods_data->total();//统计数量
         $create_time =   $user_info['create_time'];
         $times       =   ceil((time()-$create_time)/86400);//入驻天数
         $data        =   array(
@@ -520,7 +518,7 @@ class Index extends Common{
                             'team_info'     =>  $team_info,
                             'user_info'     =>  $user_info,
                             'goods_type'    =>  '',
-                            'nums'          =>  $goods_num,
+                            'nums'          =>  $nums,
                             'times'         =>  $times,
                         );
         $this->assign($data);
