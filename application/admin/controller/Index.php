@@ -19,6 +19,10 @@ class Index extends Common{
         $count_3 = Db::name('goods')->where(['status'=>1,'type'=>3])->count();
         $count_4 = Db::name('goods')->where(['status'=>1,'type'=>4])->count();
         $count_5 = Db::name('goods')->where(['status'=>1,'type'=>5])->count();
+        //$user_total 总人数 $check_total商品待审核总数  $goods_total商品总数
+        $user_total = Db::name('user')->where(array('is_delete'=>0))->count();
+        $check_total = Db::name('goods')->where(['status'=>1])->count();
+        $goods_total = Db::name('goods')->where(['is_delete'=>0])->count();
         $data = [
             'goods_count' => $goods_num,
             'merchant_count' => $merchant_num,
@@ -29,7 +33,10 @@ class Index extends Common{
                 3=>$count_3,
                 4=>$count_4,
                 5=>$count_5
-            ]
+            ],
+            'user_total'=>$user_total,
+            'check_total'=>$check_total,
+            'goods_total'=>$goods_total
         ];
         $this->assign($data);
         return $this->fetch();
