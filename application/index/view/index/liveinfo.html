@@ -223,18 +223,21 @@
 
 
 {include file="public/footer" /}
-     <script type="text/javascript">
-       //浮动左边导航
-$(window).scroll(function(){
-     if($(this).scrollTop() > 280){
-        $("#zuo").addClass('zuofu');
-     }
-     else{
-        $("#zuo").removeClass('zuofu');
-     }
-  })    
-        </script>
-<script>
+<script type="text/javascript">
+  //浮动左边导航
+  $(window).scroll(function(){
+       if($(this).scrollTop() > 280){
+          $("#zuo").addClass('zuofu');
+       }
+       else{
+          $("#zuo").removeClass('zuofu');
+       }
+    })
+
+var clipboard = new Clipboard('.copy');
+clipboard.on('success', function(e) {
+   $(e).click();
+});
 
 function show(url){
     $(".lbOverlay").css({"height":window.screen.availHeight});

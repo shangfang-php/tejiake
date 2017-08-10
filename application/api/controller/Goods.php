@@ -15,7 +15,7 @@ class Goods extends Controller{
 	}
 
 	/**
-	 * 添加显示抢购产品
+	 * 查询产品接口
 	 */
 	public function index(){
 		$userId 	=	intval(trim(input('post.user_id'))); ##注册时生成的用户ID
