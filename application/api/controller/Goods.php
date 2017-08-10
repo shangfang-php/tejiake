@@ -234,7 +234,7 @@ class Goods extends Controller{
 	function get_goods_sell_time(){
 		$return 	=	array();
 		$itemId 	=	intval(trim(input('post.gid')));
-		$where 		=	array('a.id'=>['>', $itemId], 'a.status'=>2, 'type'=>['!=', 2]);
+		$where 		=	array('a.id'=>['>', $itemId], 'a.status'=>2, 'type'=>['<>', 2]);
 		$field 		=	'a.id,a.create_time,b.time,a.taobao_goodsId as itemId';
 		$goods_info =	Db::table('goods')->alias('a')->join('goods_sell_num_records b', 'a.id = b.gid', 'left')
 						->field($field)->where($where)->order('a.id', 'asc')->select();
@@ -257,8 +257,8 @@ class Goods extends Controller{
 	 */
 	function receive_goods_sell_nums(){
 		$return 	=	array();
-		$gid 		=	intval(trim(input('post.gid')));
-		$sell_num 	=	intval(trim(input('post.nums')));
+		$gid 		=	intval(trim(input('gid')));
+		$sell_num 	=	intval(trim(input('nums')));
 		if(!$gid){
 			return returnAjaxMsg('601', '未传递gid');
 		}
@@ -269,7 +269,7 @@ class Goods extends Controller{
 
 		$where 	=	array('gid'=>$gid);
 		$res 	=	Db::table('goods_sell_num_records')->field('gid,sell_num')->where($where)->find();
-		if(!$res){
+		if($res){
 			$last_sell_num 		=	$res['sell_num'];
 		}else{
 			$goods_info 	=	Db::table('goods')->field('sell_num')->find($gid);
@@ -278,8 +278,13 @@ class Goods extends Controller{
 		}
 		$two_hour_sell_num	=	$sell_num - $last_sell_num;
 		$two_hour_sell_num  = 	$two_hour_sell_num < 0 ? 0 : $two_hour_sell_num;
-		$info 	=	Db::table('goods_sell_num_records')->where($where)->update(['sell_num'=>$sell_num,'time'=>time()]);
-		$info 	=	Db::table('goods')->where('id', $gid)->update(['two_hour_sell_num'=>$two_hour_sell_num]);
+		if($res){
+			$info 	=	Db::table('goods_sell_num_records')->where($where)->update(['sell_num'=>$sell_num,'time'=>time()]);
+		}else{
+			$info 	=	Db::table('goods_sell_num_records')->insert(['sell_num'=>$sell_num,'time'=>time(),'gid'=>$gid]);
+		}
+		//var_dump($two_hour_sell_num, $sell_num, $last_sell_num);exit;
+		$info 	=	Db::table('goods')->where('id', $gid)->update(['two_hour_sell_num'=>$two_hour_sell_num,'sell_num'=>$sell_num]);
 
 		if($info === false){
 			return returnAjaxMsg('603', '更新销量失败!');
