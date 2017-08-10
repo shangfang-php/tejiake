@@ -67,7 +67,7 @@
             </div>
 
             <div class="xiang-fit">
-               <div class="quan fl"><span>￥{:sprintf('%0.2f',$data.coupon_money)}</span></div>
+               <div class="quan fl"><span>￥{:round($data.coupon_money,2)}</span></div>
                <div class="fr f12 ac">已领取:&nbsp;{$data.coupon_apply_num}/{$data.coupon_total_num}&nbsp;</div>
             </div>
 
@@ -117,9 +117,9 @@
                                   {else/}
                                       <div style="width: 294px;height: 295px;    margin-top: 20px;">
                                           <img src="{$data.main_img}" alt="" style="width: 100%;">
-                                      </div><!--  <img src="__STATIC__/index/images/bigplay.png" alt="" class="bigplay" onclick="show()" class="btn">-->
+                                      </div>  <img src="__STATIC__/index/images/bigplay.png" alt="" class="bigplay" onclick="show()" class="btn">
                                       <!-- <input type="button" name="" value="↓下载视频" class="down"> -->
-                                      <a href="{$vo.url}"><input type="button" name="" value="↓下载视频" class="down jp-play-down" ></a>
+                                      <a href="{$vo.url}" target="_blank"><input type="button" name="" value="↓下载视频" class="down jp-play-down" ></a>
                                   {/if}
                               </div>
                           </div>
@@ -160,18 +160,19 @@
 
                   <div class="link">
                     <div class="one one4">
-                        <div id="guide_info">
+                        <div id="guide_info" class="robb">
                           <img style="width:130px;height: auto" src="{if condition='!empty($data.long_img) eq true'}{$data.long_img}{else/}{$data.main_img}{/if}" alt="">
                           <p>
                               {$data.short_title}<br>
                               【在售价{:round($data.price,2)}元】券后【{:round($data.real_money,2)}元】<br>
+                            <span id="rob">
                               领券：<a href="{$data.coupon_link}" target="_blank" class="lan">{$data.coupon_link}</a><br>
                               抢购：<br>
                               <a href="{$data.link}" target="_blank" class="lan">{$data.link}</a><br>
+                            </span>
                               {$data.guide_info}
                           </p>
                         </div>
-
                        <input type="button" name="" value="一键转链"  class="yijian" onclick="show2()">
                        <input type="button" name="" value="+复制" class="fuzhi copy" data-clipboard-action="copy" data-clipboard-target="#guide_info">
                       </div>
@@ -255,7 +256,16 @@ function show2(){
 
         if (data.code == 200)
         {
-            htmll += '200';//转链数据显示
+            //转链数据显示
+            var rob = '';
+            rob += data.data;
+            $('#rob').html('');
+            $('.robb p').append(rob);
+            //$('.zhuan').html('<span>转链成功</span>');
+            $('.yijian').val('转链成功');
+            $('.yijian').removeAttr('onclick');
+            //alert(200);//转链数据显示
+            return false;
         }
         else if (data.code == 101)
         {

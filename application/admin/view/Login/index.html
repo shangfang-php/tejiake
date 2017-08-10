@@ -58,7 +58,8 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <!--<input class="form-control" type="password" name="password" required="" placeholder="密码" value="{$Think.cookie.admin_pass}">-->
-                                <input class="form-control" type="password" name="password" required="" placeholder="密码" value="{if condition='!empty($password) eq true'}{$password}{/if}">
+                                <input class="form-control" type="password" name="password" required="" placeholder="密码" value="{if condition='!empty($password) eq true'}{$password}{/if}" oninput="changep()">
+                                <input type="hidden" name="is_rem" value="{if condition='!empty($password) eq true'}1{else/}0{/if}">
                             </div>
                         </div>
 
@@ -113,11 +114,12 @@
                 var rempsw = 0;
                 var username = $('input[name=username]').val();
                 var password = $('input[name=password]').val();
+                var is_rem = $('input[name=is_rem]').val();
                 if(username != '' && password != ''){
                     if($('#checkbox-signup').is(':checked')){
                          rempsw = 1;
                     }
-                    $.post("{url('Login/index')}",{username:username,password:password,rempsw:rempsw},function(data){
+                    $.post("{url('Login/index')}",{username:username,password:password,rempsw:rempsw,is_rem:is_rem},function(data){
                        //alert(typeof data);
                         data = JSON.parse(data);
                         if(data.status == 1){
@@ -129,6 +131,10 @@
                 }else{
                     alert('用户名或密码不可为空');return false;
                 }
+            }
+
+            function changep(){
+                $('input[name=is_rem]').val(0);
             }
         </script>
         {include file='public/footer' /}

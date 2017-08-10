@@ -19,7 +19,12 @@ class Login extends Controller
                 if(empty($username)||empty($psw)){
                     exit(json_encode(array('status'=>0,'msg'=>'用户名或密码不可为空')));
                 }
-                $password = pswCrypt($psw);
+                $is_rem = input('post.is_rem');
+                if($is_rem == 1){
+                    $password = $psw;
+                }else{
+                    $password = pswCrypt($psw);
+                }
                 //exit(json_encode(array('status'=>0,'msg'=>$password)));
                 $rempsw = input('post.rempsw');
                 $info = Db::name('admin')->where(array('username'=>$username))->find();
@@ -35,17 +40,17 @@ class Login extends Controller
                 Session::set('admin_user',$username);
                 if($rempsw == 1){
                     //记住密码 存储于cookie
-                    cookie('admin_user',trim($username),3600*24*30);
-                    cookie('admin_pass',trim($psw),3600*24*30);
+                    cookie('cu',trim($username),3600*24*30);
+                    cookie('CSDFDSA',trim($password),3600*24*30);
                     //exit(json_encode(array('status'=>1,'msg'=>'登录成功'))) ;
                 }
                 exit(json_encode(array('status'=>1,'msg'=>'登录成功'))) ;
             }else{
-                $username = Cookie::get('admin_user');
-                $password = Cookie::get('admin_pass');
+                $username = Cookie::get('cu');
+                $password = Cookie::get('CSDFDSA');
                 if($username && $password) {
                     $this->assign('username',$username);
-                    $this->assign('password',$password);
+                    $this->assign('password',pswCrypt($password));
                 }
                 return view('index');
             }
@@ -94,11 +99,11 @@ class Login extends Controller
      */
     public function loginout(){
         Session::delete('admin_user');
-        $cookie_admin = Cookie::get('admin_user');
-        $cookie_pass = Cookie::get('admin_pass');
+        $cookie_admin = Cookie::get('cu');
+        $cookie_pass = Cookie::get('CSDFDSA');
         if(!empty($cookie_admin) || !empty($cookie_pass)){
-            Cookie::delete('admin_user');
-            Cookie::delete('admin_pass');
+            Cookie::delete('cu');
+            Cookie::delete('CSDFDSA');
             //Cookie::clear();
         }
         $this->redirect('login/index');
