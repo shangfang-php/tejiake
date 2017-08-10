@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="__STATIC__/index/css/jplayer.blue.monday.min.css">
 <link rel="stylesheet" href="__STATIC__/index/css/quan_detail.css">
 <style type="text/css" media="screen">
-    .countdown div i {
+  /*   .countdown div i {
         background: none;
         font-size: 16px;
 
@@ -17,7 +17,12 @@
         vertical-align: top;
         font-size: 16px;
 
-    }
+    } */
+    .countdown div.seperator {
+   
+    vertical-align: middle;
+   
+}
     .rong{
         padding: 11px 35px;
     }
@@ -117,17 +122,42 @@
             <div class="ti-ti-box">
                 <p class="fl f20 lan"><img src="__STATIC__/index/images/shipd.png" alt="">&nbsp;
                     {if condition="$data.type eq 1"}爆款单
-                    {elseif condition="$data.type eq 2"}限时抢购&nbsp;<img src="__STATIC__/index/images/time-icon.png" alt="">&nbsp;
+                    {elseif condition="$data.type eq 2"}限时抢购&nbsp;&nbsp;<img src="__STATIC__/index/images/time-icon.png" alt="">&nbsp;
                     <div class="lia fl f16">
                         <div class="countdown" >
-                            <div>剩余</div>
-                            <div><i class="days">00</i></div>天
-                            <div><i class="hours">00</i></div>
-                            <div class="seperator" >:</div>
-                            <div><i class="minutes">00</i></div>
-                            <div class="seperator" >:</div>
-                            <div><i class="seconds">00</i></div>
-                            <div>结束</div>
+                            <div>剩余&nbsp;</div>
+                             <div>
+                                        <i class="days">
+                                            00
+                                        </i>
+                                    </div>
+                                    <div class="seperator">
+                                        天
+                                    </div>
+                                    <div>
+                                        <i class="hours">
+                                            00
+                                        </i>
+                                      
+                                    </div>
+                                    <div class="seperator">
+                                        时
+                                    </div>
+                                    <div>
+                                        <i class="minutes">
+                                            00
+                                        </i>
+                                      
+                                    </div>
+                                    <div class="seperator">
+                                        分
+                                    </div>
+                                    <div>
+                                        <i class="seconds">
+                                            00
+                                        </i>
+                                    </div>
+                            <div>&nbsp;结束</div>
                         </div>
                     </div>
                 <script>
@@ -142,7 +172,7 @@
                         if(now >= end_time){
                             $('.countdown').html('<p style="color: red;">活动已结束!</p>');
                         }else{
-                            $('.countdown').html('<p style="color: red;">活动正在火热进行中!</p>');
+                            // $('.countdown').html('<p style="color: red;">活动正在火热进行中!</p>');
                         }
 
                     });
@@ -260,7 +290,7 @@
 
                                                     <div class="jp-video-txt-item">
                                                         <a href="{$extends_data.video_url}"
-                                                           download="">
+                                                           download="" target="_blank">
                                         <span class="jp-play-down">
                                             下载视频
                                         </span>
@@ -355,7 +385,7 @@
                     <p class="dashed"></p>
                     <p class="f14 ac" style="line-height: 25px;padding: 10px 0 25px 0">{$data.title}</p>
                     <p class="dashed"></p>
-                    <p class="zhuan" onclick="show2()"><span>一键转链</span></p>
+                   <!--  <p class="zhuan" onclick="show2()"><span>一键转链</span></p> -->
                 </div>
                 <div class="clear"></div>
             </div>
@@ -377,8 +407,9 @@
                             </div>
 
                         </p>
-
+                         <p class="zhuan" onclick="show2()"><span>一键转链</span></p>
                         <p class="yjfz">
+
                             <input class="fz fr copy f12" type="button" value=" 一键复制" >
                         </p>
                     </div>

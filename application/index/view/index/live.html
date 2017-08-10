@@ -33,7 +33,8 @@
             <img src="__STATIC__/index/images/live.png" alt="爆款单" style="padding-top: 64px">
             <span class="f12">
                 <img src="__STATIC__/index/images/tu.png" alt="">
-                &nbsp;在线淘客数：{$online_num}
+              
+                <i style="position: relative;top: 24px;">&nbsp;在线淘客数：{$online_num}人</i>
             </span>
         </div>
         <div class="live-dec">
@@ -67,16 +68,16 @@
                         <div class="good-fit">
                            <div class="fl f12" style="width: 124px; height: 23px; line-height: 19px;">
                                 券后
-                                <span class="f16 price" style="color: #fe5c30;">
+                                <span class="f16 price" style="color: #fe5c30;    display: initial;">
                                     ￥{:sprintf('%0.2f',$val.real_money)}
                                 </span>
                             </div>
                             <div class="fl quan">
                                ￥{:sprintf('%0.2f',$val.coupon_money)}&nbsp;
                             </div>
-                            <div class="charges f12 fr"  style="width: 110px;">
+                            <div class="charges f12 fr"  style="width: 122px;">
                                 佣金
-                                <span class="a3">
+                                <span class="a3" style="    display: initial;">
                                     ￥{:sprintf('%0.2f',$val.taoke_money)}
                                 </span>
                                 ({:round($val.taoke_money_percent)}%)
