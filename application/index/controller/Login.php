@@ -89,7 +89,7 @@ class Login extends Controller{
      */
     function check_drag(){
         $phone  =   trim(input('post.phone'));
-        $type   =   trim(input('post.type')); ##1为注册2为充值密码
+        $type   =   trim(input('post.type')); ##1为注册2为重置密码
         $type   =   $type == 2 ? 2 : 1; ##默认是注册
 
         $checkPhone =checkPhone($phone);
@@ -104,7 +104,7 @@ class Login extends Controller{
         if($type == 2 && !$res){
             return returnAjaxMsg('303','手机号尚未注册!');
         }
-        if(session('isRegister')){
+        if(session('isRegister') || $type == 2){
             Session::set('check_drag', 1); ##滑动验证码通过
             return returnAjaxMsg('200','验证通过');
         }else{
