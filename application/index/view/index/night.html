@@ -81,20 +81,20 @@
                         </div>
 
                         <div class="good-sales">
-                            <!--<div class="skipper fl f12">
+                            <div class="skipper fl f12">
                                 近2个小时跑单
                             </div>
                             <div class="lia fl f12">
-                                <span>
-                                    2
-                                </span>
-                                <span>
-                                    2
-                                </span>
-                                <span>
-                                    2
-                                </span>
-                            </div>-->
+                                {if $val.two_hour_sell_num}
+                                    {assign name="two_hour_sell_num" value=":str_split($val.two_hour_sell_num)" }
+                                    {for start="0" end="4-count($two_hour_sell_num)"}
+                                    <span>0</span>
+                                    {/for}
+                                    {foreach $two_hour_sell_num as $v}
+                                        <span>{$v}</span>
+                                    {/foreach}
+                                {/if}
+                            </div>
                             <div class="xiao fr f12">
                                 销量&nbsp;{$val.sell_num}
                             </div>
