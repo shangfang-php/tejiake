@@ -67,7 +67,7 @@
             </div>
 
             <div class="xiang-fit">
-               <div class="quan fl"><span>￥{:sprintf('%0.2f',$data.coupon_money)}</span></div>
+               <div class="quan fl"><span>￥{:round($data.coupon_money,2)}</span></div>
                <div class="fr f12 ac">已领取:&nbsp;{$data.coupon_apply_num}/{$data.coupon_total_num}&nbsp;</div>
             </div>
 
