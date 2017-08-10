@@ -141,11 +141,11 @@ $(".basic .a2").click(function(){
                         <img src="__STATIC__/index/images/YE.png" alt="">
                         {/if}
                         &nbsp;{$vo.short_title}</p></td>
-                    <td style="width: 90px;"><p style="color: #ff7758;">￥{$vo.real_money}<br><i class="back f12">￥{$vo.price}</i></p></td>
+                    <td style="width: 90px;"><p style="color: #ff7758;">￥{:round($vo.real_money,2)}<br><i class="back f12">￥{:round($vo.price,2)}</i></p></td>
                     <td style="width: 130px;">
-                    <p class="quan">￥{$vo.coupon_money}</p><p style="color: #ccc;" class="f12">已领：<i style="color: #333;">{$vo.coupon_apply_num}</i>/{$vo.coupon_total_num}</p>
+                    <p class="quan">￥{:round($vo.coupon_money,2)}</p><p style="color: #ccc;" class="f12">已领：<i style="color: #333;">{$vo.coupon_apply_num}</i>/{$vo.coupon_total_num}</p>
                     </td>
-                    <td style="width: 70px;">{$vo.taoke_money_percent}%</td>
+                    <td style="width: 70px;">{:round($vo.taoke_money_percent,2)}%</td>
                     <td style="width: 178px; " class=" ac"> 
                     <p class="f12">开始：{$vo.start_time|date="Y-m-d H:i:s",###}</p>
                     <p class="f12">结束：{$vo.end_time|date="Y-m-d H:i:s",###}</p>
